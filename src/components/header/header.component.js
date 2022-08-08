@@ -10,13 +10,15 @@ import cart from '../../assets/svgs/Bag.svg'
 import enter from '../../assets/svgs/enter.svg'
 import {Link} from "react-router-dom";
 
+import {slide as menu} from 'react-burger-menu'
+
 // import user from '../../assets/svgs/user.svg'
 
 function HeaderComponent(props) {
     return (
         <header className={classes.wrapper}>
             <ul className={classes.container}>
-                <li className={classes.logo}>AllianceCup</li>
+                <li className={classes.logo}><span>AllianceCup</span></li>
                 <li className={classes.socials}>
                     <a href="https://www.instagram.com/alliance_cup/">
                         <img src={instIcon} alt="INST-icon"/>
@@ -35,12 +37,10 @@ function HeaderComponent(props) {
                     <span>+38(096) 612-15-16</span>
                     <span>allince.cup.ua@gmail.com</span>
                 </li>
-                <li className={classes.cart}>
+                <li className={classes.authCart}>
                     <Link to={"/"}>
                         <span><img src={cart} alt="pin"/>Кошик</span>
                     </Link>
-                </li>
-                <li className={classes.auth}>
                     <Link to={"/"}>
                         <span><img src={enter} alt="pin"/>Авторизація</span>
                     </Link>
