@@ -10,8 +10,6 @@ import cart from '../../assets/svgs/Bag.svg'
 import enter from '../../assets/svgs/enter.svg'
 import {Link} from "react-router-dom";
 
-import {slide as menu} from 'react-burger-menu'
-
 // import user from '../../assets/svgs/user.svg'
 
 function HeaderComponent(props) {
@@ -37,10 +35,12 @@ function HeaderComponent(props) {
                     <span>+38(096) 612-15-16</span>
                     <span>allince.cup.ua@gmail.com</span>
                 </li>
-                <li className={classes.authCart}>
+                <li className={classes.cart}>
                     <Link to={"/"}>
                         <span><img src={cart} alt="pin"/>Кошик</span>
                     </Link>
+                </li>
+                <li className={classes.auth}>
                     <Link to={"/"}>
                         <span><img src={enter} alt="pin"/>Авторизація</span>
                     </Link>

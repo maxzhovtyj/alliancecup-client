@@ -13,8 +13,9 @@ $alliance-grey: #BBBBBB;
     padding: 0 1rem;
   }
   @media all and (max-width: 320px) {
-    padding: 0 2rem;
+    padding: 0 .625rem;
   }
+
 }
 
 @mixin horizontal-lines {

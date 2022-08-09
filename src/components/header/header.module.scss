@@ -16,6 +16,10 @@
     font-size: .75rem;
     line-height: .8rem;
   }
+  @media all and (max-width: 375px) {
+    font-size: .6rem;
+    line-height: .8rem;
+  }
 }
 
 @mixin toCenter {
@@ -75,8 +79,8 @@
     grid-template-rows: 1fr 1fr;
     display: grid;
     grid-template-areas:
-            "logo contactInfo authCart"
-            "socials contactInfo authCart";
+            "logo contactInfo auth"
+            "socials contactInfo cart";
   }
 }
 
@@ -98,6 +102,13 @@
     grid-area: logo;
     justify-self: center;
     align-self: end;
+  }
+  @media all and (max-width: 375px) {
+    font-size: 24px;
+  }
+  @media all and (max-width: 320px) {
+    font-size: 1.25rem;
+    line-height: 1.25rem;
   }
 }
 
@@ -138,6 +149,16 @@
       height: 18px;
     }
   }
+  @media all and (max-width: 375px) {
+    max-width: 70px;
+    img {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+  @media all and (max-width: 320px) {
+    max-width: 65px;
+  }
 }
 
 .contactInfo {
@@ -160,25 +181,28 @@
   }
 }
 
-.authCart {
-  // TODO
-  max-width: 400px;
-  width: 100%;
+.cart {
   @include header-light-font;
   @include header-img;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
   span {
     @include toCenter;
   }
 
   @media all and (max-width: 425px) {
-    grid-area: authCart;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    grid-area: cart;
+    align-self: start;
+  }
+}
+
+.auth {
+  @include header-light-font;
+  @include header-img;
+  span {
+    @include toCenter;
+  }
+
+  @media all and (max-width: 425px) {
+    grid-area: auth;
+    align-self: end;
   }
 }
