@@ -2,18 +2,23 @@ $alliance-orange: #F7A500;
 $alliance-grey: #BBBBBB;
 
 @mixin left-right-padding {
-  padding: 0 10rem;
+  padding-right: 10rem;
+  padding-left: 10rem;
   @media all and (max-width: 1024px) {
-    padding: 0 2rem;
+    padding-right: 2rem;
+    padding-left: 2rem;
   }
   @media all and (max-width: 768px) {
-    padding: 0 2rem;
+    padding-right: 2rem;
+    padding-left: 2rem;
   }
   @media all and (max-width: 425px) {
-    padding: 0 1rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
   }
   @media all and (max-width: 320px) {
-    padding: 0 .625rem;
+    padding-right: .625rem;
+    padding-left: .625rem;
   }
 
 }

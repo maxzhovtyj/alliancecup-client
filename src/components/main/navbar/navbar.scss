@@ -1,0 +1,77 @@
+@import "../../../variables";
+
+nav {
+  @include horizontal-lines;
+}
+
+.navWrapper {
+  @include left-right-padding;
+}
+
+.list {
+  display: flex;
+  justify-content: space-around;
+  @include light-font;
+}
+
+.listItem {
+  position: relative;
+  padding-top: 1.875rem;
+  padding-bottom: 1.875rem;
+  &:hover {
+    color: $alliance-orange;
+  }
+}
+
+.listItem:after {
+  content: "";
+  bottom: 0;
+  width: 0;
+  backface-visibility: hidden;
+  opacity: 0;
+  background: $alliance-orange;
+  border: 1px solid rgba($alliance-orange, 0);
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  transition: all 280ms ease-in-out;
+}
+
+.listItem:hover:after {
+  opacity: 1;
+  color: $alliance-orange;
+  backface-visibility: hidden;
+  transition: width 350ms ease-in-out;
+  width: 100%;
+}
+
+//@media all and (max-width: 1024px) {
+//  .listItem {
+//    padding-top: 1.5rem;
+//    padding-bottom: 1.5rem;
+//  }
+//}
+//@media all and (max-width: 768px) {
+//  .listItem {
+//    padding-top: 1.25rem;
+//    padding-bottom: 1.25rem;
+//  }
+//}
+//@media all and (max-width: 425px) {
+//  .listItem {
+//    padding-top: 1rem;
+//    padding-bottom: 1rem;
+//  }
+//}
+//@media all and (max-width: 375px) {
+//  .listItem {
+//    padding-top: .75rem;
+//    padding-bottom: .75rem;
+//  }
+//}
+//@media all and (max-width: 320px) {
+//  .listItem {
+//    padding-top: .5rem;
+//    padding-bottom: .5rem;
+//  }
+//}
