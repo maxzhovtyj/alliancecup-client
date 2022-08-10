@@ -1,0 +1,229 @@
+@import '../../variables.scss';
+
+footer {
+  @include horizontal-lines;
+}
+
+.wrapper {
+  @include left-right-padding;
+  padding-top: 70px;
+  padding-bottom: 70px;
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  @media all and (max-width: 1024px) {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  @media all and (max-width: 425px) {
+    display: grid;
+    grid-gap: .375rem;
+    grid-template-areas:
+            "generalInfo contactInfo contactInfo"
+            "generalInfo schedule deliveryTown";
+  }
+  @media all and (max-width: 375px) {
+    grid-template-columns: 1fr .8fr 1fr;
+  }
+  @media all and (max-width: 320px) {
+    grid-gap: .3rem;
+    grid-template-columns: .8fr .8fr 1fr;
+  }
+}
+
+.generalInfo {
+  @media all and (max-width: 425px) {
+    grid-area: generalInfo;
+  }
+}
+
+.contactWrapper {
+  @media all and (max-width: 425px) {
+    grid-area: contactInfo;
+  }
+}
+
+.socials {
+  display: flex;
+
+  li:nth-child(2) {
+    margin: 0 1rem;
+  }
+
+  @media all and (max-width: 768px) {
+    img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+  @media all and (max-width: 375px) {
+    img {
+      width: 1rem;
+      height: 1rem;
+    }
+    li:nth-child(2) {
+      margin: 0 .625rem;
+    }
+  }
+}
+
+.logo {
+  font-family: 'Roboto-Light', serif;
+  line-height: 2rem;
+  margin-bottom: 1rem;
+  @include logo;
+  @media all and (max-width: 768px) {
+    margin-bottom: 0;
+  }
+  @media all and (max-width: 425px) {
+    margin-bottom: .5rem;
+  }
+  @media all and (max-width: 320px) {
+    line-height: 1.2rem;
+    margin-bottom: .325rem;
+  }
+}
+
+.text {
+  @include light-font;
+  line-height: 1.5rem;
+  margin-bottom: .5rem;
+  @media all and (max-width: 768px) {
+    margin-bottom: .375rem;
+  }
+}
+
+.copyright {
+  display: flex;
+  align-items: center;
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  font-size: 1rem;
+  color: #B7B7B7;
+  margin-bottom: .5rem;
+  @media all and (max-width: 768px) {
+    font-size: .625rem;
+    margin-bottom: .375rem;
+  }
+  @media all and (max-width: 375px) {
+    img {
+      width: .625rem;
+      height: .625rem;
+    }
+    font-size: .5rem;
+    margin-bottom: .3rem;
+  }
+  @media all and (max-width: 320px) {
+    img {
+      width: .5rem;
+      height: .5rem;
+    }
+    font-size: .4rem;
+    margin-bottom: .3rem;
+  }
+}
+
+.contactInfo {
+  li {
+    img {
+      margin-right: .3rem;
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+
+    p {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+    }
+
+    &:nth-child(2) {
+      margin: 3px 0;
+    }
+
+    @media all and (max-width: 1440px) {
+      img {
+        width: 1.775rem;
+        height: 1.775rem;
+      }
+      p {
+        font-size: 1.125rem;
+      }
+    }
+    @media all and (max-width: 1024px) {
+      img {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+      p {
+        line-height: 1rem;
+        font-size: 1rem;
+      }
+    }
+    @media all and (max-width: 768px) {
+      img {
+        width: 1.125rem;
+        height: 1.125rem;
+      }
+      p {
+        line-height: .875rem;
+        font-size: .875rem;
+      }
+    }
+    @media all and (max-width: 425px) {
+      p {
+        line-height: .5rem;
+        font-size: .75rem;
+      }
+    }
+    @media all and (max-width: 320px) {
+      p {
+        font-size: .625rem;
+      }
+      img {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+  }
+}
+
+.schedule, .deliveryTown {
+  font-size: 1.5rem;
+
+  p:nth-child(1) {
+    color: $alliance-orange;
+  }
+
+  @media all and (max-width: 1440px) {
+    font-size: 1.125rem;
+  }
+  @media all and (max-width: 1024px) {
+    font-size: 1rem;
+  }
+  @media all and (max-width: 768px) {
+    font-size: .875rem;
+  }
+  @media all and (max-width: 425px) {
+    font-size: .625rem;
+  }
+  @media all and (max-width: 375px) {
+    font-size: .5rem;
+  }
+  @media all and (max-width: 320px) {
+
+  }
+}
+
+.schedule {
+  @media all and (max-width: 425px) {
+    grid-area: schedule;
+  }
+}
+
+.deliveryTown {
+  @media all and (max-width: 425px) {
+    grid-area: deliveryTown;
+  }
+}
