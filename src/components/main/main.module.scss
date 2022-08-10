@@ -1,0 +1,5 @@
+@import "../../variables";
+
+.mainWrapper {
+  @include left-right-padding;
+}

@@ -18,8 +18,21 @@ nav {
   position: relative;
   padding-top: 1.875rem;
   padding-bottom: 1.875rem;
+  text-transform: uppercase;
   &:hover {
     color: $alliance-orange;
+  }
+  @media all and (max-width: 768px) {
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+  }
+  @media all and (max-width: 425px) {
+    padding-top: .75rem;
+    padding-bottom: .5rem;
+  }
+  @media all and (max-width: 320px) {
+    padding-top: .5rem;
+    padding-bottom: .25rem;
   }
 }
 
@@ -44,34 +57,3 @@ nav {
   transition: width 350ms ease-in-out;
   width: 100%;
 }
-
-//@media all and (max-width: 1024px) {
-//  .listItem {
-//    padding-top: 1.5rem;
-//    padding-bottom: 1.5rem;
-//  }
-//}
-//@media all and (max-width: 768px) {
-//  .listItem {
-//    padding-top: 1.25rem;
-//    padding-bottom: 1.25rem;
-//  }
-//}
-//@media all and (max-width: 425px) {
-//  .listItem {
-//    padding-top: 1rem;
-//    padding-bottom: 1rem;
-//  }
-//}
-//@media all and (max-width: 375px) {
-//  .listItem {
-//    padding-top: .75rem;
-//    padding-bottom: .75rem;
-//  }
-//}
-//@media all and (max-width: 320px) {
-//  .listItem {
-//    padding-top: .5rem;
-//    padding-bottom: .5rem;
-//  }
-//}
