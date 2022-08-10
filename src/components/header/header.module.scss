@@ -1,0 +1,208 @@
+@import '../../variables.scss';
+
+@mixin header-light-font {
+  font-family: 'Roboto', serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  @media all and (max-width: 1024px) {
+    font-size: 1.125rem;
+    line-height: 1rem;
+  }
+  @media all and (max-width: 768px) {
+    font-size: 1rem;
+    line-height: .8rem;
+  }
+  @media all and (max-width: 425px) {
+    font-size: .75rem;
+    line-height: .8rem;
+  }
+  @media all and (max-width: 375px) {
+    font-size: .6rem;
+    line-height: .8rem;
+  }
+}
+
+@mixin toCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin header-img {
+  img {
+    width: 36px;
+    height: 36px;
+    margin-right: .3rem;
+  }
+  @media all and (max-width: 1024px) {
+    img {
+      width: 24px;
+      height: 24px;
+      margin-right: .1rem;
+    }
+  }
+  @media all and (max-width: 768px) {
+    img {
+      width: 18px;
+      height: 18px;
+      margin-right: .1rem;
+    }
+  }
+}
+
+.wrapper {
+  @include horizontal-lines;
+  height: 120px;
+  position: relative;
+
+  ul {
+    @include left-right-padding;
+  }
+
+  span {
+    display: inline-block;
+  }
+
+  @media all and (max-width: 425px) {
+    height: 80px;
+  }
+}
+
+.container {
+  height: 100%;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @media all and (max-width: 425px) {
+    grid-template-columns: 1fr 1fr .8fr;
+    grid-template-rows: 1fr 1fr;
+    display: grid;
+    grid-template-areas:
+            "logo contactInfo auth"
+            "socials contactInfo cart";
+  }
+}
+
+.logo {
+  font-weight: 500;
+  font-size: 42px;
+  span {
+    display: block;
+  }
+  @media all and (max-width: 1024px) {
+    font-size: 36px;
+  }
+  @media all and (max-width: 768px) {
+    font-size: 24px;
+  }
+  @media all and (max-width: 425px) {
+    font-size: 28px;
+    line-height: 20px;
+    grid-area: logo;
+    justify-self: center;
+    align-self: end;
+  }
+  @media all and (max-width: 375px) {
+    font-size: 24px;
+  }
+  @media all and (max-width: 320px) {
+    font-size: 1.25rem;
+    line-height: 1.25rem;
+  }
+}
+
+.socials {
+  max-width: 250px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+
+  img {
+    width: 50px;
+    height: 50px;
+  }
+
+  @media all and (max-width: 1024px) {
+    max-width: 200px;
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  @media all and (max-width: 768px) {
+    max-width: 140px;
+    img {
+      width: 34px;
+      height: 34px;
+    }
+  }
+  @media all and (max-width: 425px) {
+    grid-area: socials;
+    justify-self: center;
+    align-self: start;
+    max-width: 85px;
+    margin: 3px 0;
+    justify-content: space-between;
+    img {
+      width: 18px;
+      height: 18px;
+    }
+  }
+  @media all and (max-width: 375px) {
+    max-width: 70px;
+    img {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+  @media all and (max-width: 320px) {
+    max-width: 65px;
+  }
+}
+
+.contactInfo {
+  @include header-light-font;
+  @include header-img;
+
+  span {
+    display: flex;
+    align-items: center;
+  }
+
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  //margin: 0 .5rem;
+  line-height: 1.8rem;
+  @media all and (max-width: 425px) {
+    grid-area: contactInfo;
+  }
+}
+
+.cart {
+  @include header-light-font;
+  @include header-img;
+  span {
+    @include toCenter;
+  }
+
+  @media all and (max-width: 425px) {
+    grid-area: cart;
+    align-self: start;
+  }
+}
+
+.auth {
+  @include header-light-font;
+  @include header-img;
+  span {
+    @include toCenter;
+  }
+
+  @media all and (max-width: 425px) {
+    grid-area: auth;
+    align-self: end;
+  }
+}

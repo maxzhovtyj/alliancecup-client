@@ -1,0 +1,36 @@
+$alliance-orange: #F7A500;
+$alliance-grey: #BBBBBB;
+
+@mixin left-right-padding {
+  padding: 0 10rem;
+  @media all and (max-width: 1024px) {
+    padding: 0 2rem;
+  }
+  @media all and (max-width: 768px) {
+    padding: 0 2rem;
+  }
+  @media all and (max-width: 425px) {
+    padding: 0 1rem;
+  }
+  @media all and (max-width: 320px) {
+    padding: 0 .625rem;
+  }
+
+}
+
+@mixin horizontal-lines {
+  &::before {
+    position: absolute;
+    content: "";
+    height: 1px;
+    background-color: $alliance-grey;
+    width: 100%;
+  }
+  &::after {
+    position: absolute;
+    content: "";
+    height: 1px;
+    background-color: $alliance-grey;
+    width: 100%;
+  }
+}
