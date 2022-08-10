@@ -1,33 +1,5 @@
 @import '../../variables.scss';
 
-@mixin header-light-font {
-  font-family: 'Roboto', serif;
-  font-size: 1.5rem;
-  font-weight: 300;
-  @media all and (max-width: 1024px) {
-    font-size: 1.125rem;
-    line-height: 1rem;
-  }
-  @media all and (max-width: 768px) {
-    font-size: 1rem;
-    line-height: .8rem;
-  }
-  @media all and (max-width: 425px) {
-    font-size: .75rem;
-    line-height: .8rem;
-  }
-  @media all and (max-width: 375px) {
-    font-size: .6rem;
-    line-height: .8rem;
-  }
-}
-
-@mixin toCenter {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 @mixin header-img {
   img {
     width: 36px;
@@ -85,31 +57,7 @@
 }
 
 .logo {
-  font-weight: 500;
-  font-size: 42px;
-  span {
-    display: block;
-  }
-  @media all and (max-width: 1024px) {
-    font-size: 36px;
-  }
-  @media all and (max-width: 768px) {
-    font-size: 24px;
-  }
-  @media all and (max-width: 425px) {
-    font-size: 28px;
-    line-height: 20px;
-    grid-area: logo;
-    justify-self: center;
-    align-self: end;
-  }
-  @media all and (max-width: 375px) {
-    font-size: 24px;
-  }
-  @media all and (max-width: 320px) {
-    font-size: 1.25rem;
-    line-height: 1.25rem;
-  }
+  @include logo;
 }
 
 .socials {
@@ -162,7 +110,7 @@
 }
 
 .contactInfo {
-  @include header-light-font;
+  @include light-font;
   @include header-img;
 
   span {
@@ -182,7 +130,7 @@
 }
 
 .cart {
-  @include header-light-font;
+  @include light-font;
   @include header-img;
   span {
     @include toCenter;
@@ -195,7 +143,7 @@
 }
 
 .auth {
-  @include header-light-font;
+  @include light-font;
   @include header-img;
   span {
     @include toCenter;
