@@ -7,8 +7,8 @@ import instIcon from '../../assets/social/instagram-icon.svg'
 import vbIcon from '../../assets/social/viber-icon.svg'
 import pin from '../../assets/svgs/pin.svg'
 import cart from '../../assets/svgs/Bag.svg'
-import enter from '../../assets/svgs/enter.svg'
 import {Link} from "react-router-dom";
+import SignInDialog from "../../UI/modalSignIn/signIn";
 
 // import user from '../../assets/svgs/user.svg'
 
@@ -41,9 +41,7 @@ function HeaderComponent(props) {
                     </Link>
                 </li>
                 <li className={classes.auth}>
-                    <Link to={"/"}>
-                        <span><img src={enter} alt="pin"/>Авторизація</span>
-                    </Link>
+                    <SignInDialog/>
                 </li>
             </ul>
 

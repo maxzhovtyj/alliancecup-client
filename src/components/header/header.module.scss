@@ -143,6 +143,7 @@
 }
 
 .auth {
+  @include toCenter;
   @include light-font;
   @include header-img;
   span {

@@ -1,0 +1,17 @@
+@import '../../variables';
+
+.authBtn {
+  cursor: pointer;
+  background: none;
+  border: none;
+  background: #ffffff;
+}
+
+.authInputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.dialogWrapper {
+  //padding: 1rem 2rem;
+}
