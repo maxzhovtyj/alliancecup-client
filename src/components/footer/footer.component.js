@@ -13,7 +13,7 @@ import classes from './footer.module.scss'
 
 function FooterComponent() {
     return (<footer>
-        <div className={classes.wrapper}>
+        <div className={classes.footerWrapper}>
             <div className={classes.generalInfo} >
                 <p className={classes.logo}>AllianceCup</p>
                 <p className={classes.text}>Продаж паперових<br/>стаканчиків<br/>і не тільки</p>

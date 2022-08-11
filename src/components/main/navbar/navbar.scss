@@ -1,0 +1,59 @@
+@import "../../../variables";
+
+nav {
+  @include horizontal-lines;
+}
+
+.navWrapper {
+  @include left-right-padding;
+}
+
+.list {
+  display: flex;
+  justify-content: space-around;
+  @include light-font;
+}
+
+.listItem {
+  position: relative;
+  padding-top: 1.875rem;
+  padding-bottom: 1.875rem;
+  text-transform: uppercase;
+  &:hover {
+    color: $alliance-orange;
+  }
+  @media all and (max-width: 768px) {
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+  }
+  @media all and (max-width: 425px) {
+    padding-top: .75rem;
+    padding-bottom: .5rem;
+  }
+  @media all and (max-width: 320px) {
+    padding-top: .5rem;
+    padding-bottom: .25rem;
+  }
+}
+
+.listItem:after {
+  content: "";
+  bottom: 0;
+  width: 0;
+  backface-visibility: hidden;
+  opacity: 0;
+  background: $alliance-orange;
+  border: 1px solid rgba($alliance-orange, 0);
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  transition: all 280ms ease-in-out;
+}
+
+.listItem:hover:after {
+  opacity: 1;
+  color: $alliance-orange;
+  backface-visibility: hidden;
+  transition: width 350ms ease-in-out;
+  width: 100%;
+}

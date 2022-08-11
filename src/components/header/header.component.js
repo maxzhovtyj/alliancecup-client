@@ -14,7 +14,7 @@ import {Link} from "react-router-dom";
 
 function HeaderComponent(props) {
     return (
-        <header className={classes.wrapper}>
+        <header className={classes.headerWrapper}>
             <ul className={classes.container}>
                 <li className={classes.logo}><span>AllianceCup</span></li>
                 <li className={classes.socials}>
