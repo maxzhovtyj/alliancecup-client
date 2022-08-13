@@ -16,7 +16,11 @@ function HeaderComponent(props) {
     return (
         <header className={classes.headerWrapper}>
             <ul className={classes.container}>
-                <li className={classes.logo}><span>AllianceCup</span></li>
+                <li className={classes.logo}>
+                    <Link to="/">
+                        <span>AllianceCup</span>
+                    </Link>
+                </li>
                 <li className={classes.socials}>
                     <a href="https://www.instagram.com/alliance_cup/">
                         <img src={instIcon} alt="INST-icon"/>
@@ -36,7 +40,7 @@ function HeaderComponent(props) {
                     <span>allince.cup.ua@gmail.com</span>
                 </li>
                 <li className={classes.cart}>
-                    <Link to={"/"}>
+                    <Link to={"/cart"}>
                         <span><img src={cart} alt="pin"/>Кошик</span>
                     </Link>
                 </li>

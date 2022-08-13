@@ -1,0 +1,122 @@
+@import '../../../../variables.scss';
+
+.productsList {
+  margin: 3rem;
+}
+
+.productItem {
+  display: flex;
+  flex-direction: column;
+  width: 230px;
+  height: 500px;
+  filter: drop-shadow(0px 0px 12px rgba(0, 0, 0, 0.1));
+  font-family: 'Roboto', serif;
+  background: #ffffff;
+  border-radius: 5px;
+  transition: 350ms ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.productInfoWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+@mixin rightBorder {
+  position: relative;
+  &:after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    content: "";
+    width: 1px;
+    background-color: $alliance-grey;
+  }
+}
+@mixin bottomBorder {
+  position: relative;
+  &:after {
+    position: absolute;
+    right: 10px;
+    left: 10px;
+    bottom: -10px;
+    content: "";
+    height: 1px;
+    background-color: $alliance-grey;
+  }
+}
+
+.productInfo {
+  display: flex;
+  flex-direction: column;
+  span {
+    width: 50%;
+    text-align: center;
+    position: relative;
+  }
+  input {
+    margin: 0 auto;
+  }
+  button {
+    margin: 0 auto;
+  }
+}
+
+.productImg {
+  display: block;
+  width: 230px;
+  height: 230px;
+  border-radius: 5px;
+}
+
+.productTitle {
+  margin: 1rem;
+  font-size: 1rem;
+  text-align: center;
+  &:hover {
+    color: $alliance-orange;
+  }
+}
+
+.priceInfo {
+  margin: 10px 5px;
+  display: flex;
+  align-items: center;
+  input {
+    text-align: center;
+    padding: 0 5px;
+    border: 1px solid $alliance-orange;
+    border-radius: 10px;
+    width: 5rem;
+    height: 1.5rem;
+  }
+  @include bottomBorder;
+}
+
+.stockInfo {
+  margin: 10px 5px;
+  display: flex;
+  align-items: center;
+  @include bottomBorder;
+}
+
+.buyInfo {
+  margin: 10px 5px;
+  display: flex;
+  align-items: center;
+}
+
+.buyBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.rightBorder {
+  @include rightBorder;
+}

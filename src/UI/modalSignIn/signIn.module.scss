@@ -10,8 +10,33 @@
 .authInputs {
   display: flex;
   flex-direction: column;
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    width: 90%;
+    height: 1px;
+    background: $alliance-grey;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 .dialogWrapper {
-  //padding: 1rem 2rem;
+  padding: 1rem 2rem;
+}
+
+.topTitle {
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    width: 90%;
+    height: 1px;
+    background: $alliance-grey;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }

@@ -16,7 +16,7 @@ const BootstrapDialogTitle = (props) => {
     const {children, onClose} = props;
 
     return (
-        <DialogTitle sx={{m: 0, p: 2}}>
+        <DialogTitle sx={{m: 0, p: 2}} className={classes.topTitle}>
             {children}
             {onClose ? (
                 <IconButton
@@ -49,31 +49,31 @@ export default function SignInDialog() {
     };
 
     return (
-        <>
-            <button className={classes.authBtn} onClick={handleClickOpen}>
-                <span><img src={enter} alt="pin"/>Авторизація</span>
-            </button>
-            <Dialog open={open} onClose={handleClose}>
-                <BootstrapDialogTitle onClose={handleClose}>Авторизація</BootstrapDialogTitle>
+            <>
+                <button className={classes.authBtn} onClick={handleClickOpen}>
+                    <span><img src={enter} alt="pin"/>Авторизація</span>
+                </button>
+                <Dialog open={open} onClose={handleClose}>
+                    <BootstrapDialogTitle onClose={handleClose}>Авторизація</BootstrapDialogTitle>
 
-                <DialogContent className={classes.authInputs}>
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Required"
-                        margin={"dense"}
-                    />
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Required"
-                        margin={"dense"}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="outlined">Outlined</Button>
-                </DialogActions>
-            </Dialog>
-        </>
+                    <DialogContent className={classes.authInputs}>
+                        <TextField
+                            required
+                            id="outlined"
+                            label="Email"
+                            margin={"normal"}
+                        />
+                        <TextField
+                            required
+                            id="outlined"
+                            label="Пароль"
+                            margin={"normal"}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button variant="outlined">Увійти</Button>
+                    </DialogActions>
+                </Dialog>
+            </>
     );
 }

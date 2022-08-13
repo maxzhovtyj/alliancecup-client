@@ -8,16 +8,16 @@ function NavbarComponent(props) {
             <div className="navWrapper">
                 <ul className="list">
                     <li className="listItem">
-                        <Link to="#">Каталог</Link>
+                        <Link to="/categories">Каталог</Link>
                     </li>
                     <li className="listItem">
-                        <Link to="#">Доставка</Link>
+                        <Link to="/delivery">Доставка</Link>
                     </li>
                     <li className="listItem">
-                        <Link to="#">Контакти</Link>
+                        <Link to="/contacts">Контакти</Link>
                     </li>
                     <li className="listItem">
-                        <Link to="#">Для оптовиків</Link>
+                        <Link to="/for-wholesalers">Для оптовиків</Link>
                     </li>
                 </ul>
             </div>
