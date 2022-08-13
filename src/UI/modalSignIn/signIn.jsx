@@ -1,79 +1,78 @@
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 
 import classes from './signIn.module.scss'
 import enter from "../../assets/svgs/enter.svg";
 
-
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import {IconButton, TextField} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-
-const BootstrapDialogTitle = (props) => {
-    const {children, onClose} = props;
-
-    return (
-        <DialogTitle sx={{m: 0, p: 2}} className={classes.topTitle}>
-            {children}
-            {onClose ? (
-                <IconButton
-                    aria-label="close"
-                    onClick={onClose}
-                    sx={{
-                        position: 'absolute',
-                        right: 8,
-                        top: 8,
-                        color: (theme) => theme.palette.grey[500],
-                    }}
-                >
-                    <CloseIcon/>
-                </IconButton>
-            ) : null}
-        </DialogTitle>
-    );
-};
+import {AuthContext} from "../../context/AuthContext";
 
 export default function SignInDialog() {
-    // const [form, setForm] = useState({email: "", password: ""})
-    const [open, setOpen] = useState(false);
+    const isAuth = useContext(AuthContext)
+    const [form, setForm] = useState({email: "", password: ""})
+    const [signInOpen, setSignInOpen] = useState(false);
 
     const handleClickOpen = () => {
-        setOpen(true);
+        setSignInOpen(true);
     };
-
     const handleClose = () => {
-        setOpen(false);
+        setSignInOpen(false);
     };
 
-    return (
-            <>
-                <button className={classes.authBtn} onClick={handleClickOpen}>
-                    <span><img src={enter} alt="pin"/>Авторизація</span>
-                </button>
-                <Dialog open={open} onClose={handleClose}>
-                    <BootstrapDialogTitle onClose={handleClose}>Авторизація</BootstrapDialogTitle>
+    function formHandler(e) {
+        console.log(e.target.name)
+        setForm({...form, [e.target.name]: e.target.value})
+    }
 
+    useEffect(() => {
+        console.log(form)
+    }, [form])
+    return (
+        <>
+            <button className={classes.authBtn} onClick={handleClickOpen}>
+                {
+                    isAuth ? <span><img src={enter} alt="pin"/>Авторизація</span> : ""
+                }
+            </button>
+            <Dialog open={signInOpen} onClose={handleClose}>
+                <div className={classes.dialogWrapper}>
+                    <div className={classes.topWrapper}>
+                        <p className={classes.topTitle}> Авторизація</p>
+                        <IconButton
+                            aria-label="close"
+                            onClick={handleClose}
+                            sx={{
+                                color: (theme) => theme.palette.grey[500],
+                            }}
+                        >
+                            <CloseIcon/>
+                        </IconButton>
+                    </div>
                     <DialogContent className={classes.authInputs}>
                         <TextField
+                            name={"email"}
+                            onChange={formHandler}
+                            className={classes.emailInput}
                             required
-                            id="outlined"
                             label="Email"
-                            margin={"normal"}
                         />
                         <TextField
+                            name={"password"}
+                            onChange={formHandler}
                             required
-                            id="outlined"
                             label="Пароль"
-                            margin={"normal"}
+                            type={"password"}
                         />
                     </DialogContent>
-                    <DialogActions>
-                        <Button variant="outlined">Увійти</Button>
-                    </DialogActions>
-                </Dialog>
-            </>
+
+                    <div className={classes.signInBtn}>
+                        <Button  variant={"outlined"} size={"large"}>Увійти</Button>
+                    </div>
+                </div>
+            </Dialog>
+        </>
     );
 }
