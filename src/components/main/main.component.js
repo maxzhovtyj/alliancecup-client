@@ -11,6 +11,7 @@ import DeliveryComponent from "./delivery/delivery.component";
 import ContactsComponent from "./contacts/contacts.component";
 import ForWholesalersComponent from "./forWholesalers/forWholesalers.component";
 import ProductComponent from "./product/product.component";
+import UserCabinetComponent from "./userCabinet/userCabinet.component";
 
 function MainComponent() {
     return (
@@ -26,6 +27,7 @@ function MainComponent() {
                     <Route path={"/delivery"} element={<DeliveryComponent/>}/>
                     <Route path={"/contacts"} element={<ContactsComponent/>}/>
                     <Route path={"/for-wholesalers"} element={<ForWholesalersComponent/>}/>
+                    <Route path={"/user"} element={<UserCabinetComponent/>}/>
                 </Routes>
             </div>
         </div>

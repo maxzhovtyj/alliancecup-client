@@ -32,8 +32,9 @@ function ProductsComponent() {
         )
     }
     return (
-        <div>
+        <div className={classes.productsPageWrapper}>
             <div className={classes.sidebar}>
+                sidebar
             </div>
             <div className={classes.productsList}>
                 {products.map(item => <ProductItemComponent product={item} key={item.article}/>)}

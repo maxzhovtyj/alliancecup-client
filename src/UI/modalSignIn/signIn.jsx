@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import {useContext, useState} from "react";
 
 import classes from './signIn.module.scss'
 import enter from "../../assets/svgs/enter.svg";
@@ -9,9 +9,12 @@ import DialogContent from '@mui/material/DialogContent';
 import {IconButton, TextField} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import {AuthContext} from "../../context/AuthContext";
+import $api from "../../http/http";
+import {useAuth} from "../../hooks/auth.hook";
 
 export default function SignInDialog() {
     const isAuth = useContext(AuthContext)
+    let {login} = useAuth()
     const [form, setForm] = useState({email: "", password: ""})
     const [signInOpen, setSignInOpen] = useState(false);
 
@@ -23,13 +26,18 @@ export default function SignInDialog() {
     };
 
     function formHandler(e) {
-        console.log(e.target.name)
         setForm({...form, [e.target.name]: e.target.value})
     }
 
-    useEffect(() => {
-        console.log(form)
-    }, [form])
+    async function signIn() {
+        const response = await $api.post('/auth/sign-in', form).catch(function (error) {
+            if (error.response) {
+                console.log(error.response.data);
+            }
+        });
+        login(response.data.access_token, 1)
+    }
+
     return (
         <>
             <button className={classes.authBtn} onClick={handleClickOpen}>
@@ -69,7 +77,7 @@ export default function SignInDialog() {
                     </DialogContent>
 
                     <div className={classes.signInBtn}>
-                        <Button  variant={"outlined"} size={"large"}>Увійти</Button>
+                        <Button onClick={signIn} variant={"outlined"} size={"large"}>Увійти</Button>
                     </div>
                 </div>
             </Dialog>

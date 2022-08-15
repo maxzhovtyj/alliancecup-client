@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import classes from './header.module.scss'
 
@@ -7,12 +7,16 @@ import instIcon from '../../assets/social/instagram-icon.svg'
 import vbIcon from '../../assets/social/viber-icon.svg'
 import pin from '../../assets/svgs/pin.svg'
 import cart from '../../assets/svgs/Bag.svg'
+import user from '../../assets/svgs/user.svg'
+
 import {Link} from "react-router-dom";
 import SignInDialog from "../../UI/modalSignIn/signIn";
+import {AuthContext} from "../../context/AuthContext";
 
-// import user from '../../assets/svgs/user.svg'
 
 function HeaderComponent(props) {
+    const {isAuthenticated} = useContext(AuthContext)
+
     return (
         <header className={classes.headerWrapper}>
             <ul className={classes.container}>
@@ -45,7 +49,12 @@ function HeaderComponent(props) {
                     </Link>
                 </li>
                 <li className={classes.auth}>
-                    <SignInDialog/>
+                    { isAuthenticated ?
+                        <Link to={"/user"}>
+                            <span><img src={user} alt="pin"/>Кабінет</span>
+                        </Link>
+                        :
+                        <SignInDialog/>}
                 </li>
             </ul>
 
