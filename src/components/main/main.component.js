@@ -12,6 +12,7 @@ import ContactsComponent from "./contacts/contacts.component";
 import ForWholesalersComponent from "./forWholesalers/forWholesalers.component";
 import ProductComponent from "./product/product.component";
 import UserCabinetComponent from "./userCabinet/userCabinet.component";
+import PrivateRoute from "../../utils/PrivateRoute";
 
 function MainComponent() {
     return (
@@ -19,7 +20,7 @@ function MainComponent() {
             <NavbarComponent/>
             <div className={classes.mainWrapper}>
                 <Routes>
-                    <Route path={"/"} element={<HomePageComponent/>} />
+                    <Route path={"/"} element={<HomePageComponent/>}/>
                     <Route path={"/categories"} element={<CategoriesComponent/>}/>
                     <Route path={"/categories/:id"} element={<ProductsComponent/>}/>
                     <Route path={"/product/:id"} element={<ProductComponent/>}/>
@@ -27,7 +28,9 @@ function MainComponent() {
                     <Route path={"/delivery"} element={<DeliveryComponent/>}/>
                     <Route path={"/contacts"} element={<ContactsComponent/>}/>
                     <Route path={"/for-wholesalers"} element={<ForWholesalersComponent/>}/>
-                    <Route path={"/user"} element={<UserCabinetComponent/>}/>
+                    <Route element={<PrivateRoute/>}>
+                        <Route exact path={"/user"} element={<UserCabinetComponent/>}/>
+                    </Route>
                 </Routes>
             </div>
         </div>

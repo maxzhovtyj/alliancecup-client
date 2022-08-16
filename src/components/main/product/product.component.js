@@ -4,6 +4,8 @@ import {useParams} from "react-router-dom";
 
 import classes from './product.module.scss'
 
+import noopImg from '../../../assets/noopProduct.svg'
+
 function ProductComponent(props) {
     const {id} = useParams()
     let [product, setProduct] = useState({
@@ -19,18 +21,22 @@ function ProductComponent(props) {
     })
     useEffect(() => {
         async function fetchProduct() {
-            await $api.get(`api/product?id=${id}`).then(res => {
-                console.log(res.data)
-                setProduct(res.data)
-            })
+            try {
+                await $api.get(`api/product?id=${id}`).then(res => {
+                    console.log(res.data)
+                    setProduct(res.data)
+                })
+            } catch (e) {
+                console.log(e)
+            }
         }
 
-        fetchProduct()
+        fetchProduct().then()
     }, [id])
     return (
         <div className={classes.productWrapper}>
             <div className={classes.productInfo}>
-                <img className={classes.productImg} src={product.info.img_url} alt="img"/>
+                <img className={classes.productImg} src={product.info.img_url || noopImg} alt="img"/>
                 <div className={classes.textInfo}>
                     <p className={classes.productTitle}>{product.info.product_title}</p>
                     <p className={classes.productArticle}>Артикул: {product.info.article}</p>

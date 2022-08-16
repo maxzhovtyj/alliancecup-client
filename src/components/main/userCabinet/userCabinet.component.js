@@ -1,10 +1,13 @@
 import React from 'react';
+import Button from "@mui/material/Button";
 
-// import classes from './userCabinet.module.scss'
+import classes from './userCabinet.module.scss'
 
-function UserCabinetComponent(props) {
+function UserCabinetComponent() {
     return (
-        <div>User cabinet</div>
+        <div className={classes.logoutBtn}>
+            <Button variant={"outlined"}>Logout</Button>
+        </div>
     );
 }
 

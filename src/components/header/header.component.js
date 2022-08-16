@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 
 import classes from './header.module.scss'
 
@@ -10,12 +10,11 @@ import cart from '../../assets/svgs/Bag.svg'
 import user from '../../assets/svgs/user.svg'
 
 import {Link} from "react-router-dom";
-import SignInDialog from "../../UI/modalSignIn/signIn";
-import {AuthContext} from "../../context/AuthContext";
+import AuthDialogs from "../../UI/authDialogs/authDialogs";
 
 
-function HeaderComponent(props) {
-    const {isAuthenticated} = useContext(AuthContext)
+function HeaderComponent() {
+    let isAuth = false
 
     return (
         <header className={classes.headerWrapper}>
@@ -49,15 +48,14 @@ function HeaderComponent(props) {
                     </Link>
                 </li>
                 <li className={classes.auth}>
-                    { isAuthenticated ?
+                    { isAuth ?
                         <Link to={"/user"}>
                             <span><img src={user} alt="pin"/>Кабінет</span>
                         </Link>
                         :
-                        <SignInDialog/>}
+                        <AuthDialogs/>}
                 </li>
             </ul>
-
         </header>
     );
 }

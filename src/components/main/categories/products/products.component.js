@@ -6,8 +6,6 @@ import ProductItemComponent from "./productItem.component";
 
 import classes from './products.module.scss'
 
-//https://domain.com/category/1
-
 function ProductsComponent() {
     const {id} = useParams()
 
@@ -24,21 +22,20 @@ function ProductsComponent() {
         dispatch(fetchProducts(searchParams))
     }, [dispatch, searchParams])
 
-    if (products === null) {
-        return (
-            <div>
-                Товарів не знайдено
-            </div>
-        )
-    }
     return (
         <div className={classes.productsPageWrapper}>
             <div className={classes.sidebar}>
                 sidebar
             </div>
-            <div className={classes.productsList}>
-                {products.map(item => <ProductItemComponent product={item} key={item.article}/>)}
-            </div>
+            {
+                !products
+                    ?
+                    <div className={classes.productsList}>Товарів не знайдено</div>
+                    :
+                    <div className={classes.productsList}>
+                        {products.map(item => <ProductItemComponent product={item} key={item.article}/>)}
+                    </div>
+            }
         </div>
     );
 }

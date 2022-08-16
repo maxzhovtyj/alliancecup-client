@@ -2,27 +2,34 @@ import React, {useState} from 'react';
 import {Link} from 'react-router-dom'
 import classes from './products.module.scss'
 
+import noopImg from '../../../../assets/noopProduct.svg'
+
 function ProductItemComponent({product}) {
     let [amount, setAmount] = useState(1)
-    let [priceAmount, setPriceAmount] = useState(product.price)
+    let [priceAmount, setPriceAmount] = useState(Number(product.price))
 
     function setProductAmount(e) {
-        if (isNaN(e.target.value)) {
-            e.target.value = 1
+        const result = e.target.value.replace(/\D/g, '');
+        setAmount(result)
+        setPriceAmount(Number(parseFloat(String(result * product.price)).toPrecision(4)))
+    }
+
+    function addToCart() {
+        if (!amount || !priceAmount) {
+            console.log("Wrong amount or price")
+            return
         }
-        if (e.target.value === 0 || e.target.value === undefined || e.target.value === "") {
-            setAmount(1)
-            setPriceAmount(product.price)
-        } else {
-            setAmount(e.target.value)
-            setPriceAmount(e.target.value * product.price)
-        }
+        console.log({
+            product_id: product.id,
+            quantity: amount,
+            price_for_quantity: priceAmount
+        })
     }
 
     return (
         <div className={classes.productItem}>
             <Link to={`/product/${product.id}`}>
-                <img className={classes.productImg} src={product.img_url} alt="img"/>
+                <img className={classes.productImg} src={product.img_url || noopImg} alt="img"/>
             </Link>
             <div className={classes.productInfoWrapper}>
                 <Link to={`/product/${product.id}`}>
@@ -40,7 +47,7 @@ function ProductItemComponent({product}) {
                     </div>
                     <div className={classes.buyInfo}>
                         <span className={classes.rightBorder}>{priceAmount}</span>
-                        <button className={classes.buyBtn}>Купити</button>
+                        <button onClick={addToCart} className={classes.buyBtn}>Купити</button>
                     </div>
                 </div>
             </div>

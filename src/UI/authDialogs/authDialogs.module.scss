@@ -12,6 +12,10 @@
   padding: 1rem 2rem;
 }
 
+.formInput {
+  margin-top: 1rem !important;
+}
+
 .authInputs {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
@@ -50,27 +54,11 @@
   }
 }
 
-.emailInput {
-  margin: 1rem 0 !important;
-}
-
-.signInBtn {
+.requestBtn {
   margin: 1rem 0;
   @include toCenter;
   padding-bottom: 1rem;
-  position: relative;
-  button {
-    cursor: pointer;
-    color: $alliance-orange;
-    background-color: white;
-    border: 1px solid $alliance-orange;
-    transition: .3s ease-in-out;
-    &:hover {
-      background-color: $alliance-orange;
-      color: white;
-      border: 1px solid $alliance-orange;
-    }
-  }
+  @include btn;
   &:after {
     content: "";
     position: absolute;
@@ -80,5 +68,25 @@
     bottom: 1px;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+}
+
+.passwordInputs {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.redirect {
+  @include toCenter;
+  p {
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-family: 'Roboto', serif;
+    margin-right: .5rem;
+  }
+  button {
+    color: $alliance-orange;
   }
 }
