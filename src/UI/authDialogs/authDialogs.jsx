@@ -5,8 +5,12 @@ import enter from "../../assets/svgs/enter.svg";
 
 import SignUpDialog from "./signUpDialog";
 import SignInDialog from "./signInDialog";
+import {useSnackbar} from "../../hooks/useSnackbar";
+import SimpleSnackbar from "../snackbar";
+import $api from "../../http/http";
 
 export default function AuthDialogs() {
+    let {open, message, setMessage, handleClose, handleClick} = useSnackbar()
     let isAuth = false
 
     const [signInForm, setSignInForm] = useState({email: "", password: ""})
@@ -46,11 +50,37 @@ export default function AuthDialogs() {
     }
 
     async function signIn() {
+        await $api.post('/auth/sign-in', signInForm).catch(function (error) {
+            if (error.response.status === 400) {
+                setMessage("Ви ввели хибні дані")
+                handleClick()
+            }
+            if (error.response.status === 500) {
+                setMessage("Користувача не знайдено")
+                handleClick()
+            }
+        })
 
     }
 
     async function signUp() {
-
+        const reqForm = {
+            email: signUpForm.email,
+            password: signUpForm.password,
+            phone_number: signUpForm.phone,
+            name: signUpForm.name
+        }
+        console.log(reqForm)
+        await $api.post('/auth/sign-up', reqForm).catch(function (error) {
+            if (error.response.status === 400) {
+                setMessage("Ви ввели хибні дані")
+                handleClick()
+            }
+            if (error.response.status === 500) {
+                setMessage("Сталася помилка")
+                handleClick()
+            }
+        })
     }
 
     return (
@@ -78,6 +108,8 @@ export default function AuthDialogs() {
                 signUp={signUp}
                 handleSignInOpen={handleSignInOpen}
             />
+
+            <SimpleSnackbar open={open} message={message} handleClose={handleClose}/>
         </>
     );
 }

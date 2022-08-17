@@ -1,4 +1,4 @@
-import {getCategoriesActionCreator, getProductsActionCreator} from "./categoriestReducer";
+import {getCategoriesActionCreator, getMoreProductsActionCreator, getProductsActionCreator} from "./categoriestReducer";
 import $api from "../../http/http";
 
 export const fetchCategories = () => {
@@ -8,11 +8,20 @@ export const fetchCategories = () => {
     }
 }
 
-export const fetchProducts = ({id, createdAt, leftPrice, rightPrice}) => {
+export const fetchProducts = ({id, createdAt, leftPrice, rightPrice, search, size, characteristic}) => {
     return async (dispatch) => {
         const response = await $api.get(
-            `/api/get-products?category=${id}&created_at=${createdAt}&price=${leftPrice}:${rightPrice}`
+            `/api/get-products?category=${id}&created_at=${createdAt}&price=${leftPrice}:${rightPrice}&size=${size}&search=${search}&characteristic=${characteristic}`
         )
         dispatch(getProductsActionCreator(response.data))
+    }
+}
+
+export const fetchMoreProducts = ({id, createdAt, leftPrice, rightPrice, search, size, characteristic}) => {
+    return async (dispatch) => {
+        const response = await $api.get(
+            `/api/get-products?category=${id}&created_at=${createdAt}&price=${leftPrice}:${rightPrice}&size=${size}&search=${search}&characteristic=${characteristic}`
+        )
+        dispatch(getMoreProductsActionCreator(response.data))
     }
 }

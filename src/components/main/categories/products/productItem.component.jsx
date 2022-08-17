@@ -3,8 +3,21 @@ import {Link} from 'react-router-dom'
 import classes from './products.module.scss'
 
 import noopImg from '../../../../assets/noopProduct.svg'
+import Button from "@mui/material/Button";
 
-function ProductItemComponent({product}) {
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import SimpleSnackbar from "../../../../UI/snackbar";
+
+const theme = createTheme({
+    palette: {
+        neutral: {
+            main: '#F7A500',
+            contrastText: '#fff',
+        },
+    },
+});
+
+function ProductItemComponent({product, setMessage, handleClick}) {
     let [amount, setAmount] = useState(1)
     let [priceAmount, setPriceAmount] = useState(Number(product.price))
 
@@ -16,7 +29,8 @@ function ProductItemComponent({product}) {
 
     function addToCart() {
         if (!amount || !priceAmount) {
-            console.log("Wrong amount or price")
+            setMessage("Помилка")
+            handleClick()
             return
         }
         console.log({
@@ -47,7 +61,9 @@ function ProductItemComponent({product}) {
                     </div>
                     <div className={classes.buyInfo}>
                         <span className={classes.rightBorder}>{priceAmount}</span>
-                        <button onClick={addToCart} className={classes.buyBtn}>Купити</button>
+                        <ThemeProvider theme={theme}>
+                            <Button variant={"text"} onClick={addToCart} color="neutral">Купити</Button>
+                        </ThemeProvider>
                     </div>
                 </div>
             </div>

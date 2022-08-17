@@ -1,9 +1,13 @@
 @import '../../../../variables.scss';
 
 .productsPageWrapper {
-  height: 100%;
+  min-height: 100%;
   display: grid;
   grid-template-columns: 2fr 8fr;
+}
+
+.productsWrapper {
+  margin: 3rem;
 }
 
 .sidebar {
@@ -20,8 +24,22 @@
   }
 }
 
+.searchBar {
+  @include btn;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.searchBarInput {
+  width: 60%;
+  border-radius: 10px;
+
+}
+
 .productsList {
-  margin: 1rem;
+  margin: 2rem 0;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -140,9 +158,13 @@
 }
 
 .buyBtn {
-  background: none;
-  border: none;
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  transition: .3s ease-in-out;
   cursor: pointer;
+  background-color: white;
+  &:hover {
+  }
 }
 
 .rightBorder {
