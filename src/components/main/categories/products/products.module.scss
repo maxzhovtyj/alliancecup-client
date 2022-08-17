@@ -1,0 +1,172 @@
+@import '../../../../variables.scss';
+
+.productsPageWrapper {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: 2fr 8fr;
+}
+
+.productsWrapper {
+  margin: 3rem;
+}
+
+.sidebar {
+  height: 100%;
+  position: relative;
+  &:after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    content: "";
+    background-color: $alliance-grey;
+    width: 2px;
+  }
+}
+
+.searchBar {
+  @include btn;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.searchBarInput {
+  width: 60%;
+  border-radius: 10px;
+
+}
+
+.productsList {
+  margin: 2rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.productItem {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 600px;
+  filter: drop-shadow(0px 0px 12px rgba(0, 0, 0, 0.1));
+  font-family: 'Roboto', serif;
+  background: #ffffff;
+  border-radius: 5px;
+  transition: 350ms ease-in-out;
+  &:hover {
+
+  }
+}
+
+.productInfoWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+@mixin rightBorder {
+  position: relative;
+  &:after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    content: "";
+    width: 1px;
+    background-color: $alliance-grey;
+  }
+}
+@mixin bottomBorder {
+  position: relative;
+  &:after {
+    position: absolute;
+    right: 10px;
+    left: 10px;
+    bottom: -10px;
+    content: "";
+    height: 1px;
+    background-color: $alliance-grey;
+  }
+}
+
+.productInfo {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  span {
+    width: 50%;
+    text-align: center;
+    position: relative;
+  }
+  input {
+    margin: 0 auto;
+  }
+  button {
+    margin: 0 auto;
+  }
+}
+
+.productImg {
+  display: block;
+  width: 300px;
+  height: 300px;
+  border-radius: 5px;
+}
+
+.productTitle {
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  margin: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+  &:hover {
+    color: $alliance-orange;
+  }
+}
+
+.priceInfo {
+  margin: 10px 5px;
+  display: flex;
+  align-items: center;
+  input {
+    text-align: center;
+    padding: 0 5px;
+    border: 1px solid $alliance-orange;
+    border-radius: 10px;
+    width: 5rem;
+    height: 1.5rem;
+  }
+  @include bottomBorder;
+}
+
+.stockInfo {
+  margin: 10px 5px;
+  display: flex;
+  align-items: center;
+  @include bottomBorder;
+}
+
+.buyInfo {
+  margin: 10px 5px;
+  display: flex;
+  align-items: center;
+}
+
+.buyBtn {
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  transition: .3s ease-in-out;
+  cursor: pointer;
+  background-color: white;
+  &:hover {
+  }
+}
+
+.rightBorder {
+  @include rightBorder;
+}
