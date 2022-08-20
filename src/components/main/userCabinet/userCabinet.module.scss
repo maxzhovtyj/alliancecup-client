@@ -1,5 +1,15 @@
 @import '../../../variables.scss';
 
+.userPage {
+  margin: 1rem 0;
+}
+
+.title {
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  font-size: 2rem;
+}
+
 .logoutBtn {
   @include btn;
 }

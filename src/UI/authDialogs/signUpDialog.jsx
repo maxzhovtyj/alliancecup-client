@@ -1,12 +1,45 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 import classes from "./authDialogs.module.scss";
-import {IconButton, TextField} from "@mui/material";
+import {FormControl, IconButton, Input, InputLabel, TextField} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DialogContent from "@mui/material/DialogContent";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 
-function SignUpDialog({signUpOpen, handleSignUpOpen, handleSignUpClose, signUpFormHandler, signUp, handleSignInOpen}) {
+import PropTypes from 'prop-types';
+import {IMaskInput} from 'react-imask';
+import {muiTextField} from "../styles";
+
+const TextMaskCustom = forwardRef(function TextMaskCustom(props, ref) {
+    const {onChange, ...other} = props;
+    return (
+        <IMaskInput
+            {...other}
+            mask="+38# (00) 000-00-00"
+            definitions={{
+                "#": /[0]/,
+            }}
+            inputRef={ref}
+            onAccept={(value) => onChange({target: {name: props.name, value}})}
+            overwrite
+        />
+    );
+});
+
+TextMaskCustom.propTypes = {
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+};
+
+function SignUpDialog({
+                          signUpOpen,
+                          handleSignUpOpen,
+                          handleSignUpClose,
+                          signUpFormHandler,
+                          signUp,
+                          handleSignInOpen,
+                          value
+                      }) {
     return (
         <Dialog open={signUpOpen} onClose={handleSignUpOpen}>
             <div className={classes.dialogWrapper}>
@@ -23,7 +56,20 @@ function SignUpDialog({signUpOpen, handleSignUpOpen, handleSignUpClose, signUpFo
                     </IconButton>
                 </div>
                 <DialogContent className={classes.authInputs}>
+                    <FormControl className={classes.formInput}>
+                        <InputLabel htmlFor="phone">Номер телефону</InputLabel>
+                        <Input
+                            value={value.phone}
+                            onChange={signUpFormHandler}
+                            name="phone"
+                            id="phone"
+                            inputComponent={TextMaskCustom}
+                            required
+                            label="Номер телефону"
+                        />
+                    </FormControl>
                     <TextField
+                        sx={{muiTextField}}
                         className={classes.formInput}
                         name={"email"}
                         onChange={signUpFormHandler}
@@ -36,13 +82,6 @@ function SignUpDialog({signUpOpen, handleSignUpOpen, handleSignUpClose, signUpFo
                         onChange={signUpFormHandler}
                         required
                         label="Ім'я"
-                    />
-                    <TextField
-                        className={classes.formInput}
-                        name={"phone"}
-                        onChange={signUpFormHandler}
-                        required
-                        label="Номер телефону"
                     />
                     <div className={classes.passwordInputs}>
                         <TextField

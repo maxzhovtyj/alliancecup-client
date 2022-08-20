@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import classes from './header.module.scss'
 
@@ -10,11 +10,12 @@ import cart from '../../assets/svgs/Bag.svg'
 import user from '../../assets/svgs/user.svg'
 
 import {Link} from "react-router-dom";
-import AuthDialogs from "../../UI/authDialogs/authDialogs";
+import AuthDialogs from "./authDialogs";
+import {AuthContext} from "../../context/AuthContext";
 
 
 function HeaderComponent() {
-    let isAuth = false
+    const {isAuth} = useContext(AuthContext)
 
     return (
         <header className={classes.headerWrapper}>

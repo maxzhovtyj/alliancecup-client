@@ -1,7 +1,15 @@
 @import "../../../variables";
 
 nav {
-  @include horizontal-lines;
+  position: relative;
+  &::after {
+    position: absolute;
+    content: "";
+    height: 1px;
+    background-color: $alliance-grey;
+    right: 0;
+    left: 0;
+  }
 }
 
 .navWrapper {

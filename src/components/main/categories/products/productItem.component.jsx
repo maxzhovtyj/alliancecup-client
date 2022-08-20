@@ -1,23 +1,21 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Link} from 'react-router-dom'
 import classes from './products.module.scss'
 
 import noopImg from '../../../../assets/noopProduct.svg'
 import Button from "@mui/material/Button";
 
-import {createTheme, ThemeProvider} from '@mui/material/styles';
-import SimpleSnackbar from "../../../../UI/snackbar";
-
-const theme = createTheme({
-    palette: {
-        neutral: {
-            main: '#F7A500',
-            contrastText: '#fff',
-        },
-    },
-});
+import {ThemeProvider} from '@mui/material/styles';
+import {muiTextBtnTheme} from "../../../../UI/styles";
+import {useDispatch} from "react-redux";
+import {fetchAddToCart} from "../../../../redux/userCartRedux/fetchUserCart";
+import {AuthContext} from "../../../../context/AuthContext";
 
 function ProductItemComponent({product, setMessage, handleClick}) {
+    const dispatch = useDispatch()
+
+    const {isAuth} = useContext(AuthContext)
+
     let [amount, setAmount] = useState(1)
     let [priceAmount, setPriceAmount] = useState(Number(product.price))
 
@@ -29,15 +27,23 @@ function ProductItemComponent({product, setMessage, handleClick}) {
 
     function addToCart() {
         if (!amount || !priceAmount) {
-            setMessage("Помилка")
+            setMessage("Неправильна кількість товару, спробуйте ще")
             handleClick()
             return
         }
-        console.log({
+
+        const addToCartProduct = {
             product_id: product.id,
-            quantity: amount,
+            quantity: Number(amount),
             price_for_quantity: priceAmount
-        })
+        }
+
+        console.log(addToCartProduct)
+
+        dispatch(fetchAddToCart(isAuth, addToCartProduct))
+
+        setMessage("Товар додано до кошику")
+        handleClick()
     }
 
     return (
@@ -59,12 +65,18 @@ function ProductItemComponent({product, setMessage, handleClick}) {
                         <span className={classes.rightBorder}>{product.price} грн/уп</span>
                         <input onChange={setProductAmount} value={amount}/>
                     </div>
-                    <div className={classes.buyInfo}>
-                        <span className={classes.rightBorder}>{priceAmount}</span>
-                        <ThemeProvider theme={theme}>
-                            <Button variant={"text"} onClick={addToCart} color="neutral">Купити</Button>
-                        </ThemeProvider>
-                    </div>
+                    {
+                        product.amount_in_stock === 0
+                            ?
+                            <div className={classes.notInStock}>Немає в наявності</div>
+                            :
+                            <div className={classes.buyInfo}>
+                                <span className={classes.rightBorder}>{priceAmount}</span>
+                                <ThemeProvider theme={muiTextBtnTheme}>
+                                    <Button variant={"text"} onClick={addToCart} color="alliance">Купити</Button>
+                                </ThemeProvider>
+                            </div>
+                    }
                 </div>
             </div>
         </div>

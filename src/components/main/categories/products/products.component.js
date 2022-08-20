@@ -1,36 +1,30 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {fetchMoreProducts, fetchProducts} from "../../../../redux/categoriesRedux/categoriesFetch";
-import {useParams} from "react-router-dom";
+import {fetchCategories, fetchMoreProducts, fetchProducts} from "../../../../redux/shopRedux/shopFetch";
+import {Link, useParams} from "react-router-dom";
+
 import ProductItemComponent from "./productItem.component";
 
 import classes from './products.module.scss'
 import {Button, TextField} from "@mui/material";
 import SimpleSnackbar from "../../../../UI/snackbar";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
-
-const style = {
-    "& .MuiOutlinedInput-root": {
-        borderRadius: "10px",
-        "&.Mui-focused fieldset": {
-            borderWidth: "1px",
-            borderColor: "#F7A500"
-        }
-    }
-}
-
+import {muiBtnStyle, muiTextBtnTheme} from "../../../../UI/styles";
+import {ThemeProvider} from "@mui/material/styles";
 
 function ProductsComponent() {
-    const {id} = useParams()
     const dispatch = useDispatch()
-    const products = useSelector(state => state.categories.products)
+
+    const categories = useSelector(state => state.shop.categories)
+    const products = useSelector(state => state.shop.products)
+    const cannotLoadMore = useSelector(state => state.shop.statusNoMoreProducts)
+
     let {open, setMessage, handleClick, message, handleClose} = useSnackbar()
 
     let [searchBar, setSearchBar] = useState("")
     const [searchParams, setSearchParams] = useState({
-        id: id,
-        leftPrice: "0",
-        rightPrice: "100",
+        id: useParams().id,
+        price: [0, 200],
         size: "",
         characteristic: "",
         createdAt: "",
@@ -38,6 +32,7 @@ function ProductsComponent() {
     })
 
     useEffect(() => {
+        dispatch(fetchCategories())
         dispatch(fetchProducts(searchParams))
     }, [dispatch, searchParams])
 
@@ -52,18 +47,30 @@ function ProductsComponent() {
         setSearchBar(event.target.value)
     }
 
-    function search() {
+    function search(e) {
+        e.preventDefault()
         setSearchParams({...searchParams, search: searchBar})
+    }
+
+    function useSetCategoryId() {
+        setSearchParams({...searchParams, id: useParams().id})
     }
 
     return (
         <div className={classes.productsPageWrapper}>
-            <div className={classes.sidebar}>sidebar</div>
-            <div className={classes.productsWrapper}>
-                <div className={classes.searchBar}>
-                    <TextField onChange={handleSearchBar} sx={style} className={classes.searchBarInput}/>
-                    <Button onClick={search} variant={"text"}>Search</Button>
+            <div className={classes.sidebar}>
+                <div className={classes.catalog}>
+                    {categories.map(item =>
+                        <Link to={`/categories/${item.id}`} key={item.id} onClick={useSetCategoryId}>
+                            {item.category_title}
+                        </Link>)}
                 </div>
+            </div>
+            <div className={classes.productsWrapper}>
+                <form className={classes.searchBar}>
+                    <TextField onChange={handleSearchBar} sx={muiBtnStyle} className={classes.searchBarInput}/>
+                    <Button type={"submit"} onSubmit={search} onClick={search} variant={"text"}>Search</Button>
+                </form>
                 {
                     !products
                         ?
@@ -79,7 +86,16 @@ function ProductsComponent() {
                                         key={item.article}
                                     />)}
                             </div>
-                            <Button onClick={loadMore} variant={"outlined"}>Load More</Button>
+                            {
+                                cannotLoadMore
+                                    ?
+                                    ""
+                                    :
+                                    <ThemeProvider theme={muiTextBtnTheme}>
+                                        <Button onClick={loadMore} className={classes.loadMoreBtn} variant={"text"}
+                                                color="alliance">Завантажити ще</Button>
+                                    </ThemeProvider>
+                            }
                             <SimpleSnackbar open={open} message={message} handleClose={handleClose}/>
                         </div>
                 }

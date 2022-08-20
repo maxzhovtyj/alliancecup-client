@@ -3,10 +3,12 @@ import {applyMiddleware, combineReducers, createStore} from "redux";
 import {composeWithDevTools} from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
-import {categoriesReducer} from "./categoriesRedux/categoriestReducer";
+import {shopReducer} from "./shopRedux/shopReducer";
+import {cartReducer} from "./userCartRedux/userCartReducer";
 
 const rootReducer = combineReducers({
-    categories: categoriesReducer
+    shop: shopReducer,
+    cartPage: cartReducer
 })
 
 let store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))

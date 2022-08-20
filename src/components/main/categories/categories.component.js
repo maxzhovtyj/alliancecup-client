@@ -3,10 +3,10 @@ import CategoryItemComponent from "./categoryItem.component";
 
 import classes from './categories.module.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {fetchCategories} from "../../../redux/categoriesRedux/categoriesFetch";
+import {fetchCategories} from "../../../redux/shopRedux/shopFetch";
 
 function CategoriesComponent() {
-    const categories = useSelector(state => state.categories.categories)
+    const categories = useSelector(state => state.shop.categories)
     const dispatch = useDispatch()
 
     useEffect(() => {
