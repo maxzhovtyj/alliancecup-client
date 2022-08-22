@@ -13,6 +13,7 @@ import ForWholesalersComponent from "./forWholesalers/forWholesalers.component";
 import ProductComponent from "./product/product.component";
 import UserCabinetComponent from "./userCabinet/userCabinet.component";
 import PrivateRoute from "../../utils/PrivateRoute";
+import NewOrderComponent from "./cart/newOrder.component";
 
 function MainComponent() {
     return (
@@ -31,6 +32,7 @@ function MainComponent() {
                     <Route element={<PrivateRoute/>}>
                         <Route exact path={"/user"} element={<UserCabinetComponent/>}/>
                     </Route>
+                    <Route path={"/cart/order"} element={<NewOrderComponent/>}/>
                 </Routes>
             </div>
         </div>

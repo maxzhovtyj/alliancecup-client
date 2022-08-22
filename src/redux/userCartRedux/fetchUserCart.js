@@ -1,20 +1,7 @@
 import $api from "../../http/http";
-import {addToCartActionCreator, userCartActionCreator} from "./userCartReducer";
+import {userCartActionCreator} from "./userCartReducer";
 
 // let cartProducts = "cartProducts"
-
-export const fetchAddToCart = (isAuth, product) => {
-    return async (dispatch) => {
-        if (isAuth) {
-            const response = await $api.post('/api/client/add-to-cart', product)
-            console.log(response.data)
-            dispatch(addToCartActionCreator(response.data))
-        } else {
-            // TODO ADD TO CART FOR UNAUTHENTICATED USER
-            // localStorage.setItem(cartProducts, )
-        }
-    }
-}
 
 export const fetchUserCart = () => {
     return async (dispatch) => {

@@ -34,3 +34,45 @@
 .productTitle {}
 .productQuantity {}
 .productPriceForQuantity {}
+
+.orderPage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  margin: 2rem 0;
+}
+
+.orderPersonalInfo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 1rem;
+}
+
+.orderLFM {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.orderField {
+  width: 80%;
+}
+
+.deliveryForm {
+  width: 80%;
+  margin-bottom: 1rem !important;
+}
+
+.novaPoshtaDelivery {
+  & > * {
+    margin-bottom: 1rem;
+  }
+}
+
+.orderContactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.orderForm {}

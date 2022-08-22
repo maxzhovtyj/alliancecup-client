@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AuthContext} from "../../../context/AuthContext";
 import {fetchUserCart} from "../../../redux/userCartRedux/fetchUserCart";
@@ -6,6 +6,7 @@ import CartItem from "./cartItem";
 import Button from "@mui/material/Button";
 
 import classes from './cart.module.scss'
+import {NavLink} from "react-router-dom";
 
 function CartComponent() {
     const {isAuth} = useContext(AuthContext)
@@ -17,20 +18,26 @@ function CartComponent() {
         dispatch(fetchUserCart(isAuth))
     }, [dispatch, isAuth])
 
-    function makeOrder() {
-
-    }
-
     return (
         <div className={classes.cartPageWrapper}>
             <h1 className={classes.cartTitle}>Кошик</h1>
             <div className={classes.productsList}>
                 {
-                    cartProducts.cart.map(item => <CartItem product={item} key={item.article}/>)
+                    cartProducts.cart
+                        ?
+                        cartProducts.cart.map(item => <CartItem product={item} key={item.article}/>)
+                        : "Кошик пустий"
                 }
             </div>
             <p>Загальна вартість: {cartProducts.sum}</p>
-            <Button onClick={makeOrder}>Оформити замовлення</Button>
+            {
+                cartProducts
+                    ?
+                    <NavLink to={"/cart/order"}>
+                        <Button>Оформити замовлення</Button>
+                    </NavLink>
+                    : ""
+            }
         </div>
     );
 }

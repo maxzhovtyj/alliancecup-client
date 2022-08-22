@@ -8,8 +8,9 @@ import Button from "@mui/material/Button";
 import {ThemeProvider} from '@mui/material/styles';
 import {muiTextBtnTheme} from "../../../../UI/styles";
 import {useDispatch} from "react-redux";
-import {fetchAddToCart} from "../../../../redux/userCartRedux/fetchUserCart";
 import {AuthContext} from "../../../../context/AuthContext";
+import $api from "../../../../http/http";
+import {logDOM} from "@testing-library/react";
 
 function ProductItemComponent({product, setMessage, handleClick}) {
     const dispatch = useDispatch()
@@ -22,10 +23,10 @@ function ProductItemComponent({product, setMessage, handleClick}) {
     function setProductAmount(e) {
         const result = e.target.value.replace(/\D/g, '');
         setAmount(result)
-        setPriceAmount(Number(parseFloat(String(result * product.price)).toPrecision(4)))
+        setPriceAmount(Number(parseFloat(String(result * product.price)).toPrecision(15)))
     }
 
-    function addToCart() {
+    async function addToCart() {
         if (!amount || !priceAmount) {
             setMessage("Неправильна кількість товару, спробуйте ще")
             handleClick()
@@ -38,12 +39,33 @@ function ProductItemComponent({product, setMessage, handleClick}) {
             price_for_quantity: priceAmount
         }
 
-        console.log(addToCartProduct)
-
-        dispatch(fetchAddToCart(isAuth, addToCartProduct))
-
-        setMessage("Товар додано до кошику")
-        handleClick()
+        try {
+            if (isAuth) {
+                await $api.post('/api/client/add-to-cart', addToCartProduct)
+                    .catch(function (error) {
+                        if (error.response.status === 400) {
+                            throw new Error("Помилка: Хибні дані")
+                        }
+                        if (error.response.status === 401) {
+                            throw new Error("Помилка: ви не авторизовані")
+                        }
+                        if (error.response.status === 500) {
+                            if (error.response.data.message.includes("duplicate")) {
+                                throw new Error("Помилка: товар уже в кошику")
+                            }
+                            throw new Error("Помилка: щось пішло не так")
+                        }
+                    })
+            } else {
+                // TODO ADD TO CART FOR UNAUTHENTICATED USER
+                // localStorage.setItem(cartProducts, )
+            }
+            setMessage("Товар додано до кошику")
+            handleClick()
+        } catch (e) {
+            setMessage(e.message)
+            handleClick()
+        }
     }
 
     return (

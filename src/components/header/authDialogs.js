@@ -88,8 +88,6 @@ export default function AuthDialogs() {
             phone_number: signUpForm.phone,
             name: signUpForm.name
         }
-        console.log(reqForm)
-        return
 
         try {
             await $api.post('/auth/sign-up', reqForm).catch(function (error) {

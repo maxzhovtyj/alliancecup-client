@@ -7,12 +7,14 @@ import {IconButton} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {fetchDeleteFromCart} from "../../../redux/userCartRedux/fetchUserCart";
 
-function CartItem({product}) {
+function CartItem({product, order}) {
     const dispatch = useDispatch()
+
     function deleteFromCart() {
         dispatch(fetchDeleteFromCart(product.product_id))
         window.location.reload();
     }
+
     return (
         <div className={classes.productItem}>
             <img src={product.img_url || noopImg} alt="product_image" className={classes.productImg}/>
@@ -20,12 +22,18 @@ function CartItem({product}) {
             <p>{product.price} грн/уп</p>
             <span className={classes.productQuantity}>{product.quantity}</span>
             <span className={classes.productPriceForQuantity}>{product.price_for_quantity}</span>
-            <IconButton
-                aria-label="close"
-                onClick={deleteFromCart}
-            >
-                <CloseIcon/>
-            </IconButton>
+            {
+                order
+                    ?
+                    ""
+                    :
+                    <IconButton
+                        aria-label="close"
+                        onClick={deleteFromCart}
+                    >
+                        <CloseIcon/>
+                    </IconButton>
+            }
         </div>
     );
 }
