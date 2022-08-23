@@ -4,10 +4,9 @@ import {AuthContext} from "../../../context/AuthContext";
 
 import {fetchUserCart} from "../../../redux/userCartRedux/fetchUserCart";
 
-import $api from "../../../http/http";
-
 import CartItem from "./cartItem";
 import AutoCompleteSelect from "../../../UI/autoCompleteSelect/autoCompleteSelect";
+import SimpleSnackbar from "../../../UI/snackbar";
 
 import classes from "./cart.module.scss";
 import {FormControl, InputLabel, MenuItem, Select, TextField, ThemeProvider} from "@mui/material";
@@ -15,15 +14,31 @@ import Button from "@mui/material/Button";
 
 import {muiTextBtnTheme, muiTextField} from "../../../UI/styles";
 import {TextMaskCustom} from "../../../utils/TextMask";
+
 import axios from "axios";
 import {useSnackbar} from "../../../hooks/useSnackbar";
-import SimpleSnackbar from "../../../UI/snackbar";
 
 import {useNavigate} from "react-router-dom";
+import {ShoppingService} from "../../../service/ShoppingService";
 
 const novaAccessKey = "6e42ef74bae876c04fb84dcc2912126a"
 const NovaOption = "Нова Пошта"
 const inTownOption = "Доставка AllianceCup по м. Рівне"
+
+const validate = (values, setErrors) => {
+    let tmp = {}
+
+    tmp.lastName = values.lastName ? "" : "This field is required"
+    tmp.firstName = values.firstName ? "" : "This field is required"
+    tmp.middleName = values.middleName ? "" : "This field is required"
+
+    tmp.email = (/$|.+@.+..+/).test(values.email) ? "" : "Invalid email"
+    tmp.phone = values.phone.length > 19 ? "" : "Invalid phone"
+
+    setErrors({...tmp})
+
+    return Object.values(tmp).every(value => value === "")
+}
 
 function NewOrderComponent() {
     const navigate = useNavigate()
@@ -60,7 +75,15 @@ function NewOrderComponent() {
         paymentTypeTitle: "",
     })
 
-    // const [errors, setErrors] = useState({})
+    const [errors, setErrors] = useState({
+        lastName: false,
+        firstName: false,
+        middleName: false,
+        phone: false,
+        email: false,
+        deliveryTypeTitle: false,
+        paymentTypeTitle: false,
+    })
 
     const [disabled, setDisabled] = useState(false)
 
@@ -68,33 +91,15 @@ function NewOrderComponent() {
         if (e.target.value === NovaOption) {
             setIsInTown(false)
             setIsNovaPoshta(true)
-        }
-
-        if (e.target.value === inTownOption) {
+        } else if (e.target.value === inTownOption) {
             setIsNovaPoshta(false)
             setIsInTown(true)
+        } else {
+            setIsNovaPoshta(false)
+            setIsInTown(false)
         }
 
         setOrderInfo({...orderInfo, [e.target.name]: e.target.value})
-    }
-
-    const fetchNewOrder = async (makeOrderForm) => {
-        try {
-            await $api.post('/api/new-order', makeOrderForm).catch(function (error) {
-                if (error.response.status === 400) {
-                    throw new Error("Помилка: Хибні дані")
-                }
-                if (error.response.status === 401) {
-                    throw new Error("Помилка: ви не авторизовані")
-                }
-                if (error.response.status === 500) {
-                    throw new Error("Помилка: щось пішло не так")
-                }
-            })
-        } catch (e) {
-            setMessage(e.message)
-            handleClick()
-        }
     }
 
     function makeNewOrder() {
@@ -135,10 +140,15 @@ function NewOrderComponent() {
 
         makeOrderForm.products = cartProducts.cart
 
-        fetchNewOrder(makeOrderForm).then(() => {
-            setDisabled(true)
-            navigate("/")
-        })
+        console.log(makeOrderForm)
+        return;
+        ShoppingService.newOrder(makeOrderForm, setMessage, handleClick)
+            .then(() => {
+                setMessage("Ваше замовлення надіслано")
+                handleClick()
+                setDisabled(true)
+                navigate("/")
+            })
     }
 
     async function getCities(findByString) {
@@ -175,26 +185,11 @@ function NewOrderComponent() {
         }
     }, [cartProducts.cart, navigate])
 
-    async function fetchDeliveryTypes() {
-        try {
-            const response = await $api.get('/api/order-info-types').catch(function (error) {
-                if (error.response.status === 400) {
-                    throw new Error("Помилка: Хибні дані")
-                }
-                if (error.response.status === 500) {
-                    throw new Error("Помилка: щось пішло не так")
-                }
-            })
-
-            setDeliveryTypes(response.data.deliveryTypes)
-            setPaymentTypes(response.data.paymentTypes)
-        } catch (e) {
-            console.log(e.message)
-        }
-    }
-
     useEffect(() => {
-        fetchDeliveryTypes().then()
+        ShoppingService.fetchDeliveryTypes().then((res) => {
+            setDeliveryTypes(res.deliveryTypes)
+            setPaymentTypes(res.paymentTypes)
+        })
     }, [])
 
     const handleCities = (event) => {
@@ -233,53 +228,64 @@ function NewOrderComponent() {
                             name={"lastName"}
                             required
                             label="Призвіще"
+                            value={orderInfo.lastName}
                             onChange={handleOrderInfo}
+                            error={errors.lastName}
                         />
                         <TextField
                             className={classes.orderField}
                             name={"firstName"}
                             required
                             label="Ім'я"
+                            value={orderInfo.firstName}
                             onChange={handleOrderInfo}
+                            error={errors.firstName}
                         />
                         <TextField
                             className={classes.orderField}
                             name={"middleName"}
                             required
                             label="По батькові"
+                            value={orderInfo.middleName}
                             onChange={handleOrderInfo}
+                            error={errors.middleName}
                         />
                     </div>
                     <div className={classes.orderContactInfo}>
                         <TextField
+                            required
                             name="phone"
                             id="phone"
-                            value={orderInfo.phone}
+                            label="Номер телефону"
                             InputProps={{
                                 inputComponent: TextMaskCustom
                             }}
-                            required
-                            label="Номер телефону"
+                            value={orderInfo.phone}
                             onChange={handleOrderInfo}
+                            error={errors.phone}
                         />
                         <TextField
                             sx={{muiTextField}}
                             name={"email"}
                             required
                             label="Email"
+                            value={orderInfo.email}
                             onChange={handleOrderInfo}
+                            error={errors.email}
                         />
                     </div>
                 </div>
                 <FormControl className={classes.deliveryForm}>
                     <InputLabel id="demo-simple-select-label">Доставка</InputLabel>
                     <Select
+                        required
                         name={"deliveryTypeTitle"}
                         labelId="delivery"
                         id="delivery-id"
                         label="Доставка"
                         value={orderInfo.deliveryTypeTitle}
                         onChange={handleOrderInfo}
+                        error={errors.deliveryTypeTitle}
                     >
                         {
                             deliveryTypes?.map(item => <MenuItem value={item.delivery_type_title}
@@ -333,6 +339,7 @@ function NewOrderComponent() {
                         label="Спосіб доставки"
                         value={orderInfo.paymentTypeTitle}
                         onChange={handleOrderInfo}
+                        error={errors.paymentTypeTitle}
                     >
                         {
                             paymentTypes.map(item =>
@@ -359,9 +366,9 @@ function NewOrderComponent() {
             </div>
             <div className={classes.productsList}>
                 {
-                    cartProducts?.cart?.map(item => <CartItem product={item} key={item.article} order={true}/>)
+                    cartProducts?.cart?.map(item => <CartItem product={item} key={item.product_id} order={true}/>)
                 }
-                <p>Сума замовлення: {cartProducts.sum}</p>
+                <p className={classes.orderSum}>Сума замовлення: {cartProducts.sum}</p>
             </div>
 
             <SimpleSnackbar open={open} message={message} handleClose={handleClose}/>

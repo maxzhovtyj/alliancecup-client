@@ -23,7 +23,6 @@ function ProductComponent(props) {
         async function fetchProduct() {
             try {
                 await $api.get(`api/product?id=${id}`).then(res => {
-                    console.log(res.data)
                     setProduct(res.data)
                 })
             } catch (e) {

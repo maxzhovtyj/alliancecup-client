@@ -22,6 +22,11 @@ $api.interceptors.request.use(async (config) => {
     if (!isExpired) return config
 
     const response = await axios.post(`${API_URL}/auth/refresh`, {}, {withCredentials: true})
+        .catch(function (error) {
+            localStorage.removeItem("userData")
+            return config
+    })
+
     localStorage.setItem("userData", JSON.stringify({token: response?.data?.access_token}))
 
     userData = JSON.parse(localStorage.getItem("userData"))

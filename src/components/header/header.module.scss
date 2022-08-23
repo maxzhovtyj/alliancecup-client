@@ -43,9 +43,8 @@
 .container {
   height: 100%;
   list-style: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
   @media all and (max-width: 425px) {
     grid-template-columns: 1fr 1fr .8fr;
     grid-template-rows: 1fr 1fr;
@@ -58,14 +57,16 @@
 
 .logo {
   @include logo;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .socials {
-  max-width: 250px;
   width: 100%;
   display: flex;
   justify-content: space-around;
-
+  align-items: center;
   img {
     width: 50px;
     height: 50px;
@@ -122,7 +123,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  //margin: 0 .5rem;
+  justify-content: center;
   line-height: 1.8rem;
   @media all and (max-width: 425px) {
     grid-area: contactInfo;
@@ -132,7 +133,11 @@
 .cart {
   @include light-font;
   @include header-img;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   span {
+    margin: auto 0;
     @include toCenter;
   }
 
@@ -143,7 +148,9 @@
 }
 
 .auth {
-  @include toCenter;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   @include light-font;
   @include header-img;
   span {

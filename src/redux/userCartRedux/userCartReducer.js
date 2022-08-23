@@ -9,7 +9,7 @@ const ADD_TO_CART = "ADD_TO_CART"
 export const cartReducer = (state = cartDefaultState, action) => {
     switch (action.type) {
         case GET_FROM_CART: {
-            return {...state, cart: action.payload.products, sum: action.payload.sum}
+            return {...state, cart: action.payload?.products, sum: action.payload?.sum}
         }
         case ADD_TO_CART: {
             return {...state, cart: [...state.cart, action.payload]}

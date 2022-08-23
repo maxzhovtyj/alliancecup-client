@@ -4,6 +4,19 @@
   margin: 2rem 0;
 }
 
+.emptyCartWrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 3rem 0;
+  h1 {
+    font-family: 'Roboto', serif;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+}
+
 .cartTitle {
   font-family: 'Roboto', serif;
   font-weight: 300;
@@ -18,22 +31,78 @@
 }
 
 .productItem {
+  width: 100%;
   border: 1px solid $alliance-grey;
   border-radius: 10px;
-  max-width: 800px;
-  width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  position: relative;
 }
+
+.productInfo {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr 1fr;
+  width: 100%;
+}
+
 .productImg {
-  border-radius: 10px;
-  width: 200px;
-  height: 200px;
+  display: block;
+  img {
+    border-radius: 10px;
+    width: 200px;
+  }
 }
-.productTitle {}
-.productQuantity {}
-.productPriceForQuantity {}
+
+.productTitle {
+  font-size: 1.5rem;
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  text-align: center;
+}
+
+.productPrice {
+  @include light-font;
+  @include toCenter;
+  word-wrap: normal;
+}
+
+.productQuantity {
+  @include light-font;
+  @include toCenter;
+
+}
+.productPriceForQuantity {
+  @include light-font;
+  @include toCenter;
+
+
+}
+
+.deleteIconBtn {
+  position: absolute !important;
+  right: 0;
+}
+
+.helperText {
+  @include light-font;
+  font-size: 14px;
+  display: grid;
+  grid-template-columns: 7fr 1fr 1fr 1fr;
+}
+
+.orderSum {
+  font-family: 'Roboto', serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+.bottomInfo {
+  margin: 3rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+}
 
 .orderPage {
   display: grid;

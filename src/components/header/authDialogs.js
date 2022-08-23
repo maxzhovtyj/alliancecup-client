@@ -56,16 +56,14 @@ export default function AuthDialogs() {
         try {
             const response = await $api.post('/auth/sign-in', signInForm).catch(function (error) {
                 if (error.response.status === 400) {
-                    setMessage("Ви ввели хибні дані")
-                    handleClick()
+                    throw new Error("Ви ввели хибні дані")
                 }
                 if (error.response.status === 500) {
-                    setMessage("Користувача не знайдено")
-                    handleClick()
+                    throw new Error("Користувача не знайдено")
                 }
             })
 
-            console.log(response)
+            localStorage.clear()
             login(response.data.accessToken, 0)
             handleSignUpClose()
         } catch (e) {

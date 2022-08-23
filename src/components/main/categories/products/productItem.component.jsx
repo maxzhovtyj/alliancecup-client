@@ -7,14 +7,12 @@ import Button from "@mui/material/Button";
 
 import {ThemeProvider} from '@mui/material/styles';
 import {muiTextBtnTheme} from "../../../../UI/styles";
-import {useDispatch} from "react-redux";
 import {AuthContext} from "../../../../context/AuthContext";
 import $api from "../../../../http/http";
-import {logDOM} from "@testing-library/react";
+
+export const cartProductsStorage = "cartProducts"
 
 function ProductItemComponent({product, setMessage, handleClick}) {
-    const dispatch = useDispatch()
-
     const {isAuth} = useContext(AuthContext)
 
     let [amount, setAmount] = useState(1)
@@ -36,7 +34,14 @@ function ProductItemComponent({product, setMessage, handleClick}) {
         const addToCartProduct = {
             product_id: product.id,
             quantity: Number(amount),
-            price_for_quantity: priceAmount
+            price_for_quantity: priceAmount,
+            amount_in_stock: product.amount_in_stock,
+            article: product.amount_in_stock,
+            img_url: product.img_url,
+            packages_in_box: product.packages_in_box,
+            price: product.price,
+            product_title: product.product_title,
+            units_in_package: product.units_in_package
         }
 
         try {
@@ -57,8 +62,20 @@ function ProductItemComponent({product, setMessage, handleClick}) {
                         }
                     })
             } else {
-                // TODO ADD TO CART FOR UNAUTHENTICATED USER
-                // localStorage.setItem(cartProducts, )
+                let cart = JSON.parse(localStorage.getItem(cartProductsStorage))
+
+                if (cart) {
+                    cart?.products.push(addToCartProduct)
+                    localStorage.setItem(cartProductsStorage, JSON.stringify({
+                        products: cart?.products,
+                        sum: cart.sum + addToCartProduct.price_for_quantity
+                    }))
+                } else {
+                    localStorage.setItem(cartProductsStorage, JSON.stringify({
+                        products: [addToCartProduct],
+                        sum: addToCartProduct.price_for_quantity
+                    }))
+                }
             }
             setMessage("Товар додано до кошику")
             handleClick()
