@@ -10,8 +10,10 @@ const $api = axios.create({
     baseURL: API_URL,
 })
 
+export const storageName = "userData"
+
 $api.interceptors.request.use(async (config) => {
-    let userData = JSON.parse(localStorage.getItem("userData"))
+    let userData = JSON.parse(localStorage.getItem(storageName))
 
     if (!userData || userData?.token === "") return config
 
@@ -23,13 +25,17 @@ $api.interceptors.request.use(async (config) => {
 
     const response = await axios.post(`${API_URL}/auth/refresh`, {}, {withCredentials: true})
         .catch(function (error) {
-            localStorage.removeItem("userData")
+            localStorage.removeItem(storageName)
             return config
     })
 
-    localStorage.setItem("userData", JSON.stringify({token: response?.data?.access_token}))
+    localStorage.setItem(storageName, JSON.stringify({
+        userId: response.data.userId,
+        userRoleId: response.data.userRoleId,
+        token: response.data.accessToken
+    }))
 
-    userData = JSON.parse(localStorage.getItem("userData"))
+    userData = JSON.parse(localStorage.getItem(storageName))
     if (userData && userData.token !== "") {
         config.headers.Authorization = `Bearer ${userData.token}`
     }

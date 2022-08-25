@@ -1,6 +1,7 @@
-import {Autocomplete, TextField} from "@mui/material";
+import {Autocomplete} from "@mui/material";
+import {AllianceTextField} from "../styles";
 
-export default function AutoCompleteSelect({label, width, options, getOptionLabel, value, setValue, onChange}) {
+export default function AutoCompleteSelect({label, width, options, getOptionLabel, value, setValue, onChange, error}) {
     return (
         <Autocomplete
             sx={{width: width}}
@@ -12,7 +13,7 @@ export default function AutoCompleteSelect({label, width, options, getOptionLabe
             onChange={setValue}
             includeInputInList
             renderInput={(params) => (
-                <TextField {...params} onChange={onChange} label={label}/>
+                <AllianceTextField {...params} error={error} onChange={onChange} label={label}/>
             )}
         />
     );

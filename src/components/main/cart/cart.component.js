@@ -40,13 +40,13 @@ function CartComponent() {
                     ?
                     <>
                         <h1 className={classes.cartTitle}>Кошик</h1>
-                        <div className={classes.helperText}
-                             style={{display: "grid", gridTemplateColumns: "7fr 1fr 1fr 1fr"}}>
-                            <p>Продукт</p>
-                            <p>Ціна за од.</p>
-                            <p>Кількість</p>
-                            <p>Сума</p>
-                        </div>
+                        {/*<div className={classes.helperText}*/}
+                        {/*     style={{display: "grid", gridTemplateColumns: "7fr 1fr 1fr 1fr"}}>*/}
+                        {/*    <p>Продукт</p>*/}
+                        {/*    <p>Ціна за од.</p>*/}
+                        {/*    <p>Кількість</p>*/}
+                        {/*    <p>Сума</p>*/}
+                        {/*</div>*/}
                         <div className={classes.productsList}>
                             {cartPage?.cart.map(item => <CartItem key={item.product_id} product={item}/>)}
                         </div>

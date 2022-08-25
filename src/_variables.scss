@@ -4,6 +4,10 @@ $alliance-grey: #BBBBBB;
 @mixin left-right-padding {
   padding-right: 10rem;
   padding-left: 10rem;
+  @media all and (max-width: 1440px) {
+    padding-right: 6rem;
+    padding-left: 6rem;
+  }
   @media all and (max-width: 1024px) {
     padding-right: 2rem;
     padding-left: 2rem;
@@ -41,31 +45,32 @@ $alliance-grey: #BBBBBB;
 }
 
 @mixin logo {
-    font-weight: 500;
-    font-size: 42px;
-    span {
-      display: block;
-    }
-    @media all and (max-width: 1024px) {
-      font-size: 36px;
-    }
-    @media all and (max-width: 768px) {
-      font-size: 24px;
-    }
-    @media all and (max-width: 425px) {
-      font-size: 28px;
-      line-height: 20px;
-      grid-area: logo;
-      justify-self: center;
-      align-self: end;
-    }
-    @media all and (max-width: 375px) {
-      font-size: 24px;
-    }
-    @media all and (max-width: 320px) {
-      font-size: 1.25rem;
-      line-height: 1.25rem;
-    }
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  font-size: 42px;
+  span {
+    display: block;
+  }
+  @media all and (max-width: 1024px) {
+    font-size: 36px;
+  }
+  @media all and (max-width: 768px) {
+    font-size: 24px;
+  }
+  @media all and (max-width: 425px) {
+    font-size: 28px;
+    line-height: 20px;
+    grid-area: logo;
+    justify-self: center;
+    align-self: end;
+  }
+  @media all and (max-width: 375px) {
+    font-size: 24px;
+  }
+  @media all and (max-width: 320px) {
+    font-size: 1.25rem;
+    line-height: 1.25rem;
+  }
 }
 
 @mixin light-font {
@@ -104,6 +109,7 @@ $alliance-grey: #BBBBBB;
     background-color: white;
     border: 1px solid $alliance-orange;
     transition: .3s ease-in-out;
+
     &:hover {
       background-color: $alliance-orange;
       color: white;

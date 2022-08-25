@@ -1,25 +1,19 @@
 @import "../../../variables";
 
-nav {
-  position: relative;
-  &::after {
-    position: absolute;
-    content: "";
-    height: 1px;
-    background-color: $alliance-grey;
-    right: 0;
-    left: 0;
-  }
-}
-
 .navWrapper {
   @include left-right-padding;
+  border-bottom: 1px solid $alliance-grey;
 }
 
 .list {
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 2fr 4fr;
   @include light-font;
+}
+
+.navInfoWrapper {
+  display: flex;
+  justify-content: space-between;
 }
 
 .listItem {
@@ -64,4 +58,10 @@ nav {
   backface-visibility: hidden;
   transition: width 350ms ease-in-out;
   width: 100%;
+}
+
+.catalogItem {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }

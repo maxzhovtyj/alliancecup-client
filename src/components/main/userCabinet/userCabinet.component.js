@@ -4,9 +4,10 @@ import Button from "@mui/material/Button";
 import classes from './userCabinet.module.scss'
 import {AuthContext} from "../../../context/AuthContext";
 import $api from "../../../http/http";
+import {NavLink} from "react-router-dom";
 
 function UserCabinetComponent() {
-    const {logout} = useContext(AuthContext)
+    const {userRoleId, logout} = useContext(AuthContext)
 
     const userLogout = async () => {
         try {
@@ -33,6 +34,14 @@ function UserCabinetComponent() {
             <h1 className={classes.title}>Особистий кабінет</h1>
             <div className={classes.logoutBtn}>
                 <Button onClick={userLogout}>Вийти</Button>
+                {
+                    (userRoleId !== 0 && userRoleId !== 1)
+                        ?
+                        <NavLink to={"admin"}>
+                            <Button variant={"outlined"}>Панель адміністратора</Button>
+                        </NavLink>
+                        : ""
+                }
             </div>
         </div>
     );

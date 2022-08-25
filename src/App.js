@@ -7,13 +7,15 @@ import {AuthContext} from "./context/AuthContext";
 import {useAuth} from "./hooks/useAuth";
 
 function App() {
-    const {token, login, logout} = useAuth()
+    const {token, login, logout, userId, userRoleId} = useAuth()
 
     return (
         <AuthContext.Provider value={{
             isAuth: !!token,
             login: login,
-            logout: logout
+            logout: logout,
+            userId: userId,
+            userRoleId: userRoleId,
         }}>
             <div className="App">
                 <HeaderComponent/>

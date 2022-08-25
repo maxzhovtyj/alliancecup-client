@@ -13,7 +13,9 @@ import ForWholesalersComponent from "./forWholesalers/forWholesalers.component";
 import ProductComponent from "./product/product.component";
 import UserCabinetComponent from "./userCabinet/userCabinet.component";
 import PrivateRoute from "../../utils/PrivateRoute";
-import NewOrderComponent from "./cart/newOrder.component";
+import OrderComponent from "./cart/order.component";
+import AdminRoute from "../../utils/AdminRoute";
+import AdminComponent from "./admin/admin.component";
 
 function MainComponent() {
     return (
@@ -31,8 +33,11 @@ function MainComponent() {
                     <Route path={"/for-wholesalers"} element={<ForWholesalersComponent/>}/>
                     <Route element={<PrivateRoute/>}>
                         <Route exact path={"/user"} element={<UserCabinetComponent/>}/>
+                        <Route element={<AdminRoute/>}>
+                            <Route path={"/user/admin"} element={<AdminComponent/>}/>
+                        </Route>
                     </Route>
-                    <Route path={"/cart/order"} element={<NewOrderComponent/>}/>
+                    <Route path={"/cart/order"} element={<OrderComponent/>}/>
                 </Routes>
             </div>
         </div>

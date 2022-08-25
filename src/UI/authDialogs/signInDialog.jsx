@@ -1,12 +1,13 @@
 import React from 'react';
 import classes from "./authDialogs.module.scss";
-import {IconButton, TextField} from "@mui/material";
+import {IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DialogContent from "@mui/material/DialogContent";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
+import {AllianceTextField} from "../styles";
 
-function SignInDialog({signInOpen, handleSignInOpen, handleSignInClose, signInFormHandler, signIn, handleSignUpOpen}) {
+function SignInDialog({signInOpen, handleSignInOpen, handleSignInClose, signInFormHandler, signIn, handleSignUpOpen, errors}) {
     return (
         <Dialog open={signInOpen} onClose={handleSignInOpen}>
             <div className={classes.dialogWrapper}>
@@ -23,14 +24,14 @@ function SignInDialog({signInOpen, handleSignInOpen, handleSignInClose, signInFo
                     </IconButton>
                 </div>
                 <DialogContent className={classes.authInputs}>
-                    <TextField
+                    <AllianceTextField
                         className={classes.formInput}
                         name={"email"}
                         onChange={signInFormHandler}
                         required
                         label="Email"
                     />
-                    <TextField
+                    <AllianceTextField
                         className={classes.formInput}
                         name={"password"}
                         onChange={signInFormHandler}

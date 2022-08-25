@@ -9,38 +9,27 @@ import AutoCompleteSelect from "../../../UI/autoCompleteSelect/autoCompleteSelec
 import SimpleSnackbar from "../../../UI/snackbar";
 
 import classes from "./cart.module.scss";
-import {FormControl, InputLabel, MenuItem, Select, TextField, ThemeProvider} from "@mui/material";
+import {FormControl, MenuItem, ThemeProvider} from "@mui/material";
 import Button from "@mui/material/Button";
 
-import {muiTextBtnTheme, muiTextField} from "../../../UI/styles";
+import {
+    AllianceInputLabel,
+    AllianceSelect,
+    AllianceTextField,
+    muiTextBtnTheme,
+} from "../../../UI/styles";
 import {TextMaskCustom} from "../../../utils/TextMask";
 
-import axios from "axios";
 import {useSnackbar} from "../../../hooks/useSnackbar";
 
 import {useNavigate} from "react-router-dom";
 import {ShoppingService} from "../../../service/ShoppingService";
+import {NovaPoshtaService} from "../../../service/NovaPoshtaService";
 
-const novaAccessKey = "6e42ef74bae876c04fb84dcc2912126a"
 const NovaOption = "Нова Пошта"
 const inTownOption = "Доставка AllianceCup по м. Рівне"
 
-const validate = (values, setErrors) => {
-    let tmp = {}
-
-    tmp.lastName = values.lastName ? "" : "This field is required"
-    tmp.firstName = values.firstName ? "" : "This field is required"
-    tmp.middleName = values.middleName ? "" : "This field is required"
-
-    tmp.email = (/$|.+@.+..+/).test(values.email) ? "" : "Invalid email"
-    tmp.phone = values.phone.length > 19 ? "" : "Invalid phone"
-
-    setErrors({...tmp})
-
-    return Object.values(tmp).every(value => value === "")
-}
-
-function NewOrderComponent() {
+function OrderComponent() {
     const navigate = useNavigate()
 
     const {isAuth} = useContext(AuthContext)
@@ -83,9 +72,40 @@ function NewOrderComponent() {
         email: false,
         deliveryTypeTitle: false,
         paymentTypeTitle: false,
+        novaPoshtaCity: false,
+        novaPoshtaDepartment: false,
+        deliveryAddress: false
     })
 
     const [disabled, setDisabled] = useState(false)
+
+    const validate = () => {
+        let tmp = {}
+
+        tmp.lastName = !orderInfo.lastName
+        tmp.firstName = !orderInfo.firstName
+        tmp.middleName = !orderInfo.middleName
+
+        tmp.deliveryTypeTitle = !orderInfo.deliveryTypeTitle
+        tmp.paymentTypeTitle = !orderInfo.paymentTypeTitle
+
+        tmp.email = !(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(orderInfo.email)
+        tmp.phone = orderInfo.phone?.length < 19
+
+        if (isNovaPoshta) {
+            tmp.novaPoshtaCity = !city
+            tmp.novaPoshtaDepartment = !department
+        }
+        if (isInTown) {
+            tmp.deliveryAddress = !address
+        }
+
+        setErrors({
+            ...tmp
+        })
+
+        return Object.values(tmp).every(value => value === false)
+    }
 
     const handleOrderInfo = (e) => {
         if (e.target.value === NovaOption) {
@@ -94,7 +114,7 @@ function NewOrderComponent() {
         } else if (e.target.value === inTownOption) {
             setIsNovaPoshta(false)
             setIsInTown(true)
-        } else {
+        } else if (e.target.name === "deliveryTypeTitle") {
             setIsNovaPoshta(false)
             setIsInTown(false)
         }
@@ -103,6 +123,12 @@ function NewOrderComponent() {
     }
 
     function makeNewOrder() {
+        if (!validate(orderInfo, setErrors)) {
+            handleClick()
+            setMessage("Ви не заповнили потрібні поля")
+            return;
+        }
+
         const makeOrderForm = {
             info: {
                 user_lastname: orderInfo.lastName,
@@ -151,39 +177,9 @@ function NewOrderComponent() {
             })
     }
 
-    async function getCities(findByString) {
-        const response = await axios.post('https://api.novaposhta.ua/v2.0/json/', {
-            apiKey: novaAccessKey,
-            modelName: "Address",
-            calledMethod: "getCities",
-            methodProperties: {
-                FindByString: findByString
-            },
-        })
-        setCities(JSON.parse(JSON.stringify(response.data.data)))
-    }
-
-    async function getDepartments(cityRef) {
-        const response = await axios.post('https://api.novaposhta.ua/v2.0/json/', {
-            apiKey: novaAccessKey,
-            modelName: "Address",
-            calledMethod: "getWarehouses",
-            methodProperties: {
-                CityRef: cityRef
-            }
-        })
-        setDepartments(JSON.parse(JSON.stringify(response.data.data)))
-    }
-
     useEffect(() => {
         dispatch(fetchUserCart(isAuth))
     }, [dispatch, isAuth])
-
-    useEffect(() => {
-        if (!cartProducts.cart) {
-            navigate("/")
-        }
-    }, [cartProducts.cart, navigate])
 
     useEffect(() => {
         ShoppingService.fetchDeliveryTypes().then((res) => {
@@ -193,37 +189,32 @@ function NewOrderComponent() {
     }, [])
 
     const handleCities = (event) => {
-        getCities(event.target.value).then((req, res) => {
-            if (res) {
-                console.log(res)
-            }
-        })
+        NovaPoshtaService.getCities(event.target.value).then(res => setCities(res))
     }
-
     const handleDepartments = (cityValueRef) => {
-        getDepartments(cityValueRef).then((req, res) => {
-            if (res) {
-                console.log()
-            }
-        })
+        NovaPoshtaService.getDepartments(cityValueRef).then(res => setDepartments(res))
     }
 
     const handleSetCityValue = (event, newValue) => {
         setDepartment(null)
         setDepartments([])
         setCity(newValue)
+
         handleDepartments(newValue?.Ref)
     }
 
     const handleSetDepartmentValue = (event, newValue) => {
         setDepartment(newValue)
     }
+
+    // TODO NOVA POSHTA ORDER CITY AND DEPARTMENT
+
     return (
         <div className={classes.orderPage}>
             <div className={classes.orderForm}>
                 <div className={classes.orderPersonalInfo}>
                     <div className={classes.orderLFM}>
-                        <TextField
+                        <AllianceTextField
                             className={classes.orderField}
                             name={"lastName"}
                             required
@@ -232,7 +223,7 @@ function NewOrderComponent() {
                             onChange={handleOrderInfo}
                             error={errors.lastName}
                         />
-                        <TextField
+                        <AllianceTextField
                             className={classes.orderField}
                             name={"firstName"}
                             required
@@ -241,7 +232,7 @@ function NewOrderComponent() {
                             onChange={handleOrderInfo}
                             error={errors.firstName}
                         />
-                        <TextField
+                        <AllianceTextField
                             className={classes.orderField}
                             name={"middleName"}
                             required
@@ -252,7 +243,7 @@ function NewOrderComponent() {
                         />
                     </div>
                     <div className={classes.orderContactInfo}>
-                        <TextField
+                        <AllianceTextField
                             required
                             name="phone"
                             id="phone"
@@ -264,8 +255,7 @@ function NewOrderComponent() {
                             onChange={handleOrderInfo}
                             error={errors.phone}
                         />
-                        <TextField
-                            sx={{muiTextField}}
+                        <AllianceTextField
                             name={"email"}
                             required
                             label="Email"
@@ -276,8 +266,9 @@ function NewOrderComponent() {
                     </div>
                 </div>
                 <FormControl className={classes.deliveryForm}>
-                    <InputLabel id="demo-simple-select-label">Доставка</InputLabel>
-                    <Select
+                    <AllianceInputLabel error={errors.deliveryTypeTitle}
+                                        id="demo-simple-select-label">Доставка</AllianceInputLabel>
+                    <AllianceSelect
                         required
                         name={"deliveryTypeTitle"}
                         labelId="delivery"
@@ -291,7 +282,7 @@ function NewOrderComponent() {
                             deliveryTypes?.map(item => <MenuItem value={item.delivery_type_title}
                                                                  key={item.id}>{item.delivery_type_title}</MenuItem>)
                         }
-                    </Select>
+                    </AllianceSelect>
                 </FormControl>
                 {
                     isNovaPoshta
@@ -305,6 +296,7 @@ function NewOrderComponent() {
                                 value={city}
                                 setValue={handleSetCityValue}
                                 getOptionLabel={option => option.Description}
+                                error={errors.novaPoshtaCity}
                             />
                             <AutoCompleteSelect
                                 label={"Відділення"}
@@ -313,6 +305,7 @@ function NewOrderComponent() {
                                 value={department}
                                 setValue={handleSetDepartmentValue}
                                 getOptionLabel={option => option.Description}
+                                error={errors.novaPoshtaDepartment}
                             />
                         </div>
                         : ""
@@ -321,22 +314,25 @@ function NewOrderComponent() {
                     isInTown
                         ?
                         <div>
-                            <TextField
+                            <AllianceTextField
                                 name={"address"}
                                 label={"Адреса"}
                                 sx={{marginBottom: "1rem", width: "80%"}}
                                 onChange={event => setAddress(event.target.value)}
+                                error={errors.deliveryAddress}
                             />
                         </div>
                         : ""
                 }
                 <FormControl className={classes.deliveryForm}>
-                    <InputLabel id="payment-label-id">Спосіб оплати</InputLabel>
-                    <Select
+                    <AllianceInputLabel error={errors.paymentTypeTitle} id="payment-label-id">
+                        Спосіб оплати
+                    </AllianceInputLabel>
+                    <AllianceSelect
                         name={"paymentTypeTitle"}
                         labelId="payment"
                         id="payment-id"
-                        label="Спосіб доставки"
+                        label="Спосіб оплати"
                         value={orderInfo.paymentTypeTitle}
                         onChange={handleOrderInfo}
                         error={errors.paymentTypeTitle}
@@ -347,9 +343,9 @@ function NewOrderComponent() {
                                     {item.payment_type_title}
                                 </MenuItem>)
                         }
-                    </Select>
+                    </AllianceSelect>
                 </FormControl>
-                <TextField
+                <AllianceTextField
                     name={"comment"}
                     fullWidth
                     id="outlined-multiline-static"
@@ -360,8 +356,14 @@ function NewOrderComponent() {
                     onChange={handleOrderInfo}
                 />
                 <ThemeProvider theme={muiTextBtnTheme}>
-                    <Button disabled={disabled} sx={{marginTop: "1rem"}} color={"alliance"} variant={"outlined"}
-                            onClick={makeNewOrder}>Зробити замовлення</Button>
+                    <Button disabled={disabled}
+                            sx={{marginTop: "1rem"}}
+                            color={"alliance"}
+                            variant={"outlined"}
+                            onClick={makeNewOrder}
+                    >
+                        Зробити замовлення
+                    </Button>
                 </ThemeProvider>
             </div>
             <div className={classes.productsList}>
@@ -376,4 +378,4 @@ function NewOrderComponent() {
     );
 }
 
-export default NewOrderComponent;
+export default OrderComponent

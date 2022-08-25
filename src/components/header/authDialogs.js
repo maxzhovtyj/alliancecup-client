@@ -3,7 +3,7 @@ import {useContext, useState} from "react";
 import $api from "../../http/http";
 
 import classes from '../../UI/authDialogs/authDialogs.module.scss'
-import enter from "../../assets/svgs/enter.svg";
+import enter from "../../assets/svgs/log-in.svg";
 
 import SignUpDialog from "../../UI/authDialogs/signUpDialog";
 import SignInDialog from "../../UI/authDialogs/signInDialog";
@@ -25,8 +25,28 @@ export default function AuthDialogs() {
         repeatPassword: "",
     })
 
-    const [signInOpen, setSignInOpen] = useState(false);
+    const [signInErrors, setSignInErrors] = useState({
+        email: false,
+        password: false
+    })
+    const [signUpErrors, setSignUpErrors] = useState({
+        email: false,
+        name: false,
+        phone: false,
+        password: false,
+        repeatPassword: false,
+    })
+
+    const [signInOpen, setSignInOpen] = useState(false)
     const [signUpOpen, setSignUpOpen] = useState(false)
+
+    const validateSignIn = () => {
+
+    }
+
+    const validateSignUp = () => {
+
+    }
 
     const handleSignInOpen = () => {
         setSignUpOpen(false)
@@ -64,13 +84,12 @@ export default function AuthDialogs() {
             })
 
             localStorage.clear()
-            login(response.data.accessToken, 0)
+            login(response.data.accessToken, response.data.userId, response.data.userRoleId)
             handleSignUpClose()
         } catch (e) {
             setMessage("Щось пішло не так")
             handleClick()
         }
-
     }
 
     async function signUp() {
@@ -111,11 +130,17 @@ export default function AuthDialogs() {
 
     return (
         <>
-            <button className={classes.authBtn} onClick={handleSignInOpen}>
+            <div className={classes.authBtn} onClick={handleSignInOpen}>
                 {
-                    !isAuth ? <span><img src={enter} alt="pin"/>Авторизація</span> : ""
+                    !isAuth
+                        ?
+                        <div className={classes.authTop}>
+                            <img src={enter} alt="login"/>
+                            <span>Авторизація</span>
+                        </div>
+                        : ""
                 }
-            </button>
+            </div>
 
             <SignInDialog
                 signInOpen={signInOpen}

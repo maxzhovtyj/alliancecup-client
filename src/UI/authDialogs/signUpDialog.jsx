@@ -6,8 +6,8 @@ import DialogContent from "@mui/material/DialogContent";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 
-import {muiTextField} from "../styles";
 import {TextMaskCustom} from "../../utils/TextMask";
+import {AllianceTextField} from "../styles";
 
 function SignUpDialog({
                           signUpOpen,
@@ -16,7 +16,8 @@ function SignUpDialog({
                           signUpFormHandler,
                           signUp,
                           handleSignInOpen,
-                          value
+                          value,
+                          errors
                       }) {
     return (
         <Dialog open={signUpOpen} onClose={handleSignUpOpen}>
@@ -35,7 +36,7 @@ function SignUpDialog({
                 </div>
                 <DialogContent className={classes.authInputs}>
                     <FormControl className={classes.formInput}>
-                        <TextField
+                        <AllianceTextField
                             value={value.phone}
                             onChange={signUpFormHandler}
                             name="phone"
@@ -46,15 +47,14 @@ function SignUpDialog({
                             required
                             label="Номер телефону"
                         />
-                        <TextField
-                            sx={{muiTextField}}
+                        <AllianceTextField
                             className={classes.formInput}
                             name={"email"}
                             onChange={signUpFormHandler}
                             required
                             label="Email"
                         />
-                        <TextField
+                        <AllianceTextField
                             className={classes.formInput}
                             name={"name"}
                             onChange={signUpFormHandler}
@@ -62,14 +62,14 @@ function SignUpDialog({
                             label="Ім'я"
                         />
                         <div className={classes.passwordInputs}>
-                            <TextField
+                            <AllianceTextField
                                 name={"password"}
                                 onChange={signUpFormHandler}
                                 required
                                 label="Пароль"
                                 type={"password"}
                             />
-                            <TextField
+                            <AllianceTextField
                                 name={"repeatPassword"}
                                 onChange={signUpFormHandler}
                                 required

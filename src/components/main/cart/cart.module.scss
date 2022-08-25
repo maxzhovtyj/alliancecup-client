@@ -24,7 +24,6 @@
 }
 
 .productsList {
-  margin: 1rem 0;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -41,7 +40,7 @@
 
 .productInfo {
   display: grid;
-  grid-template-columns: 3fr 1fr 1fr 1fr;
+  grid-template-columns: 3fr 1fr .5fr 1fr;
   width: 100%;
 }
 
@@ -49,7 +48,7 @@
   display: block;
   img {
     border-radius: 10px;
-    width: 200px;
+    width: 250px;
   }
 }
 
@@ -58,6 +57,25 @@
   font-family: 'Roboto', serif;
   font-weight: 300;
   text-align: center;
+  transition: .3s ease-in-out;
+  &:hover {
+    color: $alliance-orange;
+  }
+  @media all and (max-width: 1024px) {
+    font-size: 1rem;
+  }
+  @media all and (max-width: 768px) {
+    font-size: 14px;
+  }
+  @media all and (max-width: 1024px) {
+    font-size: 1rem;
+  }
+  @media all and (max-width: 1024px) {
+    font-size: 1rem;
+  }
+  @media all and (max-width: 1024px) {
+    font-size: 1rem;
+  }
 }
 
 .productPrice {
@@ -74,13 +92,12 @@
 .productPriceForQuantity {
   @include light-font;
   @include toCenter;
-
-
 }
 
 .deleteIconBtn {
   position: absolute !important;
   right: 0;
+  left: auto;
 }
 
 .helperText {
@@ -106,8 +123,8 @@
 
 .orderPage {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5rem;
+  grid-template-columns: 2fr 3fr;
+  gap: 2rem;
   margin: 2rem 0;
 }
 
@@ -133,9 +150,9 @@
 }
 
 .novaPoshtaDelivery {
-  & > * {
-    margin-bottom: 1rem;
-  }
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
 .orderContactInfo {
