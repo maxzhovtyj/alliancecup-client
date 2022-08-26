@@ -84,10 +84,16 @@
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.noItemsTitle {
+  font-family: 'Roboto', serif;
+  font-size: 1.5rem;
+  font-weight: 300;
 }
 
 .productsList {
-  margin: 2rem 0;
   gap: 2rem;
   display: flex;
   flex-wrap: wrap;
@@ -205,6 +211,12 @@
   transition: .3s ease-in-out;
   cursor: pointer;
   background-color: white;
+}
+
+.IconBtn {
+  top: 5px;
+  right: 5px;
+  position: absolute !important;
 }
 
 .loadMoreBtn {

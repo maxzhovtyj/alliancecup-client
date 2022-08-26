@@ -5,10 +5,12 @@ import thunk from "redux-thunk";
 
 import {shopReducer} from "./shopRedux/shopReducer";
 import {cartReducer} from "./userCartRedux/userCartReducer";
+import {favouritesReducer} from "./userFavouritesRedux/favouritesReducer";
 
 const rootReducer = combineReducers({
     shop: shopReducer,
-    cartPage: cartReducer
+    cartPage: cartReducer,
+    favouritesPage: favouritesReducer
 })
 
 let store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))

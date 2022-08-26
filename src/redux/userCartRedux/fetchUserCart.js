@@ -1,6 +1,6 @@
 import $api from "../../http/http";
 import {userCartActionCreator} from "./userCartReducer";
-import {cartProductsStorage} from "../../components/main/categories/products/productItem.component";
+import {cartProductsStorage} from "../../service/ShoppingService";
 
 export const fetchUserCart = (isAuth) => {
     return async (dispatch) => {

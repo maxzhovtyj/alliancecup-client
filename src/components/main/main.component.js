@@ -16,6 +16,8 @@ import PrivateRoute from "../../utils/PrivateRoute";
 import OrderComponent from "./cart/order.component";
 import AdminRoute from "../../utils/AdminRoute";
 import AdminComponent from "./admin/admin.component";
+import FavouritesComponent from "./favourites/favourites.component";
+import AboutUsComponent from "./aboutUs/aboutUs.component";
 
 function MainComponent() {
     return (
@@ -29,8 +31,10 @@ function MainComponent() {
                     <Route path={"/product/:id"} element={<ProductComponent/>}/>
                     <Route path={"/cart"} element={<CartComponent/>}/>
                     <Route path={"/delivery"} element={<DeliveryComponent/>}/>
+                    <Route path={"/about-us"} element={<AboutUsComponent/>}/>
                     <Route path={"/contacts"} element={<ContactsComponent/>}/>
                     <Route path={"/for-wholesalers"} element={<ForWholesalersComponent/>}/>
+                    <Route path={"/favourites"} element={<FavouritesComponent/>}/>
                     <Route element={<PrivateRoute/>}>
                         <Route exact path={"/user"} element={<UserCabinetComponent/>}/>
                         <Route element={<AdminRoute/>}>

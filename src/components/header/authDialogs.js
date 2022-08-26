@@ -41,11 +41,30 @@ export default function AuthDialogs() {
     const [signUpOpen, setSignUpOpen] = useState(false)
 
     const validateSignIn = () => {
+        let tmp = {}
 
+        tmp.email = !(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(signInForm.email)
+        tmp.password = !signInForm.password
+
+        setSignInErrors({
+            ...tmp
+        })
+        return Object.values(tmp).every(value => value === false)
     }
 
     const validateSignUp = () => {
+        let tmp = {}
 
+        tmp.name = !signUpForm.name
+        tmp.email = !(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(signUpForm.email)
+        tmp.phone = signUpForm.phone?.length < 19
+        tmp.password = signUpForm.password < 4 || signUpForm.password !== signUpForm.repeatPassword
+        tmp.repeatPassword = signUpForm.repeatPassword < 4 || signUpForm.password !== signUpForm.repeatPassword
+
+        setSignUpErrors({
+            ...tmp
+        })
+        return Object.values(tmp).every(value => value === false)
     }
 
     const handleSignInOpen = () => {
@@ -73,6 +92,12 @@ export default function AuthDialogs() {
     }
 
     async function signIn() {
+        if (!validateSignIn()) {
+            setMessage("Поля не пройшли ваділацію")
+            handleClick()
+            return
+        }
+
         try {
             const response = await $api.post('/auth/sign-in', signInForm).catch(function (error) {
                 if (error.response.status === 400) {
@@ -93,8 +118,8 @@ export default function AuthDialogs() {
     }
 
     async function signUp() {
-        if (signUpForm.password !== signUpForm.repeatPassword) {
-            setMessage("Паролі не співпадають")
+        if (!validateSignUp()) {
+            setMessage("Поля не пройшли ваділацію")
             handleClick()
             return
         }
@@ -149,6 +174,7 @@ export default function AuthDialogs() {
                 signInFormHandler={signInFormHandler}
                 signIn={signIn}
                 handleSignUpOpen={handleSignUpOpen}
+                errors={signInErrors}
             />
 
             <SignUpDialog
@@ -159,6 +185,7 @@ export default function AuthDialogs() {
                 signUp={signUp}
                 handleSignInOpen={handleSignInOpen}
                 value={signUpForm}
+                errors={signUpErrors}
             />
 
             <SimpleSnackbar open={open} message={message} handleClose={handleClose}/>

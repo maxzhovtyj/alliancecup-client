@@ -8,11 +8,12 @@ import Button from "@mui/material/Button";
 import {ThemeProvider} from '@mui/material/styles';
 import {muiTextBtnTheme} from "../../../../UI/styles";
 import {AuthContext} from "../../../../context/AuthContext";
-import $api from "../../../../http/http";
+import CloseIcon from "@mui/icons-material/Close";
+import {IconButton} from "@mui/material";
+import {ShoppingService} from "../../../../service/ShoppingService";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-export const cartProductsStorage = "cartProducts"
-
-function ProductItemComponent({product, setMessage, handleClick}) {
+function ProductItemComponent({product, setMessage, handleClick, deleteFavourite}) {
     const {isAuth} = useContext(AuthContext)
 
     let [amount, setAmount] = useState(1)
@@ -24,7 +25,7 @@ function ProductItemComponent({product, setMessage, handleClick}) {
         setPriceAmount(Number(parseFloat(String(result * product.price)).toPrecision(15)))
     }
 
-    async function addToCart() {
+    function addToCart() {
         if (!amount || !priceAmount) {
             setMessage("Неправильна кількість товару, спробуйте ще")
             handleClick()
@@ -44,45 +45,23 @@ function ProductItemComponent({product, setMessage, handleClick}) {
             units_in_package: product.units_in_package
         }
 
-        try {
-            if (isAuth) {
-                await $api.post('/api/client/add-to-cart', addToCartProduct)
-                    .catch(function (error) {
-                        if (error.response.status === 400) {
-                            throw new Error("Помилка: Хибні дані")
-                        }
-                        if (error.response.status === 401) {
-                            throw new Error("Помилка: ви не авторизовані")
-                        }
-                        if (error.response.status === 500) {
-                            if (error.response.data.message.includes("duplicate")) {
-                                throw new Error("Помилка: товар уже в кошику")
-                            }
-                            throw new Error("Помилка: щось пішло не так")
-                        }
-                    })
-            } else {
-                let cart = JSON.parse(localStorage.getItem(cartProductsStorage))
+        ShoppingService.addToCart(isAuth, addToCartProduct).then(res => {
+            setMessage(res.message)
+            handleClick()
+        })
+    }
 
-                if (cart) {
-                    cart?.products.push(addToCartProduct)
-                    localStorage.setItem(cartProductsStorage, JSON.stringify({
-                        products: cart?.products,
-                        sum: cart.sum + addToCartProduct.price_for_quantity
-                    }))
-                } else {
-                    localStorage.setItem(cartProductsStorage, JSON.stringify({
-                        products: [addToCartProduct],
-                        sum: addToCartProduct.price_for_quantity
-                    }))
-                }
-            }
-            setMessage("Товар додано до кошику")
+    function addToFavourites() {
+        ShoppingService.addToFavourites(isAuth, product).then(res => {
+            setMessage(res.message)
             handleClick()
-        } catch (e) {
-            setMessage(e.message)
-            handleClick()
-        }
+        })
+    }
+
+    function deleteFromFavourites() {
+        ShoppingService.deleteFromFavourites(isAuth, product.id).then(() => {
+            window.location.reload()
+        })
     }
 
     return (
@@ -115,6 +94,25 @@ function ProductItemComponent({product, setMessage, handleClick}) {
                                     <Button variant={"text"} onClick={addToCart} color="alliance">Купити</Button>
                                 </ThemeProvider>
                             </div>
+                    }
+                    {
+                        deleteFavourite
+                            ?
+                            <IconButton
+                                className={classes.IconBtn}
+                                aria-label="close"
+                                onClick={deleteFromFavourites}
+                            >
+                                <CloseIcon/>
+                            </IconButton>
+                            :
+                            <IconButton
+                                className={classes.IconBtn}
+                                aria-label="close"
+                                onClick={addToFavourites}
+                            >
+                                <FavoriteBorderIcon/>
+                            </IconButton>
                     }
                 </div>
             </div>

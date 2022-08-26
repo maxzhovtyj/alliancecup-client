@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from "./authDialogs.module.scss";
-import {FormControl, IconButton, TextField} from "@mui/material";
+import {FormControl, IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DialogContent from "@mui/material/DialogContent";
 import Button from "@mui/material/Button";
@@ -46,6 +46,7 @@ function SignUpDialog({
                             }}
                             required
                             label="Номер телефону"
+                            error={errors.phone}
                         />
                         <AllianceTextField
                             className={classes.formInput}
@@ -53,6 +54,7 @@ function SignUpDialog({
                             onChange={signUpFormHandler}
                             required
                             label="Email"
+                            error={errors.email}
                         />
                         <AllianceTextField
                             className={classes.formInput}
@@ -60,6 +62,7 @@ function SignUpDialog({
                             onChange={signUpFormHandler}
                             required
                             label="Ім'я"
+                            error={errors.name}
                         />
                         <div className={classes.passwordInputs}>
                             <AllianceTextField
@@ -68,6 +71,7 @@ function SignUpDialog({
                                 required
                                 label="Пароль"
                                 type={"password"}
+                                error={errors.password}
                             />
                             <AllianceTextField
                                 name={"repeatPassword"}
@@ -75,6 +79,7 @@ function SignUpDialog({
                                 required
                                 label="Повторіть пароль"
                                 type={"password"}
+                                error={errors.repeatPassword}
                             />
                         </div>
                     </FormControl>

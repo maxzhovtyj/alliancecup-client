@@ -15,7 +15,7 @@ function NavbarComponent(props) {
                     </div>
                     <div className={classes.navInfoWrapper}>
                         <div className={classes.listItem}>
-                            <Link to="/delivery">Про нас</Link>
+                            <Link to="/about-us">Про нас</Link>
                         </div>
                         <div className={classes.listItem}>
                             <Link to="/delivery">Доставка</Link>

@@ -30,6 +30,7 @@ function SignInDialog({signInOpen, handleSignInOpen, handleSignInClose, signInFo
                         onChange={signInFormHandler}
                         required
                         label="Email"
+                        error={errors.email}
                     />
                     <AllianceTextField
                         className={classes.formInput}
@@ -38,6 +39,7 @@ function SignInDialog({signInOpen, handleSignInOpen, handleSignInClose, signInFo
                         required
                         label="Пароль"
                         type={"password"}
+                        error={errors.password}
                     />
                 </DialogContent>
 

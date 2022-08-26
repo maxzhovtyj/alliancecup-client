@@ -1,0 +1,20 @@
+.pageTitle {
+  margin-top: 2rem;
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  font-size: 2rem;
+}
+
+.emptyTitle {
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.favouriteList {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}

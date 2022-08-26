@@ -101,25 +101,27 @@ function ProductsComponent() {
                 </div>
             </div>
             <div className={classes.productsWrapper}>
-                <div className={classes.filtrationList}>
-                    {
-                        filtrationList
-                            ?
-                            filtrationList
-                                .map((item, index) =>
-                                    <FiltrationItem
-                                        onClick={handleCharacteristic}
-                                        key={index}
-                                        item={item}
-                                    />
-                                )
-                            : ""
-                    }
-                </div>
+                {
+                    filtrationList
+                        ?
+                        <div className={classes.filtrationList}>
+                            {
+                                filtrationList
+                                    .map((item, index) =>
+                                        <FiltrationItem
+                                            onClick={handleCharacteristic}
+                                            key={index}
+                                            item={item}
+                                        />
+                                    )
+                            }
+                        </div>
+                        : ""
+                }
                 {
                     !products
                         ?
-                        <div className={classes.productsList}>Товарів не знайдено</div>
+                        <div className={classes.noItemsTitle}>Товарів не знайдено</div>
                         :
                         <div>
                             <div className={classes.productsList}>

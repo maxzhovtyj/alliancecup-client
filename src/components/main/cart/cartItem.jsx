@@ -33,9 +33,10 @@ function CartItem({product, order}) {
                         ?
                         ""
                         :
-                        <IconButton className={classes.deleteIconBtn}
-                                    aria-label="close"
-                                    onClick={deleteFromCart}
+                        <IconButton
+                            className={classes.deleteIconBtn}
+                            aria-label="close"
+                            onClick={deleteFromCart}
                         >
                             <CloseIcon/>
                         </IconButton>
