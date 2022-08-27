@@ -26,6 +26,7 @@ export default function RangeSlider({value, setValue, onCommitted}) {
                     onChange={(event, newValue) => setValue(newValue)}
                     onChangeCommitted={onCommitted}
                     valueLabelDisplay="auto"
+                    disableSwap
                 />
             </ThemeProvider>
         </Box>

@@ -166,8 +166,6 @@ function OrderComponent() {
 
         makeOrderForm.products = cartProducts.cart
 
-        console.log(makeOrderForm)
-        return;
         ShoppingService.newOrder(makeOrderForm, setMessage, handleClick)
             .then(() => {
                 setMessage("Ваше замовлення надіслано")

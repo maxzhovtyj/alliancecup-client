@@ -4,7 +4,8 @@ import Button from "@mui/material/Button";
 import classes from './userCabinet.module.scss'
 import {AuthContext} from "../../../context/AuthContext";
 import $api from "../../../http/http";
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 
 function UserCabinetComponent() {
     const {userRoleId, logout} = useContext(AuthContext)
@@ -32,13 +33,27 @@ function UserCabinetComponent() {
     return (
         <div className={classes.userPage}>
             <h1 className={classes.title}>Особистий кабінет</h1>
+            <div className={classes.content}>
+                <ul className={classes.sidebar}>
+                    <li className={classes.sidebarItem}>
+                        <Link to={"/user/personal-info"}>Персональні дані</Link>
+                    </li>
+                    <li className={classes.sidebarItem}>
+                        <Link to={"/user/order-history"}>Історія замовлень</Link>
+                    </li>
+                    <li className={classes.sidebarItem}>
+                        <Link to={"/user/change-password"}>Зміна паролю</Link>
+                    </li>
+                </ul>
+                <Outlet/>
+            </div>
             <div className={classes.logoutBtn}>
                 <Button onClick={userLogout}>Вийти</Button>
                 {
                     (userRoleId !== 0 && userRoleId !== 1)
                         ?
                         <NavLink to={"admin"}>
-                            <Button variant={"outlined"}>Панель адміністратора</Button>
+                            <Button variant={"outlined"} sx={{marginLeft: "1rem"}}>Панель адміністратора</Button>
                         </NavLink>
                         : ""
                 }

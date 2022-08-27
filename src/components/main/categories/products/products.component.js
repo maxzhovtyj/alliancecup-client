@@ -11,7 +11,7 @@ import {Link, useParams} from "react-router-dom";
 import ProductItemComponent from "./productItem.component";
 
 import classes from './products.module.scss'
-import {Button} from "@mui/material";
+import {Button, Chip, Stack} from "@mui/material";
 import SimpleSnackbar from "../../../../UI/snackbar";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import {muiTextBtnTheme} from "../../../../UI/styles";
@@ -77,80 +77,112 @@ function ProductsComponent() {
         setSearchParams({...searchParams, price: rangePrice})
     }
 
+    const handleDelete = () => {
+        setSearchParams({
+            id: 1,
+            price: [0, 100],
+            size: "",
+            characteristic: "",
+            createdAt: "",
+            search: "",
+        })
+    };
+
     return (
-        <div className={classes.productsPageWrapper}>
-            <div className={classes.sidebar}>
-                {/*<div style={{display: "flex", justifyContent: "space-around"}}>*/}
-                {/*    <span>{searchParams.price[0]}</span>*/}
-                {/*    <span>{searchParams.price[1]}</span>*/}
-                {/*</div>*/}
-                <RangeSlider
-                    value={rangePrice}
-                    setValue={setRangePrice}
-                    onCommitted={onRangeCommitted}
-                />
-                <div className={classes.catalog}>
+        <>
+            <Stack direction="row" spacing={1} className={classes.chipsList}>
+                <Chip label="Clickable Deletable" variant="outlined" onDelete={handleDelete} />
+                <Chip label="Clickable Deletable" variant="outlined" onDelete={handleDelete} />
+            </Stack>
+            <div className={classes.productsPageWrapper}>
+                <div className={classes.sidebar}>
+                    <div className={classes.sidebarWrapper}>
+                        <div className={classes.sidebarContainer}>
+                            <div className={classes.priceRange}>
+                                <p className={classes.priceRangeTitle}>Ціна</p>
+                                <RangeSlider
+                                    value={rangePrice}
+                                    setValue={setRangePrice}
+                                    onCommitted={onRangeCommitted}
+                                />
+                                <div className={classes.rangePrices}>
+                                    <span>{rangePrice[0]}</span>
+                                    <span>{rangePrice[1]}</span>
+                                </div>
+                            </div>
+                            <div className={classes.catalog}>
+                                {
+                                    categories
+                                        .map(item =>
+                                            <Link
+                                                to={`/categories/${item.id}`}
+                                                key={item.id}
+                                                onClick={useSetCategoryId}
+
+                                            >
+                                                <p className={classes.catalogItem}>{item.category_title}</p>
+                                            </Link>
+                                        )
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className={classes.productsWrapper}>
                     {
-                        categories
-                            .map(item =>
-                                <Link to={`/categories/${item.id}`} key={item.id} onClick={useSetCategoryId}>
-                                    {item.category_title}
-                                </Link>
-                            )
+                        filtrationList
+                            ?
+                            <div className={classes.filtrationList}>
+                                {
+                                    filtrationList
+                                        .map((item, index) =>
+                                            <FiltrationItem
+                                                onClick={handleCharacteristic}
+                                                key={index}
+                                                item={item}
+                                            />
+                                        )
+                                }
+                            </div>
+                            : ""
+                    }
+                    {
+                        !products
+                            ?
+                            <div className={classes.noItemsTitle}>Товарів не знайдено</div>
+                            :
+                            <div>
+                                <div className={classes.productsList}>
+                                    {
+                                        products.map(
+                                            item => <ProductItemComponent
+                                                product={item}
+                                                setMessage={setMessage}
+                                                handleClick={handleClick}
+                                                key={item.article}
+                                            />
+                                        )
+                                    }
+                                </div>
+                                {
+                                    cannotLoadMore
+                                        ?
+                                        ""
+                                        :
+                                        <ThemeProvider theme={muiTextBtnTheme}>
+                                            <div style={{display: "flex", justifyContent: "center", marginTop: "1rem"}}>
+                                                <Button onClick={loadMore} className={classes.loadMoreBtn}
+                                                        variant={"text"}
+                                                        color="alliance">Завантажити ще</Button>
+                                            </div>
+                                        </ThemeProvider>
+                                }
+                                <SimpleSnackbar open={open} message={message} handleClose={handleClose}/>
+                            </div>
                     }
                 </div>
             </div>
-            <div className={classes.productsWrapper}>
-                {
-                    filtrationList
-                        ?
-                        <div className={classes.filtrationList}>
-                            {
-                                filtrationList
-                                    .map((item, index) =>
-                                        <FiltrationItem
-                                            onClick={handleCharacteristic}
-                                            key={index}
-                                            item={item}
-                                        />
-                                    )
-                            }
-                        </div>
-                        : ""
-                }
-                {
-                    !products
-                        ?
-                        <div className={classes.noItemsTitle}>Товарів не знайдено</div>
-                        :
-                        <div>
-                            <div className={classes.productsList}>
-                                {
-                                    products.map(
-                                        item => <ProductItemComponent
-                                            product={item}
-                                            setMessage={setMessage}
-                                            handleClick={handleClick}
-                                            key={item.article}
-                                        />
-                                    )
-                                }
-                            </div>
-                            {
-                                cannotLoadMore
-                                    ?
-                                    ""
-                                    :
-                                    <ThemeProvider theme={muiTextBtnTheme}>
-                                        <Button onClick={loadMore} className={classes.loadMoreBtn} variant={"text"}
-                                                color="alliance">Завантажити ще</Button>
-                                    </ThemeProvider>
-                            }
-                            <SimpleSnackbar open={open} message={message} handleClose={handleClose}/>
-                        </div>
-                }
-            </div>
-        </div>
+        </>
     );
 }
 

@@ -9,7 +9,7 @@ function FiltrationItem({onClick, item: {filtrationTitle, imgUrl, infoDescriptio
     }
     return (
         <div onClick={() => onClick(infoDescription, id)} className={classes.filtrationItem}>
-            <img src={imgUrl} alt="img"/>
+            <img className={classes.filtrationItemImg} src={imgUrl} alt="img"/>
             <div className={classes.filtrationBgItem}/>
             <p>{filtrationTitle}</p>
         </div>

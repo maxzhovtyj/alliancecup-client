@@ -7,7 +7,10 @@ const GET_FAVOURITES = "GET_FAVOURITES"
 export const favouritesReducer = (state = favouritesDefaultState, action) => {
     switch (action.type) {
         case GET_FAVOURITES: {
-            return {...state, favouritesList: [...action.payload]}
+            if (action.payload) {
+                return {...state, favouritesList: [...action.payload]}
+            } else
+                return state
         }
         default:
             return state

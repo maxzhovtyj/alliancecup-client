@@ -1,0 +1,6 @@
+.show {
+  display: none;
+  @media all and (max-width: 425px) {
+    display: block;
+  }
+}

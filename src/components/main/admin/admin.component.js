@@ -2,7 +2,9 @@ import React from 'react';
 
 function AdminComponent(props) {
     return (
-        <div>Administration</div>
+        <div>
+            admin
+        </div>
     );
 }
 

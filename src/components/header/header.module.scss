@@ -47,19 +47,23 @@
   }
   
   @media all and (max-width: 768px) {
-    font-size: .5rem;
+    font-size: 1rem;
+  }
+}
+
+.authMenu {
+  @media all and (max-width: 425px) {
+    display: none;
   }
 }
 
 .headerWrapper {
   position: relative;
   border-bottom: 1px solid $alliance-grey;
-}
-
-.container {
   display: flex;
   flex-direction: column;
 }
+
 
 .headerList {
   @include left-right-padding;
@@ -67,6 +71,14 @@
   padding-bottom: 1rem;
   display: flex;
   justify-content: space-between;
+  @media all and (max-width: 425px) {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+            "logo contactInfo favourites"
+            "slogan contactInfo cart";
+  }
 }
 
 .logo {
@@ -74,12 +86,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  @media all and (max-width: 425px) {
+    font-size: 1.2rem;
+    grid-area: logo;
+  }
 }
 
 .slogan {
   text-align: center;
   @include toCenter;
-  @include light-font
+  @include light-font;
+  @media all and (max-width: 425px) {
+    grid-area: slogan;
+  }
 }
 
 .socials {
@@ -146,39 +165,31 @@
   justify-content: center;
   line-height: 1.8rem;
   @media all and (max-width: 425px) {
+    justify-content: space-around;
     grid-area: contactInfo;
   }
 }
 
-.cart {
+.cart, .favourites {
   @include light-font;
   @include header-img;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include toCenter;
   span {
     margin: auto 0;
     @include toCenter;
   }
+}
 
+.cart {
   @media all and (max-width: 425px) {
     grid-area: cart;
     align-self: start;
   }
 }
 
-.auth {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  @include light-font;
-  @include header-img;
-  span {
-    @include toCenter;
-  }
-
+.favourites {
   @media all and (max-width: 425px) {
-    grid-area: auth;
+    grid-area: favourites;
     align-self: end;
   }
 }
