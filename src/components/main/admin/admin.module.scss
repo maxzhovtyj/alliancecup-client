@@ -1,0 +1,16 @@
+@import '../../../variables';
+
+.adminPageWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.adminNavbar {
+  padding: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  @include light-font;
+}

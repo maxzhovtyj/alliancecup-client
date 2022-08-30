@@ -1,9 +1,18 @@
 import React from 'react';
+import {NavLink, Outlet} from "react-router-dom";
 
-function AdminComponent(props) {
+import classes from './admin.module.scss'
+
+function AdminComponent() {
     return (
-        <div>
-            admin
+        <div className={classes.adminPageWrapper}>
+            <ul className={classes.adminNavbar}>
+                <li><NavLink to={"/user/admin/products"}>Товари</NavLink></li>
+                <li><NavLink to={"/user/admin/categories"}>Категорії</NavLink></li>
+                <li><NavLink to={"/user/admin/moderators"}>Модератори</NavLink></li>
+                <li><NavLink to={"/user/admin/orders"}>Замовлення</NavLink></li>
+            </ul>
+            <Outlet/>
         </div>
     );
 }

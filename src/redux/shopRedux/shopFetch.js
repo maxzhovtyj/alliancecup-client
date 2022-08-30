@@ -24,11 +24,11 @@ export const fetchCategories = () => {
     }
 }
 
-export const fetchProducts = ({id, createdAt, price, search, size, characteristic}) => {
+export const fetchProducts = ({id, createdAt, price, size, characteristic, search}) => {
     return async (dispatch) => {
         dispatch(loadProductsActionCreator())
         const response = await $api.get(
-            `/api/get-products?category=${id}&created_at=${createdAt}&price=${price[0]}:${price[1]}&size=${size}&search=${search}&characteristic=${characteristic}`
+            `/api/products?category=${id}&createdAt=${createdAt}&priceRange=${price[0]}:${price[1]}&size=${size}&characteristic=${characteristic}&search=${search}`
         )
         dispatch(getProductsActionCreator(response.data))
     }
@@ -38,7 +38,7 @@ export const fetchMoreProducts = ({id, createdAt, price, search, size, character
     return async (dispatch) => {
         dispatch(setFetchingActionCreator())
         const response = await $api.get(
-            `/api/get-products?category=${id}&created_at=${createdAt}&price=${price[0]}:${price[1]}&size=${size}&search=${search}&characteristic=${characteristic}`
+            `/api/products?category=${id}&createdAt=${createdAt}&priceRange=${price[0]}:${price[1]}&size=${size}&characteristic=${characteristic}&search=${search}`
         )
         if (response.data.data !== null) {
             dispatch(getMoreProductsActionCreator(response.data))

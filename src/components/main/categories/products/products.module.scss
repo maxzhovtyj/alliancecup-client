@@ -1,7 +1,7 @@
 @import '../../../../variables.scss';
 
 .chipsList {
-  margin: 1rem 0;
+  margin-top: 2rem;
 }
 
 .productsPageWrapper {
@@ -100,26 +100,6 @@
     width: 2rem;
     background-color: $alliance-grey;
 
-  }
-}
-
-.searchBar {
-  @include btn;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1rem;
-  @media all and (max-width: 425px) {
-    align-items: center;
-    justify-content: space-between;
-  }
-}
-
-.searchBarInput {
-  width: 60%;
-  border-radius: 10px;
-  @media all and (max-width: 425px) {
-    width: 90%;
   }
 }
 

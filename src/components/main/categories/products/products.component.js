@@ -11,13 +11,14 @@ import {Link, useParams} from "react-router-dom";
 import ProductItemComponent from "./productItem.component";
 
 import classes from './products.module.scss'
-import {Button, Chip, Stack} from "@mui/material";
+import {Button, Stack} from "@mui/material";
 import SimpleSnackbar from "../../../../UI/snackbar";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import {muiTextBtnTheme} from "../../../../UI/styles";
 import {ThemeProvider} from "@mui/material/styles";
 import RangeSlider from "../../../../UI/rangeSlider/rangeSlider";
 import FiltrationItem from "../filtrationItem/filtrationItem";
+import AllianceChip from "../../../../UI/AllianceChip";
 
 function ProductsComponent() {
     const dispatch = useDispatch()
@@ -29,6 +30,9 @@ function ProductsComponent() {
 
     let {open, setMessage, handleClick, message, handleClose} = useSnackbar()
 
+    const [paramsChips, setParamsChips] = useState([
+
+    ])
     let [filtrationParent, setFiltrationParent] = useState({
         parentName: "category_id",
         id: useParams().id
@@ -51,11 +55,8 @@ function ProductsComponent() {
 
     useEffect(() => {
         dispatch(fetchProducts(searchParams))
-    }, [dispatch, searchParams])
-
-    useEffect(() => {
         dispatch(fetchFiltrationList(filtrationParent.parentName, filtrationParent.id))
-    }, [dispatch, filtrationParent.id, filtrationParent.parentName])
+    }, [dispatch, filtrationParent.id, filtrationParent.parentName, searchParams])
 
     function loadMore() {
         let lastCreatedAt = products[products.length - 1].created_at
@@ -70,6 +71,7 @@ function ProductsComponent() {
 
     function handleCharacteristic(filtration, id) {
         setFiltrationParent({parentName: "filtration_list_id", id: id})
+        setParamsChips([...paramsChips, filtration])
         setSearchParams({...searchParams, characteristic: filtration})
     }
 
@@ -77,22 +79,18 @@ function ProductsComponent() {
         setSearchParams({...searchParams, price: rangePrice})
     }
 
-    const handleDelete = () => {
-        setSearchParams({
-            id: 1,
-            price: [0, 100],
-            size: "",
-            characteristic: "",
-            createdAt: "",
-            search: "",
-        })
+    const handleDelete = (name) => {
+        setParamsChips(prevState => prevState.filter(item => item !== name))
+        setSearchParams({...searchParams, characteristic: ""})
     };
 
     return (
         <>
             <Stack direction="row" spacing={1} className={classes.chipsList}>
-                <Chip label="Clickable Deletable" variant="outlined" onDelete={handleDelete} />
-                <Chip label="Clickable Deletable" variant="outlined" onDelete={handleDelete} />
+                {
+                    paramsChips.map((chipItem, index) =>
+                    <AllianceChip key={index} name={chipItem} label={chipItem} onDelete={handleDelete} variant="outlined"/>)
+                }
             </Stack>
             <div className={classes.productsPageWrapper}>
                 <div className={classes.sidebar}>

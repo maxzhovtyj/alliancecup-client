@@ -21,6 +21,7 @@ import AboutUsComponent from "./aboutUs/aboutUs.component";
 import PersonalInfoComponent from "./userCabinet/components/personalInfo/personalInfo.component";
 import OrderHistoryComponent from "./userCabinet/components/orderHistory/orderHistory.component";
 import ChangePasswordComponent from "./userCabinet/components/changePassword/changePassword.component";
+import AdminProductsComponent from "./admin/products/adminProducts.component";
 
 function MainComponent() {
     return (
@@ -38,16 +39,18 @@ function MainComponent() {
                     <Route path={"/contacts"} element={<ContactsComponent/>}/>
                     <Route path={"/for-wholesalers"} element={<ForWholesalersComponent/>}/>
                     <Route path={"/favourites"} element={<FavouritesComponent/>}/>
-                    <Route element={<PrivateRoute/>}>
+                    {/*<Route element={<PrivateRoute/>}>*/}
                         <Route path={"/user"} element={<UserCabinetComponent/>}>
                             <Route path={"personal-info"} element={<PersonalInfoComponent/>}/>
                             <Route path={"order-history"} element={<OrderHistoryComponent/>}/>
                             <Route path={"change-password"} element={<ChangePasswordComponent/>}/>
                         </Route>
-                        <Route element={<AdminRoute/>}>
-                            <Route path={"/user/admin"} element={<AdminComponent/>}/>
-                        </Route>
-                    </Route>
+                        {/*<Route element={<AdminRoute/>}>*/}
+                            <Route path={"/user/admin"} element={<AdminComponent/>}>
+                                <Route path={"products"} element={<AdminProductsComponent/>}/>
+                            </Route>
+                        {/*</Route>*/}
+                    {/*</Route>*/}
                     <Route path={"/cart/order"} element={<OrderComponent/>}/>
                 </Routes>
             </div>
