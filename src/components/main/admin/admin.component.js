@@ -11,6 +11,7 @@ function AdminComponent() {
                 <li><NavLink to={"/user/admin/categories"}>Категорії</NavLink></li>
                 <li><NavLink to={"/user/admin/moderators"}>Модератори</NavLink></li>
                 <li><NavLink to={"/user/admin/orders"}>Замовлення</NavLink></li>
+                <li><NavLink to={"/user/admin/supply"}>Постачання</NavLink></li>
             </ul>
             <Outlet/>
         </div>

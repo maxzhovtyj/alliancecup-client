@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
-    Button, FormControl, IconButton,
+    Button, FormControl,
     MenuItem,
     Paper,
     Table,
@@ -16,13 +16,17 @@ import {AllianceInputLabel, AllianceSelect, muiTextBtnTheme} from "../../../../U
 import classes from "../../categories/products/products.module.scss";
 import {ThemeProvider} from "@mui/material/styles";
 import SearchBar from "../../../../UI/searchBar/searchBar";
-import {MoreVertRounded} from "@mui/icons-material";
+import ContextMenu from "../../../../UI/adminProductContextMenu/contextMenu";
+import {useSnackbar} from "../../../../hooks/useSnackbar";
+import SimpleSnackbar from "../../../../UI/snackbar";
 
 function AdminProductsComponent() {
     const dispatch = useDispatch()
     const products = useSelector(state => state.shop.products)
     const categories = useSelector(state => state.shop.categories)
     const cannotLoadMore = useSelector(state => state.shop.statusNoMoreProducts)
+
+    const {open, setMessage, message, handleClick, handleClose} = useSnackbar()
 
     const [searchBar, setSearchBar] = useState("")
     const [searchParams, setSearchParams] = useState({
@@ -86,14 +90,13 @@ function AdminProductsComponent() {
                     <TableHead>
                         <TableRow>
                             <TableCell align={"center"}>Id</TableCell>
-                            <TableCell align={"center"}>Category</TableCell>
-                            <TableCell align="left">Title</TableCell>
+                            <TableCell align={"center"}>Категорія</TableCell>
+                            <TableCell align="left">Назва</TableCell>
                             <TableCell align="center">Price</TableCell>
                             <TableCell align="center">Шт/уп</TableCell>
                             <TableCell align="center">Уп/ящ</TableCell>
                             <TableCell align="center">Кількість</TableCell>
                             <TableCell align="center">Управління</TableCell>
-
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -112,7 +115,9 @@ function AdminProductsComponent() {
                                         <TableCell align="center">{row.units_in_package}</TableCell>
                                         <TableCell align="center">{row.packages_in_box}</TableCell>
                                         <TableCell align="center">{row.amount_in_stock}</TableCell>
-                                        <TableCell align="center"><IconButton><MoreVertRounded/></IconButton></TableCell>
+                                        <TableCell align="center">
+                                            <ContextMenu item={row} setSnackbarMessage={setMessage} clickSnackbar={handleClick}/>
+                                        </TableCell>
                                     </TableRow>
                                 ))
                                 :
@@ -133,6 +138,7 @@ function AdminProductsComponent() {
                         </div>
                     </ThemeProvider>
             }
+            <SimpleSnackbar open={open} message={message} handleClose={handleClose}/>
         </div>
     )
         ;

@@ -22,6 +22,7 @@ import PersonalInfoComponent from "./userCabinet/components/personalInfo/persona
 import OrderHistoryComponent from "./userCabinet/components/orderHistory/orderHistory.component";
 import ChangePasswordComponent from "./userCabinet/components/changePassword/changePassword.component";
 import AdminProductsComponent from "./admin/products/adminProducts.component";
+import AdminSupplyComponent from "./admin/supply/adminSupply.component";
 
 function MainComponent() {
     return (
@@ -48,6 +49,7 @@ function MainComponent() {
                         {/*<Route element={<AdminRoute/>}>*/}
                             <Route path={"/user/admin"} element={<AdminComponent/>}>
                                 <Route path={"products"} element={<AdminProductsComponent/>}/>
+                                <Route path={"supply"} element={<AdminSupplyComponent/>}/>
                             </Route>
                         {/*</Route>*/}
                     {/*</Route>*/}

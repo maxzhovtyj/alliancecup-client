@@ -1,13 +1,12 @@
 import {useContext, useState} from "react";
-import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import classes from './burgerMenu.module.scss'
-import {Link} from "@mui/material";
+import {IconButton} from "@mui/material";
 import {AuthContext} from "../../context/AuthContext";
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 export default function BurgerMenu() {
     const {isAuth} = useContext(AuthContext)
@@ -23,7 +22,7 @@ export default function BurgerMenu() {
 
     return (
         <div className={classes.show}>
-            <Button
+            <IconButton
                 id="basic-button"
                 aria-controls={open ? 'basic-menu' : undefined}
                 aria-haspopup="true"
@@ -32,7 +31,7 @@ export default function BurgerMenu() {
             >
                 <MenuIcon style={{color: "white"}}/>
 
-            </Button>
+            </IconButton>
             <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}
