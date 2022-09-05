@@ -12,14 +12,14 @@ export const fetchFiltrationList = (name, id) => {
             dispatch(clearFiltrationListActionCreator())
             return
         }
-        const response = await $api.get(`/api/filtration-list?parentName=${name}&id=${id}`)
+        const response = await $api.get(`/api/filtration?parentName=${name}&id=${id}`)
         dispatch(getFiltrationListActionCreator(JSON.parse(JSON.stringify(response.data))))
     }
 }
 
 export const fetchCategories = () => {
     return async (dispatch) => {
-        const response = await $api.get('/api/all-categories')
+        const response = await $api.get('/api/categories')
         dispatch(getCategoriesActionCreator(response.data))
     }
 }

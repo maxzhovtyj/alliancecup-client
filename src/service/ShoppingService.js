@@ -6,7 +6,7 @@ export const cartProductsStorage = "cartProducts"
 export class ShoppingService {
     static async newOrder(makeOrderForm, setMessage, handleClick) {
         try {
-            await $api.post('/api/new-order', makeOrderForm).catch(function (error) {
+            await $api.post('/api/order', makeOrderForm).catch(function (error) {
                 if (error.response.status === 400) {
                     throw new Error("Помилка: Хибні дані")
                 }
@@ -27,7 +27,7 @@ export class ShoppingService {
     static async addToCart(isAuth, addToCartProduct) {
         try {
             if (isAuth) {
-                await $api.post('/api/client/add-to-cart', addToCartProduct)
+                await $api.post('/api/client/cart', addToCartProduct)
                     .catch(function (error) {
                         if (error.response.status === 400) {
                             throw new Error("Помилка: Хибні дані")
@@ -68,7 +68,7 @@ export class ShoppingService {
 
     static async deleteFromCart(isAuth, productId) {
         if (isAuth) {
-            await $api.delete(`/api/client/delete-from-cart?id=${productId}`)
+            await $api.delete(`/api/client/cart?id=${productId}`)
         } else {
             let cart = JSON.parse(localStorage.getItem(cartProductsStorage))
             let productPrice
@@ -93,7 +93,7 @@ export class ShoppingService {
     static async addToFavourites(isAuth, product) {
         try {
             if (isAuth) {
-                await $api.post('/api/client/add-to-favourites', {id: product.id})
+                await $api.post('/api/client/favourites', {id: product.id})
                     .catch(function (error) {
                         if (error.response.status === 400) {
                             throw new Error("Помилка: Хибні дані")
@@ -129,7 +129,7 @@ export class ShoppingService {
 
     static async deleteFromFavourites(isAuth, productId) {
         if (isAuth) {
-            await $api.delete(`/api/client/delete-from-favourites?id=${productId}`)
+            await $api.delete(`/api/client/favourites?id=${productId}`)
         } else {
             let favourites = JSON.parse(localStorage.getItem(favouriteProductsStorage))
             let filtered = favourites?.products.filter(item => item.id !== productId)

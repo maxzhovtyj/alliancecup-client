@@ -20,7 +20,7 @@ export class AuthService {
 
     static async changePassword(form) {
         try {
-            const response = await $api.put('/api/client/change-password', form).catch(function (error) {
+            await $api.put('/api/client/change-password', form).catch(function (error) {
                 if (error.response.status === 401) {
                     throw new Error("Спочатку увійдіть")
                 }

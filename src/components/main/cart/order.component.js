@@ -130,7 +130,7 @@ function OrderComponent() {
         }
 
         const makeOrderForm = {
-            info: {
+            order: {
                 user_lastname: orderInfo.lastName,
                 user_firstname: orderInfo.firstName,
                 user_middle_name: orderInfo.middleName,

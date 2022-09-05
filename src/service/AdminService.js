@@ -3,7 +3,7 @@ import $api from "../http/http";
 export class AdminService {
     static async deleteProduct(productId) {
         try {
-            const response = await $api.delete(`/api/admin/delete-product?id=${productId}`).catch(function (error) {
+            const response = await $api.delete(`/api/admin/product?id=${productId}`).catch(function (error) {
                 if (error.response.status === 401) {
                     throw new Error("Спочатку увійдіть")
                 }
@@ -29,7 +29,7 @@ export class AdminService {
 
     static async deleteCategory(categoryId) {
         try {
-            const response = $api.delete(`/api/admin/delete-category?id=${categoryId}`).catch(function (error) {
+            const response = $api.delete(`/api/admin/category?id=${categoryId}`).catch(function (error) {
                 if (error.response.status === 401) {
                     throw new Error("Спочатку увійдіть")
                 }
