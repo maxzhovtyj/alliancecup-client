@@ -12,23 +12,23 @@ export const fetchFiltrationList = (name, id) => {
             dispatch(clearFiltrationListActionCreator())
             return
         }
-        const response = await $api.get(`/api/filtration-list?parentName=${name}&id=${id}`)
+        const response = await $api.get(`/api/filtration?parentName=${name}&id=${id}`)
         dispatch(getFiltrationListActionCreator(JSON.parse(JSON.stringify(response.data))))
     }
 }
 
 export const fetchCategories = () => {
     return async (dispatch) => {
-        const response = await $api.get('/api/all-categories')
+        const response = await $api.get('/api/categories')
         dispatch(getCategoriesActionCreator(response.data))
     }
 }
 
-export const fetchProducts = ({id, createdAt, price, search, size, characteristic}) => {
+export const fetchProducts = ({id, createdAt, price, size, characteristic, search}) => {
     return async (dispatch) => {
         dispatch(loadProductsActionCreator())
         const response = await $api.get(
-            `/api/get-products?category=${id}&created_at=${createdAt}&price=${price[0]}:${price[1]}&size=${size}&search=${search}&characteristic=${characteristic}`
+            `/api/products?category=${id}&createdAt=${createdAt}&priceRange=${price[0]}:${price[1]}&size=${size}&characteristic=${characteristic}&search=${search}`
         )
         dispatch(getProductsActionCreator(response.data))
     }
@@ -38,7 +38,7 @@ export const fetchMoreProducts = ({id, createdAt, price, search, size, character
     return async (dispatch) => {
         dispatch(setFetchingActionCreator())
         const response = await $api.get(
-            `/api/get-products?category=${id}&created_at=${createdAt}&price=${price[0]}:${price[1]}&size=${size}&search=${search}&characteristic=${characteristic}`
+            `/api/products?category=${id}&createdAt=${createdAt}&priceRange=${price[0]}:${price[1]}&size=${size}&characteristic=${characteristic}&search=${search}`
         )
         if (response.data.data !== null) {
             dispatch(getMoreProductsActionCreator(response.data))

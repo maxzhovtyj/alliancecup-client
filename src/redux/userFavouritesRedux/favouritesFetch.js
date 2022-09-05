@@ -5,7 +5,7 @@ import {favouriteProductsStorage} from "../../service/ShoppingService";
 export const fetchFavourites = (isAuth) => {
     return async (dispatch) => {
         if (isAuth) {
-            const response = await $api.get('/api/client/get-favourites')
+            const response = await $api.get('/api/client/favourites')
             dispatch(getFavouritesActionCreator(response.data?.products))
         } else {
             let favourites = JSON.parse(localStorage.getItem(favouriteProductsStorage))

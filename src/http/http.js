@@ -24,8 +24,9 @@ $api.interceptors.request.use(async (config) => {
     if (!isExpired) return config
 
     const response = await axios.post(`${API_URL}/auth/refresh`, {}, {withCredentials: true})
-        .catch(function (error) {
+        .catch(function () {
             localStorage.removeItem(storageName)
+            window.location.reload()
             return config
     })
 
