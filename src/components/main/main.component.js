@@ -12,9 +12,9 @@ import ContactsComponent from "./contacts/contacts.component";
 import ForWholesalersComponent from "./forWholesalers/forWholesalers.component";
 import ProductComponent from "./product/product.component";
 import UserCabinetComponent from "./userCabinet/userCabinet.component";
-// import PrivateRoute from "../../utils/PrivateRoute";
+// import PrivateRoute from "../../utils/PrivateRoute"; // TODO invalid navigation
 import OrderComponent from "./cart/order.component";
-// import AdminRoute from "../../utils/AdminRoute";
+// import AdminRoute from "../../utils/AdminRoute"; // TODO invalid navigation
 import AdminComponent from "./admin/admin.component";
 import FavouritesComponent from "./favourites/favourites.component";
 import AboutUsComponent from "./aboutUs/aboutUs.component";
