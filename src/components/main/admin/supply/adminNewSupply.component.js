@@ -21,9 +21,12 @@ import {ThemeProvider} from "@mui/material/styles";
 import {SupplyService} from "../../../../service/SupplyService";
 import AutoCompleteSelect from "../../../../UI/autoCompleteSelect/autoCompleteSelect";
 import {ProductService} from "../../../../service/ProductService";
+import {useSnackbar} from "../../../../hooks/useSnackbar";
+import SimpleSnackbar from "../../../../UI/snackbar";
 
 
 function AdminNewSupplyComponent() {
+    const snackbar = useSnackbar()
     const [productsOptions, setProductsOptions] = useState([])
     const [supplyInfo, setSupplyInfo] = useState({
         supplier: '', comment: '',
@@ -53,7 +56,9 @@ function AdminNewSupplyComponent() {
     // function to handle payment info
     const handlePaymentInfo = (index, event) => {
         const values = [...paymentInfo]
-        values[index][event.target.name] = event.target.value
+        if (event.target.name === "paymentSum") {
+            values[index][event.target.name] = parseFloat(event.target.value) || 0
+        } else values[index][event.target.name] = event.target.value
         setPaymentInfo(values)
     }
 
@@ -70,12 +75,19 @@ function AdminNewSupplyComponent() {
     // functions to handle products
     const handleProduct = (index, event) => {
         const values = [...products]
-        values[index][event.target.name] = event.target.value
+        if (event.target.name === "amount") {
+            values[index][event.target.name] = parseFloat(event.target.value) || 0
+        } else if (event.target.name === "priceForUnit") {
+            values[index][event.target.name] = parseFloat(event.target.value) || 0
+        } else if (event.target.name === "tax") {
+            values[index][event.target.name] = parseFloat(event.target.value) || 0
+        } else values[index][event.target.name] = event.target.value
         setProducts(values)
     }
 
     const handleAddProduct = () => {
         setProducts([...products, {
+            product: null,
             productId: "",
             packaging: "",
             amount: "",
@@ -108,32 +120,36 @@ function AdminNewSupplyComponent() {
         ProductService.search(event.target.value).then(res => setProductsOptions(res.data.data))
     }
 
-    const handleSetProductIdValue = (event, index, newValue) => {
+    const handleSetProductIdValue = (index, newValue) => {
         console.log(newValue)
-        if (event.target.value) {
-            const values = [...products]
-            values[index]["productId"] = newValue.id
-            setProducts(values)
-        }
+
+        const values = [...products]
+        values[index]["product"] = newValue
+        values[index]["productId"] = newValue.id
+
+        setProducts(values)
     }
 
     // function to create and save new supply
-    const createNewSupply = () => {
+    const createNewSupply = async () => {
         const reqBody = {
             info: supplyInfo,
             payment: paymentInfo,
             products: products,
         }
 
-        console.log(reqBody)
-        // SupplyService.newSupply(reqBody, null, null).then()
+        const res = await SupplyService.newSupply(reqBody).then()
+
+        snackbar.setMessage(res?.message)
+        snackbar.handleClick()
     }
 
     function HandleMoney(price) {
         return Number(parseFloat(String(price)).toPrecision(15))
     }
 
-    // TODO AutoComplete Select Product
+    // TODO Errors handling
+    // TODO Fields validation
     return (
         <div>
             <div className={classes.supplyInfoWrapper}>
@@ -213,23 +229,13 @@ function AdminNewSupplyComponent() {
                         {
                             products.map((item, index) =>
                                 <TableRow key={index} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                    <TableCell align="center">
-                                        <div>
-                                            <AutoCompleteSelect
-                                                options={productsOptions}
-                                                onChange={handleProductsOptions}
-                                                value={item.productId}
-                                                setValue={(event, newValue) => handleSetProductIdValue(event, index, newValue)}
-                                                getOptionLabel={option => option.product_title}
-                                            />
-                                            {/*<AutoCompleteSelect*/}
-                                            {/*    options={productsOptions}*/}
-                                            {/*    onChange={handleCities}*/}
-                                            {/*    value={city}*/}
-                                            {/*    setValue={handleSetCityValue}*/}
-                                            {/*    getOptionLabel={option => option.Description}*/}
-                                            {/*/>*/}
-                                        </div>
+                                    <TableCell width={400}>
+                                        <AutoCompleteSelect
+                                            options={productsOptions}
+                                            onChange={handleProductsOptions}
+                                            setValue={(event, newValue) => handleSetProductIdValue(index, newValue)}
+                                            getOptionLabel={option => option.product_title}
+                                        />
                                     </TableCell>
                                     <TableCell align="center">
                                         <TextField
@@ -295,6 +301,7 @@ function AdminNewSupplyComponent() {
                     </Button>
                 </div>
             </ThemeProvider>
+            <SimpleSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
         </div>
     );
 }
