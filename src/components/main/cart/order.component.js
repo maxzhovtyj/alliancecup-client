@@ -205,8 +205,6 @@ function OrderComponent() {
         setDepartment(newValue)
     }
 
-    // TODO NOVA POSHTA ORDER CITY AND DEPARTMENT
-
     return (
         <div className={classes.orderPage}>
             <div className={classes.orderForm}>

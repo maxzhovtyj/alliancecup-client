@@ -23,6 +23,7 @@ import OrderHistoryComponent from "./userCabinet/components/orderHistory/orderHi
 import ChangePasswordComponent from "./userCabinet/components/changePassword/changePassword.component";
 import AdminProductsComponent from "./admin/products/adminProducts.component";
 import AdminSupplyComponent from "./admin/supply/adminSupply.component";
+import AdminNewSupplyComponent from "./admin/supply/adminNewSupply.component";
 
 function MainComponent() {
     return (
@@ -52,6 +53,7 @@ function MainComponent() {
                                 <Route index element={<Navigate to="products" replace />} />
                                 <Route path={"products"} element={<AdminProductsComponent/>}/>
                                 <Route path={"supply"} element={<AdminSupplyComponent/>}/>
+                                <Route path={"new-supply"} element={<AdminNewSupplyComponent/>}/>
                             </Route>
                         {/*</Route>*/}
                     {/*</Route>*/}

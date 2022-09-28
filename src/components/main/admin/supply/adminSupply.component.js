@@ -5,6 +5,7 @@ import {fetchMoreSupply, fetchSupply} from "../../../../redux/adminRedux/adminFe
 import {ThemeProvider} from "@mui/material/styles";
 import {muiTextBtnTheme} from "../../../../UI/styles";
 import classes from "../../categories/products/products.module.scss";
+import {NavLink} from "react-router-dom";
 
 function AdminSupplyComponent(props) {
     const dispatch = useDispatch()
@@ -19,6 +20,19 @@ function AdminSupplyComponent(props) {
     }
     return (
         <div>
+            <ThemeProvider theme={muiTextBtnTheme}>
+                <NavLink to={"/user/admin/new-supply"}>
+                    <div style={{display: "flex", justifyContent: "right", marginBottom: "2rem"}}>
+                        <Button
+                            className={classes.loadMoreBtn}
+                            variant={"outlined"}
+                            color="alliance"
+                        >
+                            Нове постачання
+                        </Button>
+                    </div>
+                </NavLink>
+            </ThemeProvider>
             <TableContainer component={Paper} sx={{margin: "2rem 0"}}>
                 <Table sx={{minWidth: 200}} aria-label="simple table">
                     <TableHead>
@@ -45,7 +59,7 @@ function AdminSupplyComponent(props) {
                                         <TableCell align={"center"}>{row.supplyTime || "---"}</TableCell>
                                         <TableCell align={"center"}>{row.sum}</TableCell>
                                         <TableCell align="center">{row.comment || "---"}</TableCell>
-                                        <TableCell align="center">{row.createdAt}</TableCell>
+                                        <TableCell align="center">{row.createdAt.split(/T|Z/g).join(" ")}</TableCell>
                                         {/*<TableCell align="center">*/}
                                         {/*    <ContextMenu item={row} setSnackbarMessage={setMessage} clickSnackbar={handleClick}/>*/}
                                         {/*</TableCell>*/}

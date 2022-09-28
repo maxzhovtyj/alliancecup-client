@@ -1,0 +1,48 @@
+@import '../../../../variables';
+
+.pageTitle {
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.supplyInfoWrapper {
+  max-width: 625px;
+  width: 100%;
+}
+
+p {
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  font-size: 1.225rem;
+}
+
+.supplyInfoItem {
+  display: grid;
+  grid-template-columns: 2fr 5fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.paymentTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.paymentInfo {
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.paymentFieldsWrapper {
+  display: grid;
+  gap: 1rem;
+}
+
+.removeBtn {
+}
