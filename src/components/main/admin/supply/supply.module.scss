@@ -25,10 +25,19 @@ p {
   margin-bottom: 2rem;
 }
 
-.paymentTitle {
+.supplyInfoTitle {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+}
+
+.paymentTitle {
+}
+
+.paymentTitleWrapper {
+  margin-top: 8px;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
 .paymentInfo {

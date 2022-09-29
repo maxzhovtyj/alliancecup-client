@@ -16,9 +16,9 @@ import {AllianceInputLabel, AllianceSelect, muiTextBtnTheme} from "../../../../U
 import classes from "../../categories/products/products.module.scss";
 import {ThemeProvider} from "@mui/material/styles";
 import SearchBar from "../../../../UI/searchBar/searchBar";
-import ContextMenu from "../../../../UI/adminProductContextMenu/contextMenu";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import SimpleSnackbar from "../../../../UI/snackbar";
+import ContextMenuProduct from "../../../../UI/contextMenu/contextMenuProduct";
 
 function AdminProductsComponent() {
     const dispatch = useDispatch()
@@ -116,7 +116,7 @@ function AdminProductsComponent() {
                                         <TableCell align="center">{row.packages_in_box}</TableCell>
                                         <TableCell align="center">{row.amount_in_stock}</TableCell>
                                         <TableCell align="center">
-                                            <ContextMenu item={row} setSnackbarMessage={setMessage} clickSnackbar={handleClick}/>
+                                            <ContextMenuProduct item={row} setSnackbarMessage={setMessage} clickSnackbar={handleClick}/>
                                         </TableCell>
                                     </TableRow>
                                 ))

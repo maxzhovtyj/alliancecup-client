@@ -29,7 +29,7 @@ export class AdminService {
 
     static async deleteCategory(categoryId) {
         try {
-            const response = $api.delete(`/api/admin/category?id=${categoryId}`).catch(function (error) {
+            const response = await $api.delete(`/api/admin/category?id=${categoryId}`).catch(function (error) {
                 if (error.response.status === 401) {
                     throw new Error("Спочатку увійдіть")
                 }
@@ -52,4 +52,44 @@ export class AdminService {
             return e
         }
     }
+
+    static async getInventories(createdAt) {
+        try {
+            return await $api.get(`/api/admin/inventories?createdAt=${createdAt}`).catch(function (error) {
+                if (error.response.status === 401) {
+                    throw new Error("Спочатку увійдіть")
+                }
+                if (error.response.status === 403) {
+                    throw new Error("Доступ заборонено")
+                }
+                if (error.response.status === 400) {
+                    throw new Error("Ви надали хибні дані")
+                }
+                if (error.response.status === 500) {
+                    throw new Error("Щось пішло не так")
+                }
+            })
+        } catch (e) {
+            return e
+        }
+    }
+
+    static async getInventoryProducts(id) {
+        try {
+            return await $api.get(`/api/admin/inventory-products?id=${id}`).catch(function (error) {
+                if (error.response.status === 401) {
+                    throw new Error("Спочатку увійдіть")
+                }
+                if (error.response.status === 403) {
+                    throw new Error("Доступ заборонено")
+                }
+                if (error.response.status === 400) {
+                    throw new Error("Ви надали хибні дані")
+                }
+            })
+        } catch (e) {
+            return e
+        }
+    }
+
 }

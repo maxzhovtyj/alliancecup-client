@@ -24,6 +24,9 @@ import ChangePasswordComponent from "./userCabinet/components/changePassword/cha
 import AdminProductsComponent from "./admin/products/adminProducts.component";
 import AdminSupplyComponent from "./admin/supply/adminSupply.component";
 import AdminNewSupplyComponent from "./admin/supply/adminNewSupply.component";
+import AdminInventoryComponent from "./admin/inventory/adminInventory.component";
+import AdminInventoryProductsComponent from "./admin/inventory/adminInventoryProducts.component";
+import AdminSupplyProductsComponent from "./admin/supply/adminSupplyProducts.component";
 
 function MainComponent() {
     return (
@@ -53,7 +56,10 @@ function MainComponent() {
                                 <Route index element={<Navigate to="products" replace />} />
                                 <Route path={"products"} element={<AdminProductsComponent/>}/>
                                 <Route path={"supply"} element={<AdminSupplyComponent/>}/>
+                                <Route path={"supply/:id"} element={<AdminSupplyProductsComponent/>}/>
                                 <Route path={"new-supply"} element={<AdminNewSupplyComponent/>}/>
+                                <Route path={"inventory"} element={<AdminInventoryComponent/>}/>
+                                <Route path={"inventory/:id"} element={<AdminInventoryProductsComponent/>}/>
                             </Route>
                         {/*</Route>*/}
                     {/*</Route>*/}

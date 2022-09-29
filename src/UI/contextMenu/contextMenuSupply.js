@@ -1,28 +1,26 @@
 import * as React from 'react';
+
 import MenuItem from '@mui/material/MenuItem';
 import {Divider, IconButton, ListItemIcon, ListItemText, Menu} from "@mui/material";
-
 import {MoreVertRounded} from "@mui/icons-material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import DescriptionIcon from '@mui/icons-material/Description';
-import {AdminService} from "../../service/AdminService";
+import InventoryIcon from '@mui/icons-material/Inventory';
 
-export default function ContextMenu({item, setSnackbarMessage, clickSnackbar}) {
+import {NavLink} from "react-router-dom";
+
+export default function ContextMenuSupply({item}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
 
     const handleDelete = () => {
-        AdminService.deleteProduct(item.id).then(res => {
-            setSnackbarMessage(res.message)
-            clickSnackbar()
-        })
         setAnchorEl(null);
     }
     return (
@@ -45,24 +43,22 @@ export default function ContextMenu({item, setSnackbarMessage, clickSnackbar}) {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem onClick={handleClose}>
-                    <ListItemIcon>
-                        <DescriptionIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText>Edit description</ListItemText>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                    <ListItemIcon>
-                        <EditIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText>Edit</ListItemText>
-                </MenuItem>
+                <NavLink to={`/user/admin/supply/${item.id}`}>
+                    <MenuItem onClick={handleClose}>
+                        <ListItemIcon>
+                            <InventoryIcon fontSize="small"/>
+                        </ListItemIcon>
+                        <ListItemText>Товари</ListItemText>
+                    </MenuItem>
+                </NavLink>
+
                 <Divider/>
+
                 <MenuItem onClick={handleDelete}>
                     <ListItemIcon>
-                        <DeleteIcon fontSize="small" />
+                        <DeleteIcon fontSize="small"/>
                     </ListItemIcon>
-                    <ListItemText>Delete</ListItemText>
+                    <ListItemText>Видалити</ListItemText>
                 </MenuItem>
             </Menu>
         </div>

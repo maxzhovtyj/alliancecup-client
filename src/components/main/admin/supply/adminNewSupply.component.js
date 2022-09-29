@@ -159,16 +159,20 @@ function AdminNewSupplyComponent() {
 
                 <FormControl>
                     <div className={classes.supplyInfoItem}>
-                        <p>Постачальник</p>
+                        <div className={classes.supplyInfoTitle}>
+                            <p>Постачальник</p>
+                        </div>
                         <AllianceTextField name={"supplier"} value={supplyInfo.supplier} onChange={handleSupplyInfo}/>
                     </div>
 
                     <div className={classes.supplyInfoItem}>
                         <div className={classes.paymentTitle}>
-                            <p>Оплата</p>
-                            <IconButton onClick={handleAddPayment}>
-                                <AddIcon/>
-                            </IconButton>
+                            <div className={classes.paymentTitleWrapper}>
+                                <p>Оплата</p>
+                                <IconButton onClick={handleAddPayment}>
+                                    <AddIcon/>
+                                </IconButton>
+                            </div>
                         </div>
                         <div className={classes.paymentFieldsWrapper}>
                             {paymentInfo.map((item, index) =>
@@ -197,7 +201,9 @@ function AdminNewSupplyComponent() {
                     </div>
 
                     <div className={classes.supplyInfoItem}>
-                        <p>Коментарій</p>
+                        <div className={classes.supplyInfoTitle}>
+                            <p>Коментарій</p>
+                        </div>
                         <AllianceTextField
                             name={"comment"}
                             fullWidth

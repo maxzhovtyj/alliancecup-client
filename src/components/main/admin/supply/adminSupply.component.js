@@ -6,6 +6,8 @@ import {ThemeProvider} from "@mui/material/styles";
 import {muiTextBtnTheme} from "../../../../UI/styles";
 import classes from "../../categories/products/products.module.scss";
 import {NavLink} from "react-router-dom";
+import ContextMenuInventory from "../../../../UI/contextMenu/contextMenuInventory";
+import ContextMenuSupply from "../../../../UI/contextMenu/contextMenuSupply";
 
 function AdminSupplyComponent(props) {
     const dispatch = useDispatch()
@@ -43,6 +45,7 @@ function AdminSupplyComponent(props) {
                             <TableCell align="center">Сума</TableCell>
                             <TableCell align="center">Коментарій</TableCell>
                             <TableCell align="center">Створено</TableCell>
+                            <TableCell align="center">Дії</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -60,9 +63,9 @@ function AdminSupplyComponent(props) {
                                         <TableCell align={"center"}>{row.sum}</TableCell>
                                         <TableCell align="center">{row.comment || "---"}</TableCell>
                                         <TableCell align="center">{row.createdAt.split(/T|Z/g).join(" ")}</TableCell>
-                                        {/*<TableCell align="center">*/}
-                                        {/*    <ContextMenu item={row} setSnackbarMessage={setMessage} clickSnackbar={handleClick}/>*/}
-                                        {/*</TableCell>*/}
+                                        <TableCell align="center">
+                                            <ContextMenuSupply item={row}/>
+                                        </TableCell>
                                     </TableRow>
                                 ))
                                 :
