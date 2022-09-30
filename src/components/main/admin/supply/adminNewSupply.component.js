@@ -153,6 +153,8 @@ function AdminNewSupplyComponent() {
     return (
         <div>
             <div className={classes.supplyInfoWrapper}>
+                {/*TODO select supply time*/}
+                
                 <p className={classes.pageTitle}>
                     Нове постачання
                 </p>

@@ -21,6 +21,8 @@ const CANNOT_LOAD_INVENTORIES = "CANNOT_LOAD_INVENTORIES"
 
 const GET_INVENTORY_PRODUCTS = "GET_INVENTORY_PRODUCTS"
 
+const GET_PRODUCTS_TO_INVENTORY = "GET_PRODUCTS_TO_INVENTORY"
+
 export const adminReducer = (state = adminDefaultState, action) => {
     switch (action.type) {
         case GET_ALL_SUPPLY : {
@@ -56,6 +58,10 @@ export const adminReducer = (state = adminDefaultState, action) => {
         case GET_SUPPLY_PRODUCTS: {
             return {...state, supplyProducts: [...action.payload]}
         }
+
+        case GET_PRODUCTS_TO_INVENTORY: {
+            return {...state, products: [...action.payload]}
+        }
         default:
             return state
     }
@@ -73,3 +79,4 @@ export const getMoreInventoriesActionCreator = (payload) => ({type: GET_MORE_INV
 export const cannotLoadInventoriesActionCreator = () => ({type: CANNOT_LOAD_INVENTORIES})
 
 export const getInventoryProductsActionCreator = (payload) => ({type: GET_INVENTORY_PRODUCTS, payload})
+export const getProductsToInventoryActionCreator = (payload) => ({type: GET_PRODUCTS_TO_INVENTORY, payload})

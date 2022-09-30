@@ -7,6 +7,7 @@ import {ThemeProvider} from "@mui/material/styles";
 import ContextMenuInventory from "../../../../UI/contextMenu/contextMenuInventory";
 
 import classes from './inventory.module.scss'
+import {NavLink} from "react-router-dom";
 
 function AdminInventoryComponent(props) {
     const dispatch = useDispatch()
@@ -26,6 +27,18 @@ function AdminInventoryComponent(props) {
             <p className={classes.inventoryTitle}>
                 Інвентаризації
             </p>
+            <ThemeProvider theme={muiTextBtnTheme}>
+                <NavLink to={"/user/admin/new-inventory"}>
+                    <div style={{display: "flex", justifyContent: "right", marginBottom: "2rem"}}>
+                        <Button
+                            variant={"outlined"}
+                            color="alliance"
+                        >
+                            Нова інвентаризація
+                        </Button>
+                    </div>
+                </NavLink>
+            </ThemeProvider>
             <TableContainer component={Paper} sx={{margin: "2rem 0"}}>
                 <Table sx={{minWidth: 200}} aria-label="simple table">
                     <TableHead>

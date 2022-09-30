@@ -27,6 +27,7 @@ import AdminNewSupplyComponent from "./admin/supply/adminNewSupply.component";
 import AdminInventoryComponent from "./admin/inventory/adminInventory.component";
 import AdminInventoryProductsComponent from "./admin/inventory/adminInventoryProducts.component";
 import AdminSupplyProductsComponent from "./admin/supply/adminSupplyProducts.component";
+import AdminNewInventoryComponent from "./admin/inventory/adminNewInventory.component";
 
 function MainComponent() {
     return (
@@ -60,6 +61,8 @@ function MainComponent() {
                                 <Route path={"new-supply"} element={<AdminNewSupplyComponent/>}/>
                                 <Route path={"inventory"} element={<AdminInventoryComponent/>}/>
                                 <Route path={"inventory/:id"} element={<AdminInventoryProductsComponent/>}/>
+                                <Route path={"new-inventory"} element={<AdminNewInventoryComponent/>}/>
+
                             </Route>
                         {/*</Route>*/}
                     {/*</Route>*/}

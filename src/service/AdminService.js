@@ -55,7 +55,7 @@ export class AdminService {
 
     static async getInventories(createdAt) {
         try {
-            return await $api.get(`/api/admin/inventories?createdAt=${createdAt}`).catch(function (error) {
+            return await $api.get(`/api/admin/super/inventories?createdAt=${createdAt}`).catch(function (error) {
                 if (error.response.status === 401) {
                     throw new Error("Спочатку увійдіть")
                 }
@@ -76,7 +76,7 @@ export class AdminService {
 
     static async getInventoryProducts(id) {
         try {
-            return await $api.get(`/api/admin/inventory-products?id=${id}`).catch(function (error) {
+            return await $api.get(`/api/admin/super/inventory-products?id=${id}`).catch(function (error) {
                 if (error.response.status === 401) {
                     throw new Error("Спочатку увійдіть")
                 }
@@ -92,4 +92,25 @@ export class AdminService {
         }
     }
 
+    static async getProductsToInventory() {
+        try {
+            return await $api.get(`/api/admin/super/inventory`).catch(function (error) {
+                if (error.response.status === 401) {
+                    throw new Error("Спочатку увійдіть")
+                }
+                if (error.response.status === 403) {
+                    throw new Error("Доступ заборонено")
+                }
+                if (error.response.status === 400) {
+                    throw new Error("Ви надали хибні дані")
+                }
+            })
+        } catch (e) {
+            return e
+        }
+    }
+
+    static HandleMoney(price) {
+        return Number(parseFloat(String(price)).toPrecision(15))
+    }
 }

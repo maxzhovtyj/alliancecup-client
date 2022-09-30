@@ -3,3 +3,22 @@
   font-weight: 300;
   font-size: 2rem;
 }
+
+.inventoryBottomWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.inventorySumTitle {
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  font-size: 2rem;
+}
+
+.inventorySum {
+  margin-left: 1rem;
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  font-size: 2rem;
+}

@@ -3,7 +3,7 @@ import {
     cannotLoadInventoriesActionCreator,
     cannotLoadSupplyActionCreator,
     getInventoriesActionCreator, getInventoryProductsActionCreator, getMoreInventoriesActionCreator,
-    getMoreSupplyActionCreator,
+    getMoreSupplyActionCreator, getProductsToInventoryActionCreator,
     getSupplyActionCreator, getSupplyProductsActionCreator
 } from "./adminReducer";
 import {AdminService} from "../../service/AdminService";
@@ -72,6 +72,17 @@ export const fetchInventoryProducts = (id) => {
             // dispatch(cannotLoadInventoriesActionCreator())
         } else {
             dispatch(getInventoryProductsActionCreator(response.data))
+        }
+    }
+}
+
+export const fetchProductsToInventory = () => {
+    return async (dispatch) => {
+        const response = await AdminService.getProductsToInventory()
+        if (response.data === null) {
+            // dispatch(cannotLoadInventoriesActionCreator())
+        } else {
+            dispatch(getProductsToInventoryActionCreator(response.data))
         }
     }
 }
