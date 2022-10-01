@@ -1,5 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {
+    Button,
+    FormControl,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
+} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProductsToInventory} from "../../../../redux/adminRedux/adminFetch";
 import {AllianceTextField, muiTextBtnTheme} from "../../../../UI/styles";
@@ -43,10 +53,10 @@ function AdminNewInventoryComponent() {
     useEffect(() => {
         setInventory(products.map(item => ({
             ...item,
-            realAmount: 0,
-            realAmountPrice: 0,
-            difference: 0,
-            differencePrice: 0
+            realAmount: "",
+            realAmountPrice: "",
+            difference: "",
+            differencePrice: ""
         })))
     }, [products])
 
@@ -58,12 +68,15 @@ function AdminNewInventoryComponent() {
     const countInventorySum = (values) => {
         let sum = 0
         for (let i = 0; i < values.length; i++) {
-            sum += values[i].differencePrice
+            if (values[i].differencePrice !== "") {
+                sum += values[i].differencePrice
+            }
         }
 
         return sum
     }
 
+    // TODO save form data on submit
     return (
         <div>
             <p>Нова інвентаризація</p>
@@ -169,7 +182,8 @@ function AdminNewInventoryComponent() {
                 </ThemeProvider>
             </div>
         </div>
-    );
+    )
+        ;
 }
 
 export default AdminNewInventoryComponent;
