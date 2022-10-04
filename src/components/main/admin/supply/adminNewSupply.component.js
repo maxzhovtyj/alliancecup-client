@@ -87,14 +87,13 @@ function AdminNewSupplyComponent() {
 
     const handleAddProduct = () => {
         setProducts([...products, {
-            product: null,
-            productId: "",
-            packaging: "",
-            amount: "",
-            priceForUnit: "",
-            sumWithoutTax: 0,
-            tax: "",
-            totalSum: "",
+                productId: null,
+                packaging: "",
+                amount: 0,
+                priceForUnit: 0,
+                sumWithoutTax: 0,
+                tax: 0,
+                totalSum: 0,
         }])
     }
 
@@ -117,17 +116,27 @@ function AdminNewSupplyComponent() {
     }
 
     const handleProductsOptions = (event) => {
-        ProductService.search(event.target.value).then(res => setProductsOptions(res.data.data))
+        ProductService.search(event.target.value).then(res => {
+            if (res.data.data) {
+                setProductsOptions(res.data.data)
+            }
+        })
     }
 
     const handleSetProductIdValue = (index, newValue) => {
         console.log(newValue)
 
-        const values = [...products]
-        values[index]["product"] = newValue
-        values[index]["productId"] = newValue.id
-
-        setProducts(values)
+        if (newValue?.id) {
+            const values = [...products]
+            values[index]["product"] = newValue
+            values[index]["productId"] = newValue.id
+            setProducts(values)
+        } else {
+            const values = [...products]
+            values[index]["product"] = null
+            values[index]["productId"] = null
+            setProducts(values)
+        }
     }
 
     // function to create and save new supply
@@ -138,10 +147,11 @@ function AdminNewSupplyComponent() {
             products: products,
         }
 
-        const res = await SupplyService.newSupply(reqBody).then()
+        console.log(reqBody)
+        // const res = await SupplyService.newSupply(reqBody).then()
 
-        snackbar.setMessage(res?.message)
-        snackbar.handleClick()
+        // snackbar.setMessage(res?.message)
+        // snackbar.handleClick()
     }
 
     function HandleMoney(price) {
@@ -154,7 +164,7 @@ function AdminNewSupplyComponent() {
         <div>
             <div className={classes.supplyInfoWrapper}>
                 {/*TODO select supply time*/}
-                
+
                 <p className={classes.pageTitle}>
                     Нове постачання
                 </p>
@@ -243,6 +253,8 @@ function AdminNewSupplyComponent() {
                                             onChange={handleProductsOptions}
                                             setValue={(event, newValue) => handleSetProductIdValue(index, newValue)}
                                             getOptionLabel={option => option.product_title}
+                                            noOptionsText={"Товарів не знайдено"}
+                                            IsOptionEqualToValue={(option, value) => option.product_title === value.product_title}
                                         />
                                     </TableCell>
                                     <TableCell align="center">

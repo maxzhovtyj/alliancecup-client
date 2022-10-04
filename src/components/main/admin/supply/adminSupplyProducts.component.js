@@ -3,7 +3,6 @@ import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchSupplyProducts} from "../../../../redux/adminRedux/adminFetch";
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import ContextMenuInventory from "../../../../UI/contextMenu/contextMenuInventory";
 
 function AdminSupplyProductsComponent(props) {
     const {id} = useParams()
