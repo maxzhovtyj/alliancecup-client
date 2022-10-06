@@ -110,23 +110,24 @@ export class AdminService {
         }
     }
 
-    static async getOrders(createdAt, status) {
+    static async getOrders(createdAt, status, search) {
         try {
-            return await $api.get(`/api/admin/orders?created_at=${createdAt || ""}&order_status=${status || ""}`)
-                .catch(function (error) {
-                    if (error.response.status === 401) {
-                        throw new Error("Спочатку увійдіть")
-                    }
-                    if (error.response.status === 403) {
-                        throw new Error("Доступ заборонено")
-                    }
-                    if (error.response.status === 400) {
-                        throw new Error("Ви надали хибні дані")
-                    }
-                    if (error.response.status === 500) {
-                        throw new Error("Щось пішло не так...")
-                    }
-                })
+            return await $api.get(
+                `/api/admin/orders?created_at=${createdAt || ""}&order_status=${status || ""}&search=${search || ""}`
+            ).catch(function (error) {
+                if (error.response.status === 401) {
+                    throw new Error("Спочатку увійдіть")
+                }
+                if (error.response.status === 403) {
+                    throw new Error("Доступ заборонено")
+                }
+                if (error.response.status === 400) {
+                    throw new Error("Ви надали хибні дані")
+                }
+                if (error.response.status === 500) {
+                    throw new Error("Щось пішло не так...")
+                }
+            })
         } catch (e) {
             return e
         }

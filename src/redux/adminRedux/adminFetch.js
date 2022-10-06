@@ -87,14 +87,14 @@ export const fetchProductsToInventory = () => {
     }
 }
 
-export const fetchOrders = (createdAt, orderStatus) => {
+export const fetchOrders = (createdAt, orderStatus, search) => {
     return async (dispatch) => {
-        const response = await AdminService.getOrders(createdAt, orderStatus)
-        if (response.data.data === null) {
+        const response = await AdminService.getOrders(createdAt, orderStatus, search)
+        if (response.data === null) {
             // dispatch(cannotLoadInventoriesActionCreator())
             dispatch(getOrdersActionCreator([]))
         } else {
-            dispatch(getOrdersActionCreator(response.data.data))
+            dispatch(getOrdersActionCreator(response.data))
         }
     }
 }

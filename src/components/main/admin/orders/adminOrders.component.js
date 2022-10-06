@@ -5,9 +5,22 @@ import {useEffect, useState} from "react";
 import {fetchOrders} from "../../../../redux/adminRedux/adminFetch";
 
 import ContextMenuOrders from "../../../../UI/contextMenu/contextMenuOrders";
-import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {
+    FormControl, InputLabel,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
+} from "@mui/material";
 
 import {API_URL} from "../../../../http/http";
+import Box from "@mui/material/Box";
+import MenuItem from "@mui/material/MenuItem";
+import {AllianceInputLabel, AllianceSelect} from "../../../../UI/styles";
+import SearchBar from "../../../../UI/searchBar/searchBar";
 
 const $fileApi = axios.create({
     responseType: "arraybuffer",
@@ -19,39 +32,69 @@ const IN_PROGRESS = "IN_PROGRESS"
 const PROCESSED = "PROCESSED"
 const COMPLETED = "COMPLETED"
 
-function AdminOrdersComponent(props) {
+function AdminOrdersComponent() {
     const dispatch = useDispatch()
     const orders = useSelector(state => state.admin.orders)
-    const [orderStatus, setOrderStatus] = useState(PROCESSED)
+
+    const [orderStatus, setOrderStatus] = useState("")
+    const [searchOrders, setSearchOrders] = useState("")
+    const [searchBar, setSearchBar] = useState("")
 
     useEffect(() => {
-        dispatch(fetchOrders("", orderStatus))
-    }, [dispatch, orderStatus])
+        dispatch(fetchOrders("", orderStatus, searchOrders))
+    }, [dispatch, orderStatus, searchOrders])
 
-    const getInvoice = async () => {
+    const getInvoice = async (orderId) => {
         try {
-            return await $fileApi.get("/api/invoice?id=92d078c7-8730-48af-9124-4d528112ebe0")
+            return await $fileApi.get(`/api/invoice?id=${orderId}`)
         } catch (e) {
             console.log(e)
         }
     }
 
-    const downloadInvoice = () => {
-        getInvoice().then(res => {
+    const downloadInvoice = (orderId) => {
+        getInvoice(orderId).then(res => {
             const file = new Blob([res.data], {type: 'application/pdf'});
 
             const fileURL = URL.createObjectURL(file);
             const link = document.createElement('a');
             link.href = fileURL;
-            link.download = "invoice.pdf";
+            link.download = `invoice-${orderId}.pdf`;
             link.click();
         })
     }
 
+    const handleOrderStatus = (event) => {
+        setOrderStatus(event.target.value)
+    }
+
+    const handleOnSearch = (event) => {
+        event.preventDefault()
+        setSearchOrders(searchBar)
+    }
     return (
         <div>
             <p>Orders</p>
-            <Button variant={"outlined"} onClick={downloadInvoice}>Download</Button>
+            <Box sx={{maxWidth: 300, marginTop: 2, marginBottom: 2}}>
+                <FormControl fullWidth>
+                    <AllianceInputLabel id="status-select">Статус</AllianceInputLabel>
+                    <AllianceSelect
+                        label={"Статус"}
+                        labelId={"status-select"}
+                        id="demo-status-select"
+                        value={orderStatus}
+                        onChange={handleOrderStatus}
+                    >
+
+                        <MenuItem value={IN_PROGRESS}>Надійшли</MenuItem>
+                        <MenuItem value={PROCESSED}>Оброблено</MenuItem>
+                        <MenuItem value={COMPLETED}>Завершено</MenuItem>
+                    </AllianceSelect>
+                </FormControl>
+            </Box>
+
+            <SearchBar value={searchBar} setValue={setSearchBar} onSearch={handleOnSearch}/>
+
             <TableContainer component={Paper} sx={{margin: "2rem 0"}}>
                 <Table sx={{minWidth: 200}} aria-label="simple table">
                     <TableHead>
@@ -85,7 +128,7 @@ function AdminOrdersComponent(props) {
                                         <TableCell align={"center"}>{row.payment_type_title}</TableCell>
                                         <TableCell align={"center"}>{row.created_at.split(/T|Z/g).join(" ")}</TableCell>
                                         <TableCell align="center">
-                                            <ContextMenuOrders item={row}/>
+                                            <ContextMenuOrders item={row} downloadInvoice={downloadInvoice}/>
                                         </TableCell>
                                     </TableRow>
                                 ))

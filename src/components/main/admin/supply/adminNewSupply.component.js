@@ -23,6 +23,7 @@ import AutoCompleteSelect from "../../../../UI/autoCompleteSelect/autoCompleteSe
 import {ProductService} from "../../../../service/ProductService";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import SimpleSnackbar from "../../../../UI/snackbar";
+import {useNavigate} from "react-router-dom";
 
 
 function AdminNewSupplyComponent() {
@@ -147,11 +148,32 @@ function AdminNewSupplyComponent() {
             products: products,
         }
 
-        console.log(reqBody)
-        // const res = await SupplyService.newSupply(reqBody).then()
+        // console.log(reqBody)
+        const res = await SupplyService.newSupply(reqBody).then(res => {
+            console.log(res)
+        })
 
-        // snackbar.setMessage(res?.message)
-        // snackbar.handleClick()
+        setProductsOptions([])
+        setSupplyInfo({
+            supplier: '', comment: '',
+        })
+        setPaymentInfo([
+            {paymentType: "", paymentSum: 0},
+        ])
+        setProducts([
+            {
+                productId: null,
+                packaging: "",
+                amount: 0,
+                priceForUnit: 0,
+                sumWithoutTax: 0,
+                tax: 0,
+                totalSum: 0,
+            },
+        ])
+
+        snackbar.setMessage(res?.message)
+        snackbar.handleClick()
     }
 
     function HandleMoney(price) {

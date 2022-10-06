@@ -8,7 +8,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import {NavLink} from "react-router-dom";
 import {useState} from "react";
 
-export default function ContextMenuOrders({item}) {
+export default function ContextMenuOrders({item, downloadInvoice}) {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -52,7 +52,7 @@ export default function ContextMenuOrders({item}) {
                     </MenuItem>
                 </NavLink>
 
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={() => downloadInvoice(item.id)}>
                     <ListItemIcon>
                         <FileDownloadIcon fontSize="small"/>
                     </ListItemIcon>
