@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {AllianceTextField, muiTextBtnTheme} from "../../../../UI/styles";
 
 import classes from './supply.module.scss'
@@ -23,7 +23,6 @@ import AutoCompleteSelect from "../../../../UI/autoCompleteSelect/autoCompleteSe
 import {ProductService} from "../../../../service/ProductService";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import SimpleSnackbar from "../../../../UI/snackbar";
-import {useNavigate} from "react-router-dom";
 
 
 function AdminNewSupplyComponent() {

@@ -6,7 +6,8 @@ import {fetchOrders} from "../../../../redux/adminRedux/adminFetch";
 
 import ContextMenuOrders from "../../../../UI/contextMenu/contextMenuOrders";
 import {
-    FormControl, InputLabel,
+    Button,
+    FormControl,
     Paper,
     Table,
     TableBody,
@@ -19,8 +20,10 @@ import {
 import {API_URL} from "../../../../http/http";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
-import {AllianceInputLabel, AllianceSelect} from "../../../../UI/styles";
+import {AllianceInputLabel, AllianceSelect, muiTextBtnTheme} from "../../../../UI/styles";
 import SearchBar from "../../../../UI/searchBar/searchBar";
+import {NavLink} from "react-router-dom";
+import {ThemeProvider} from "@mui/material/styles";
 
 const $fileApi = axios.create({
     responseType: "arraybuffer",
@@ -95,8 +98,20 @@ function AdminOrdersComponent() {
 
             <SearchBar value={searchBar} setValue={setSearchBar} onSearch={handleOnSearch}/>
 
+            <ThemeProvider theme={muiTextBtnTheme}>
+                <NavLink to={"/user/admin/new-order"}>
+                    <div style={{display: "flex", justifyContent: "left", marginBottom: "2rem", marginTop: "2rem"}}>
+                        <Button
+                            variant={"outlined"}
+                            color="alliance"
+                        >
+                            Нове замовлення
+                        </Button>
+                    </div>
+                </NavLink>
+            </ThemeProvider>
             <TableContainer component={Paper} sx={{margin: "2rem 0"}}>
-                <Table sx={{minWidth: 200}} aria-label="simple table">
+                <Table sx={{minWidth: 200}}>
                     <TableHead>
                         <TableRow>
                             <TableCell align={"center"}>Id</TableCell>

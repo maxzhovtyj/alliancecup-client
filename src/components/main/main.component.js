@@ -30,6 +30,7 @@ import AdminSupplyProductsComponent from "./admin/supply/adminSupplyProducts.com
 import AdminNewInventoryComponent from "./admin/inventory/adminNewInventory.component";
 import AdminOrdersComponent from "./admin/orders/adminOrders.component";
 import AdminOrderInfoComponent from "./admin/orders/adminOrderInfo.component";
+import AdminNewOrderComponent from "./admin/orders/adminNewOrder.component";
 
 function MainComponent() {
     return (
@@ -58,15 +59,18 @@ function MainComponent() {
                             <Route path={"/user/admin"} element={<AdminComponent/>}>
                                 <Route index element={<Navigate to="products" replace />} />
                                 <Route path={"products"} element={<AdminProductsComponent/>}/>
+
                                 <Route path={"orders"} element={<AdminOrdersComponent/>}/>
                                 <Route path={"orders/:id"} element={<AdminOrderInfoComponent/>}/>
+                                <Route path={"new-order"} element={<AdminNewOrderComponent/>}/>
+
                                 <Route path={"supply"} element={<AdminSupplyComponent/>}/>
                                 <Route path={"supply/:id"} element={<AdminSupplyProductsComponent/>}/>
                                 <Route path={"new-supply"} element={<AdminNewSupplyComponent/>}/>
+
                                 <Route path={"inventory"} element={<AdminInventoryComponent/>}/>
                                 <Route path={"inventory/:id"} element={<AdminInventoryProductsComponent/>}/>
                                 <Route path={"new-inventory"} element={<AdminNewInventoryComponent/>}/>
-
                             </Route>
                         {/*</Route>*/}
                     {/*</Route>*/}
