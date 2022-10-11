@@ -21,9 +21,10 @@ import {useNavigate} from "react-router-dom";
 import {ShoppingService} from "../../../service/ShoppingService";
 import {NovaPoshtaService} from "../../../service/NovaPoshtaService";
 import OrderInfo from "./orderInfo";
+import {OrderService} from "../../../service/OrderService";
 
-const NovaOption = "Нова Пошта"
-const inTownOption = "Доставка AllianceCup по м. Рівне"
+export const NovaOption = "Нова Пошта"
+export const inTownOption = "Доставка AllianceCup по м. Рівне"
 
 function OrderComponent() {
     const navigate = useNavigate()
@@ -75,34 +76,6 @@ function OrderComponent() {
 
     const [disabled, setDisabled] = useState(false)
 
-    const validate = () => {
-        let tmp = {}
-
-        tmp.lastName = !orderInfo.lastName
-        tmp.firstName = !orderInfo.firstName
-        tmp.middleName = !orderInfo.middleName
-
-        tmp.deliveryTypeTitle = !orderInfo.deliveryTypeTitle
-        tmp.paymentTypeTitle = !orderInfo.paymentTypeTitle
-
-        tmp.email = !(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(orderInfo.email)
-        tmp.phone = orderInfo.phone?.length < 19
-
-        if (isNovaPoshta) {
-            tmp.novaPoshtaCity = !city
-            tmp.novaPoshtaDepartment = !department
-        }
-        if (isInTown) {
-            tmp.deliveryAddress = !address
-        }
-
-        setErrors({
-            ...tmp
-        })
-
-        return Object.values(tmp).every(value => value === false)
-    }
-
     const handleOrderInfo = (e) => {
         if (e.target.value === NovaOption) {
             setIsInTown(false)
@@ -119,7 +92,7 @@ function OrderComponent() {
     }
 
     function makeNewOrder() {
-        if (!validate(orderInfo, setErrors)) {
+        if (!OrderService.validate(orderInfo, isNovaPoshta, city, department, isInTown, address, setErrors)) {
             handleClick()
             setMessage("Ви не заповнили потрібні поля")
             return;

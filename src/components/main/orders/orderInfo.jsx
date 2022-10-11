@@ -1,5 +1,4 @@
 import React from 'react';
-import classes from "../cart/cart.module.scss";
 import {AllianceInputLabel, AllianceSelect, AllianceTextField} from "../../../UI/styles";
 import {TextMaskCustom} from "../../../utils/TextMask";
 import {FormControl, MenuItem} from "@mui/material";
