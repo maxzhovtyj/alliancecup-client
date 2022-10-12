@@ -4,8 +4,34 @@ import {ShoppingService} from "../../../../service/ShoppingService";
 import {NovaPoshtaService} from "../../../../service/NovaPoshtaService";
 import {inTownOption, NovaOption} from "../../orders/order.component";
 import {useEffect, useState} from "react";
+import {
+    Button,
+    IconButton,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
+} from "@mui/material";
+import {AllianceTextField} from "../../../../UI/styles";
+import AutoCompleteSelect from "../../../../UI/autoCompleteSelect/autoCompleteSelect";
+import {ProductService} from "../../../../service/ProductService";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function AdminNewOrderComponent() {
+    const [productsOptions, setProductsOptions] = useState([])
+    const [products, setProducts] = useState([
+        {
+            productId: null,
+            product: null,
+            quantity: 0,
+            price: 0,
+            price_for_quantity: 0,
+        }
+    ])
+
     const [isNovaPoshta, setIsNovaPoshta] = useState(false)
     const [isInTown, setIsInTown] = useState(false)
 
@@ -44,6 +70,13 @@ function AdminNewOrderComponent() {
         deliveryAddress: false
     })
 
+    useEffect(() => {
+        ShoppingService.fetchDeliveryTypes().then((res) => {
+            setDeliveryTypes(res.deliveryTypes)
+            setPaymentTypes(res.paymentTypes)
+        })
+    }, [])
+
     const handleOrderInfo = (e) => {
         if (e.target.value === NovaOption) {
             setIsInTown(false)
@@ -59,12 +92,38 @@ function AdminNewOrderComponent() {
         setOrderInfo({...orderInfo, [e.target.name]: e.target.value})
     }
 
-    useEffect(() => {
-        ShoppingService.fetchDeliveryTypes().then((res) => {
-            setDeliveryTypes(res.deliveryTypes)
-            setPaymentTypes(res.paymentTypes)
+    const handleSetProductIdValue = (index, newValue) => {
+        let values = [...products]
+        if (newValue?.id) {
+            values[index]["product"] = newValue
+            values[index]["productId"] = newValue.id
+            values[index]["price"] = newValue.price
+            values[index]["price_for_quantity"] = newValue.price * values[index]["quantity"]
+            setProducts(values)
+        } else {
+            values[index]["product"] = null
+            values[index]["productId"] = null
+            values[index]["price"] = 0
+            values[index]["price_for_quantity"] = 0
+            setProducts(values)
+        }
+    }
+
+    const handleProductsOptions = (event) => {
+        ProductService.search(event.target.value).then(res => {
+            if (res.data.data) {
+                setProductsOptions(res.data.data)
+            }
         })
-    }, [])
+    }
+
+    const handleProduct = (event, index) => {
+        let values = [...products]
+        const quantity = parseFloat(event.target.value) || 0
+        values[index][event.target.name] = quantity
+        values[index]["price_for_quantity"] = quantity * values[index]["price"]
+        setProducts(values)
+    }
 
     const handleCities = (event) => {
         NovaPoshtaService.getCities(event.target.value).then(res => setCities(res))
@@ -84,6 +143,22 @@ function AdminNewOrderComponent() {
     const handleSetDepartmentValue = (event, newValue) => {
         setDepartment(newValue)
     }
+
+    const handleRemovePayment = (index) => {
+        const values = [...products]
+        values.splice(index, 1)
+        setProducts(values)
+    }
+
+    const handleAddProduct = () => {
+        setProducts([...products, {
+            productId: null,
+            product: null,
+            quantity: 0,
+            price: 0,
+            price_for_quantity: 0,
+        }])
+    }
     return (
         <div>
             <p className={classes.pageTitle}>Нове замовлення</p>
@@ -101,6 +176,60 @@ function AdminNewOrderComponent() {
                     selectDepartments={{departments, department, handleSetDepartmentValue}}
                 />
             </div>
+            <Button onClick={handleAddProduct}>Додати товар</Button>
+            <TableContainer component={Paper} sx={{margin: "2rem 0"}}>
+                <Table sx={{minWidth: 200}}>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align={"center"}>Id</TableCell>
+                            <TableCell align={"center"}>Товар</TableCell>
+                            <TableCell align={"center"}>Ціна</TableCell>
+                            <TableCell align={"center"}>Кількість</TableCell>
+                            <TableCell align={"center"}>Сума</TableCell>
+                            <TableCell align={"center"}> </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {
+                            (products?.length)
+                                ?
+                                products.map((row, index) => (
+                                    <TableRow
+                                        key={index}
+                                        sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                    >
+                                        <TableCell align={"center"}>{row.product?.id}</TableCell>
+                                        <TableCell align={"center"}>
+                                            <AutoCompleteSelect
+                                                options={productsOptions}
+                                                onChange={handleProductsOptions}
+                                                setValue={(event, newValue) => handleSetProductIdValue(index, newValue)}
+                                                getOptionLabel={option => option.product_title}
+                                                noOptionsText={"Товарів не знайдено"}
+                                                IsOptionEqualToValue={(option, value) => option.product_title === value.product_title}
+                                            />
+                                        </TableCell>
+                                        <TableCell align={"center"}>{row.product?.price || 0} грн</TableCell>
+                                        <TableCell align={"center"}>
+                                            <AllianceTextField
+                                                name={"quantity"}
+                                                value={row.quantity}
+                                                onChange={(event) => handleProduct(event, index)}
+                                            />
+                                        </TableCell>
+                                        <TableCell align={"center"}>{row.price_for_quantity}</TableCell>
+                                        <TableCell align={"center"}>
+                                            <IconButton onClick={() => handleRemovePayment(index)}>
+                                                <DeleteIcon/>
+                                            </IconButton>
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                                : " "
+                        }
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </div>
     );
 }

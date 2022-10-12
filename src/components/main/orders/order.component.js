@@ -36,17 +36,19 @@ function OrderComponent() {
     const dispatch = useDispatch()
     const cartProducts = useSelector(state => state.cartPage)
 
-    const [isNovaPoshta, setIsNovaPoshta] = useState(false)
-    const [isInTown, setIsInTown] = useState(false)
-
     const [deliveryTypes, setDeliveryTypes] = useState([])
+
+    const [city, setCity] = useState(null)
+    const [department, setDepartment] = useState(null)
+
+    const [isInTown, setIsInTown] = useState(false)
+    const [isNovaPoshta, setIsNovaPoshta] = useState(false)
+
     const [paymentTypes, setPaymentTypes] = useState([])
 
     const [cities, setCities] = useState([])
     const [departments, setDepartments] = useState([])
 
-    const [city, setCity] = useState(null)
-    const [department, setDepartment] = useState(null)
 
     const [address, setAddress] = useState(null)
 
@@ -75,6 +77,17 @@ function OrderComponent() {
     })
 
     const [disabled, setDisabled] = useState(false)
+
+    useEffect(() => {
+        dispatch(fetchUserCart(isAuth))
+    }, [dispatch, isAuth])
+
+    useEffect(() => {
+        ShoppingService.fetchDeliveryTypes().then((res) => {
+            setDeliveryTypes(res.deliveryTypes)
+            setPaymentTypes(res.paymentTypes)
+        })
+    }, [])
 
     const handleOrderInfo = (e) => {
         if (e.target.value === NovaOption) {
@@ -143,17 +156,6 @@ function OrderComponent() {
                 navigate("/")
             })
     }
-
-    useEffect(() => {
-        dispatch(fetchUserCart(isAuth))
-    }, [dispatch, isAuth])
-
-    useEffect(() => {
-        ShoppingService.fetchDeliveryTypes().then((res) => {
-            setDeliveryTypes(res.deliveryTypes)
-            setPaymentTypes(res.paymentTypes)
-        })
-    }, [])
 
     const handleCities = (event) => {
         NovaPoshtaService.getCities(event.target.value).then(res => setCities(res))

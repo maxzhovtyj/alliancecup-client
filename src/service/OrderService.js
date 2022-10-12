@@ -1,5 +1,5 @@
 export class OrderService {
-    static validate (orderInfo, isNovaPoshta, city, department, isInTown, address, setErrors) {
+    static validate(orderInfo, isNovaPoshta, city, department, isInTown, address, setErrors) {
         let tmp = {}
 
         tmp.lastName = !orderInfo.lastName
