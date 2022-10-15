@@ -19,6 +19,7 @@ import SearchBar from "../../../../UI/searchBar/searchBar";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import SimpleSnackbar from "../../../../UI/snackbar";
 import ContextMenuProduct from "../../../../UI/contextMenu/contextMenuProduct";
+import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 
 function AdminProductsComponent() {
     const dispatch = useDispatch()
@@ -92,9 +93,8 @@ function AdminProductsComponent() {
                             <TableCell align={"center"}>Id</TableCell>
                             <TableCell align={"center"}>Категорія</TableCell>
                             <TableCell align="left">Назва</TableCell>
-                            <TableCell align="center">Price</TableCell>
-                            <TableCell align="center">Шт/уп</TableCell>
-                            <TableCell align="center">Уп/ящ</TableCell>
+                            <TableCell align="center">Ціна</TableCell>
+                            <TableCell align="center">Пакування</TableCell>
                             <TableCell align="center">Кількість</TableCell>
                             <TableCell align="center">Управління</TableCell>
                         </TableRow>
@@ -112,11 +112,15 @@ function AdminProductsComponent() {
                                         <TableCell align={"center"}>{row.category_title}</TableCell>
                                         <TableCell component="th" scope="row">{row.product_title}</TableCell>
                                         <TableCell align="center">{row.price}</TableCell>
-                                        <TableCell align="center">{row.units_in_package}</TableCell>
-                                        <TableCell align="center">{row.packages_in_box}</TableCell>
+                                        <TableCell align="center">{
+                                            Object.entries(row.packaging).map(e => {
+                                            const [key, value] = e;
+                                            return <span key={key}>{value} {key} </span>;
+                                        })}</TableCell>
                                         <TableCell align="center">{row.amount_in_stock}</TableCell>
                                         <TableCell align="center">
-                                            <ContextMenuProduct item={row} setSnackbarMessage={setMessage} clickSnackbar={handleClick}/>
+                                            <ContextMenuProduct item={row} setSnackbarMessage={setMessage}
+                                                                clickSnackbar={handleClick}/>
                                         </TableCell>
                                     </TableRow>
                                 ))
@@ -130,13 +134,15 @@ function AdminProductsComponent() {
             </TableContainer>
             {
                 cannotLoadMore ? "" :
-                    <ThemeProvider theme={muiTextBtnTheme}>
-                        <div style={{display: "flex", justifyContent: "center", marginBottom: "2rem"}}>
-                            <Button onClick={loadMore} className={classes.loadMoreBtn}
-                                    variant={"text"}
-                                    color="alliance">Завантажити ще</Button>
-                        </div>
-                    </ThemeProvider>
+                    <AllianceButton
+                        onClick={loadMore}
+                        align={"center"}
+                        mb={"2rem"}
+                        mt={"2rem"}
+                        variant={"text"}
+                    >
+                        Завантажити ще
+                    </AllianceButton>
             }
             <SimpleSnackbar open={open} message={message} handleClose={handleClose}/>
         </div>

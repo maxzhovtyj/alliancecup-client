@@ -23,6 +23,7 @@ import AutoCompleteSelect from "../../../../UI/autoCompleteSelect/autoCompleteSe
 import {ProductService} from "../../../../service/ProductService";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import SimpleSnackbar from "../../../../UI/snackbar";
+import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 
 
 function AdminNewSupplyComponent() {
@@ -117,8 +118,8 @@ function AdminNewSupplyComponent() {
 
     const handleProductsOptions = (event) => {
         ProductService.search(event.target.value).then(res => {
-            if (res.data.data) {
-                setProductsOptions(res.data.data)
+            if (res.data) {
+                setProductsOptions(res.data)
             }
         })
     }
@@ -326,22 +327,16 @@ function AdminNewSupplyComponent() {
                                 </TableRow>)
                         }
                         <TableRow>
-                            <TableCell><Button onClick={handleAddProduct}>Додати товар</Button></TableCell>
+                            <TableCell>
+                                <AllianceButton variant={"text"} onClick={handleAddProduct}>Додати товар</AllianceButton>
+                            </TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
-            <ThemeProvider theme={muiTextBtnTheme}>
-                <div style={{display: "flex", justifyContent: "left", marginBottom: "2rem"}}>
-                    <Button
-                        variant={"outlined"}
-                        color="alliance"
-                        onClick={createNewSupply}
-                    >
-                        Створити
-                    </Button>
-                </div>
-            </ThemeProvider>
+            <AllianceButton onClick={createNewSupply} mb={"2rem"}>
+                Створити
+            </AllianceButton>
             <SimpleSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
         </div>
     );

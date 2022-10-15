@@ -12,6 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import {IconButton} from "@mui/material";
 import {ShoppingService} from "../../../../service/ShoppingService";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 
 function ProductItemComponent({product, setMessage, handleClick, deleteFavourite}) {
     const {isAuth} = useContext(AuthContext)
@@ -39,10 +40,8 @@ function ProductItemComponent({product, setMessage, handleClick, deleteFavourite
             amount_in_stock: product.amount_in_stock,
             article: product.amount_in_stock,
             img_url: product.img_url,
-            packages_in_box: product.packages_in_box,
             price: product.price,
             product_title: product.product_title,
-            units_in_package: product.units_in_package
         }
 
         ShoppingService.addToCart(isAuth, addToCartProduct).then(res => {
@@ -76,8 +75,12 @@ function ProductItemComponent({product, setMessage, handleClick, deleteFavourite
 
                 <div className={classes.productInfo}>
                     <div className={classes.stockInfo}>
-                        <span className={classes.rightBorder}>{product.units_in_package} шт/уп</span>
-                        <span>{product.packages_in_box} уп/ящ</span>
+                        {
+                            Object.entries(product.packaging).map(entry => {
+                                const [key, value] = entry;
+                                return <span key={key}>{value} {key}</span>;
+                            })
+                        }
                     </div>
                     <div className={classes.priceInfo}>
                         <span className={classes.rightBorder}>{product.price} грн/уп</span>
@@ -90,9 +93,9 @@ function ProductItemComponent({product, setMessage, handleClick, deleteFavourite
                             :
                             <div className={classes.buyInfo}>
                                 <span className={classes.rightBorder}>{priceAmount}</span>
-                                <ThemeProvider theme={muiTextBtnTheme}>
-                                    <Button variant={"text"} onClick={addToCart} color="alliance">Купити</Button>
-                                </ThemeProvider>
+                                <AllianceButton align={"center"} variant={"text"} onClick={addToCart}>
+                                    Купити
+                                </AllianceButton>
                             </div>
                     }
                     {

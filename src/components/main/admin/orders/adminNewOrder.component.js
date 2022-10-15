@@ -19,6 +19,7 @@ import {AllianceTextField} from "../../../../UI/styles";
 import AutoCompleteSelect from "../../../../UI/autoCompleteSelect/autoCompleteSelect";
 import {ProductService} from "../../../../service/ProductService";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 
 function AdminNewOrderComponent() {
     const [productsOptions, setProductsOptions] = useState([])
@@ -111,8 +112,8 @@ function AdminNewOrderComponent() {
 
     const handleProductsOptions = (event) => {
         ProductService.search(event.target.value).then(res => {
-            if (res.data.data) {
-                setProductsOptions(res.data.data)
+            if (res.data) {
+                setProductsOptions(res.data)
             }
         })
     }
@@ -159,6 +160,10 @@ function AdminNewOrderComponent() {
             price_for_quantity: 0,
         }])
     }
+
+    // TODO The value provided to Autocomplete is invalid.
+    //      None of the options match with ...
+    //      You can use the `isOptionEqualToValue` prop to customize the equality test.
     return (
         <div>
             <p className={classes.pageTitle}>Нове замовлення</p>
@@ -176,7 +181,14 @@ function AdminNewOrderComponent() {
                     selectDepartments={{departments, department, handleSetDepartmentValue}}
                 />
             </div>
-            <Button onClick={handleAddProduct}>Додати товар</Button>
+            <AllianceButton
+                onClick={handleAddProduct}
+                mb={"2rem"}
+                mt={"2rem"}
+                align={"left"}
+            >
+                Додати товар
+            </AllianceButton>
             <TableContainer component={Paper} sx={{margin: "2rem 0"}}>
                 <Table sx={{minWidth: 200}}>
                     <TableHead>
@@ -205,8 +217,6 @@ function AdminNewOrderComponent() {
                                                 onChange={handleProductsOptions}
                                                 setValue={(event, newValue) => handleSetProductIdValue(index, newValue)}
                                                 getOptionLabel={option => option.product_title}
-                                                noOptionsText={"Товарів не знайдено"}
-                                                IsOptionEqualToValue={(option, value) => option.product_title === value.product_title}
                                             />
                                         </TableCell>
                                         <TableCell align={"center"}>{row.product?.price || 0} грн</TableCell>

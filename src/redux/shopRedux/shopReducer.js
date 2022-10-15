@@ -30,10 +30,10 @@ export const shopReducer = (state = shopDefaultState, action) => {
             return {...state, filtrationList: []}
         }
         case GET_PRODUCTS_FROM_CATEGORY: {
-            return {...state, products: action.payload.data}
+            return {...state, products: action.payload}
         }
         case GET_MORE_PRODUCTS: {
-            return {...state, products: [...state.products, ...action.payload.data]}
+            return {...state, products: [...state.products, ...action.payload]}
         }
         case CANNOT_LOAD_PRODUCTS: {
             return {...state, statusNoMoreProducts: true}

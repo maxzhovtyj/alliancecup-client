@@ -40,7 +40,7 @@ export const fetchMoreProducts = ({id, createdAt, price, search, size, character
         const response = await $api.get(
             `/api/products?category=${id}&createdAt=${createdAt}&priceRange=${price[0]}:${price[1]}&size=${size}&characteristic=${characteristic}&search=${search}`
         )
-        if (response.data.data !== null) {
+        if (response.data !== null) {
             dispatch(getMoreProductsActionCreator(response.data))
         } else {
             dispatch(cannotLoadProductsActionCreator())
