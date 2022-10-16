@@ -161,9 +161,10 @@ function AdminNewOrderComponent() {
         }])
     }
 
-    // TODO The value provided to Autocomplete is invalid.
-    //      None of the options match with ...
-    //      You can use the `isOptionEqualToValue` prop to customize the equality test.
+    function makeOrder() {
+
+    }
+
     return (
         <div>
             <p className={classes.pageTitle}>Нове замовлення</p>
@@ -203,7 +204,7 @@ function AdminNewOrderComponent() {
                     </TableHead>
                     <TableBody>
                         {
-                            (products?.length)
+                            (products)
                                 ?
                                 products.map((row, index) => (
                                     <TableRow
@@ -217,6 +218,8 @@ function AdminNewOrderComponent() {
                                                 onChange={handleProductsOptions}
                                                 setValue={(event, newValue) => handleSetProductIdValue(index, newValue)}
                                                 getOptionLabel={option => option.product_title}
+                                                noOptionsText={"Товарів не знайдено"}
+                                                IsOptionEqualToValue={(option, value) => option.product_title === value.product_title}
                                             />
                                         </TableCell>
                                         <TableCell align={"center"}>{row.product?.price || 0} грн</TableCell>
@@ -240,6 +243,9 @@ function AdminNewOrderComponent() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <AllianceButton onClick={makeOrder} mb={"1rem"}>
+                Виконати замовлення
+            </AllianceButton>
         </div>
     );
 }

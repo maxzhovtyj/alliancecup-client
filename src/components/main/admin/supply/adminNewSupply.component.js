@@ -86,13 +86,13 @@ function AdminNewSupplyComponent() {
 
     const handleAddProduct = () => {
         setProducts([...products, {
-                productId: null,
-                packaging: "",
-                amount: 0,
-                priceForUnit: 0,
-                sumWithoutTax: 0,
-                tax: 0,
-                totalSum: 0,
+            productId: null,
+            packaging: "",
+            amount: 0,
+            priceForUnit: 0,
+            sumWithoutTax: 0,
+            tax: 0,
+            totalSum: 0,
         }])
     }
 
@@ -123,8 +123,6 @@ function AdminNewSupplyComponent() {
     }
 
     const handleSetProductIdValue = (index, newValue) => {
-        console.log(newValue)
-
         if (newValue?.id) {
             const values = [...products]
             values[index]["product"] = newValue
@@ -326,7 +324,9 @@ function AdminNewSupplyComponent() {
                         }
                         <TableRow>
                             <TableCell>
-                                <AllianceButton variant={"text"} onClick={handleAddProduct}>Додати товар</AllianceButton>
+                                <AllianceButton variant={"text"} onClick={handleAddProduct}>Додати
+                                    товар
+                                </AllianceButton>
                             </TableCell>
                         </TableRow>
                     </TableBody>
