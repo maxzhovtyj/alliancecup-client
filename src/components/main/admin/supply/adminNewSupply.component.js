@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
-import {AllianceTextField, muiTextBtnTheme} from "../../../../UI/styles";
+import {AllianceTextField} from "../../../../UI/styles";
 
 import classes from './supply.module.scss'
 import {
-    Button,
     FormControl,
     IconButton,
     Paper,
@@ -17,7 +16,6 @@ import {
 } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
-import {ThemeProvider} from "@mui/material/styles";
 import {SupplyService} from "../../../../service/SupplyService";
 import AutoCompleteSelect from "../../../../UI/autoCompleteSelect/autoCompleteSelect";
 import {ProductService} from "../../../../service/ProductService";

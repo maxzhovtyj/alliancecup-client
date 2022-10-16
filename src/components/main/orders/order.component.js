@@ -10,11 +10,6 @@ import SimpleSnackbar from "../../../UI/snackbar";
 import cartClasses from "../cart/cart.module.scss";
 import orderClasses from "./order.module.scss"
 
-import {ThemeProvider} from "@mui/material";
-import Button from "@mui/material/Button";
-
-import {muiTextBtnTheme} from "../../../UI/styles";
-
 import {useSnackbar} from "../../../hooks/useSnackbar";
 
 import {useNavigate} from "react-router-dom";
@@ -22,6 +17,7 @@ import {ShoppingService} from "../../../service/ShoppingService";
 import {NovaPoshtaService} from "../../../service/NovaPoshtaService";
 import OrderInfo from "./orderInfo";
 import {OrderService} from "../../../service/OrderService";
+import AllianceButton from "../../../UI/allianceCupButton/allianceButton";
 
 export const NovaOption = "Нова Пошта"
 export const inTownOption = "Доставка AllianceCup по м. Рівне"
@@ -190,16 +186,9 @@ function OrderComponent() {
                            selectCities={{cities, handleCities, city, handleSetCityValue}}
                            selectDepartments={{departments, department, handleSetDepartmentValue}}
                 />
-                <ThemeProvider theme={muiTextBtnTheme}>
-                    <Button disabled={disabled}
-                            sx={{marginTop: "1rem"}}
-                            color={"alliance"}
-                            variant={"outlined"}
-                            onClick={makeNewOrder}
-                    >
-                        Зробити замовлення
-                    </Button>
-                </ThemeProvider>
+                <AllianceButton onClick={makeNewOrder} disabled={disabled} mt={"1rem"}>
+                    Зробити замовлення
+                </AllianceButton>
             </div>
             <div className={cartClasses.productsList}>
                 {

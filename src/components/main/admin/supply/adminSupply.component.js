@@ -1,15 +1,14 @@
-import React, {useEffect} from 'react';
-import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+
 import {fetchMoreSupply, fetchSupply} from "../../../../redux/adminRedux/adminFetch";
-import {ThemeProvider} from "@mui/material/styles";
-import {muiTextBtnTheme} from "../../../../UI/styles";
-import classes from "../../categories/products/products.module.scss";
 import {NavLink} from "react-router-dom";
-import ContextMenuInventory from "../../../../UI/contextMenu/contextMenuInventory";
 import ContextMenuSupply from "../../../../UI/contextMenu/contextMenuSupply";
 
-function AdminSupplyComponent(props) {
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
+
+function AdminSupplyComponent() {
     const dispatch = useDispatch()
     const supply = useSelector(state => state.admin.supply)
     const loadMoreStatus = useSelector(state => state.admin.statusNoMoreSupply)
@@ -22,19 +21,11 @@ function AdminSupplyComponent(props) {
     }
     return (
         <div>
-            <ThemeProvider theme={muiTextBtnTheme}>
-                <NavLink to={"/user/admin/new-supply"}>
-                    <div style={{display: "flex", justifyContent: "right", marginBottom: "2rem"}}>
-                        <Button
-                            className={classes.loadMoreBtn}
-                            variant={"outlined"}
-                            color="alliance"
-                        >
-                            Нове постачання
-                        </Button>
-                    </div>
-                </NavLink>
-            </ThemeProvider>
+            <NavLink to={"/user/admin/new-supply"}>
+                <AllianceButton mb={"2rem"}>
+                    Нове постачання
+                </AllianceButton>
+            </NavLink>
             <TableContainer component={Paper} sx={{margin: "2rem 0"}}>
                 <Table sx={{minWidth: 200}} aria-label="simple table">
                     <TableHead>
@@ -62,7 +53,7 @@ function AdminSupplyComponent(props) {
                                         <TableCell align={"center"}>{row.supplyTime || "---"}</TableCell>
                                         <TableCell align={"center"}>{row.sum}</TableCell>
                                         <TableCell align="center">{row.comment || "---"}</TableCell>
-                                        <TableCell align="center">{row.createdAt.split(/T|Z/g).join(" ")}</TableCell>
+                                        <TableCell align="center">{row.createdAt.split(/[TZ]/g).join(" ")}</TableCell>
                                         <TableCell align="center">
                                             <ContextMenuSupply item={row}/>
                                         </TableCell>
@@ -78,13 +69,9 @@ function AdminSupplyComponent(props) {
             </TableContainer>
             {
                 loadMoreStatus ? "" :
-                    <ThemeProvider theme={muiTextBtnTheme}>
-                        <div style={{display: "flex", justifyContent: "center", marginBottom: "2rem"}}>
-                            <Button onClick={loadMore} className={classes.loadMoreBtn}
-                                    variant={"text"}
-                                    color="alliance">Завантажити ще</Button>
-                        </div>
-                    </ThemeProvider>
+                    <AllianceButton onClick={loadMore} mb={"2rem"}>
+                        Завантажити ще
+                    </AllianceButton>
             }
         </div>
     );

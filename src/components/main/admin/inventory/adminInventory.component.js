@@ -1,15 +1,14 @@
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchInventories, fetchMoreInventories} from "../../../../redux/adminRedux/adminFetch";
-import {muiTextBtnTheme} from "../../../../UI/styles";
-import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import {ThemeProvider} from "@mui/material/styles";
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import ContextMenuInventory from "../../../../UI/contextMenu/contextMenuInventory";
 
 import classes from './inventory.module.scss'
 import {NavLink} from "react-router-dom";
+import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 
-function AdminInventoryComponent(props) {
+function AdminInventoryComponent() {
     const dispatch = useDispatch()
     const inventories = useSelector(state => state.admin.inventories)
     const canLoad = useSelector(state => state.admin.statusNoMoreInventories)
@@ -27,18 +26,13 @@ function AdminInventoryComponent(props) {
             <p className={classes.inventoryTitle}>
                 Інвентаризації
             </p>
-            <ThemeProvider theme={muiTextBtnTheme}>
-                <NavLink to={"/user/admin/new-inventory"}>
-                    <div style={{display: "flex", justifyContent: "right", marginBottom: "2rem"}}>
-                        <Button
-                            variant={"outlined"}
-                            color="alliance"
-                        >
-                            Нова інвентаризація
-                        </Button>
-                    </div>
-                </NavLink>
-            </ThemeProvider>
+
+            <NavLink to={"/user/admin/new-inventory"}>
+                <AllianceButton mb={"2rem"} align={"right"}>
+                    Нова інвентаризація
+                </AllianceButton>
+            </NavLink>
+
             <TableContainer component={Paper} sx={{margin: "2rem 0"}}>
                 <Table sx={{minWidth: 200}} aria-label="simple table">
                     <TableHead>
@@ -75,13 +69,9 @@ function AdminInventoryComponent(props) {
             {
                 !canLoad
                     ?
-                    <ThemeProvider theme={muiTextBtnTheme}>
-                        <div style={{display: "flex", justifyContent: "left", marginBottom: "2rem"}}>
-                            <Button onClick={loadMoreInventories}
-                                    variant={"outlined"}
-                                    color="alliance">Завантажити ще</Button>
-                        </div>
-                    </ThemeProvider>
+                    <AllianceButton onClick={loadMoreInventories} mb={"2rem"}>
+                        Завантажити ще
+                    </AllianceButton>
                     : ""
             }
         </div>

@@ -1,7 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
-    Button,
-    FormControl,
     Paper,
     Table,
     TableBody,
@@ -12,10 +10,10 @@ import {
 } from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProductsToInventory} from "../../../../redux/adminRedux/adminFetch";
-import {AllianceTextField, muiTextBtnTheme} from "../../../../UI/styles";
-import {ThemeProvider} from "@mui/material/styles";
+import {AllianceTextField} from "../../../../UI/styles";
 
 import classes from './inventory.module.scss'
+import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 
 function AdminNewInventoryComponent() {
     const dispatch = useDispatch()
@@ -60,6 +58,7 @@ function AdminNewInventoryComponent() {
         })))
     }, [products])
 
+    // TODO inventory
     const doInventory = () => {
         console.log(inventory)
     }
@@ -113,7 +112,7 @@ function AdminNewInventoryComponent() {
                                         <TableCell align={"center"}>{row.title}</TableCell>
                                         <TableCell align={"center"}>{row.productPrice}</TableCell>
                                         <TableCell align={"center"}>
-                                            {row.lastInventory?.split(/T|Z/).join(" ") || "---"}
+                                            {row.lastInventory?.split(/[TZ]/).join(" ") || "---"}
                                         </TableCell>
                                         <TableCell align={"center"}>{row.initialAmount || "---"}</TableCell>
                                         <TableCell align={"center"}>{row.currentSupply}</TableCell>
@@ -169,17 +168,9 @@ function AdminNewInventoryComponent() {
                         {inventorySum} ₴
                     </span>
                 </div>
-                <ThemeProvider theme={muiTextBtnTheme}>
-                    <div style={{display: "flex", justifyContent: "left", marginBottom: "2rem"}}>
-                        <Button
-                            variant={"outlined"}
-                            color="alliance"
-                            onClick={doInventory}
-                        >
-                            Провести інвентаризацію
-                        </Button>
-                    </div>
-                </ThemeProvider>
+                <AllianceButton onClick={doInventory} mb={"2rem"}>
+                    Провести інвентаризацію
+                </AllianceButton>
             </div>
         </div>
     )

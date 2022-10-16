@@ -3,12 +3,11 @@ import {useSnackbar} from "../../../../../hooks/useSnackbar";
 
 import {AuthService} from "../../../../../service/AuthService";
 
-import {AllianceTextField, muiTextBtnTheme} from "../../../../../UI/styles";
-import {Button} from "@mui/material";
-import {ThemeProvider} from "@mui/material/styles";
+import {AllianceTextField} from "../../../../../UI/styles";
 
 import classes from './changePassword.module.scss'
 import SimpleSnackbar from "../../../../../UI/snackbar";
+import AllianceButton from "../../../../../UI/allianceCupButton/allianceButton";
 
 function ChangePasswordComponent(props) {
     const [errors, setErrors] = useState({
@@ -93,15 +92,9 @@ function ChangePasswordComponent(props) {
                     />
                 </div>
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center", marginTop: "1rem"}}>
-                    <ThemeProvider theme={muiTextBtnTheme}>
-                        <Button
-                            onClick={changePassword}
-                            color={"alliance"}
-                            fullWidth
-                        >
-                            Зберегти
-                        </Button>
-                    </ThemeProvider>
+                    <AllianceButton onClick={changePassword} mt={"1rem"}>
+                        Зберегти
+                    </AllianceButton>
                 </div>
             </div>
             <SimpleSnackbar open={open} message={message} handleClose={handleClose}/>

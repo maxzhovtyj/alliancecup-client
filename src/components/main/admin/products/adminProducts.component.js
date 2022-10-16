@@ -12,9 +12,7 @@ import {
 } from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchCategories, fetchMoreProducts, fetchProducts} from "../../../../redux/shopRedux/shopFetch";
-import {AllianceInputLabel, AllianceSelect, muiTextBtnTheme} from "../../../../UI/styles";
-import classes from "../../categories/products/products.module.scss";
-import {ThemeProvider} from "@mui/material/styles";
+import {AllianceInputLabel, AllianceSelect} from "../../../../UI/styles";
 import SearchBar from "../../../../UI/searchBar/searchBar";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import SimpleSnackbar from "../../../../UI/snackbar";

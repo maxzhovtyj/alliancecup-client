@@ -3,10 +3,7 @@ import {Link} from 'react-router-dom'
 import classes from './products.module.scss'
 
 import noopImg from '../../../../assets/noopProduct.svg'
-import Button from "@mui/material/Button";
 
-import {ThemeProvider} from '@mui/material/styles';
-import {muiTextBtnTheme} from "../../../../UI/styles";
 import {AuthContext} from "../../../../context/AuthContext";
 import CloseIcon from "@mui/icons-material/Close";
 import {IconButton} from "@mui/material";

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {
     fetchCategories,
@@ -11,14 +11,13 @@ import {Link, useParams} from "react-router-dom";
 import ProductItemComponent from "./productItem.component";
 
 import classes from './products.module.scss'
-import {Button, Stack} from "@mui/material";
+import {Stack} from "@mui/material";
 import SimpleSnackbar from "../../../../UI/snackbar";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
-import {muiTextBtnTheme} from "../../../../UI/styles";
-import {ThemeProvider} from "@mui/material/styles";
 import RangeSlider from "../../../../UI/rangeSlider/rangeSlider";
 import FiltrationItem from "../filtrationItem/filtrationItem";
 import AllianceChip from "../../../../UI/AllianceChip";
+import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 
 function ProductsComponent() {
     const dispatch = useDispatch()
@@ -30,9 +29,7 @@ function ProductsComponent() {
 
     let {open, setMessage, handleClick, message, handleClose} = useSnackbar()
 
-    const [paramsChips, setParamsChips] = useState([
-
-    ])
+    const [paramsChips, setParamsChips] = useState([])
     let [filtrationParent, setFiltrationParent] = useState({
         parentName: "category_id",
         id: useParams().id
@@ -89,7 +86,8 @@ function ProductsComponent() {
             <Stack direction="row" spacing={1} className={classes.chipsList}>
                 {
                     paramsChips.map((chipItem, index) =>
-                    <AllianceChip key={index} name={chipItem} label={chipItem} onDelete={handleDelete} variant="outlined"/>)
+                        <AllianceChip key={index} name={chipItem} label={chipItem} onDelete={handleDelete}
+                                      variant="outlined"/>)
                 }
             </Stack>
             <div className={classes.productsPageWrapper}>
@@ -164,16 +162,11 @@ function ProductsComponent() {
                                 </div>
                                 {
                                     cannotLoadMore
-                                        ?
-                                        ""
+                                        ? ""
                                         :
-                                        <ThemeProvider theme={muiTextBtnTheme}>
-                                            <div style={{display: "flex", justifyContent: "center", marginTop: "1rem"}}>
-                                                <Button onClick={loadMore} className={classes.loadMoreBtn}
-                                                        variant={"text"}
-                                                        color="alliance">Завантажити ще</Button>
-                                            </div>
-                                        </ThemeProvider>
+                                        <AllianceButton onClick={loadMore} mt={"1rem"}>
+                                            Завантажити ще
+                                        </AllianceButton>
                                 }
                                 <SimpleSnackbar open={open} message={message} handleClose={handleClose}/>
                             </div>
