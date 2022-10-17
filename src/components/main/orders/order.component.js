@@ -114,7 +114,7 @@ function OrderComponent() {
                 user_middle_name: orderInfo.middleName,
                 user_phone_number: orderInfo.phone,
                 user_email: orderInfo.email,
-                order_sum_price: cartProducts.sum,
+                sum_price: cartProducts.sum,
                 delivery_type_title: orderInfo.deliveryTypeTitle,
                 payment_type_title: orderInfo.paymentTypeTitle
             }
