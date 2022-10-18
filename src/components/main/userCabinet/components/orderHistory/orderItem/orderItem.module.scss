@@ -22,6 +22,33 @@
 
 }
 
+.orderProductItem {
+  display: flex;
+  gap: 2rem;
+  img {
+    width: 45px;
+    height: 45px;
+  }
+  span {
+    font-family: 'Roboto', serif;
+    font-weight: 300;
+    color: $alliance-grey;
+    font-size: 14px;
+  }
+  .orderProductInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .productTitle {
+    transition: .3s ease-in-out;
+    &:hover{
+      color: $alliance-orange;
+    }
+  }
+}
+
 .orderDeliveryInfo {
 
 }

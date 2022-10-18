@@ -15,4 +15,12 @@ export class UserService {
             return e
         }
     }
+
+    static truncTimestamp (createdAt) {
+        createdAt = createdAt.split(/[TZ]/g)
+        let dotInd = createdAt[1].indexOf(".")
+        createdAt[1] = createdAt[1].slice(0, dotInd)
+
+        return createdAt.join(" ")
+    }
 }

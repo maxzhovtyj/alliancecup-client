@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import $api from "../../../http/http";
 import {useParams} from "react-router-dom";
 
@@ -6,19 +6,9 @@ import classes from './product.module.scss'
 
 import noopImg from '../../../assets/noopProduct.svg'
 
-function ProductComponent(props) {
+function ProductComponent() {
     const {id} = useParams()
-    let [product, setProduct] = useState({
-        info: {
-            article: "",
-            product_title: "",
-            img_url: "",
-            price: "",
-            units_in_package: "",
-            amount_in_stock: "",
-        },
-        description: []
-    })
+    let [product, setProduct] = useState({})
     useEffect(() => {
         async function fetchProduct() {
             try {
@@ -35,10 +25,10 @@ function ProductComponent(props) {
     return (
         <div className={classes.productWrapper}>
             <div className={classes.productInfo}>
-                <img className={classes.productImg} src={product.info.img_url || noopImg} alt="img"/>
+                <img className={classes.productImg} src={product.img_url || noopImg} alt="img"/>
                 <div className={classes.textInfo}>
-                    <p className={classes.productTitle}>{product.info.product_title}</p>
-                    <p className={classes.productArticle}>Артикул: {product.info.article}</p>
+                    <p className={classes.productTitle}>{product.product_title}</p>
+                    <p className={classes.productArticle}>Артикул: {product.article}</p>
                 </div>
             </div>
         </div>
