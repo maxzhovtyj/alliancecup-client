@@ -16,6 +16,21 @@ export class UserService {
         }
     }
 
+    static async userInfo() {
+        try {
+            return await $api.get("/api/client/personal-info").catch(function (err) {
+                if (err.response.status === 401) {
+                    throw new Error("Спочатку увійдіть")
+                }
+                if (err.response.status === 500) {
+                    throw new Error("Щось пішло не так...")
+                }
+            })
+        } catch (e) {
+            return e
+        }
+    }
+
     static truncTimestamp (createdAt) {
         createdAt = createdAt.split(/[TZ]/g)
         let dotInd = createdAt[1].indexOf(".")
