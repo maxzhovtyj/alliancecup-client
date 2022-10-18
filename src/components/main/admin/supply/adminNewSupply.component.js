@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {AllianceTextField} from "../../../../UI/styles";
 
 import classes from './supply.module.scss'
@@ -23,14 +23,19 @@ import {useSnackbar} from "../../../../hooks/useSnackbar";
 import SimpleSnackbar from "../../../../UI/snackbar";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 
 function AdminNewSupplyComponent() {
     const snackbar = useSnackbar()
-    const [productsOptions, setProductsOptions] = useState([])
-    const [supplyInfo, setSupplyInfo] = useState({
-        supplier: '', comment: '',
-    })
 
+    const [productsOptions, setProductsOptions] = useState([])
+
+    const [dateValue, setDateValue] = useState(null);
+    const [supplyInfo, setSupplyInfo] = useState({
+        supplier: '', comment: '', supplyTime: null,
+    })
     const [paymentInfo, setPaymentInfo] = useState([
         {paymentType: "", paymentSum: 0},
     ])
@@ -137,7 +142,8 @@ function AdminNewSupplyComponent() {
     }
 
     // function to create and save new supply
-    const createNewSupply = async () => {
+    // TODO wrong supply time parsing on server
+    const createNewSupply = () => {
         const reqBody = {
             info: supplyInfo,
             payment: paymentInfo,
@@ -145,8 +151,9 @@ function AdminNewSupplyComponent() {
         }
 
         // console.log(reqBody)
-        const res = await SupplyService.newSupply(reqBody).then(res => {
-            console.log(res)
+        SupplyService.newSupply(reqBody).then(res => {
+            snackbar.setMessage(res?.message)
+            snackbar.handleClick()
         })
 
         setProductsOptions([])
@@ -167,9 +174,6 @@ function AdminNewSupplyComponent() {
                 totalSum: 0,
             },
         ])
-
-        snackbar.setMessage(res?.message)
-        snackbar.handleClick()
     }
 
     function HandleMoney(price) {
@@ -181,13 +185,27 @@ function AdminNewSupplyComponent() {
     return (
         <div>
             <div className={classes.supplyInfoWrapper}>
-                {/*TODO select supply time*/}
-
                 <p className={classes.pageTitle}>
                     Нове постачання
                 </p>
 
                 <FormControl>
+                    <div className={classes.supplyInfoItem}>
+                        <div className={classes.supplyInfoTitle}>
+                            <p>Час постачання</p>
+                        </div>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker
+                                label="Час постачання"
+                                value={supplyInfo.supplyTime}
+                                onChange={(newValue) => {
+                                    setSupplyInfo({...supplyInfo, "supplyTime": newValue})
+                                }}
+                                renderInput={(params) => <AllianceTextField {...params} />}
+                            />
+                        </LocalizationProvider>
+                    </div>
+
                     <div className={classes.supplyInfoItem}>
                         <div className={classes.supplyInfoTitle}>
                             <p>Постачальник</p>
