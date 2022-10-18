@@ -24,6 +24,7 @@ import {AllianceInputLabel, AllianceSelect} from "../../../../UI/styles";
 import SearchBar from "../../../../UI/searchBar/searchBar";
 import {NavLink} from "react-router-dom";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
+import {UserService} from "../../../../service/UserService";
 
 const $fileApi = axios.create({
     responseType: "arraybuffer",
@@ -132,10 +133,12 @@ function AdminOrdersComponent() {
                                             {[row.user_lastname, row.user_firstname, row.user_middle_name].join(" ")}
                                         </TableCell>
                                         <TableCell align={"center"}>{row.user_phone_number}</TableCell>
-                                        <TableCell align={"center"}>{row.order_sum_price} грн</TableCell>
+                                        <TableCell align={"center"}>{row.sum_price} грн</TableCell>
                                         <TableCell align={"center"}>{row.delivery_type_title}</TableCell>
                                         <TableCell align={"center"}>{row.payment_type_title}</TableCell>
-                                        <TableCell align={"center"}>{row.created_at.split(/T|Z/g).join(" ")}</TableCell>
+                                        <TableCell align={"center"}>
+                                            {UserService.truncTimestamp(row.created_at)}
+                                        </TableCell>
                                         <TableCell align="center">
                                             <ContextMenuOrders item={row} downloadInvoice={downloadInvoice}/>
                                         </TableCell>

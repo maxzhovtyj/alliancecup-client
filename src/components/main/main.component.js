@@ -1,8 +1,8 @@
-import React from 'react';
-import NavbarComponent from "./navbar/navbar.component";
-
 import classes from './main.module.scss'
+
 import {Route, Routes, Navigate} from "react-router-dom";
+
+import NavbarComponent from "./navbar/navbar.component";
 import CartComponent from "./cart/cart.component";
 import CategoriesComponent from "./categories/categories.component";
 import HomePageComponent from "./homePage/homePage.component";
@@ -12,9 +12,9 @@ import ContactsComponent from "./contacts/contacts.component";
 import ForWholesalersComponent from "./forWholesalers/forWholesalers.component";
 import ProductComponent from "./product/product.component";
 import UserCabinetComponent from "./userCabinet/userCabinet.component";
-// import PrivateRoute from "../../utils/PrivateRoute"; // TODO invalid navigation
+import PrivateRoute from "../../utils/PrivateRoute"; // TODO invalid navigation
 import OrderComponent from "./orders/order.component";
-// import AdminRoute from "../../utils/AdminRoute"; // TODO invalid navigation
+import AdminRoute from "../../utils/AdminRoute"; // TODO invalid navigation
 import AdminComponent from "./admin/admin.component";
 import FavouritesComponent from "./favourites/favourites.component";
 import AboutUsComponent from "./aboutUs/aboutUs.component";
@@ -48,14 +48,14 @@ function MainComponent() {
                     <Route path={"/contacts"} element={<ContactsComponent/>}/>
                     <Route path={"/for-wholesalers"} element={<ForWholesalersComponent/>}/>
                     <Route path={"/favourites"} element={<FavouritesComponent/>}/>
-                    {/*<Route element={<PrivateRoute/>}>*/}
+                    <Route element={<PrivateRoute/>}>
                         <Route path={"/user"} element={<UserCabinetComponent/>}>
                             <Route index element={<Navigate to="personal-info" replace />} />
                             <Route path={"personal-info"} element={<PersonalInfoComponent/>}/>
                             <Route path={"order-history"} element={<OrderHistoryComponent/>}/>
                             <Route path={"change-password"} element={<ChangePasswordComponent/>}/>
                         </Route>
-                        {/*<Route element={<AdminRoute/>}>*/}
+                        <Route element={<AdminRoute/>}>
                             <Route path={"/user/admin"} element={<AdminComponent/>}>
                                 <Route index element={<Navigate to="products" replace />} />
                                 <Route path={"products"} element={<AdminProductsComponent/>}/>
@@ -72,8 +72,8 @@ function MainComponent() {
                                 <Route path={"inventory/:id"} element={<AdminInventoryProductsComponent/>}/>
                                 <Route path={"new-inventory"} element={<AdminNewInventoryComponent/>}/>
                             </Route>
-                        {/*</Route>*/}
-                    {/*</Route>*/}
+                        </Route>
+                    </Route>
                     <Route path={"/cart/order"} element={<OrderComponent/>}/>
                 </Routes>
             </div>

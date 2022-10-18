@@ -7,6 +7,7 @@ import ContextMenuInventory from "../../../../UI/contextMenu/contextMenuInventor
 import classes from './inventory.module.scss'
 import {NavLink} from "react-router-dom";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
+import {UserService} from "../../../../service/UserService";
 
 function AdminInventoryComponent() {
     const dispatch = useDispatch()
@@ -52,7 +53,9 @@ function AdminInventoryComponent() {
                                         sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                     >
                                         <TableCell align={"center"}>{row.id}</TableCell>
-                                        <TableCell align={"center"}>{row.createdAt.split(/T|Z/g).join(" ")}</TableCell>
+                                        <TableCell align={"center"}>
+                                            {UserService.truncTimestamp(row.created_at)}
+                                        </TableCell>
                                         <TableCell align="center">
                                             <ContextMenuInventory item={row}/>
                                         </TableCell>

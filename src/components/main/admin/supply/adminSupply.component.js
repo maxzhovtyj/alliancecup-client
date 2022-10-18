@@ -7,6 +7,7 @@ import ContextMenuSupply from "../../../../UI/contextMenu/contextMenuSupply";
 
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
+import {UserService} from "../../../../service/UserService";
 
 function AdminSupplyComponent() {
     const dispatch = useDispatch()
@@ -53,7 +54,9 @@ function AdminSupplyComponent() {
                                         <TableCell align={"center"}>{row.supplyTime || "---"}</TableCell>
                                         <TableCell align={"center"}>{row.sum}</TableCell>
                                         <TableCell align="center">{row.comment || "---"}</TableCell>
-                                        <TableCell align="center">{row.createdAt.split(/[TZ]/g).join(" ")}</TableCell>
+                                        <TableCell align="center">
+                                            {UserService.truncTimestamp(row.createdAt)}
+                                        </TableCell>
                                         <TableCell align="center">
                                             <ContextMenuSupply item={row}/>
                                         </TableCell>
