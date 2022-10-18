@@ -1,10 +1,39 @@
 @import "../../../../../../variables";
 
 .orderWrapper {
-  border: 1px solid $alliance-grey;
   margin: .5rem 0;
+  padding: 1rem;
 }
 
 .orderInfo {
-  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdownWrapper {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.orderProducts {
+
+}
+
+.orderDeliveryInfo {
+
+}
+
+.orderCreatedAt {
+  color: $alliance-grey;
+}
+
+.orderSum {
+  display: flex;
+  gap: 1rem;
+  p {
+    font-size: 1.5rem;
+  }
 }
