@@ -18,6 +18,7 @@ import {useSnackbar} from "../../../../hooks/useSnackbar";
 import SimpleSnackbar from "../../../../UI/snackbar";
 import ContextMenuProduct from "../../../../UI/contextMenu/contextMenuProduct";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
+import {NavLink} from "react-router-dom";
 
 function AdminProductsComponent() {
     const dispatch = useDispatch()
@@ -63,7 +64,7 @@ function AdminProductsComponent() {
 
     return (
         <div>
-            <FormControl sx={{marginBottom: "2rem", minWidth: 200}}>
+            <FormControl sx={{marginBottom: "1rem", minWidth: 200}}>
                 <AllianceInputLabel>Категорія</AllianceInputLabel>
                 <AllianceSelect
                     defaultValue={""}
@@ -84,7 +85,11 @@ function AdminProductsComponent() {
 
             <SearchBar value={searchBar} setValue={setSearchBar} onSearch={onSearch}/>
 
-            <TableContainer component={Paper} sx={{margin: "2rem 0"}}>
+            <NavLink to={"/user/admin/new-product"}>
+                <AllianceButton mt={"1rem"} mb={"1rem"}>Додати товар</AllianceButton>
+            </NavLink>
+
+            <TableContainer component={Paper}>
                 <Table sx={{minWidth: 200}} aria-label="simple table">
                     <TableHead>
                         <TableRow>
