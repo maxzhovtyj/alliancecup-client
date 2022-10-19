@@ -21,7 +21,7 @@ const CLEAR_FILTRATION_LIST = "CLEAR_FILTRATION_LIST"
 export const shopReducer = (state = shopDefaultState, action) => {
     switch (action.type) {
         case GET_ALL_CATEGORIES: {
-            return {...state, categories: [...action.payload.data]}
+            return {...state, categories: action.payload}
         }
         case GET_FILTRATION_LIST: {
             return {...state, filtrationList: action.payload}

@@ -31,6 +31,24 @@ export class UserService {
         }
     }
 
+    static async updateUserInfo(changeInfo) {
+        try {
+            return await $api.put("/api/client/personal-info", changeInfo).catch(function (err) {
+                if (err.response.status === 401) {
+                    throw new Error("Спочатку увійдіть")
+                }
+                if (err.response.status === 400) {
+                    throw new Error("Ви ввели хибні дані")
+                }
+                if (err.response.status === 500) {
+                    throw new Error("Щось пішло не так...")
+                }
+            })
+        } catch (e) {
+            return e
+        }
+    }
+
     static truncTimestamp (createdAt) {
         createdAt = createdAt.split(/[TZ]/g)
         let dotInd = createdAt[1].indexOf(".")

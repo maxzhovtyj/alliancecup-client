@@ -20,7 +20,11 @@ export const fetchFiltrationList = (name, id) => {
 export const fetchCategories = () => {
     return async (dispatch) => {
         const response = await $api.get('/api/categories')
-        dispatch(getCategoriesActionCreator(response.data))
+        if (response.data != null) {
+            dispatch(getCategoriesActionCreator(response.data))
+        } else {
+            dispatch(getCategoriesActionCreator([]))
+        }
     }
 }
 
