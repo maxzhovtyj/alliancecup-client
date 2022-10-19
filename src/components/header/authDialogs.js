@@ -98,33 +98,26 @@ export default function AuthDialogs() {
         setSignUpForm({...signUpForm, [e.target.name]: e.target.value})
     }
 
-    async function signIn() {
+    function signIn() {
         if (!validateSignIn()) {
             setMessage("Поля не пройшли ваділацію")
             handleClick()
             return
         }
 
-        try {
-            const response = await $api.post('/auth/sign-in', signInForm).catch(function (error) {
-                if (error.response.status === 400) {
-                    throw new Error("Ви ввели хибні дані")
-                }
-                if (error.response.status === 500) {
-                    throw new Error("Користувача не знайдено")
-                }
-            })
-
-            localStorage.clear()
-            login(response.data.accessToken, response.data.userId, response.data.userRoleId)
-            handleSignUpClose()
-        } catch (e) {
-            setMessage("Щось пішло не так")
-            handleClick()
-        }
+        UserService.signIn(signInForm).then(res => {
+            if (res.status === 200) {
+                localStorage.clear()
+                login(res.data.accessToken, res.data.userId, res.data.userRoleId)
+                handleSignUpClose()
+            } else {
+                setMessage(res?.message)
+                handleClick()
+            }
+        })
     }
 
-    async function signUp() {
+    function signUp() {
         if (!validateSignUp()) {
             setMessage("Поля не пройшли ваділацію")
             handleClick()

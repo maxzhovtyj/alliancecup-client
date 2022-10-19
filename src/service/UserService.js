@@ -64,6 +64,18 @@ export class UserService {
         }
     }
 
+    static async signIn(reqForm) {
+        try {
+            return await $api.post('/auth/sign-in', reqForm).catch(function (error) {
+                if (error.response.status !== 200) {
+                    throw new Error("Ви ввели хибні дані")
+                }
+            })
+        } catch (e) {
+            return e
+        }
+    }
+
     static truncTimestamp (createdAt) {
         createdAt = createdAt.split(/[TZ]/g)
         let dotInd = createdAt[1].indexOf(".")
