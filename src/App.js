@@ -7,15 +7,16 @@ import {AuthContext} from "./context/AuthContext";
 import {useAuth} from "./hooks/useAuth";
 
 function App() {
-    const {token, login, logout, userId, userRoleId} = useAuth()
+    const {login, logout, userId, isAdmin, isModerator} = useAuth()
 
     return (
         <AuthContext.Provider value={{
-            isAuth: !!token,
+            isAuth: !!localStorage.getItem("userData"),
             login: login,
             logout: logout,
             userId: userId,
-            userRoleId: userRoleId,
+            isAdmin: isAdmin,
+            isModerator: isModerator,
         }}>
             <div className="App">
                 <HeaderComponent/>

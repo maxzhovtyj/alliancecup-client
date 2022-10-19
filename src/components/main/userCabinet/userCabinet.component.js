@@ -8,7 +8,8 @@ import {Link, NavLink} from "react-router-dom";
 import {Outlet} from "react-router-dom";
 
 function UserCabinetComponent() {
-    const {userRoleId, logout} = useContext(AuthContext)
+    const {isAdmin, isModerator, logout} = useContext(AuthContext)
+
 
     const userLogout = async () => {
         try {
@@ -50,7 +51,7 @@ function UserCabinetComponent() {
             <div className={classes.logoutBtn}>
                 <Button onClick={userLogout}>Вийти</Button>
                 {
-                    (userRoleId !== 0 && userRoleId !== 1)
+                    (isAdmin || isModerator)
                         ?
                         <NavLink to={"admin"}>
                             <Button variant={"outlined"} sx={{marginLeft: "1rem"}}>Панель адміністратора</Button>

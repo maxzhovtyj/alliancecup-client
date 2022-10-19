@@ -14,7 +14,11 @@ function OrderHistoryComponent(props) {
         <div>
             <p>Історія замовлень</p>
             <div>
-                {orders.map(item => <OrderItem key={item.info.id} order={item}/>)}
+                {
+                    orders.length
+                        ? orders.map(item => <OrderItem key={item.info.id} order={item}/>)
+                        : <p>У вас поки що немає замовлень</p>
+                }
             </div>
         </div>
     );
