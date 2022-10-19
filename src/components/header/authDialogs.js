@@ -10,6 +10,7 @@ import SignInDialog from "../../UI/authDialogs/signInDialog";
 import {useSnackbar} from "../../hooks/useSnackbar";
 import SimpleSnackbar from "../../UI/snackbar";
 import {AuthContext} from "../../context/AuthContext";
+import {UserService} from "../../service/UserService";
 
 export default function AuthDialogs() {
     const {isAuth, login} = useContext(AuthContext)
@@ -19,8 +20,10 @@ export default function AuthDialogs() {
     const [signInForm, setSignInForm] = useState({email: "", password: ""})
     const [signUpForm, setSignUpForm] = useState({
         email: "",
-        name: "",
-        phone: "+38 (012) 123-12-12",
+        lastname: "",
+        firstname: "",
+        middleName: "",
+        phoneNumber: "+38 (012) 123-12-12",
         password: "",
         repeatPassword: "",
     })
@@ -31,8 +34,10 @@ export default function AuthDialogs() {
     })
     const [signUpErrors, setSignUpErrors] = useState({
         email: false,
-        name: false,
-        phone: false,
+        lastname: false,
+        firstname: false,
+        middleName: false,
+        phoneNumber: false,
         password: false,
         repeatPassword: false,
     })
@@ -55,9 +60,11 @@ export default function AuthDialogs() {
     const validateSignUp = () => {
         let tmp = {}
 
-        tmp.name = !signUpForm.name
+        tmp.lastname = !signUpForm.lastname
+        tmp.firstname = !signUpForm.firstname
+        tmp.middleName = !signUpForm.middleName
         tmp.email = !(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(signUpForm.email)
-        tmp.phone = signUpForm.phone?.length < 19
+        tmp.phoneNumber = signUpForm.phoneNumber?.length < 19
         tmp.password = signUpForm.password < 4 || signUpForm.password !== signUpForm.repeatPassword
         tmp.repeatPassword = signUpForm.repeatPassword < 4 || signUpForm.password !== signUpForm.repeatPassword
 
@@ -127,30 +134,21 @@ export default function AuthDialogs() {
         const reqForm = {
             email: signUpForm.email,
             password: signUpForm.password,
-            phone_number: signUpForm.phone,
-            name: signUpForm.name
+            phoneNumber: signUpForm.phoneNumber,
+            lastname: signUpForm.lastname,
+            firstname: signUpForm.firstname,
+            middleName: signUpForm.middleName,
         }
 
-        try {
-            await $api.post('/auth/sign-up', reqForm).catch(function (error) {
-                if (error.response.status === 400) {
-                    console.log(error)
-                    setMessage("Ви ввели хибні дані")
-                    handleClick()
-                    throw new Error(error.response.message)
-                }
-                if (error.response.status === 500) {
-                    setMessage("Сталася помилка, користувач с такими даними уже існує")
-                    handleClick()
-                    throw new Error(error.response.message)
-                }
-            })
-
-            handleSignUpClose()
-            handleSignInOpen()
-        } catch (e) {
-            console.log(e)
-        }
+        UserService.signUp(reqForm).then(res => {
+            if (res.status === 201 || res.status === 200) {
+                setMessage("Користувача успішно зареєстровано")
+                handleClick()
+            } else {
+                setMessage(res.data)
+                handleClick()
+            }
+        })
     }
 
     return (

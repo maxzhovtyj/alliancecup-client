@@ -37,9 +37,9 @@ function SignUpDialog({
                 <DialogContent className={classes.authInputs}>
                     <FormControl className={classes.formInput}>
                         <AllianceTextField
-                            value={value.phone}
+                            value={value.phoneNumber}
                             onChange={signUpFormHandler}
-                            name="phone"
+                            name="phoneNumber"
                             id="phone-id"
                             InputProps={{
                                 inputComponent: TextMaskCustom
@@ -58,11 +58,27 @@ function SignUpDialog({
                         />
                         <AllianceTextField
                             className={classes.formInput}
-                            name={"name"}
+                            name={"lastname"}
+                            onChange={signUpFormHandler}
+                            required
+                            label="Прізвище"
+                            error={errors.lastname}
+                        />
+                        <AllianceTextField
+                            className={classes.formInput}
+                            name={"firstname"}
                             onChange={signUpFormHandler}
                             required
                             label="Ім'я"
-                            error={errors.name}
+                            error={errors.firstname}
+                        />
+                        <AllianceTextField
+                            className={classes.formInput}
+                            name={"middleName"}
+                            onChange={signUpFormHandler}
+                            required
+                            label="По-батькові"
+                            error={errors.middleName}
                         />
                         <div className={classes.passwordInputs}>
                             <AllianceTextField

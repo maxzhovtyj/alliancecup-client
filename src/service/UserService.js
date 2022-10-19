@@ -49,6 +49,21 @@ export class UserService {
         }
     }
 
+    static async signUp(reqForm) {
+        try {
+            return await $api.post('/auth/sign-up', reqForm).catch(function (error) {
+                if (error.response.status === 400) {
+                    throw new Error("Ви ввели хибні дані")
+                }
+                if (error.response.status === 500) {
+                    throw new Error("Щось пішло не так")
+                }
+            })
+        } catch (e) {
+            return e
+        }
+    }
+
     static truncTimestamp (createdAt) {
         createdAt = createdAt.split(/[TZ]/g)
         let dotInd = createdAt[1].indexOf(".")
