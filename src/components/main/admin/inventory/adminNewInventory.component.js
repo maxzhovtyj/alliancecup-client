@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import {
-    Paper,
     Table,
     TableBody,
     TableCell,
@@ -14,8 +13,15 @@ import {AllianceTextField} from "../../../../UI/styles";
 
 import classes from './inventory.module.scss'
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
+import {AlliancePaper} from "../../../../UI/AlliancePaper";
+import {AdminService} from "../../../../service/AdminService";
+import {useSnackbar} from "../../../../hooks/useSnackbar";
+import AllianceSnackbar from "../../../../UI/snackbar";
+import {UserService} from "../../../../service/UserService";
 
 function AdminNewInventoryComponent() {
+    const snackbar = useSnackbar()
+
     const dispatch = useDispatch()
     const products = useSelector(state => state.admin.products)
 
@@ -51,16 +57,24 @@ function AdminNewInventoryComponent() {
     useEffect(() => {
         setInventory(products.map(item => ({
             ...item,
-            realAmount: "",
-            realAmountPrice: "",
-            difference: "",
-            differencePrice: ""
+            realAmount: 0,
+            realAmountPrice: 0,
+            difference: 0,
+            differencePrice: 0
         })))
     }, [products])
 
     // TODO inventory
     const doInventory = () => {
-        console.log(inventory)
+        AdminService.doInventory(inventory).then(res => {
+            if (res?.status === 201 || res?.status === 200) {
+                snackbar.setMessage("Товари успішно проінвентаризовано")
+                snackbar.handleClick()
+            } else {
+                snackbar.setMessage(res?.message)
+                snackbar.handleClick()
+            }
+        })
     }
 
     // TODO sum counting
@@ -79,7 +93,7 @@ function AdminNewInventoryComponent() {
     return (
         <div>
             <p>Нова інвентаризація</p>
-            <TableContainer component={Paper} sx={{margin: "2rem 0"}}>
+            <TableContainer component={AlliancePaper} sx={{margin: "2rem 0"}}>
                 <Table sx={{minWidth: 200}} aria-label="simple table">
                     <TableHead>
                         <TableRow>
@@ -100,62 +114,61 @@ function AdminNewInventoryComponent() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {
-                            (inventory)
-                                ?
-                                inventory.map((row, index) => (
-                                    <TableRow
-                                        key={row.productId}
-                                        sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                                    >
-                                        <TableCell align={"center"}>{row.productId}</TableCell>
-                                        <TableCell align={"center"}>{row.title}</TableCell>
-                                        <TableCell align={"center"}>{row.productPrice}</TableCell>
-                                        <TableCell align={"center"}>
-                                            {row.lastInventory?.split(/[TZ]/).join(" ") || "---"}
-                                        </TableCell>
-                                        <TableCell align={"center"}>{row.initialAmount || "---"}</TableCell>
-                                        <TableCell align={"center"}>{row.currentSupply}</TableCell>
-                                        <TableCell align={"center"}>{row.currentSpend}</TableCell>
-                                        <TableCell align={"center"}>{row.currentWriteOff}</TableCell>
-                                        <TableCell align={"center"}>{row.writeOffPrice}</TableCell>
-                                        <TableCell align={"center"}>{row.currentAmount}</TableCell>
-                                        <TableCell align={"center"}>
-                                            <AllianceTextField
-                                                name={"realAmount"}
-                                                value={row.realAmount}
-                                                onChange={event => handleInventoryState(event, index)}
-                                            />
-                                        </TableCell>
-                                        <TableCell align={"center"}>
-                                            <AllianceTextField
-                                                name={"realAmountPrice"}
-                                                value={inventory[index].realAmountPrice}
-                                                onChange={event => handleInventoryState(event, index)}
+                        <>
+                            {
+                                (inventory)
+                                    ?
+                                    inventory.map((row, index) => (
+                                        <TableRow
+                                            key={row.productId}
+                                            sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                        >
+                                            <TableCell align={"center"}>{row.productId}</TableCell>
+                                            <TableCell align={"center"}>{row.title}</TableCell>
+                                            <TableCell align={"center"}>{row.productPrice}</TableCell>
+                                            <TableCell align={"center"}>
+                                                {row.lastInventory ? UserService.truncTimestamp(row.lastInventory) : "---"}
+                                            </TableCell>
+                                            <TableCell align={"center"}>{row.initialAmount || "---"}</TableCell>
+                                            <TableCell align={"center"}>{row.currentSupply}</TableCell>
+                                            <TableCell align={"center"}>{row.currentSpend}</TableCell>
+                                            <TableCell align={"center"}>{row.currentWriteOff}</TableCell>
+                                            <TableCell align={"center"}>{row.writeOffPrice}</TableCell>
+                                            <TableCell align={"center"}>{row.currentAmount}</TableCell>
+                                            <TableCell align={"center"}>
+                                                <AllianceTextField
+                                                    name={"realAmount"}
+                                                    value={row.realAmount}
+                                                    onChange={event => handleInventoryState(event, index)}
+                                                />
+                                            </TableCell>
+                                            <TableCell align={"center"}>
+                                                <AllianceTextField
+                                                    name={"realAmountPrice"}
+                                                    value={inventory[index].realAmountPrice}
+                                                    onChange={event => handleInventoryState(event, index)}
 
-                                            />
-                                        </TableCell>
-                                        <TableCell align={"center"}>
-                                            <AllianceTextField
-                                                name={"difference"}
-                                                value={inventory[index]?.difference}
-                                                onChange={event => handleInventoryState(event, index)}
-                                            />
-                                        </TableCell>
-                                        <TableCell align={"center"}>
-                                            <AllianceTextField
-                                                name={"differencePrice"}
-                                                value={inventory[index]?.differencePrice}
-                                                onChange={event => handleInventoryState(event, index)}
-                                            />
-                                        </TableCell>
-                                    </TableRow>
-                                ))
-                                :
-                                <TableRow>
-                                    <TableCell align="left">Немає товарів</TableCell>
-                                </TableRow>
-                        }
+                                                />
+                                            </TableCell>
+                                            <TableCell align={"center"}>
+                                                <AllianceTextField
+                                                    name={"difference"}
+                                                    value={inventory[index]?.difference}
+                                                    onChange={event => handleInventoryState(event, index)}
+                                                />
+                                            </TableCell>
+                                            <TableCell align={"center"}>
+                                                <AllianceTextField
+                                                    name={"differencePrice"}
+                                                    value={inventory[index]?.differencePrice}
+                                                    onChange={event => handleInventoryState(event, index)}
+                                                />
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                    : <TableRow><TableCell align="center">Немає товарів</TableCell></TableRow>
+                            }
+                        </>
                     </TableBody>
                 </Table>
             </TableContainer>
@@ -172,9 +185,9 @@ function AdminNewInventoryComponent() {
                     Провести інвентаризацію
                 </AllianceButton>
             </div>
+            <AllianceSnackbar open={snackbar.open} handleClose={snackbar.handleClose} message={snackbar.message}/>
         </div>
-    )
-        ;
+    );
 }
 
 export default AdminNewInventoryComponent;

@@ -12,7 +12,7 @@ import ProductItemComponent from "./productItem.component";
 
 import classes from './products.module.scss'
 import {Stack} from "@mui/material";
-import SimpleSnackbar from "../../../../UI/snackbar";
+import AllianceSnackbar from "../../../../UI/snackbar";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import RangeSlider from "../../../../UI/rangeSlider/rangeSlider";
 import FiltrationItem from "../filtrationItem/filtrationItem";
@@ -168,7 +168,7 @@ function ProductsComponent() {
                                             Завантажити ще
                                         </AllianceButton>
                                 }
-                                <SimpleSnackbar open={open} message={message} handleClose={handleClose}/>
+                                <AllianceSnackbar open={open} message={message} handleClose={handleClose}/>
                             </div>
                     }
                 </div>

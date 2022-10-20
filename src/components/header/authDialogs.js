@@ -8,7 +8,7 @@ import enter from "../../assets/svgs/log-in.svg";
 import SignUpDialog from "../../UI/authDialogs/signUpDialog";
 import SignInDialog from "../../UI/authDialogs/signInDialog";
 import {useSnackbar} from "../../hooks/useSnackbar";
-import SimpleSnackbar from "../../UI/snackbar";
+import AllianceSnackbar from "../../UI/snackbar";
 import {AuthContext} from "../../context/AuthContext";
 import {UserService} from "../../service/UserService";
 
@@ -179,7 +179,7 @@ export default function AuthDialogs() {
                 errors={signUpErrors}
             />
 
-            <SimpleSnackbar open={open} message={message} handleClose={handleClose}/>
+            <AllianceSnackbar open={open} message={message} handleClose={handleClose}/>
         </>
     );
 }

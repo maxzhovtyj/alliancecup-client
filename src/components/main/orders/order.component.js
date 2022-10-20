@@ -5,7 +5,7 @@ import {AuthContext} from "../../../context/AuthContext";
 import {fetchUserCart} from "../../../redux/userCartRedux/fetchUserCart";
 
 import CartItem from "../cart/cartItem";
-import SimpleSnackbar from "../../../UI/snackbar";
+import AllianceSnackbar from "../../../UI/snackbar";
 
 import cartClasses from "../cart/cart.module.scss";
 import orderClasses from "./order.module.scss"
@@ -197,7 +197,7 @@ function OrderComponent() {
                 <p className={cartClasses.orderSum}>Сума замовлення: {cartProducts.sum}</p>
             </div>
 
-            <SimpleSnackbar open={open} message={message} handleClose={handleClose}/>
+            <AllianceSnackbar open={open} message={message} handleClose={handleClose}/>
         </div>
     );
 }

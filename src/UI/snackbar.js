@@ -1,11 +1,11 @@
-import * as React from 'react';
+import {Fragment} from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function SimpleSnackbar({message, handleClose, open}) {
+export default function AllianceSnackbar({message, handleClose, open}) {
     const action = (
-        <React.Fragment>
+        <Fragment>
             <IconButton
                 size="large"
                 aria-label="close"
@@ -14,7 +14,7 @@ export default function SimpleSnackbar({message, handleClose, open}) {
             >
                 <CloseIcon fontSize="small"/>
             </IconButton>
-        </React.Fragment>
+        </Fragment>
     );
 
     return (

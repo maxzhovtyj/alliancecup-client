@@ -19,7 +19,7 @@ import {SupplyService} from "../../../../service/SupplyService";
 import AutoCompleteSelect from "../../../../UI/autoCompleteSelect/autoCompleteSelect";
 import {ProductService} from "../../../../service/ProductService";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
-import SimpleSnackbar from "../../../../UI/snackbar";
+import AllianceSnackbar from "../../../../UI/snackbar";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
@@ -353,7 +353,7 @@ function AdminNewSupplyComponent() {
             <AllianceButton onClick={createNewSupply} mt={"2rem"} mb={"2rem"}>
                 Створити
             </AllianceButton>
-            <SimpleSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
+            <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
         </div>
     );
 }

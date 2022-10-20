@@ -16,7 +16,7 @@ import {
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import {AllianceInputLabel, AllianceSelect} from "../../../../UI/styles";
 import SearchBar from "../../../../UI/searchBar/searchBar";
-import SimpleSnackbar from "../../../../UI/snackbar";
+import AllianceSnackbar from "../../../../UI/snackbar";
 import ContextMenuProduct from "../../../../UI/contextMenu/contextMenuProduct";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import {AlliancePaper} from "../../../../UI/AlliancePaper";
@@ -154,7 +154,7 @@ function AdminProductsComponent() {
                         Завантажити ще
                     </AllianceButton>
             }
-            <SimpleSnackbar open={open} message={message} handleClose={handleClose}/>
+            <AllianceSnackbar open={open} message={message} handleClose={handleClose}/>
         </div>
     )
         ;

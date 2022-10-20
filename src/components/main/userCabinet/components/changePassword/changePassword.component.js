@@ -6,7 +6,7 @@ import {AuthService} from "../../../../../service/AuthService";
 import {AllianceTextField} from "../../../../../UI/styles";
 
 import classes from './changePassword.module.scss'
-import SimpleSnackbar from "../../../../../UI/snackbar";
+import AllianceSnackbar from "../../../../../UI/snackbar";
 import AllianceButton from "../../../../../UI/allianceCupButton/allianceButton";
 
 function ChangePasswordComponent(props) {
@@ -97,7 +97,7 @@ function ChangePasswordComponent(props) {
                     </AllianceButton>
                 </div>
             </div>
-            <SimpleSnackbar open={open} message={message} handleClose={handleClose}/>
+            <AllianceSnackbar open={open} message={message} handleClose={handleClose}/>
         </div>
     );
 }

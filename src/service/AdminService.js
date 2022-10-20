@@ -17,7 +17,7 @@ export class AdminService {
                     throw new Error("Щось пішло не так під час видалення товару")
                 }
             })
-            console.log(response)
+
             return {
                 id: JSON.parse(JSON.stringify(response.data.id)),
                 message: "Товар успішно видалено"
@@ -131,6 +131,23 @@ export class AdminService {
         } catch (e) {
             return e
         }
+    }
+
+    static async doInventory(form) {
+        try {
+            return await $api.post("api/admin/super/inventory", form).catch(function (err) {
+                if (err.response.status === 500) {
+                    throw new Error("Щось пішло не так...")
+                }
+                else if (err.response.status === 400) {
+                    throw new Error("Ви ввели хибні дані")
+                }
+                else throw new Error("Щось пішло не так...")
+            })
+        } catch (e) {
+            return e
+        }
+
     }
 
     static HandleMoney(price) {

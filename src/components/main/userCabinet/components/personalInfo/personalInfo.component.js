@@ -5,7 +5,7 @@ import classes from './personalInfo.module.scss'
 import AllianceButton from "../../../../../UI/allianceCupButton/allianceButton";
 import {AllianceTextField} from "../../../../../UI/styles";
 import {useSnackbar} from "../../../../../hooks/useSnackbar";
-import SimpleSnackbar from "../../../../../UI/snackbar";
+import AllianceSnackbar from "../../../../../UI/snackbar";
 import {TextMaskCustom} from "../../../../../utils/TextMask";
 
 function PersonalInfoComponent() {
@@ -97,7 +97,7 @@ function PersonalInfoComponent() {
                         <AllianceButton onClick={saveInfo}>Зберегти</AllianceButton>
                     </div>
             }
-            <SimpleSnackbar message={snackbar.message} handleClose={snackbar.handleClose} open={snackbar.open}/>
+            <AllianceSnackbar message={snackbar.message} handleClose={snackbar.handleClose} open={snackbar.open}/>
         </div>
     );
 }
