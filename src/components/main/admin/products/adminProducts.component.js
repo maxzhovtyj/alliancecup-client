@@ -1,8 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {NavLink} from "react-router-dom";
+import {fetchCategories, fetchMoreProducts, fetchProducts} from "../../../../redux/shopRedux/shopFetch";
+
 import {
-    Button, FormControl,
+    FormControl,
     MenuItem,
-    Paper,
     Table,
     TableBody,
     TableCell,
@@ -10,15 +13,14 @@ import {
     TableHead,
     TableRow
 } from "@mui/material";
-import {useDispatch, useSelector} from "react-redux";
-import {fetchCategories, fetchMoreProducts, fetchProducts} from "../../../../redux/shopRedux/shopFetch";
+import {useSnackbar} from "../../../../hooks/useSnackbar";
 import {AllianceInputLabel, AllianceSelect} from "../../../../UI/styles";
 import SearchBar from "../../../../UI/searchBar/searchBar";
-import {useSnackbar} from "../../../../hooks/useSnackbar";
 import SimpleSnackbar from "../../../../UI/snackbar";
 import ContextMenuProduct from "../../../../UI/contextMenu/contextMenuProduct";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
-import {NavLink} from "react-router-dom";
+import {AlliancePaper} from "../../../../UI/AlliancePaper";
+import classes from "./adminProduct.module.scss";
 
 function AdminProductsComponent() {
     const dispatch = useDispatch()
@@ -47,7 +49,7 @@ function AdminProductsComponent() {
     }, [dispatch, searchParams])
 
     function loadMore() {
-        let lastCreatedAt = products[products.length - 1]?.created_at
+        let lastCreatedAt = products[products.length - 1]?.createdAt
         dispatch(fetchMoreProducts({
             ...searchParams, createdAt: lastCreatedAt
         }))
@@ -63,7 +65,7 @@ function AdminProductsComponent() {
     }
 
     return (
-        <div>
+        <div className={classes.productsWrapper}>
             <FormControl sx={{marginBottom: "1rem", minWidth: 200}}>
                 <AllianceInputLabel>Категорія</AllianceInputLabel>
                 <AllianceSelect
@@ -77,7 +79,7 @@ function AdminProductsComponent() {
                     {
                         categories?.map(item =>
                             <MenuItem value={item.id} key={item.id}>
-                                {item.category_title}
+                                {item.categoryTitle}
                             </MenuItem>)
                     }
                 </AllianceSelect>
@@ -89,8 +91,8 @@ function AdminProductsComponent() {
                 <AllianceButton mt={"1rem"} mb={"1rem"}>Додати товар</AllianceButton>
             </NavLink>
 
-            <TableContainer component={Paper}>
-                <Table sx={{minWidth: 200}} aria-label="simple table">
+            <TableContainer component={AlliancePaper}>
+                <Table sx={{minWidth: 200}}>
                     <TableHead>
                         <TableRow>
                             <TableCell align={"center"}>Id</TableCell>
@@ -103,35 +105,40 @@ function AdminProductsComponent() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {
-                            (products)
-                                ?
-                                products.map((row) => (
-                                    <TableRow
-                                        key={row.id}
-                                        sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                                    >
-                                        <TableCell align={"center"}>{row.id}</TableCell>
-                                        <TableCell align={"center"}>{row.category_title}</TableCell>
-                                        <TableCell component="th" scope="row">{row.product_title}</TableCell>
-                                        <TableCell align="center">{row.price}</TableCell>
-                                        <TableCell align="center">{
-                                            Object.entries(row.packaging).map(e => {
-                                            const [key, value] = e;
-                                            return <span key={key}>{value} {key} </span>;
-                                        })}</TableCell>
-                                        <TableCell align="center">{row.amount_in_stock}</TableCell>
-                                        <TableCell align="center">
-                                            <ContextMenuProduct item={row} setSnackbarMessage={setMessage}
-                                                                clickSnackbar={handleClick}/>
-                                        </TableCell>
-                                    </TableRow>
-                                ))
-                                :
-                                <TableRow>
-                                    <TableCell align="left">Немає товарів</TableCell>
-                                </TableRow>
-                        }
+                        <>
+                            {
+                                (products)
+                                    ?
+                                    products.map((row) => (
+                                        <TableRow
+                                            key={row.id}
+                                            sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                        >
+                                            <TableCell align={"center"}>{row.id}</TableCell>
+                                            <TableCell align={"center"}>{row.categoryTitle}</TableCell>
+                                            <TableCell component="th" scope="row">{row.productTitle}</TableCell>
+                                            <TableCell align="center">{row.price}</TableCell>
+                                            <TableCell align="center">
+                                                <>
+                                                    {Object.entries(row.packaging).map(e => {
+                                                        const [key, value] = e;
+                                                        return <span key={key}>{value} {key} </span>;
+                                                    })}
+                                                </>
+                                            </TableCell>
+                                            <TableCell align="center">{row.amountInStock}</TableCell>
+                                            <TableCell align="center">
+                                                <ContextMenuProduct
+                                                    item={row}
+                                                    setSnackbarMessage={setMessage}
+                                                    clickSnackbar={handleClick}
+                                                />
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                    : <TableRow><TableCell align="left">Немає товарів</TableCell></TableRow>
+                            }
+                        </>
                     </TableBody>
                 </Table>
             </TableContainer>
@@ -140,8 +147,8 @@ function AdminProductsComponent() {
                     <AllianceButton
                         onClick={loadMore}
                         align={"center"}
-                        mb={"2rem"}
-                        mt={"2rem"}
+                        mb={"1rem"}
+                        mt={"1rem"}
                         variant={"text"}
                     >
                         Завантажити ще

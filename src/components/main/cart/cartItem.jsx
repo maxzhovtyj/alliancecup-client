@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 import noopImg from '../../../assets/noopProduct.svg'
 
 import classes from './cart.module.scss'
@@ -12,26 +12,25 @@ function CartItem({product, order}) {
     const {isAuth} = useContext(AuthContext)
 
     function deleteFromCart() {
-        ShoppingService.deleteFromCart(isAuth, product.product_id)
+        ShoppingService.deleteFromCart(isAuth, product.productId)
             .then(() => window.location.reload())
     }
 
     return (
         <div className={classes.productItem}>
-            <NavLink to={`/product/${product.product_id}`} className={classes.productImg}>
-                <img src={product.img_url || noopImg} alt="product_image"/>
+            <NavLink to={`/product/${product.productId}`} className={classes.productImg}>
+                <img src={product.imgUrl || noopImg} alt="product_image"/>
             </NavLink>
             <div className={classes.productInfo}>
-                <NavLink to={`/product/${product.product_id}`}>
-                    <p className={classes.productTitle}>{product.product_title}</p>
+                <NavLink to={`/product/${product.productId}`}>
+                    <p className={classes.productTitle}>{product.productTitle}</p>
                 </NavLink>
                 <p className={classes.productPrice}>{product.price} грн/уп</p>
                 <span className={classes.productQuantity}>{product.quantity}</span>
-                <span className={classes.productPriceForQuantity}>{product.price_for_quantity} грн</span>
+                <span className={classes.productPriceForQuantity}>{product.priceForQuantity} грн</span>
                 {
                     order
-                        ?
-                        ""
+                        ? ""
                         :
                         <IconButton
                             className={classes.deleteIconBtn}

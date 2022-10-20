@@ -5,7 +5,6 @@ import classes from './supply.module.scss'
 import {
     FormControl,
     IconButton,
-    Paper,
     Table,
     TableBody,
     TableCell,
@@ -26,13 +25,14 @@ import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
+import {AlliancePaper} from "../../../../UI/AlliancePaper";
 
 function AdminNewSupplyComponent() {
     const snackbar = useSnackbar()
 
     const [productsOptions, setProductsOptions] = useState([])
 
-    const [dateValue, setDateValue] = useState(null);
+    // const [dateValue, setDateValue] = useState(null);
     const [supplyInfo, setSupplyInfo] = useState({
         supplier: '', comment: '', supplyTime: null,
     })
@@ -265,7 +265,7 @@ function AdminNewSupplyComponent() {
                 </FormControl>
             </div>
 
-            <TableContainer component={Paper} sx={{margin: "2rem 0"}}>
+            <TableContainer component={AlliancePaper}>
                 <Table sx={{minWidth: 200}}>
                     <TableHead>
                         <TableRow>
@@ -288,9 +288,9 @@ function AdminNewSupplyComponent() {
                                             options={productsOptions}
                                             onChange={handleProductsOptions}
                                             setValue={(event, newValue) => handleSetProductIdValue(index, newValue)}
-                                            getOptionLabel={option => option.product_title}
+                                            getOptionLabel={option => option.productTitle}
                                             noOptionsText={"Товарів не знайдено"}
-                                            IsOptionEqualToValue={(option, value) => option.product_title === value.product_title}
+                                            IsOptionEqualToValue={(option, value) => option.productTitle === value.productTitle}
                                         />
                                     </TableCell>
                                     <TableCell align="center">
@@ -342,15 +342,15 @@ function AdminNewSupplyComponent() {
                         }
                         <TableRow>
                             <TableCell>
-                                <AllianceButton variant={"text"} onClick={handleAddProduct}>Додати
-                                    товар
+                                <AllianceButton variant={"text"} onClick={handleAddProduct}>
+                                    Додати товар
                                 </AllianceButton>
                             </TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
-            <AllianceButton onClick={createNewSupply} mb={"2rem"}>
+            <AllianceButton onClick={createNewSupply} mt={"2rem"} mb={"2rem"}>
                 Створити
             </AllianceButton>
             <SimpleSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>

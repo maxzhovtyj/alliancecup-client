@@ -25,9 +25,9 @@ function ProductComponent() {
     return (
         <div className={classes.productWrapper}>
             <div className={classes.productInfo}>
-                <img className={classes.productImg} src={product.img_url || noopImg} alt="img"/>
+                <img className={classes.productImg} src={product.imgUrl || noopImg} alt="img"/>
                 <div className={classes.textInfo}>
-                    <p className={classes.productTitle}>{product.product_title}</p>
+                    <p className={classes.productTitle}>{product.productTitle}</p>
                     <p className={classes.productArticle}>Артикул: {product.article}</p>
                 </div>
             </div>

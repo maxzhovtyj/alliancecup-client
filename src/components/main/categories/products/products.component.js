@@ -56,7 +56,7 @@ function ProductsComponent() {
     }, [dispatch, filtrationParent.id, filtrationParent.parentName, searchParams])
 
     function loadMore() {
-        let lastCreatedAt = products[products.length - 1].created_at
+        let lastCreatedAt = products[products.length - 1].createdAt
         dispatch(fetchMoreProducts({
             ...searchParams, createdAt: lastCreatedAt
         }))
@@ -116,7 +116,7 @@ function ProductsComponent() {
                                                 onClick={useSetCategoryId}
 
                                             >
-                                                <p className={classes.catalogItem}>{item.category_title}</p>
+                                                <p className={classes.catalogItem}>{item.categoryTitle}</p>
                                             </Link>
                                         )
                                 }

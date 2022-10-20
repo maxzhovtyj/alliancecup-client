@@ -7,16 +7,18 @@ import {AuthContext} from "./context/AuthContext";
 import {useAuth} from "./hooks/useAuth";
 
 function App() {
-    const {login, logout, userId, isAdmin, isModerator} = useAuth()
+    const {login, logout, userId, userRoleId} = useAuth()
 
+    const data = JSON.parse(localStorage.getItem("userData"))
     return (
         <AuthContext.Provider value={{
             isAuth: !!localStorage.getItem("userData"),
             login: login,
             logout: logout,
             userId: userId,
-            isAdmin: isAdmin,
-            isModerator: isModerator,
+            userRoleId: userRoleId,
+            isAdmin: data?.userRoleId === 3 ,
+            isModerator: data?.userRoleId === 2 || data?.userRoleId === 3,
         }}>
             <div className="App">
                 <HeaderComponent/>

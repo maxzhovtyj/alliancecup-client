@@ -109,14 +109,14 @@ function OrderComponent() {
 
         const makeOrderForm = {
             order: {
-                user_lastname: orderInfo.lastName,
-                user_firstname: orderInfo.firstName,
-                user_middle_name: orderInfo.middleName,
-                user_phone_number: orderInfo.phone,
-                user_email: orderInfo.email,
-                sum_price: cartProducts.sum,
-                delivery_type_title: orderInfo.deliveryTypeTitle,
-                payment_type_title: orderInfo.paymentTypeTitle
+                userLastname: orderInfo.lastName,
+                userFirstname: orderInfo.firstName,
+                userMiddleName: orderInfo.middleName,
+                userPhoneNumber: orderInfo.phone,
+                userEmail: orderInfo.email,
+                sumPrice: cartProducts.sum,
+                deliveryTypeTitle: orderInfo.deliveryTypeTitle,
+                paymentTypeTitle: orderInfo.paymentTypeTitle
             }
         }
 
@@ -192,7 +192,7 @@ function OrderComponent() {
             </div>
             <div className={cartClasses.productsList}>
                 {
-                    cartProducts?.cart?.map(item => <CartItem product={item} key={item.product_id} order={true}/>)
+                    cartProducts?.cart?.map(item => <CartItem product={item} key={item.productId} order={true}/>)
                 }
                 <p className={cartClasses.orderSum}>Сума замовлення: {cartProducts.sum}</p>
             </div>

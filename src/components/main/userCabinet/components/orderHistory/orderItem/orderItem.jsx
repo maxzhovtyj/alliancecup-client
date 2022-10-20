@@ -7,7 +7,6 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {IconButton, Paper} from "@mui/material";
 import classes from './orderItem.module.scss'
 import {UserService} from "../../../../../../service/UserService";
-import * as PropTypes from "prop-types";
 import {NavLink} from "react-router-dom";
 
 function OrderItem({order}) {
@@ -22,40 +21,47 @@ function OrderItem({order}) {
         <Paper variant={"outlined"} className={classes.orderWrapper}>
             <div className={classes.orderInfo}>
                 <div>
-                    <p>{info.user_lastname} {info.user_firstname} {info.user_middle_name}</p>
-                    <p className={classes.orderCreatedAt}>Від {UserService.truncTimestamp(info.created_at)}</p>
+                    <p>{info.userLastname} {info.userFirstname} {info.userMiddleName}</p>
+                    <p className={classes.orderCreatedAt}>Від {UserService.truncTimestamp(info.createdAt)}</p>
                 </div>
                 <div className={classes.orderSum}>
-                    <p>Сума: {info.sum_price} грн</p>
+                    <p>Сума: {info.sumPrice} грн</p>
                     <IconButton onClick={toggleShowProduct}>
                         {showDropdown ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
                     </IconButton>
                 </div>
             </div>
-
             {
                 showDropdown
                     ?
                     <div className={classes.dropdownWrapper}>
                         <div className={classes.orderDeliveryInfo}>
                             <p>Інформація про замовлення:</p>
-                            <p>{info.user_phone_number}</p>
-                            <p>{info.user_email}</p>
+                            <p>{info.userPhoneNumber}</p>
+                            <p>{info.userEmail}</p>
                             <div>
-                                <p>Доставка: {info.delivery_type_title}</p>
-                                <div>{delivery.map((item, index) => <p
-                                    key={index}>{item.delivery_description}</p>)}</div>
+                                <p>Доставка: {info.deliveryTypeTitle}</p>
+                                {
+                                    delivery?.length
+                                        ?
+                                        <div>
+                                            {delivery.map((item, index) =>
+                                                <p key={index}>{item.deliveryDescription}</p>
+                                            )}
+                                        </div>
+                                        : ""
+                                }
                             </div>
-                            <p>{info.payment_type_title}</p>
+                            <p>{info.paymentTypeTitle}</p>
                         </div>
                         <div className={classes.orderProducts}>
                             {products.map(p =>
                                 <div key={p.id} className={classes.orderProductItem}>
-                                    <img src={p.img_url || noopImg} alt="img"/>
+                                    <img src={p.imgUrl || noopImg} alt="img"/>
                                     <NavLink to={`/product/${p.id}`}>
                                         <div className={classes.orderProductInfo}>
                                             <span>Товар</span>
-                                            <p className={classes.productTitle}>{p.product_title}</p>
+                                            <p className={classes.productTitle}>{p.productTitle}</p>
                                         </div>
                                     </NavLink>
                                     <div className={classes.orderProductInfo}>
@@ -64,7 +70,7 @@ function OrderItem({order}) {
                                     </div>
                                     <div className={classes.orderProductInfo}>
                                         <span>Сума</span>
-                                        <p>{p.price_for_quantity} грн</p>
+                                        <p>{p.priceForQuantity} грн</p>
                                     </div>
                                 </div>
                             )}

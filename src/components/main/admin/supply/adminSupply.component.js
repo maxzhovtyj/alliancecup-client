@@ -5,9 +5,10 @@ import {fetchMoreSupply, fetchSupply} from "../../../../redux/adminRedux/adminFe
 import {NavLink} from "react-router-dom";
 import ContextMenuSupply from "../../../../UI/contextMenu/contextMenuSupply";
 
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import {UserService} from "../../../../service/UserService";
+import {AlliancePaper} from "../../../../UI/AlliancePaper";
 
 function AdminSupplyComponent() {
     const dispatch = useDispatch()
@@ -27,7 +28,7 @@ function AdminSupplyComponent() {
                     Нове постачання
                 </AllianceButton>
             </NavLink>
-            <TableContainer component={Paper} sx={{margin: "2rem 0"}}>
+            <TableContainer component={AlliancePaper} sx={{margin: "2rem 0"}}>
                 <Table sx={{minWidth: 200}} aria-label="simple table">
                     <TableHead>
                         <TableRow>

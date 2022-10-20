@@ -54,7 +54,7 @@ function AdminInventoryComponent() {
                                     >
                                         <TableCell align={"center"}>{row.id}</TableCell>
                                         <TableCell align={"center"}>
-                                            {UserService.truncTimestamp(row.created_at)}
+                                            {UserService.truncTimestamp(row.createdAt)}
                                         </TableCell>
                                         <TableCell align="center">
                                             <ContextMenuInventory item={row}/>

@@ -31,14 +31,14 @@ function ProductItemComponent({product, setMessage, handleClick, deleteFavourite
         }
 
         const addToCartProduct = {
-            product_id: product.id,
+            productId: product.id,
             quantity: Number(amount),
-            price_for_quantity: priceAmount,
-            amount_in_stock: product.amount_in_stock,
-            article: product.amount_in_stock,
-            img_url: product.img_url,
+            priceForQuantity: priceAmount,
+            amountInStock: product.amountInStock,
+            article: product.article,
+            imgUrl: product.imgUrl,
             price: product.price,
-            product_title: product.product_title,
+            productTitle: product.productTitle,
         }
 
         ShoppingService.addToCart(isAuth, addToCartProduct).then(res => {
@@ -63,11 +63,11 @@ function ProductItemComponent({product, setMessage, handleClick, deleteFavourite
     return (
         <div className={classes.productItem}>
             <Link to={`/product/${product.id}`}>
-                <img className={classes.productImg} src={product.img_url || noopImg} alt="img"/>
+                <img className={classes.productImg} src={product.imgUrl || noopImg} alt="img"/>
             </Link>
             <div className={classes.productInfoWrapper}>
                 <Link to={`/product/${product.id}`}>
-                    <p className={classes.productTitle}>{product.product_title}</p>
+                    <p className={classes.productTitle}>{product.productTitle}</p>
                 </Link>
 
                 <div className={classes.productInfo}>
@@ -84,7 +84,7 @@ function ProductItemComponent({product, setMessage, handleClick, deleteFavourite
                         <input onChange={setProductAmount} value={amount}/>
                     </div>
                     {
-                        product.amount_in_stock === 0
+                        product.amountInStock === 0
                             ?
                             <div className={classes.notInStock}>Немає в наявності</div>
                             :

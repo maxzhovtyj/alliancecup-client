@@ -5,20 +5,11 @@ export const useAuth = () => {
     const [token, setToken] = useState(null)
     const [userId, setUserId] = useState(null)
     const [userRoleId, setUserRoleId] = useState(null)
-    const [isAdmin, setIsAdmin] = useState(false)
-    const [isModerator, setIsModerator] = useState(false)
 
     const login = useCallback((jwtToken, id, roleId) => {
         setToken(jwtToken)
         setUserId(id)
         setUserRoleId(roleId)
-
-        if (roleId !== 1) {
-            setIsModerator(true)
-            if (roleId === 3) {
-                setIsAdmin(true)
-            }
-        }
 
         localStorage.setItem(storageName, JSON.stringify({
             userId: id,
@@ -32,8 +23,6 @@ export const useAuth = () => {
         setToken(null)
         setUserId(null)
         setUserRoleId(null)
-        setIsModerator(false)
-        setIsAdmin(false)
 
         localStorage.removeItem(storageName)
     }, [])
@@ -47,5 +36,5 @@ export const useAuth = () => {
     }, [login])
 
 
-    return { login, logout, token, userId, isAdmin, isModerator }
+    return { login, logout, token, userId, userRoleId }
 }

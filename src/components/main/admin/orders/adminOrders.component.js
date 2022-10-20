@@ -6,7 +6,6 @@ import {fetchOrders} from "../../../../redux/adminRedux/adminFetch";
 
 import ContextMenuOrders from "../../../../UI/contextMenu/contextMenuOrders";
 import {
-    Button,
     FormControl,
     Paper,
     Table,
@@ -25,6 +24,7 @@ import SearchBar from "../../../../UI/searchBar/searchBar";
 import {NavLink} from "react-router-dom";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import {UserService} from "../../../../service/UserService";
+import {AlliancePaper} from "../../../../UI/AlliancePaper";
 
 const $fileApi = axios.create({
     responseType: "arraybuffer",
@@ -100,12 +100,12 @@ function AdminOrdersComponent() {
             <SearchBar value={searchBar} setValue={setSearchBar} onSearch={handleOnSearch}/>
 
             <NavLink to={"/user/admin/new-order"}>
-                <AllianceButton mb={"2rem"} mt={"2rem"}>
+                <AllianceButton mb={"1rem"} mt={"1rem"}>
                     Нове замовлення
                 </AllianceButton>
             </NavLink>
 
-            <TableContainer component={Paper} sx={{margin: "2rem 0"}}>
+            <TableContainer component={AlliancePaper} sx={{marginBottom: "2rem"}}>
                 <Table sx={{minWidth: 200}}>
                     <TableHead>
                         <TableRow>
@@ -120,35 +120,35 @@ function AdminOrdersComponent() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {
-                            (orders?.length)
+                        <>
+                            {(orders?.length)
                                 ?
-                                orders.map((row) => (
-                                    <TableRow
-                                        key={row.id}
-                                        sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                                    >
-                                        <TableCell align={"center"}>{row.id}</TableCell>
-                                        <TableCell align={"center"}>
-                                            {[row.user_lastname, row.user_firstname, row.user_middle_name].join(" ")}
-                                        </TableCell>
-                                        <TableCell align={"center"}>{row.user_phone_number}</TableCell>
-                                        <TableCell align={"center"}>{row.sum_price} грн</TableCell>
-                                        <TableCell align={"center"}>{row.delivery_type_title}</TableCell>
-                                        <TableCell align={"center"}>{row.payment_type_title}</TableCell>
-                                        <TableCell align={"center"}>
-                                            {UserService.truncTimestamp(row.created_at)}
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            <ContextMenuOrders item={row} downloadInvoice={downloadInvoice}/>
-                                        </TableCell>
-                                    </TableRow>
-                                ))
-                                :
-                                <TableRow>
-                                    <TableCell align="left">Немає замовлень</TableCell>
-                                </TableRow>
-                        }
+                                orders.map((row) => {
+                                    return (
+                                        <TableRow
+                                            key={row.id}
+                                            sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                        >
+                                            <TableCell align={"center"}>{row.id}</TableCell>
+                                            <TableCell align={"center"}>
+                                                {[row.userLastname, row.userFirstname, row.userMiddleName].join(" ")}
+                                            </TableCell>
+                                            <TableCell align={"center"}>{row.userPhoneNumber}</TableCell>
+                                            <TableCell align={"center"}>{row.sumPrice} грн</TableCell>
+                                            <TableCell align={"center"}>{row.deliveryTypeTitle}</TableCell>
+                                            <TableCell align={"center"}>{row.paymentTypeTitle}</TableCell>
+                                            <TableCell align={"center"}>
+                                                {UserService.truncTimestamp(row.createdAt)}
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                <ContextMenuOrders item={row} downloadInvoice={downloadInvoice}/>
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                                })
+                                : <TableRow><TableCell align="center">Немає замовлень</TableCell></TableRow>
+                            }
+                        </>
                     </TableBody>
                 </Table>
             </TableContainer>

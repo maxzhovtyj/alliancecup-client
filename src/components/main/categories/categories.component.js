@@ -14,7 +14,7 @@ function CategoriesComponent() {
     }, [dispatch])
     return (
         <div className={classes.categoriesList}>
-            {categories.map(item => <CategoryItemComponent id={item.id} title={item.category_title} img_url={item.img_url} key={item.id}/>)}
+            {categories.map(item => <CategoryItemComponent id={item.id} title={item.categoryTitle} imgUrl={item.imgUrl} key={item.id}/>)}
         </div>
     );
 }

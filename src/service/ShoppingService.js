@@ -49,12 +49,12 @@ export class ShoppingService {
                     cart?.products.push(addToCartProduct)
                     localStorage.setItem(cartProductsStorage, JSON.stringify({
                         products: cart?.products,
-                        sum: cart.sum + addToCartProduct.price_for_quantity
+                        sum: cart.sum + addToCartProduct.priceForQuantity
                     }))
                 } else {
                     localStorage.setItem(cartProductsStorage, JSON.stringify({
                         products: [addToCartProduct],
-                        sum: addToCartProduct.price_for_quantity
+                        sum: addToCartProduct.priceForQuantity
                     }))
                 }
             }
@@ -73,8 +73,8 @@ export class ShoppingService {
             let cart = JSON.parse(localStorage.getItem(cartProductsStorage))
             let productPrice
             let filtered = cart?.products.filter((item, index) => {
-                if (item.product_id === productId) {
-                    productPrice = item.price_for_quantity
+                if (item.productId === productId) {
+                    productPrice = item.priceForQuantity
                     return false
                 }
                 return true

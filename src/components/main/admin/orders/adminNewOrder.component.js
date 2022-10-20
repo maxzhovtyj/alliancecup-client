@@ -5,7 +5,6 @@ import {NovaPoshtaService} from "../../../../service/NovaPoshtaService";
 import {inTownOption, NovaOption} from "../../orders/order.component";
 import {useEffect, useState} from "react";
 import {
-    Button,
     IconButton,
     Paper,
     Table,
@@ -29,7 +28,7 @@ function AdminNewOrderComponent() {
             product: null,
             quantity: 0,
             price: 0,
-            price_for_quantity: 0,
+            priceForQuantity: 0,
         }
     ])
 
@@ -99,13 +98,13 @@ function AdminNewOrderComponent() {
             values[index]["product"] = newValue
             values[index]["productId"] = newValue.id
             values[index]["price"] = newValue.price
-            values[index]["price_for_quantity"] = newValue.price * values[index]["quantity"]
+            values[index]["priceForQuantity"] = newValue.price * values[index]["quantity"]
             setProducts(values)
         } else {
             values[index]["product"] = null
             values[index]["productId"] = null
             values[index]["price"] = 0
-            values[index]["price_for_quantity"] = 0
+            values[index]["priceForQuantity"] = 0
             setProducts(values)
         }
     }
@@ -122,7 +121,7 @@ function AdminNewOrderComponent() {
         let values = [...products]
         const quantity = parseFloat(event.target.value) || 0
         values[index][event.target.name] = quantity
-        values[index]["price_for_quantity"] = quantity * values[index]["price"]
+        values[index]["priceForQuantity"] = quantity * values[index]["price"]
         setProducts(values)
     }
 
@@ -157,7 +156,7 @@ function AdminNewOrderComponent() {
             product: null,
             quantity: 0,
             price: 0,
-            price_for_quantity: 0,
+            priceForQuantity: 0,
         }])
     }
 
@@ -217,9 +216,9 @@ function AdminNewOrderComponent() {
                                                 options={productsOptions}
                                                 onChange={handleProductsOptions}
                                                 setValue={(event, newValue) => handleSetProductIdValue(index, newValue)}
-                                                getOptionLabel={option => option.product_title}
+                                                getOptionLabel={option => option.productTitle}
                                                 noOptionsText={"Товарів не знайдено"}
-                                                IsOptionEqualToValue={(option, value) => option.product_title === value.product_title}
+                                                IsOptionEqualToValue={(option, value) => option.productTitle === value.productTitle}
                                             />
                                         </TableCell>
                                         <TableCell align={"center"}>{row.product?.price || 0} грн</TableCell>
@@ -230,7 +229,7 @@ function AdminNewOrderComponent() {
                                                 onChange={(event) => handleProduct(event, index)}
                                             />
                                         </TableCell>
-                                        <TableCell align={"center"}>{row.price_for_quantity}</TableCell>
+                                        <TableCell align={"center"}>{row.priceForQuantity}</TableCell>
                                         <TableCell align={"center"}>
                                             <IconButton onClick={() => handleRemovePayment(index)}>
                                                 <DeleteIcon/>
