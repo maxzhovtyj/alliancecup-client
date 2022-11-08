@@ -57,9 +57,10 @@ function AdminNewInventoryComponent() {
     useEffect(() => {
         setInventory(products.map(item => ({
             ...item,
-            realAmountPrice: 0,
-            difference: 0,
-            differencePrice: 0
+            realAmount: item.realAmount || 0,
+            realAmountPrice: item.realAmountPrice || 0,
+            difference: item.difference || 0,
+            differencePrice: item.differencePrice || 0
         })))
     }, [products])
 
