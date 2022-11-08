@@ -110,6 +110,26 @@ export class AdminService {
         }
     }
 
+    static async saveInventoryProducts(inventory) {
+        try {
+            return await $api.post(`/api/admin/super/save-inventory`, inventory).catch(function (error) {
+                if (error.response.status === 401) {
+                    throw new Error("Спочатку увійдіть")
+                }
+                if (error.response.status === 403) {
+                    throw new Error("Доступ заборонено")
+                }
+                if (error.response.status === 400) {
+                    throw new Error("Ви надали хибні дані")
+                }
+            })
+        } catch (e) {
+            return e
+        }
+    }
+
+
+
     static async getOrders(createdAt, status, search) {
         try {
             return await $api.get(

@@ -57,7 +57,6 @@ function AdminNewInventoryComponent() {
     useEffect(() => {
         setInventory(products.map(item => ({
             ...item,
-            realAmount: 0,
             realAmountPrice: 0,
             difference: 0,
             differencePrice: 0
@@ -69,6 +68,18 @@ function AdminNewInventoryComponent() {
         AdminService.doInventory(inventory).then(res => {
             if (res?.status === 201 || res?.status === 200) {
                 snackbar.setMessage("Товари успішно проінвентаризовано")
+                snackbar.handleClick()
+            } else {
+                snackbar.setMessage(res?.message)
+                snackbar.handleClick()
+            }
+        })
+    }
+
+    const saveInventory = () => {
+        AdminService.saveInventoryProducts(inventory).then(res => {
+            if (res?.status === 200) {
+                snackbar.setMessage("Інвентаризацію збережено")
                 snackbar.handleClick()
             } else {
                 snackbar.setMessage(res?.message)
@@ -181,9 +192,15 @@ function AdminNewInventoryComponent() {
                         {inventorySum} ₴
                     </span>
                 </div>
-                <AllianceButton onClick={doInventory} mb={"2rem"}>
-                    Провести інвентаризацію
-                </AllianceButton>
+                <div className={classes.newInventoryButtons}>
+                    <AllianceButton onClick={saveInventory} mb={"2rem"}>
+                        Зберегти інвентаризацію
+                    </AllianceButton>
+
+                    <AllianceButton onClick={doInventory} mb={"2rem"}>
+                        Провести інвентаризацію
+                    </AllianceButton>
+                </div>
             </div>
             <AllianceSnackbar open={snackbar.open} handleClose={snackbar.handleClose} message={snackbar.message}/>
         </div>

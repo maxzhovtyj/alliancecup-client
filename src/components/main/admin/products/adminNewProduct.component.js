@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {fetchCategories} from "../../../../redux/shopRedux/shopFetch";
 import {useDispatch, useSelector} from "react-redux";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
+import $api from "../../../../http/http";
 
 function AdminNewProductComponent() {
     const dispatch = useDispatch()
@@ -25,6 +26,7 @@ function AdminNewProductComponent() {
 
     const [characteristics, setCharacteristics] = useState([{}])
     const [packaging, setPackaging] = useState([{}])
+    const [productImg, setProductImg] = useState({})
 
     const handleProductForm = (event) => {
         setProductFrom({...productForm, [event.target.name]: event.target.value})
@@ -32,13 +34,29 @@ function AdminNewProductComponent() {
     const handleSetCategoryIdValue = (newValue) => {
 
     }
+    const handleSetProductImg = (event) => {
+        setProductImg(event.target.files[0])
+    }
+
     const newProduct = () => {
-        console.log(productForm)
+        // TODO form data
+        let form = new FormData()
+        
+        form.append("form", "some form data")
+
+        const addProduct = async () => {
+            return await $api.post("api/admin/product", form)
+        }
+
+        addProduct().then(res => {
+            console.log(res)
+        })
     }
     return (
         <div>
             <p className={classes.newProductTitle}>Новий товар</p>
             <FormControl className={classes.newProductInfo}>
+                <input type={"file"} onChange={handleSetProductImg} />
                 <AllianceSelect
                     defaultValue={""}
                     name={"categoryId"}
