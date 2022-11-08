@@ -120,10 +120,15 @@ function AdminProductsComponent() {
                                             <TableCell align="center">{row.price}</TableCell>
                                             <TableCell align="center">
                                                 <>
-                                                    {Object.entries(row.packaging).map(e => {
-                                                        const [key, value] = e;
-                                                        return <span key={key}>{value} {key} </span>;
-                                                    })}
+                                                    {
+                                                        row.packaging
+                                                            ?
+                                                            Object.entries(row.packaging).map(e => {
+                                                                const [key, value] = e;
+                                                                return <span key={key}>{value} {key} </span>;
+                                                            })
+                                                            : "---"
+                                                    }
                                                 </>
                                             </TableCell>
                                             <TableCell align="center">{row.amountInStock}</TableCell>

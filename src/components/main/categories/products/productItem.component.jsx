@@ -60,10 +60,17 @@ function ProductItemComponent({product, setMessage, handleClick, deleteFavourite
         })
     }
 
+    const getProductImage = () => {
+        if (product.imgUUID) {
+            return `http://localhost:9000/images/${product?.imgUUID}`
+        } else if (product.imgUrl) {
+            return product.imgUrl
+        } else return noopImg
+    }
     return (
         <div className={classes.productItem}>
             <Link to={`/product/${product.id}`}>
-                <img className={classes.productImg} src={product.imgUrl || noopImg} alt="img"/>
+                <img className={classes.productImg} src={getProductImage()} alt={"image"}/>
             </Link>
             <div className={classes.productInfoWrapper}>
                 <Link to={`/product/${product.id}`}>
@@ -73,10 +80,13 @@ function ProductItemComponent({product, setMessage, handleClick, deleteFavourite
                 <div className={classes.productInfo}>
                     <div className={classes.stockInfo}>
                         {
-                            Object.entries(product.packaging).map(entry => {
-                                const [key, value] = entry;
-                                return <span key={key}>{value} {key}</span>;
-                            })
+                            product.packaging
+                                ?
+                                Object.entries(product.packaging).map(entry => {
+                                    const [key, value] = entry
+                                    return <span key={key}>{value} {key}</span>
+                                })
+                                : ""
                         }
                     </div>
                     <div className={classes.priceInfo}>
