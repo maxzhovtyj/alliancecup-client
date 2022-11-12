@@ -11,6 +11,8 @@ const $api = axios.create({
 })
 
 export const storageName = "userData"
+export const userCartName = "userCart"
+export const userFavouritesName = "userFavourites"
 
 $api.interceptors.request.use(async (config) => {
     let userData = JSON.parse(localStorage.getItem(storageName))
@@ -28,7 +30,7 @@ $api.interceptors.request.use(async (config) => {
             localStorage.removeItem(storageName)
             window.location.reload()
             return config
-    })
+        })
 
     localStorage.setItem(storageName, JSON.stringify({
         userId: response.data.userId,
@@ -40,6 +42,26 @@ $api.interceptors.request.use(async (config) => {
     if (userData && userData.token !== "") {
         config.headers.Authorization = `Bearer ${userData.token}`
     }
+
+    // TODO
+    // let userCart = localStorage.getItem(userCartName)
+    //
+    // if (userCart) {
+    //     userCart = JSON.parse(userCart)
+    // }
+    // else {
+    //     const response = await $api.get(`${API_URL}/api/new-cart`, {withCredentials: true})
+    //         .catch(function () {
+    //             localStorage.removeItem(storageName)
+    //             window.location.reload()
+    //             return config
+    //         })
+    //
+    //     localStorage.setItem(userCartName, response.data)
+    //     userCart = response.data
+    // }
+    //
+    // config.headers.UserCart = userCart
 
     return config
 })

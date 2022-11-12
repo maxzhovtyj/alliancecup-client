@@ -27,7 +27,7 @@ export class ShoppingService {
     static async addToCart(isAuth, addToCartProduct) {
         try {
             if (isAuth) {
-                await $api.post('/api/client/cart', addToCartProduct)
+                await $api.post('/api/shopping/cart', addToCartProduct)
                     .catch(function (error) {
                         if (error.response.status === 400) {
                             throw new Error("Помилка: Хибні дані")
