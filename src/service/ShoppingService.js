@@ -68,7 +68,7 @@ export class ShoppingService {
 
     static async deleteFromCart(isAuth, productId) {
         if (isAuth) {
-            await $api.delete(`/api/client/cart?id=${productId}`)
+            await $api.delete(`/api/shopping/cart?id=${productId}`)
         } else {
             let cart = JSON.parse(localStorage.getItem(cartProductsStorage))
             let productPrice
