@@ -66,10 +66,10 @@ function ProductsComponent() {
         setSearchParams({...searchParams, id: useParams().id})
     }
 
-    function handleCharacteristic(filtration, id) {
+    function handleCharacteristic(searchKey, searchCharacteristic, id) {
         setFiltrationParent({parentName: "filtration_list_id", id: id})
-        setParamsChips([...paramsChips, filtration])
-        setSearchParams({...searchParams, characteristic: filtration})
+        setParamsChips([...paramsChips, searchCharacteristic])
+        setSearchParams({...searchParams, characteristic: searchKey+":"+searchCharacteristic})
     }
 
     function onRangeCommitted() {
