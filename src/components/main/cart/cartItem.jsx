@@ -1,18 +1,16 @@
-import {useContext} from 'react';
 import noopImg from '../../../assets/noopProduct.svg'
 
 import classes from './cart.module.scss'
+
 import CloseIcon from "@mui/icons-material/Close";
 import {IconButton} from "@mui/material";
-import {AuthContext} from "../../../context/AuthContext";
+
 import {NavLink} from "react-router-dom";
 import {ShoppingService} from "../../../service/ShoppingService";
 
 function CartItem({product, order}) {
-    const {isAuth} = useContext(AuthContext)
-
     function deleteFromCart() {
-        ShoppingService.deleteFromCart(isAuth, product.productId)
+        ShoppingService.deleteFromCart(product.productId)
             .then(() => window.location.reload())
     }
 

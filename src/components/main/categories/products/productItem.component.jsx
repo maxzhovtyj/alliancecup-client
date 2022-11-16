@@ -1,10 +1,9 @@
-import React, {useContext, useState} from 'react';
+import {useState} from 'react';
 import {Link} from 'react-router-dom'
 import classes from './products.module.scss'
 
 import noopImg from '../../../../assets/noopProduct.svg'
 
-import {AuthContext} from "../../../../context/AuthContext";
 import CloseIcon from "@mui/icons-material/Close";
 import {IconButton} from "@mui/material";
 import {ShoppingService} from "../../../../service/ShoppingService";
@@ -12,8 +11,6 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 
 function ProductItemComponent({product, setMessage, handleClick, deleteFavourite}) {
-    const {isAuth} = useContext(AuthContext)
-
     let [amount, setAmount] = useState(1)
     let [priceAmount, setPriceAmount] = useState(Number(product.price))
 
@@ -41,21 +38,21 @@ function ProductItemComponent({product, setMessage, handleClick, deleteFavourite
             productTitle: product.productTitle,
         }
 
-        ShoppingService.addToCart(isAuth, addToCartProduct).then(res => {
+        ShoppingService.addToCart(addToCartProduct).then(res => {
             setMessage(res.message)
             handleClick()
         })
     }
 
     function addToFavourites() {
-        ShoppingService.addToFavourites(isAuth, product).then(res => {
+        ShoppingService.addToFavourites(product).then(res => {
             setMessage(res.message)
             handleClick()
         })
     }
 
     function deleteFromFavourites() {
-        ShoppingService.deleteFromFavourites(isAuth, product.id).then(() => {
+        ShoppingService.deleteFromFavourites(product.id).then(() => {
             window.location.reload()
         })
     }
@@ -70,7 +67,7 @@ function ProductItemComponent({product, setMessage, handleClick, deleteFavourite
     return (
         <div className={classes.productItem}>
             <Link to={`/product/${product.id}`}>
-                <img className={classes.productImg} src={getProductImage()} alt={"image"}/>
+                <img className={classes.productImg} src={getProductImage()} alt={"img"}/>
             </Link>
             <div className={classes.productInfoWrapper}>
                 <Link to={`/product/${product.id}`}>

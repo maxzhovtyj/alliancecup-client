@@ -1,24 +1,24 @@
-import React, {useContext, useEffect} from 'react';
+import {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {fetchFavourites} from "../../../redux/userFavouritesRedux/favouritesFetch";
-import ProductItemComponent from "../categories/products/productItem.component";
 import {useSnackbar} from "../../../hooks/useSnackbar";
 
+import {fetchFavourites} from "../../../redux/userFavouritesRedux/favouritesFetch";
+import ProductItemComponent from "../categories/products/productItem.component";
+
 import classes from './favourites.module.scss'
-import {AuthContext} from "../../../context/AuthContext";
 
-function FavouritesComponent(props) {
-    const {isAuth} = useContext(AuthContext)
-
+function FavouritesComponent() {
     const dispatch = useDispatch()
     const favouritesList = useSelector(state => state.favouritesPage.favouritesList)
 
     const {setMessage, handleClick} = useSnackbar()
+
     useEffect(() => {
-        dispatch(fetchFavourites(isAuth))
-    }, [dispatch, isAuth])
+        dispatch(fetchFavourites())
+    }, [dispatch])
+
     return (
-        <>
+        <div className={classes.favouriteWrapper}>
             <h1 className={classes.pageTitle}>Обрані товари</h1>
             <div className={classes.favouriteList}>
                 {
@@ -36,7 +36,7 @@ function FavouritesComponent(props) {
                         : <p className={classes.emptyTitle}>Товари в обраному відсутні</p>
                 }
             </div>
-        </>
+        </div>
     );
 }
 

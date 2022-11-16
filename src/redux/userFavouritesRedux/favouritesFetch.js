@@ -1,17 +1,9 @@
 import $api from "../../http/http";
 import {getFavouritesActionCreator} from "./favouritesReducer";
-import {favouriteProductsStorage} from "../../service/ShoppingService";
 
-export const fetchFavourites = (isAuth) => {
+export const fetchFavourites = () => {
     return async (dispatch) => {
-        if (isAuth) {
-            const response = await $api.get('/api/client/favourites')
-            dispatch(getFavouritesActionCreator(response.data?.products))
-        } else {
-            let favourites = JSON.parse(localStorage.getItem(favouriteProductsStorage))
-            if (favourites) {
-                dispatch(getFavouritesActionCreator(favourites.products))
-            }
-        }
+        const response = await $api.get('/api/shopping/favourites')
+        dispatch(getFavouritesActionCreator(response.data))
     }
 }
