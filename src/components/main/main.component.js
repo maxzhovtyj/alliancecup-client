@@ -32,6 +32,7 @@ import AdminOrdersComponent from "./admin/orders/adminOrders.component";
 import AdminOrderInfoComponent from "./admin/orders/adminOrderInfo.component";
 import AdminNewOrderComponent from "./admin/orders/adminNewOrder.component";
 import AdminNewProductComponent from "./admin/products/adminNewProduct.component";
+import AdminCategoriesComponent from "./admin/categories/adminCategories.component";
 
 function MainComponent() {
     return (
@@ -61,6 +62,8 @@ function MainComponent() {
                                 <Route index element={<Navigate to="products" replace />} />
                                 <Route path={"products"} element={<AdminProductsComponent/>}/>
                                 <Route path={"new-product"} element={<AdminNewProductComponent/>}/>
+
+                                <Route path={"categories"} element={<AdminCategoriesComponent/>}/>
 
                                 <Route path={"orders"} element={<AdminOrdersComponent/>}/>
                                 <Route path={"orders/:id"} element={<AdminOrderInfoComponent/>}/>

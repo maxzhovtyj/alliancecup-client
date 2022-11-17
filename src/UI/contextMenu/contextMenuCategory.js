@@ -5,10 +5,10 @@ import MenuItem from '@mui/material/MenuItem';
 import {Divider, IconButton, ListItemIcon, ListItemText, Menu} from "@mui/material";
 import {MoreVertRounded} from "@mui/icons-material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import InventoryIcon from '@mui/icons-material/Inventory';
+import EditIcon from '@mui/icons-material/Edit';
 
 
-export default function ContextMenuInventory({item}) {
+export default function ContextMenuCategory({item}) {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -43,12 +43,12 @@ export default function ContextMenuInventory({item}) {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <NavLink to={`/user/admin/inventory/${item.id}`}>
+                <NavLink to={`/user/admin/category/${item.id}`}>
                     <MenuItem onClick={handleClose}>
                         <ListItemIcon>
-                            <InventoryIcon fontSize="small"/>
+                            <EditIcon fontSize="small"/>
                         </ListItemIcon>
-                        <ListItemText>Товари</ListItemText>
+                        <ListItemText>Змінити</ListItemText>
                     </MenuItem>
                 </NavLink>
 
