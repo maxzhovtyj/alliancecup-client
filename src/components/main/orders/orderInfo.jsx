@@ -150,7 +150,7 @@ function OrderInfo({
                     error={errors.paymentTypeTitle}
                 >
                     {
-                        paymentTypes.map(item =>
+                        paymentTypes?.map(item =>
                             <MenuItem value={item.payment_type_title} key={item.id}>
                                 {item.payment_type_title}
                             </MenuItem>)

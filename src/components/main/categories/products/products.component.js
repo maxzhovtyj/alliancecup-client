@@ -69,7 +69,7 @@ function ProductsComponent() {
     function handleCharacteristic(searchKey, searchCharacteristic, id) {
         setFiltrationParent({parentName: "filtration_list_id", id: id})
         setParamsChips([...paramsChips, searchCharacteristic])
-        setSearchParams({...searchParams, characteristic: searchKey+":"+searchCharacteristic})
+        setSearchParams({...searchParams, characteristic: searchKey + ":" + searchCharacteristic})
     }
 
     function onRangeCommitted() {
@@ -84,11 +84,13 @@ function ProductsComponent() {
     return (
         <>
             <Stack direction="row" spacing={1} className={classes.chipsList}>
-                {
-                    paramsChips.map((chipItem, index) =>
-                        <AllianceChip key={index} name={chipItem} label={chipItem} onDelete={handleDelete}
-                                      variant="outlined"/>)
-                }
+                <>
+                    {
+                        paramsChips.map((chipItem, index) =>
+                            <AllianceChip key={index} name={chipItem} label={chipItem} onDelete={handleDelete}
+                                          variant="outlined"/>)
+                    }
+                </>
             </Stack>
             <div className={classes.productsPageWrapper}>
                 <div className={classes.sidebar}>

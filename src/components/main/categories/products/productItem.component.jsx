@@ -28,14 +28,10 @@ function ProductItemComponent({product, setMessage, handleClick, deleteFavourite
         }
 
         const addToCartProduct = {
-            productId: product.id,
+            ...product,
             quantity: Number(amount),
             priceForQuantity: priceAmount,
-            amountInStock: product.amountInStock,
-            article: product.article,
-            imgUrl: product.imgUrl,
             price: product.price,
-            productTitle: product.productTitle,
         }
 
         ShoppingService.addToCart(addToCartProduct).then(res => {

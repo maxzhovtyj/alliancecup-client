@@ -5,6 +5,7 @@ import {
     getProductsActionCreator, loadProductsActionCreator, setFetchingActionCreator, setNotFetchingActionCreator
 } from "./shopReducer";
 import $api from "../../http/http";
+import {ProductService} from "../../service/ProductService";
 
 export const fetchFiltrationList = (name, id) => {
     return async (dispatch) => {
@@ -28,27 +29,36 @@ export const fetchCategories = () => {
     }
 }
 
-export const fetchProducts = ({id, createdAt, price, size, characteristic, search}) => {
+export const fetchProducts = ({
+                                  id,
+                                  createdAt,
+                                  price,
+                                  size,
+                                  characteristic,
+                                  search,
+                              }) => {
+
     return async (dispatch) => {
         dispatch(loadProductsActionCreator())
-        const response = await $api.get(
-            `/api/products?category=${id}&createdAt=${createdAt}&priceRange=${price[0]}:${price[1]}&size=${size}&characteristic=${characteristic}&search=${search}`
-        )
-        dispatch(getProductsActionCreator(response.data))
+        ProductService.getProducts(id, createdAt, price, size, characteristic, search).then(res => {
+            if (!res || res?.status !== 200) {
+                dispatch(getProductsActionCreator([]))
+            }
+            dispatch(getProductsActionCreator(res?.data))
+        })
     }
 }
 
-export const fetchMoreProducts = ({id, createdAt, price, search, size, characteristic}) => {
+export const fetchMoreProducts = ({id, createdAt, price, size, characteristic, search}) => {
     return async (dispatch) => {
         dispatch(setFetchingActionCreator())
-        const response = await $api.get(
-            `/api/products?category=${id}&createdAt=${createdAt}&priceRange=${price[0]}:${price[1]}&size=${size}&characteristic=${characteristic}&search=${search}`
-        )
-        if (response.data !== null) {
-            dispatch(getMoreProductsActionCreator(response.data))
-        } else {
-            dispatch(cannotLoadProductsActionCreator())
-        }
+        ProductService.getProducts(id, createdAt, price, size, characteristic, search).then(res => {
+            if (res.data !== null) {
+                dispatch(getMoreProductsActionCreator(res.data))
+            } else {
+                dispatch(cannotLoadProductsActionCreator())
+            }
+        })
         dispatch(setNotFetchingActionCreator())
     }
 }
