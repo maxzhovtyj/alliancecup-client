@@ -8,6 +8,13 @@ import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 import store from "./redux/store";
 
+export const ROLES = {
+    "GUEST": "0000",
+    "CLIENT": "0001",
+    "MODERATOR": "1002",
+    "SUPERADMIN": "2003",
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>

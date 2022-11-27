@@ -16,7 +16,6 @@ import {
     TableRow
 } from "@mui/material";
 
-import {API_URL} from "../../../../http/http";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
 import {AllianceInputLabel, AllianceSelect} from "../../../../UI/styles";
@@ -25,12 +24,7 @@ import {NavLink} from "react-router-dom";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import {UserService} from "../../../../service/UserService";
 import {AlliancePaper} from "../../../../UI/AlliancePaper";
-
-const $fileApi = axios.create({
-    responseType: "arraybuffer",
-    withCredentials: true,
-    baseURL: API_URL,
-})
+import {AdminService} from "../../../../service/AdminService";
 
 const IN_PROGRESS = "IN_PROGRESS"
 const PROCESSED = "PROCESSED"
@@ -48,16 +42,8 @@ function AdminOrdersComponent() {
         dispatch(fetchOrders("", orderStatus, searchOrders))
     }, [dispatch, orderStatus, searchOrders])
 
-    const getInvoice = async (orderId) => {
-        try {
-            return await $fileApi.get(`/api/invoice?id=${orderId}`)
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
     const downloadInvoice = (orderId) => {
-        getInvoice(orderId).then(res => {
+        AdminService.getInvoice(orderId).then(res => {
             const file = new Blob([res.data], {type: 'application/pdf'});
 
             const fileURL = URL.createObjectURL(file);
@@ -76,9 +62,10 @@ function AdminOrdersComponent() {
         event.preventDefault()
         setSearchOrders(searchBar)
     }
+
     return (
         <div>
-            <p>Orders</p>
+            <p>Замовлення</p>
             <Box sx={{maxWidth: 300, marginTop: 2, marginBottom: 2}}>
                 <FormControl fullWidth>
                     <AllianceInputLabel id="status-select">Статус</AllianceInputLabel>

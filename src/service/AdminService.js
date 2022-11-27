@@ -1,6 +1,56 @@
-import $api from "../http/http";
+import $api, {$fileApi} from "../http/http";
 
 export class AdminService {
+    static async addProduct(form) {
+        try {
+            await $api.post("api/admin/product", form).catch(function (error) {
+                if (error.response.status === 403) {
+                    throw new Error("Доступ заборонено")
+                }
+                if (error.response.status === 400) {
+                    throw new Error("Ви надали хибні дані")
+                }
+                if (error.response.status === 500) {
+                    throw new Error("Щось пішло не так")
+                }
+            })
+
+            return {
+                message: "Товар успішно додано"
+            }
+        } catch (e) {
+            return e
+        }
+    }
+
+    static async addCategory(form) {
+        try {
+            const res = await $api.post("api/admin/category", form).catch(function (error) {
+                if (error?.response?.status === 403) {
+                    throw new Error("Доступ заборонено")
+                }
+                if (error?.response?.status === 400) {
+                    throw new Error("Ви надали хибні дані")
+                }
+                if (error?.response?.status === 500) {
+                    throw new Error("Щось пішло не так")
+                }
+            })
+
+            if (res?.status === 200 || res?.status === 201) {
+                return {
+                    message: "Категорію успішно додано"
+                }
+            } else {
+                return {
+                    message: "Щось пішло не так"
+                }
+            }
+        } catch (e) {
+            return e
+        }
+    }
+
     static async deleteProduct(productId) {
         try {
             const response = await $api.delete(`/api/admin/product?id=${productId}`).catch(function (error) {
@@ -129,7 +179,6 @@ export class AdminService {
     }
 
 
-
     static async getOrders(createdAt, status, search) {
         try {
             return await $api.get(
@@ -158,16 +207,22 @@ export class AdminService {
             return await $api.post("api/admin/super/inventory", form).catch(function (err) {
                 if (err.response.status === 500) {
                     throw new Error("Щось пішло не так...")
-                }
-                else if (err.response.status === 400) {
+                } else if (err.response.status === 400) {
                     throw new Error("Ви ввели хибні дані")
-                }
-                else throw new Error("Щось пішло не так...")
+                } else throw new Error("Щось пішло не так...")
             })
         } catch (e) {
             return e
         }
 
+    }
+
+    static async getInvoice(orderId) {
+        try {
+            return await $fileApi.get(`/api/invoice?id=${orderId}`)
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     static HandleMoney(price) {

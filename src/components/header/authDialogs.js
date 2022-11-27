@@ -108,7 +108,7 @@ export default function AuthDialogs() {
         UserService.signIn(signInForm).then(res => {
             if (res.status === 200) {
                 localStorage.clear()
-                login(res.data.accessToken, res.data.userId, res.data.userRoleId)
+                login(res.data.accessToken, res.data.userId, res.data.userRoleCode)
                 handleSignUpClose()
             } else {
                 setMessage(res?.message)

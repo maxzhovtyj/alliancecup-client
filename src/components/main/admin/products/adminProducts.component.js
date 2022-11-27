@@ -101,6 +101,8 @@ function AdminProductsComponent() {
                             <TableCell align="center">Ціна</TableCell>
                             <TableCell align="center">Пакування</TableCell>
                             <TableCell align="center">Кількість</TableCell>
+                            <TableCell align="center">Посилання на фотографію</TableCell>
+                            <TableCell align="center">Номер у сховищі</TableCell>
                             <TableCell align="center">Управління</TableCell>
                         </TableRow>
                     </TableHead>
@@ -132,6 +134,8 @@ function AdminProductsComponent() {
                                                 </>
                                             </TableCell>
                                             <TableCell align="center">{row.amountInStock}</TableCell>
+                                            <TableCell align="center">{row.imgUrl || "---"}</TableCell>
+                                            <TableCell align="center">{row.imgUUID || "---"}</TableCell>
                                             <TableCell align="center">
                                                 <ContextMenuProduct
                                                     item={row}

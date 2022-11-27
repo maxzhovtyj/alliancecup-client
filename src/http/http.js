@@ -10,6 +10,12 @@ const $api = axios.create({
     baseURL: API_URL,
 })
 
+export const $fileApi = axios.create({
+    responseType: "arraybuffer",
+    withCredentials: true,
+    baseURL: API_URL,
+})
+
 export const storageName = "userData"
 
 $api.interceptors.request.use(async (config) => {
@@ -32,7 +38,7 @@ $api.interceptors.request.use(async (config) => {
 
     localStorage.setItem(storageName, JSON.stringify({
         userId: response.data.userId,
-        userRoleId: response.data.userRoleId,
+        userRoleCode: response.data.userRoleCode,
         token: response.data.accessToken
     }))
 

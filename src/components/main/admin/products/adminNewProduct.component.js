@@ -5,9 +5,13 @@ import {useEffect, useState} from "react";
 import {fetchCategories} from "../../../../redux/shopRedux/shopFetch";
 import {useDispatch, useSelector} from "react-redux";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
-import $api from "../../../../http/http";
+import {AdminService} from "../../../../service/AdminService";
+import {useSnackbar} from "../../../../hooks/useSnackbar";
+import AllianceSnackbar from "../../../../UI/snackbar";
 
 function AdminNewProductComponent() {
+    const snackbar = useSnackbar()
+
     const dispatch = useDispatch()
     const categories = useSelector(state => state.shop.categories)
 
@@ -32,16 +36,11 @@ function AdminNewProductComponent() {
         setProductFrom({...productForm, [event.target.name]: event.target.value})
     }
 
-    const handleSetCategoryIdValue = (newValue) => {
-
-    }
-
     const handleSetProductImg = (event) => {
         setProductImg(event.target.files[0])
     }
 
     const newProduct = () => {
-        // TODO form data
         let form = new FormData()
 
         form.append("file", productImg)
@@ -52,29 +51,24 @@ function AdminNewProductComponent() {
         form.append("amountInStock", productForm.amountInStock)
         form.append("price", productForm.price)
 
-        for (let p of form) {
-            console.log(p);
-        }
-
-        const addProduct = async () => {
-            return await $api.post("api/admin/product", form)
-        }
-
-        addProduct().then(res => {
-            console.log(res)
+        AdminService.addProduct(form).then(res => {
+            snackbar.setMessage(res.message)
+            snackbar.handleClick()
         })
     }
+
     return (
         <div>
             <p className={classes.newProductTitle}>Новий товар</p>
+
             <FormControl className={classes.newProductInfo}>
                 <input type={"file"} onChange={handleSetProductImg}/>
-                <FormControl>
+                <FormControl sx={{minWidth: 200}}>
                     <AllianceInputLabel>Категорія</AllianceInputLabel>
                     <AllianceSelect
                         defaultValue={""}
-                        name={"categoryTitle"}
-                        label={"Категорія"}
+                        name="categoryTitle"
+                        label="Категорія"
                         value={productForm.categoryTitle}
                         onChange={handleProductForm}
                     >
@@ -97,7 +91,10 @@ function AdminNewProductComponent() {
                                    onChange={handleProductForm}/>
                 <AllianceTextField label="Ціна" name={"price"} value={productForm.price} onChange={handleProductForm}/>
             </FormControl>
+
             <AllianceButton onClick={newProduct} mt={"1rem"} mb={"1rem"}>Додати</AllianceButton>
+
+            <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
         </div>
     );
 }

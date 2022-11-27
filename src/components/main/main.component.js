@@ -33,6 +33,9 @@ import AdminOrderInfoComponent from "./admin/orders/adminOrderInfo.component";
 import AdminNewOrderComponent from "./admin/orders/adminNewOrder.component";
 import AdminNewProductComponent from "./admin/products/adminNewProduct.component";
 import AdminCategoriesComponent from "./admin/categories/adminCategories.component";
+import AdminNewCategory from "./admin/categories/adminNewCategory";
+import SuperAdminRoute from "../../utils/SuperAdminRoute";
+import PageWasNotFound from "../errorPages/pageWasNotFound";
 
 function MainComponent() {
     return (
@@ -52,18 +55,19 @@ function MainComponent() {
                     <Route path={"/favourites"} element={<FavouritesComponent/>}/>
                     <Route element={<PrivateRoute/>}>
                         <Route path={"/user"} element={<UserCabinetComponent/>}>
-                            <Route index element={<Navigate to="personal-info" replace />} />
+                            <Route index element={<Navigate to="personal-info" replace/>}/>
                             <Route path={"personal-info"} element={<PersonalInfoComponent/>}/>
                             <Route path={"order-history"} element={<OrderHistoryComponent/>}/>
                             <Route path={"change-password"} element={<ChangePasswordComponent/>}/>
                         </Route>
                         <Route element={<AdminRoute/>}>
                             <Route path={"/user/admin"} element={<AdminComponent/>}>
-                                <Route index element={<Navigate to="products" replace />} />
+                                <Route index element={<Navigate to="products" replace/>}/>
                                 <Route path={"products"} element={<AdminProductsComponent/>}/>
                                 <Route path={"new-product"} element={<AdminNewProductComponent/>}/>
 
                                 <Route path={"categories"} element={<AdminCategoriesComponent/>}/>
+                                <Route path={"new-category"} element={<AdminNewCategory/>}/>
 
                                 <Route path={"orders"} element={<AdminOrdersComponent/>}/>
                                 <Route path={"orders/:id"} element={<AdminOrderInfoComponent/>}/>
@@ -73,13 +77,16 @@ function MainComponent() {
                                 <Route path={"supply/:id"} element={<AdminSupplyProductsComponent/>}/>
                                 <Route path={"new-supply"} element={<AdminNewSupplyComponent/>}/>
 
-                                <Route path={"inventory"} element={<AdminInventoryComponent/>}/>
-                                <Route path={"inventory/:id"} element={<AdminInventoryProductsComponent/>}/>
-                                <Route path={"new-inventory"} element={<AdminNewInventoryComponent/>}/>
+                                <Route element={<SuperAdminRoute/>}>
+                                    <Route path={"inventory"} element={<AdminInventoryComponent/>}/>
+                                    <Route path={"inventory/:id"} element={<AdminInventoryProductsComponent/>}/>
+                                    <Route path={"new-inventory"} element={<AdminNewInventoryComponent/>}/>
+                                </Route>
                             </Route>
                         </Route>
                     </Route>
                     <Route path={"/cart/order"} element={<OrderComponent/>}/>
+                    <Route path={"*"} element={<PageWasNotFound/>}/>
                 </Routes>
             </div>
         </div>

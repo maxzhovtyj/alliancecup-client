@@ -6,6 +6,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchCategories} from "../../../../redux/shopRedux/shopFetch";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import ContextMenuCategory from "../../../../UI/contextMenu/contextMenuCategory";
+import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
+import {NavLink} from "react-router-dom";
 
 function AdminCategoriesComponent() {
     const dispatch = useDispatch()
@@ -17,6 +19,9 @@ function AdminCategoriesComponent() {
     }, [dispatch])
     return (
         <div>
+            <NavLink to={"/user/admin/new-category"}>
+                <AllianceButton mt={"1rem"} mb={"1rem"}>Додати категорію</AllianceButton>
+            </NavLink>
             <TableContainer component={AlliancePaper}>
                 <Table sx={{minWidth: 200}}>
                     <TableHead>

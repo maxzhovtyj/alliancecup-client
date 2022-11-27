@@ -5,9 +5,10 @@ import FooterComponent from "./components/footer/footer.component";
 import MainComponent from "./components/main/main.component";
 import {AuthContext} from "./context/AuthContext";
 import {useAuth} from "./hooks/useAuth";
+import {ROLES} from "./index";
 
 function App() {
-    const {login, logout, userId, userRoleId} = useAuth()
+    const {login, logout, userId, userRoleCode} = useAuth()
 
     const data = JSON.parse(localStorage.getItem("userData"))
     return (
@@ -16,9 +17,9 @@ function App() {
             login: login,
             logout: logout,
             userId: userId,
-            userRoleId: userRoleId,
-            isAdmin: data?.userRoleId === 3 ,
-            isModerator: data?.userRoleId === 2 || data?.userRoleId === 3,
+            userRoleCode: userRoleCode,
+            isAdmin: data?.userRoleCode === ROLES.SUPERADMIN ,
+            isModerator: data?.userRoleCode === ROLES.MODERATOR,
         }}>
             <div className="App">
                 <HeaderComponent/>
