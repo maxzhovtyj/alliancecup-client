@@ -1,34 +1,19 @@
-import React, {useContext} from 'react';
-import Button from "@mui/material/Button";
+import {useContext} from 'react';
+import {Link, NavLink, Outlet} from "react-router-dom";
+
+import {AuthContext} from "../../../context/AuthContext";
+import {UserService} from "../../../service/UserService";
 
 import classes from './userCabinet.module.scss'
-import {AuthContext} from "../../../context/AuthContext";
-import $api from "../../../http/http";
-import {Link, NavLink} from "react-router-dom";
-import {Outlet} from "react-router-dom";
+import Button from "@mui/material/Button";
 
 function UserCabinetComponent() {
     const {isAdmin, isModerator, logout} = useContext(AuthContext)
 
-
-    const userLogout = async () => {
-        try {
-            const response = await $api.delete('/api/client/logout').catch(function (error) {
-                if (error.response.status === 400) {
-                    throw new Error("Помилка: Хибні дані")
-                }
-                if (error.response.status === 401) {
-                    throw new Error("Помилка: ви не авторизовані")
-                }
-                if (error.response.status === 500) {
-                    throw new Error("Помилка: щось пішло не так")
-                }
-            })
-            console.log(response)
+    const userLogout = () => {
+        UserService.logout().then(() => {
             logout()
-        } catch (e) {
-            console.log(e)
-        }
+        })
     }
 
     return (

@@ -1,7 +1,5 @@
 import {useContext, useState} from "react";
 
-import $api from "../../http/http";
-
 import classes from '../../UI/authDialogs/authDialogs.module.scss'
 import enter from "../../assets/svgs/log-in.svg";
 
@@ -48,7 +46,7 @@ export default function AuthDialogs() {
     const validateSignIn = () => {
         let tmp = {}
 
-        tmp.email = !(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(signInForm.email)
+        tmp.email = !(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(signInForm.email)
         tmp.password = !signInForm.password
 
         setSignInErrors({
@@ -63,7 +61,7 @@ export default function AuthDialogs() {
         tmp.lastname = !signUpForm.lastname
         tmp.firstname = !signUpForm.firstname
         tmp.middleName = !signUpForm.middleName
-        tmp.email = !(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(signUpForm.email)
+        tmp.email = !(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(signUpForm.email)
         tmp.phoneNumber = signUpForm.phoneNumber?.length < 19
         tmp.password = signUpForm.password < 4 || signUpForm.password !== signUpForm.repeatPassword
         tmp.repeatPassword = signUpForm.repeatPassword < 4 || signUpForm.password !== signUpForm.repeatPassword
@@ -78,6 +76,7 @@ export default function AuthDialogs() {
         setSignUpOpen(false)
         setSignInOpen(true);
     };
+
     const handleSignInClose = () => {
         setSignInOpen(false);
     };
@@ -86,6 +85,7 @@ export default function AuthDialogs() {
         setSignInOpen(false)
         setSignUpOpen(true);
     };
+
     const handleSignUpClose = () => {
         setSignUpOpen(false);
     };
@@ -135,8 +135,8 @@ export default function AuthDialogs() {
 
         UserService.signUp(reqForm).then(res => {
             if (res.status === 201 || res.status === 200) {
-                setMessage("Користувача успішно зареєстровано")
-                handleClick()
+                handleSignUpClose()
+                handleSignInOpen()
             } else {
                 setMessage(res.data)
                 handleClick()

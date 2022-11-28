@@ -31,6 +31,24 @@ export class UserService {
         }
     }
 
+    static async logout() {
+        try {
+            await $api.delete('/api/client/logout').catch(function (error) {
+                if (error.response.status === 400) {
+                    throw new Error("Помилка: Хибні дані")
+                }
+                if (error.response.status === 401) {
+                    throw new Error("Помилка: ви не авторизовані")
+                }
+                if (error.response.status === 500) {
+                    throw new Error("Помилка: щось пішло не так")
+                }
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     static async updateUserInfo(changeInfo) {
         try {
             return await $api.put("/api/client/personal-info", changeInfo).catch(function (err) {
