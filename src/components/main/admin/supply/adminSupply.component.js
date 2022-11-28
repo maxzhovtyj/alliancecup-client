@@ -52,7 +52,9 @@ function AdminSupplyComponent() {
                                     >
                                         <TableCell align={"center"}>{row.id}</TableCell>
                                         <TableCell align={"left"}>{row.supplier}</TableCell>
-                                        <TableCell align={"center"}>{row.supplyTime || "---"}</TableCell>
+                                        <TableCell align={"center"}>
+                                            {UserService.truncTimestamp(row.supplyTime)}
+                                        </TableCell>
                                         <TableCell align={"center"}>{row.sum}</TableCell>
                                         <TableCell align="center">{row.comment || "---"}</TableCell>
                                         <TableCell align="center">

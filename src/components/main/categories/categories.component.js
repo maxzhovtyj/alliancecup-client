@@ -14,7 +14,11 @@ function CategoriesComponent() {
     }, [dispatch])
     return (
         <div className={classes.categoriesList}>
-            {categories.map(item => <CategoryItemComponent item={item} key={item.id}/>)}
+            {
+                categories?.length
+                ? categories.map(item => <CategoryItemComponent item={item} key={item.id}/>)
+                : <p1 className={classes.categoriesNotFoundTitle}>Категорій не знайдено</p1>
+            }
         </div>
     );
 }

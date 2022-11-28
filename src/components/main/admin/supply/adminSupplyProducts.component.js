@@ -36,7 +36,7 @@ function AdminSupplyProductsComponent() {
                     <TableBody>
                         <>
                             {
-                                (products)
+                                (products?.length)
                                     ?
                                     products.map((row, index) => (
                                         <TableRow

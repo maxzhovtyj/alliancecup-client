@@ -24,18 +24,26 @@ import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
-import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {AlliancePaper} from "../../../../UI/AlliancePaper";
+import {DateTimePicker} from "@mui/x-date-pickers";
 
 function AdminNewSupplyComponent() {
     const snackbar = useSnackbar()
 
     const [productsOptions, setProductsOptions] = useState([])
 
-    // const [dateValue, setDateValue] = useState(null);
-    const [supplyInfo, setSupplyInfo] = useState({
-        supplier: '', comment: '', supplyTime: null,
+    const [supplyInfoErr, setSupplyInfoErr] = useState({
+        supplier: false,
     })
+
+    const [paymentErr, setPaymentErr] = useState({
+        paymentType: false, paymentSum: false,
+    })
+
+    const [supplyInfo, setSupplyInfo] = useState({
+        supplier: '', comment: '', supplyTime: new Date(),
+    })
+
     const [paymentInfo, setPaymentInfo] = useState([
         {paymentType: "", paymentSum: 0},
     ])
@@ -52,12 +60,10 @@ function AdminNewSupplyComponent() {
         },
     ])
 
-    // function to handle supply info
     const handleSupplyInfo = (event) => {
         setSupplyInfo({...supplyInfo, [event.target.name]: event.target.value})
     }
 
-    // function to handle payment info
     const handlePaymentInfo = (index, event) => {
         const values = [...paymentInfo]
         if (event.target.name === "paymentSum") {
@@ -76,7 +82,6 @@ function AdminNewSupplyComponent() {
         setPaymentInfo(values)
     }
 
-    // functions to handle products
     const handleProduct = (index, event) => {
         const values = [...products]
         if (event.target.name === "amount") {
@@ -141,7 +146,35 @@ function AdminNewSupplyComponent() {
         }
     }
 
-    // function to create and save new supply
+    const validate = (reqBody) => {
+        // TODO
+        let tmp = {}
+
+        console.log(reqBody)
+        tmp.info = {
+            supplier: !reqBody.info.supplier,
+            supplyTime: !reqBody.info.supplyTime,
+        }
+
+        let paymentTotal = 0
+        for (const paymentElement of reqBody.payment) {
+            paymentTotal += paymentElement.paymentSum
+        }
+
+        let productsTotalSum = 0
+        for (const productElement of reqBody.products) {
+            paymentTotal += productElement.totalSum
+        }
+
+        console.log(paymentTotal === productsTotalSum)
+
+        setSupplyInfoErr({
+            ...tmp.info
+        })
+
+        return Object.values(tmp).every(value => value === false)
+    }
+
     // TODO wrong supply time parsing on server
     const createNewSupply = () => {
         const reqBody = {
@@ -150,7 +183,13 @@ function AdminNewSupplyComponent() {
             products: products,
         }
 
-        // console.log(reqBody)
+        if (!validate(reqBody)) {
+            snackbar.setMessage("Поля не пройшли валідацію")
+            snackbar.handleClick()
+            return
+        }
+        return;
+
         SupplyService.newSupply(reqBody).then(res => {
             snackbar.setMessage(res?.message)
             snackbar.handleClick()
@@ -195,13 +234,13 @@ function AdminNewSupplyComponent() {
                             <p>Час постачання</p>
                         </div>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker
-                                label="Час постачання"
+                            <DateTimePicker
+                                validationError={supplyInfoErr.supplyTime}
                                 value={supplyInfo.supplyTime}
                                 onChange={(newValue) => {
-                                    setSupplyInfo({...supplyInfo, "supplyTime": newValue})
+                                    setSupplyInfo({...supplyInfo, "supplyTime": newValue.toDate()})
                                 }}
-                                renderInput={(params) => <AllianceTextField {...params} />}
+                                renderInput={(params) => <TextField {...params} />}
                             />
                         </LocalizationProvider>
                     </div>
@@ -210,7 +249,12 @@ function AdminNewSupplyComponent() {
                         <div className={classes.supplyInfoTitle}>
                             <p>Постачальник</p>
                         </div>
-                        <AllianceTextField name={"supplier"} value={supplyInfo.supplier} onChange={handleSupplyInfo}/>
+                        <AllianceTextField
+                            name={"supplier"}
+                            value={supplyInfo.supplier}
+                            onChange={handleSupplyInfo}
+                            error={supplyInfoErr.supplier}
+                        />
                     </div>
 
                     <div className={classes.supplyInfoItem}>
@@ -230,12 +274,14 @@ function AdminNewSupplyComponent() {
                                         name={"paymentType"}
                                         value={item.paymentType}
                                         onChange={event => handlePaymentInfo(index, event)}
+                                        error={paymentErr.paymentType}
                                     />
                                     <AllianceTextField
                                         label={"Сума"}
                                         name={"paymentSum"}
                                         value={item.paymentSum}
                                         onChange={event => handlePaymentInfo(index, event)}
+                                        error={paymentErr.paymentSum}
                                     />
                                     <IconButton
                                         className={classes.removeBtn}
