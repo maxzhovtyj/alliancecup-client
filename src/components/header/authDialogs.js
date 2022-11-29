@@ -1,10 +1,10 @@
 import {useContext, useState} from "react";
 
-import classes from '../../UI/authDialogs/authDialogs.module.scss'
+import classes from '../../UI/dialogs/authDialogs/authDialogs.module.scss'
 import enter from "../../assets/svgs/log-in.svg";
 
-import SignUpDialog from "../../UI/authDialogs/signUpDialog";
-import SignInDialog from "../../UI/authDialogs/signInDialog";
+import SignUpDialog from "../../UI/dialogs/authDialogs/signUpDialog";
+import SignInDialog from "../../UI/dialogs/authDialogs/signInDialog";
 import {useSnackbar} from "../../hooks/useSnackbar";
 import AllianceSnackbar from "../../UI/snackbar";
 import {AuthContext} from "../../context/AuthContext";

@@ -1,4 +1,3 @@
-import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 
@@ -7,7 +6,6 @@ import {fetchOrders} from "../../../../redux/adminRedux/adminFetch";
 import ContextMenuOrders from "../../../../UI/contextMenu/contextMenuOrders";
 import {
     FormControl,
-    Paper,
     Table,
     TableBody,
     TableCell,

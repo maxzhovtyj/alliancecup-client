@@ -160,8 +160,14 @@ function AdminNewOrderComponent() {
         }])
     }
 
-    function makeOrder() {
+    const validate = () => {
 
+    }
+
+    function makeOrder() {
+        if (!validate()) {
+
+        }
     }
 
     return (

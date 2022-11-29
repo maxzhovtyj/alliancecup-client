@@ -9,7 +9,7 @@ export class OrderService {
         tmp.deliveryTypeTitle = !orderInfo.deliveryTypeTitle
         tmp.paymentTypeTitle = !orderInfo.paymentTypeTitle
 
-        tmp.email = !(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(orderInfo.email)
+        tmp.email = !(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(orderInfo.email)
         tmp.phone = orderInfo.phone?.length < 19
 
         if (isNovaPoshta) {

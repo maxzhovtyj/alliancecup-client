@@ -6,8 +6,8 @@ import DialogContent from "@mui/material/DialogContent";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 
-import {TextMaskCustom} from "../../utils/TextMask";
-import {AllianceTextField} from "../styles";
+import {TextMaskCustom} from "../../../utils/TextMask";
+import {AllianceTextField} from "../../styles";
 
 function SignUpDialog({
                           signUpOpen,

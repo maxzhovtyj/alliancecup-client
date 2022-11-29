@@ -192,7 +192,7 @@ function OrderComponent() {
             </div>
             <div className={cartClasses.productsList}>
                 {
-                    cartProducts?.cart?.map(item => <CartItem product={item} key={item.productId} order={true}/>)
+                    cartProducts?.cart?.map(item => <CartItem product={item} key={item.id} order={true}/>)
                 }
                 <p className={cartClasses.orderSum}>Сума замовлення: {cartProducts.sum}</p>
             </div>

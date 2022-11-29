@@ -5,7 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import DialogContent from "@mui/material/DialogContent";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import {AllianceTextField} from "../styles";
+import {AllianceTextField} from "../../styles";
 
 function SignInDialog({signInOpen, handleSignInOpen, handleSignInClose, signInFormHandler, signIn, handleSignUpOpen, errors}) {
     return (

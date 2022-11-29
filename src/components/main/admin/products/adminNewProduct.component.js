@@ -1,18 +1,24 @@
-import classes from './adminProduct.module.scss'
-import {FormControl, IconButton, MenuItem} from "@mui/material";
-import {AllianceInputLabel, AllianceSelect, AllianceTextField} from "../../../../UI/styles";
 import {useEffect, useState} from "react";
-import {fetchCategories} from "../../../../redux/shopRedux/shopFetch";
 import {useDispatch, useSelector} from "react-redux";
-import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
-import {AdminService} from "../../../../service/AdminService";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
+import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
+
+import {fetchCategories} from "../../../../redux/shopRedux/shopFetch";
+import {AdminService} from "../../../../service/AdminService";
+
+import classes from './adminProduct.module.scss'
+import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
+import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import AllianceSnackbar from "../../../../UI/snackbar";
+import {AllianceInputLabel, AllianceSelect, AllianceTextField} from "../../../../UI/styles";
 import AddIcon from "@mui/icons-material/Add";
+import {FormControl, IconButton, MenuItem} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function AdminNewProductComponent() {
     const snackbar = useSnackbar()
+    const [showDialog, setShowDialog] = useState(false)
+    const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
 
     const dispatch = useDispatch()
     const categories = useSelector(state => state.shop.categories)
@@ -25,6 +31,7 @@ function AdminNewProductComponent() {
         amountInStock: 0,
         price: "0.0",
     })
+
     const [productFormErr, setProductFormErr] = useState({
         article: false,
         categoryTitle: false,
@@ -55,10 +62,12 @@ function AdminNewProductComponent() {
 
     const handleProductForm = (event) => {
         setProductForm({...productForm, [event.target.name]: event.target.value})
+        setShowDialog(true)
     }
 
     const handleProductAmountInStock = (event) => {
         setProductForm({...productForm, amountInStock: parseInt(event.target.value)})
+        setShowDialog(true)
     }
 
     const handleProductPrice = (event) => {
@@ -67,21 +76,25 @@ function AdminNewProductComponent() {
             ...productForm,
             price: productPrice || ""
         })
+        setShowDialog(true)
     }
 
     const handleSetProductImg = (event) => {
         setProductImg(event.target.files[0])
+        setShowDialog(true)
     }
 
     const handleCharacteristics = (event, index) => {
         const values = [...characteristics]
         values[index][event.target.name] = event.target.value
         setCharacteristics(values)
+        setShowDialog(true)
     }
 
     const handleAddCharacteristic = () => {
         setCharacteristics([...characteristics, {name: "", description: ""}])
         setCharacteristicsErr([...characteristicsErr, {name: false, description: false}])
+        setShowDialog(true)
     }
 
     const handleRemoveCharacteristics = (index) => {
@@ -92,17 +105,23 @@ function AdminNewProductComponent() {
         const valuesErr = [...characteristicsErr]
         valuesErr.splice(index, 1)
         setCharacteristicsErr(valuesErr)
+
+        setShowDialog(true)
     }
 
     const handlePackaging = (event, index) => {
         const values = [...packaging]
         values[index][event.target.name] = event.target.value
         setPackaging(values)
+
+        setShowDialog(true)
     }
 
     const handleAddPackaging = () => {
         setPackaging([...packaging, {type: "", amount: 0}])
         setPackagingErr([...packagingErr, {type: false, amount: false}])
+
+        setShowDialog(true)
     }
 
     const handleRemovePackaging = (index) => {
@@ -113,6 +132,8 @@ function AdminNewProductComponent() {
         const valuesErr = [...packagingErr]
         valuesErr.splice(index, 1)
         setPackagingErr(valuesErr)
+
+        setShowDialog(true)
     }
 
     const validate = () => {
@@ -202,6 +223,11 @@ function AdminNewProductComponent() {
 
     return (
         <div>
+            <RouterDialog
+                showDialog={showPrompt}
+                confirmNavigation={confirmNavigation}
+                cancelNavigation={cancelNavigation}
+            />
             <p className={classes.newProductTitle}>Новий товар</p>
 
             <FormControl className={classes.newProductInfo}>
