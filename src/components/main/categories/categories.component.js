@@ -17,7 +17,7 @@ function CategoriesComponent() {
             {
                 categories?.length
                 ? categories.map(item => <CategoryItemComponent item={item} key={item.id}/>)
-                : <p1 className={classes.categoriesNotFoundTitle}>Категорій не знайдено</p1>
+                : <p className={classes.categoriesNotFoundTitle}>Категорій не знайдено</p>
             }
         </div>
     );

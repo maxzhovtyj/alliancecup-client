@@ -32,21 +32,19 @@ function AdminNewSupplyComponent() {
 
     const [productsOptions, setProductsOptions] = useState([])
 
-    const [supplyInfoErr, setSupplyInfoErr] = useState({
-        supplier: false,
-    })
-
-    const [paymentErr, setPaymentErr] = useState({
-        paymentType: false, paymentSum: false,
-    })
-
     const [supplyInfo, setSupplyInfo] = useState({
         supplier: '', comment: '', supplyTime: new Date(),
+    })
+    const [supplyInfoErr, setSupplyInfoErr] = useState({
+        supplier: false,
     })
 
     const [paymentInfo, setPaymentInfo] = useState([
         {paymentType: "", paymentSum: 0},
     ])
+    const [paymentErr, setPaymentErr] = useState([{
+        paymentType: false, paymentSum: false,
+    }])
 
     const [products, setProducts] = useState([
         {
@@ -57,6 +55,15 @@ function AdminNewSupplyComponent() {
             sumWithoutTax: 0,
             tax: 0,
             totalSum: 0,
+        },
+    ])
+    const [productsErr, setProductsErr] = useState([
+        {
+            productId: false,
+            packaging: false,
+            amount: false,
+            priceForUnit: false,
+            tax: false,
         },
     ])
 
@@ -74,12 +81,17 @@ function AdminNewSupplyComponent() {
 
     const handleAddPayment = () => {
         setPaymentInfo([...paymentInfo, {paymentType: "", paymentSum: 0}])
+        setPaymentErr([...paymentErr, {paymentType: false, paymentSum: false}])
     }
 
     const handleRemovePayment = (index) => {
         const values = [...paymentInfo]
         values.splice(index, 1)
         setPaymentInfo(values)
+
+        const valuesErr = [...paymentErr]
+        valuesErr.splice(index, 1)
+        setPaymentErr(valuesErr)
     }
 
     const handleProduct = (index, event) => {
@@ -104,12 +116,24 @@ function AdminNewSupplyComponent() {
             tax: 0,
             totalSum: 0,
         }])
+
+        setProductsErr([...productsErr, {
+            productId: false,
+            packaging: false,
+            amount: false,
+            priceForUnit: false,
+            tax: false,
+        }])
     }
 
     const handleRemoveProduct = (index) => {
         const values = [...products]
         values.splice(index, 1)
         setProducts(values)
+
+        const valuesErr = [...productsErr]
+        valuesErr.splice(index, 1)
+        setProductsErr(valuesErr)
     }
 
     const handlePriceWithoutTax = (price, index) => {
@@ -147,10 +171,8 @@ function AdminNewSupplyComponent() {
     }
 
     const validate = (reqBody) => {
-        // TODO
         let tmp = {}
 
-        console.log(reqBody)
         tmp.info = {
             supplier: !reqBody.info.supplier,
             supplyTime: !reqBody.info.supplyTime,
@@ -163,16 +185,52 @@ function AdminNewSupplyComponent() {
 
         let productsTotalSum = 0
         for (const productElement of reqBody.products) {
-            paymentTotal += productElement.totalSum
+            productsTotalSum += productElement.totalSum
         }
 
-        console.log(paymentTotal === productsTotalSum)
+        tmp.payment = [
+            ...reqBody.payment.map(item => {
+                return {
+                    paymentType: !item.paymentType,
+                    paymentSum: !(item.paymentSum && paymentTotal === productsTotalSum)
+                }
+            })
+        ]
+
+        tmp.products = [
+            ...reqBody.products.map(item => {
+                return {
+                    productId: !item.productId,
+                    packaging: !item.packaging,
+                    amount: !item.amount,
+                    priceForUnit: !item.priceForUnit,
+                    tax: !(item.tax >= 0 && item.tax <= 100),
+                }
+            })
+        ]
+
 
         setSupplyInfoErr({
             ...tmp.info
         })
 
-        return Object.values(tmp).every(value => value === false)
+        setPaymentErr([
+            ...tmp.payment
+        ])
+
+        setProductsErr([
+            ...tmp.products
+        ])
+
+        const infoValidate = (Object.values(tmp.info).every(value => value === false))
+        const paymentValidate = tmp.payment
+            .map(value => Object.values(value).every(el => el === false))
+            .every(item => item === true)
+        const productsValidate = tmp.products
+            .map(value => Object.values(value).every(el => el === false))
+            .every(item => item === true)
+
+        return infoValidate && paymentValidate && productsValidate
     }
 
     // TODO wrong supply time parsing on server
@@ -188,7 +246,6 @@ function AdminNewSupplyComponent() {
             snackbar.handleClick()
             return
         }
-        return;
 
         SupplyService.newSupply(reqBody).then(res => {
             snackbar.setMessage(res?.message)
@@ -274,14 +331,14 @@ function AdminNewSupplyComponent() {
                                         name={"paymentType"}
                                         value={item.paymentType}
                                         onChange={event => handlePaymentInfo(index, event)}
-                                        error={paymentErr.paymentType}
+                                        error={paymentErr[index]["paymentType"]}
                                     />
                                     <AllianceTextField
                                         label={"Сума"}
                                         name={"paymentSum"}
                                         value={item.paymentSum}
                                         onChange={event => handlePaymentInfo(index, event)}
-                                        error={paymentErr.paymentSum}
+                                        error={paymentErr[index]["paymentSum"]}
                                     />
                                     <IconButton
                                         className={classes.removeBtn}
@@ -326,66 +383,73 @@ function AdminNewSupplyComponent() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {
-                            products.map((item, index) =>
-                                <TableRow key={index} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                    <TableCell width={400}>
-                                        <AutoCompleteSelect
-                                            options={productsOptions}
-                                            onChange={handleProductsOptions}
-                                            setValue={(event, newValue) => handleSetProductIdValue(index, newValue)}
-                                            getOptionLabel={option => option.productTitle}
-                                            noOptionsText={"Товарів не знайдено"}
-                                            IsOptionEqualToValue={(option, value) => option.productTitle === value.productTitle}
-                                        />
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <TextField
-                                            name={"packaging"}
-                                            value={item.packaging}
-                                            onChange={event => handleProduct(index, event)}
-                                        />
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <TextField
-                                            name={"amount"}
-                                            value={item.amount}
-                                            onChange={event => handleProduct(index, event)}
-                                        />
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <TextField
-                                            name={"priceForUnit"}
-                                            value={item.priceForUnit}
-                                            onChange={event => handleProduct(index, event)}
-                                        />
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <TextField
-                                            name={"sumWithoutTax"}
-                                            value={handlePriceWithoutTax(item.amount * item.priceForUnit, index)}
-                                        />
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <TextField
-                                            name={"tax"}
-                                            value={item.tax}
-                                            onChange={event => handleProduct(index, event)}
-                                        />
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <TextField
-                                            name={"totalSum"}
-                                            value={handleTotalSum(item.sumWithoutTax, item.tax, index)}
-                                        />
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <IconButton onClick={() => handleRemoveProduct(index)}>
-                                            <DeleteIcon/>
-                                        </IconButton>
-                                    </TableCell>
-                                </TableRow>)
-                        }
+                        <>
+                            {
+                                products.map((item, index) =>
+                                    <TableRow key={index} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                                        <TableCell width={400}>
+                                            <AutoCompleteSelect
+                                                options={productsOptions}
+                                                onChange={handleProductsOptions}
+                                                setValue={(event, newValue) => handleSetProductIdValue(index, newValue)}
+                                                getOptionLabel={option => option.productTitle}
+                                                noOptionsText={"Товарів не знайдено"}
+                                                IsOptionEqualToValue={(option, value) => option.productTitle === value.productTitle}
+                                                error={productsErr[index]["productId"]}
+                                            />
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <TextField
+                                                name={"packaging"}
+                                                value={item.packaging}
+                                                onChange={event => handleProduct(index, event)}
+                                                error={productsErr[index]["packaging"]}
+                                            />
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <TextField
+                                                name={"amount"}
+                                                value={item.amount}
+                                                onChange={event => handleProduct(index, event)}
+                                                error={productsErr[index]["amount"]}
+                                            />
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <TextField
+                                                name={"priceForUnit"}
+                                                value={item.priceForUnit}
+                                                onChange={event => handleProduct(index, event)}
+                                                error={productsErr[index]["priceForUnit"]}
+                                            />
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <TextField
+                                                name={"sumWithoutTax"}
+                                                value={handlePriceWithoutTax(item.amount * item.priceForUnit, index)}
+                                            />
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <TextField
+                                                name={"tax"}
+                                                value={item.tax}
+                                                onChange={event => handleProduct(index, event)}
+                                                error={productsErr[index]["tax"]}
+                                            />
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <TextField
+                                                name={"totalSum"}
+                                                value={handleTotalSum(item.sumWithoutTax, item.tax, index)}
+                                            />
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            <IconButton onClick={() => handleRemoveProduct(index)}>
+                                                <DeleteIcon/>
+                                            </IconButton>
+                                        </TableCell>
+                                    </TableRow>)
+                            }
+                        </>
                         <TableRow>
                             <TableCell>
                                 <AllianceButton variant={"text"} onClick={handleAddProduct}>
