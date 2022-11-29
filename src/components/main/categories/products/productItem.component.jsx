@@ -34,6 +34,7 @@ function ProductItemComponent({product, setMessage, handleClick, deleteFavourite
             price: product.price,
         }
 
+
         ShoppingService.addToCart(addToCartProduct).then(res => {
             setMessage(res.message)
             handleClick()

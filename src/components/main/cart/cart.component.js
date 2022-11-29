@@ -40,7 +40,7 @@ function CartComponent() {
                     <>
                         <h1 className={classes.cartTitle}>Кошик</h1>
                         <div className={classes.productsList}>
-                            {cartPage?.cart.map(item => <CartItem key={item.productId} product={item}/>)}
+                            {cartPage?.cart.map(item => <CartItem key={item.id} product={item}/>)}
                         </div>
                         <div className={classes.bottomInfo}>
                             <p className={classes.orderSum}>Загальна вартість: {cartPage.sum}</p>
