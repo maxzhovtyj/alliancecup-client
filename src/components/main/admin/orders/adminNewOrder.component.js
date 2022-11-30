@@ -1,9 +1,6 @@
 import classes from './adminOrder.module.scss'
 import OrderInfo from "../../orders/orderInfo";
-import {ShoppingService} from "../../../../service/ShoppingService";
-import {NovaPoshtaService} from "../../../../service/NovaPoshtaService";
-import {inTownOption, NovaOption} from "../../orders/order.component";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {
     IconButton,
     Paper,
@@ -19,8 +16,10 @@ import AutoCompleteSelect from "../../../../UI/autoCompleteSelect/autoCompleteSe
 import {ProductService} from "../../../../service/ProductService";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
+import useOrder from "../../../../hooks/useOrder";
 
 function AdminNewOrderComponent() {
+    //
     const [productsOptions, setProductsOptions] = useState([])
     const [products, setProducts] = useState([
         {
@@ -31,31 +30,11 @@ function AdminNewOrderComponent() {
             priceForQuantity: 0,
         }
     ])
+    //
 
-    const [isNovaPoshta, setIsNovaPoshta] = useState(false)
-    const [isInTown, setIsInTown] = useState(false)
-
-    const [deliveryTypes, setDeliveryTypes] = useState([])
-    const [paymentTypes, setPaymentTypes] = useState([])
-
-    const [cities, setCities] = useState([])
-    const [departments, setDepartments] = useState([])
-
-    const [city, setCity] = useState(null)
-    const [department, setDepartment] = useState(null)
+    const [deliveryTypes, paymentTypes, handleOrderInfo, handleCities, handleSetCityValue, handleSetDepartmentValue, orderInfo, isNovaPoshta, isInTown, cities, city, departments, department] = useOrder()
 
     const [address, setAddress] = useState(null)
-
-    const [orderInfo, setOrderInfo] = useState({
-        lastName: "",
-        firstName: "",
-        middleName: "",
-        phone: "",
-        email: "",
-        comment: "",
-        deliveryTypeTitle: "",
-        paymentTypeTitle: "",
-    })
 
     const [errors, setErrors] = useState({
         lastName: false,
@@ -69,28 +48,6 @@ function AdminNewOrderComponent() {
         novaPoshtaDepartment: false,
         deliveryAddress: false
     })
-
-    useEffect(() => {
-        ShoppingService.fetchDeliveryTypes().then((res) => {
-            setDeliveryTypes(res.deliveryTypes)
-            setPaymentTypes(res.paymentTypes)
-        })
-    }, [])
-
-    const handleOrderInfo = (e) => {
-        if (e.target.value === NovaOption) {
-            setIsInTown(false)
-            setIsNovaPoshta(true)
-        } else if (e.target.value === inTownOption) {
-            setIsNovaPoshta(false)
-            setIsInTown(true)
-        } else if (e.target.name === "deliveryTypeTitle") {
-            setIsNovaPoshta(false)
-            setIsInTown(false)
-        }
-
-        setOrderInfo({...orderInfo, [e.target.name]: e.target.value})
-    }
 
     const handleSetProductIdValue = (index, newValue) => {
         let values = [...products]
@@ -125,25 +82,7 @@ function AdminNewOrderComponent() {
         setProducts(values)
     }
 
-    const handleCities = (event) => {
-        NovaPoshtaService.getCities(event.target.value).then(res => setCities(res))
-    }
-    const handleDepartments = (cityValueRef) => {
-        NovaPoshtaService.getDepartments(cityValueRef).then(res => setDepartments(res))
-    }
-
-    const handleSetCityValue = (event, newValue) => {
-        setDepartment(null)
-        setDepartments([])
-        setCity(newValue)
-
-        handleDepartments(newValue?.Ref)
-    }
-
-    const handleSetDepartmentValue = (event, newValue) => {
-        setDepartment(newValue)
-    }
-
+    //
     const handleRemovePayment = (index) => {
         const values = [...products]
         values.splice(index, 1)
@@ -160,6 +99,7 @@ function AdminNewOrderComponent() {
         }])
     }
 
+
     const validate = () => {
 
     }
@@ -169,6 +109,8 @@ function AdminNewOrderComponent() {
 
         }
     }
+
+    //
 
     return (
         <div>

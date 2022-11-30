@@ -1,9 +1,9 @@
 import $api from "../http/http";
 
 export class ShoppingService {
-    static async newOrder(makeOrderForm, setMessage, handleClick) {
+    static async newOrder(makeOrderForm) {
         try {
-            await $api.post('/api/order', makeOrderForm).catch(function (error) {
+            const res = await $api.post('/api/shopping/order', makeOrderForm).catch(function (error) {
                 if (error.response.status === 400) {
                     throw new Error("Помилка: Хибні дані")
                 }
@@ -14,11 +14,11 @@ export class ShoppingService {
                     throw new Error("Помилка: щось пішло не так")
                 }
             })
+
+            return res
         } catch (e) {
-            setMessage(e.message)
-            handleClick()
+            return e
         }
-        localStorage.removeItem("cartProducts")
     }
 
     static async addToCart(addToCartProduct) {
@@ -104,7 +104,7 @@ export class ShoppingService {
 
     static async fetchDeliveryTypes() {
         try {
-            const response = await $api.get('/api/order-info-types').catch(function (error) {
+            const response = await $api.get('/api/shopping/order-info-types').catch(function (error) {
                 if (error.response.status === 400) {
                     throw new Error("Помилка: Хибні дані")
                 }

@@ -14,13 +14,10 @@ import {useSnackbar} from "../../../hooks/useSnackbar";
 
 import {useNavigate} from "react-router-dom";
 import {ShoppingService} from "../../../service/ShoppingService";
-import {NovaPoshtaService} from "../../../service/NovaPoshtaService";
 import OrderInfo from "./orderInfo";
 import {OrderService} from "../../../service/OrderService";
 import AllianceButton from "../../../UI/allianceCupButton/allianceButton";
-
-export const NovaOption = "Нова Пошта"
-export const inTownOption = "Доставка AllianceCup по м. Рівне"
+import useOrder from "../../../hooks/useOrder";
 
 function OrderComponent() {
     const navigate = useNavigate()
@@ -32,32 +29,9 @@ function OrderComponent() {
     const dispatch = useDispatch()
     const cartProducts = useSelector(state => state.cartPage)
 
-    const [deliveryTypes, setDeliveryTypes] = useState([])
-
-    const [city, setCity] = useState(null)
-    const [department, setDepartment] = useState(null)
-
-    const [isInTown, setIsInTown] = useState(false)
-    const [isNovaPoshta, setIsNovaPoshta] = useState(false)
-
-    const [paymentTypes, setPaymentTypes] = useState([])
-
-    const [cities, setCities] = useState([])
-    const [departments, setDepartments] = useState([])
-
+    const [deliveryTypes, paymentTypes, handleOrderInfo, handleCities, handleSetCityValue, handleSetDepartmentValue, orderInfo, isNovaPoshta, isInTown, cities, city, departments, department] = useOrder()
 
     const [address, setAddress] = useState(null)
-
-    const [orderInfo, setOrderInfo] = useState({
-        lastName: "",
-        firstName: "",
-        middleName: "",
-        phone: "",
-        email: "",
-        comment: "",
-        deliveryTypeTitle: "",
-        paymentTypeTitle: "",
-    })
 
     const [errors, setErrors] = useState({
         lastName: false,
@@ -75,30 +49,8 @@ function OrderComponent() {
     const [disabled, setDisabled] = useState(false)
 
     useEffect(() => {
-        dispatch(fetchUserCart(isAuth))
+        dispatch(fetchUserCart())
     }, [dispatch, isAuth])
-
-    useEffect(() => {
-        ShoppingService.fetchDeliveryTypes().then((res) => {
-            setDeliveryTypes(res.deliveryTypes)
-            setPaymentTypes(res.paymentTypes)
-        })
-    }, [])
-
-    const handleOrderInfo = (e) => {
-        if (e.target.value === NovaOption) {
-            setIsInTown(false)
-            setIsNovaPoshta(true)
-        } else if (e.target.value === inTownOption) {
-            setIsNovaPoshta(false)
-            setIsInTown(true)
-        } else if (e.target.name === "deliveryTypeTitle") {
-            setIsNovaPoshta(false)
-            setIsInTown(false)
-        }
-
-        setOrderInfo({...orderInfo, [e.target.name]: e.target.value})
-    }
 
     function makeNewOrder() {
         if (!OrderService.validate(orderInfo, isNovaPoshta, city, department, isInTown, address, setErrors)) {
@@ -144,32 +96,19 @@ function OrderComponent() {
 
         makeOrderForm.products = cartProducts.cart
 
+        setDisabled(true)
         ShoppingService.newOrder(makeOrderForm, setMessage, handleClick)
-            .then(() => {
-                setMessage("Ваше замовлення надіслано")
-                handleClick()
-                setDisabled(true)
-                navigate("/")
+            .then((res) => {
+                console.log(res)
+                if (res?.status === 200 || res?.status === 201) {
+                    setDisabled(true)
+                    navigate("/")
+                } else {
+                    setMessage(res?.message)
+                    handleClick()
+                }
             })
-    }
-
-    const handleCities = (event) => {
-        NovaPoshtaService.getCities(event.target.value).then(res => setCities(res))
-    }
-    const handleDepartments = (cityValueRef) => {
-        NovaPoshtaService.getDepartments(cityValueRef).then(res => setDepartments(res))
-    }
-
-    const handleSetCityValue = (event, newValue) => {
-        setDepartment(null)
-        setDepartments([])
-        setCity(newValue)
-
-        handleDepartments(newValue?.Ref)
-    }
-
-    const handleSetDepartmentValue = (event, newValue) => {
-        setDepartment(newValue)
+        setDisabled(false)
     }
 
     return (

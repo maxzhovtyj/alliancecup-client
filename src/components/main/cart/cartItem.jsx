@@ -10,17 +10,17 @@ import {ShoppingService} from "../../../service/ShoppingService";
 
 function CartItem({product, order}) {
     function deleteFromCart() {
-        ShoppingService.deleteFromCart(product.productId)
+        ShoppingService.deleteFromCart(product.id)
             .then(() => window.location.reload())
     }
 
     return (
         <div className={classes.productItem}>
-            <NavLink to={`/product/${product.productId}`} className={classes.productImg}>
+            <NavLink to={`/product/${product.id}`} className={classes.productImg}>
                 <img src={product.imgUrl || noopImg} alt="product_image"/>
             </NavLink>
             <div className={classes.productInfo}>
-                <NavLink to={`/product/${product.productId}`}>
+                <NavLink to={`/product/${product.id}`}>
                     <p className={classes.productTitle}>{product.productTitle}</p>
                 </NavLink>
                 <p className={classes.productPrice}>{product.price} грн/уп</p>

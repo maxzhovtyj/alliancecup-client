@@ -1,4 +1,4 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {fetchCategories} from "../../../../redux/shopRedux/shopFetch";
 import classes from "../products/adminProduct.module.scss";
 import {FormControl} from "@mui/material";
@@ -13,7 +13,6 @@ function AdminNewCategory() {
     const snackbar = useSnackbar()
 
     const dispatch = useDispatch()
-    const categories = useSelector(state => state.shop.categories)
 
     const [categoryForm, setCategoryForm] = useState({
         title: "",
