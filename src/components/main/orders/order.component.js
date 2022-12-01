@@ -99,7 +99,6 @@ function OrderComponent() {
         setDisabled(true)
         ShoppingService.newOrder(makeOrderForm, setMessage, handleClick)
             .then((res) => {
-                console.log(res)
                 if (res?.status === 200 || res?.status === 201) {
                     setDisabled(true)
                     navigate("/")

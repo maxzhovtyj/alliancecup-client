@@ -209,7 +209,6 @@ function AdminNewSupplyComponent() {
             })
         ]
 
-
         setSupplyInfoErr({
             ...tmp.info
         })

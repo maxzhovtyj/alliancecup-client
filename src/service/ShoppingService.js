@@ -1,9 +1,11 @@
 import $api from "../http/http";
 
 export class ShoppingService {
-    static async newOrder(makeOrderForm) {
+    static async newOrder(makeOrderForm, admin = false) {
+        const reqUrl = (admin) ? "/api/admin/order" : "/api/shopping/order"
+
         try {
-            const res = await $api.post('/api/shopping/order', makeOrderForm).catch(function (error) {
+            return await $api.post(reqUrl, makeOrderForm).catch(function (error) {
                 if (error.response.status === 400) {
                     throw new Error("Помилка: Хибні дані")
                 }
@@ -14,8 +16,6 @@ export class ShoppingService {
                     throw new Error("Помилка: щось пішло не так")
                 }
             })
-
-            return res
         } catch (e) {
             return e
         }
