@@ -6,7 +6,7 @@ function SuperAdminRoute() {
     const {isAdmin} = useContext(AuthContext)
 
     return (
-        (isAdmin) ? <Outlet/> : <Navigate to={"/"}/>
+        (isAdmin) ? <Outlet/> : <Navigate to={"/permission-forbidden"}/>
     )
 }
 

@@ -6,7 +6,7 @@ function AdminRoute() {
     const {isAdmin, isModerator} = useContext(AuthContext)
 
     return (
-        (isAdmin || isModerator) ? <Outlet/> : <Navigate to={"/"}/>
+        (isAdmin || isModerator) ? <Outlet/> : <Navigate to={"/permission-forbidden"}/>
     )
 }
 

@@ -36,6 +36,9 @@ import AdminCategoriesComponent from "./admin/categories/adminCategories.compone
 import AdminNewCategory from "./admin/categories/adminNewCategory";
 import SuperAdminRoute from "../../utils/SuperAdminRoute";
 import PageWasNotFound from "../errorPages/pageWasNotFound";
+import PermissionForbidden from "../errorPages/permissionForbidden";
+import AdminModeratorsComponent from "./admin/moderators/adminModerators.component";
+import AdminNewModeratorComponent from "./admin/moderators/adminNewModerator.component";
 
 function MainComponent() {
     return (
@@ -78,6 +81,9 @@ function MainComponent() {
                                 <Route path={"new-supply"} element={<AdminNewSupplyComponent/>}/>
 
                                 <Route element={<SuperAdminRoute/>}>
+                                    <Route path={"moderators"} element={<AdminModeratorsComponent/>}/>
+                                    <Route path={"new-moderator"} element={<AdminNewModeratorComponent/>}/>
+
                                     <Route path={"inventory"} element={<AdminInventoryComponent/>}/>
                                     <Route path={"inventory/:id"} element={<AdminInventoryProductsComponent/>}/>
                                     <Route path={"new-inventory"} element={<AdminNewInventoryComponent/>}/>
@@ -87,6 +93,7 @@ function MainComponent() {
                     </Route>
                     <Route path={"/cart/order"} element={<OrderComponent/>}/>
                     <Route path={"*"} element={<PageWasNotFound/>}/>
+                    <Route path={"/permission-forbidden"} element={<PermissionForbidden/>}/>
                 </Routes>
             </div>
         </div>

@@ -35,6 +35,12 @@ dd {
     margin: 0;
 }
 
+h1 {
+    font-family: "Roboto", serif;
+    font-size: 2rem;
+    font-weight: 300;
+}
+
 body {
     min-height: 100vh;
     scroll-behavior: smooth;

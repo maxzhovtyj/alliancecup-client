@@ -43,35 +43,6 @@ export default function AuthDialogs() {
     const [signInOpen, setSignInOpen] = useState(false)
     const [signUpOpen, setSignUpOpen] = useState(false)
 
-    const validateSignIn = () => {
-        let tmp = {}
-
-        tmp.email = !(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(signInForm.email)
-        tmp.password = !signInForm.password
-
-        setSignInErrors({
-            ...tmp
-        })
-        return Object.values(tmp).every(value => value === false)
-    }
-
-    const validateSignUp = () => {
-        let tmp = {}
-
-        tmp.lastname = !signUpForm.lastname
-        tmp.firstname = !signUpForm.firstname
-        tmp.middleName = !signUpForm.middleName
-        tmp.email = !(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(signUpForm.email)
-        tmp.phoneNumber = signUpForm.phoneNumber?.length < 19
-        tmp.password = signUpForm.password < 4 || signUpForm.password !== signUpForm.repeatPassword
-        tmp.repeatPassword = signUpForm.repeatPassword < 4 || signUpForm.password !== signUpForm.repeatPassword
-
-        setSignUpErrors({
-            ...tmp
-        })
-        return Object.values(tmp).every(value => value === false)
-    }
-
     const handleSignInOpen = () => {
         setSignUpOpen(false)
         setSignInOpen(true);
@@ -99,7 +70,7 @@ export default function AuthDialogs() {
     }
 
     function signIn() {
-        if (!validateSignIn()) {
+        if (!UserService.validateSignIn(signInForm, setSignInErrors)) {
             setMessage("Поля не пройшли ваділацію")
             handleClick()
             return
@@ -118,7 +89,7 @@ export default function AuthDialogs() {
     }
 
     function signUp() {
-        if (!validateSignUp()) {
+        if (!UserService.validateSignUp(signUpForm, setSignUpErrors)) {
             setMessage("Поля не пройшли ваділацію")
             handleClick()
             return
@@ -138,7 +109,7 @@ export default function AuthDialogs() {
                 handleSignUpClose()
                 handleSignInOpen()
             } else {
-                setMessage(res.data)
+                setMessage(res?.message)
                 handleClick()
             }
         })

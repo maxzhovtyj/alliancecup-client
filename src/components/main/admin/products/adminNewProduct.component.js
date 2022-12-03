@@ -228,6 +228,7 @@ function AdminNewProductComponent() {
                 confirmNavigation={confirmNavigation}
                 cancelNavigation={cancelNavigation}
             />
+
             <p className={classes.newProductTitle}>Новий товар</p>
 
             <FormControl className={classes.newProductInfo}>

@@ -3,7 +3,7 @@ import $api from "../http/http";
 export class SupplyService {
     static async newSupply(supplyForm) {
         try {
-            await $api.post('/api/admin/supply', supplyForm).catch(function (error) {
+            return await $api.post('/api/admin/supply', supplyForm).catch(function (error) {
                 if (error.response.status === 400) {
                     throw new Error("Помилка: Хибні дані")
                 }
@@ -17,10 +17,6 @@ export class SupplyService {
                     throw new Error("Помилка: щось пішло не так")
                 }
             })
-
-            return {
-                message: "Поставка додана"
-            }
         } catch (e) {
             return e
         }

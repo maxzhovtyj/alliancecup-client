@@ -4,8 +4,10 @@ let adminDefaultState = {
     inventories: [],
     products: [],
     orders: [],
+    moderators: [],
     statusNoMoreSupply: false,
     statusNoMoreInventories: false,
+    statusNoMoreModerators: false,
 }
 
 const GET_ALL_SUPPLY = "GET_ALL_SUPPLY"
@@ -19,6 +21,11 @@ const GET_INVENTORIES = "GET_INVENTORIES"
 const GET_MORE_INVENTORIES = "GET_MORE_INVENTORIES"
 const LOAD_INVENTORIES = "LOAD_INVENTORIES"
 const CANNOT_LOAD_INVENTORIES = "CANNOT_LOAD_INVENTORIES"
+
+const GET_MODERATORS = "GET_MODERATORS"
+const GET_MORE_MODERATORS = "GET_MORE_MODERATORS"
+const LOAD_MODERATORS = "LOAD_MODERATORS"
+const CANNOT_LOAD_MODERATORS = "CANNOT_LOAD_MODERATORS"
 
 const GET_INVENTORY_PRODUCTS = "GET_INVENTORY_PRODUCTS"
 
@@ -69,6 +76,20 @@ export const adminReducer = (state = adminDefaultState, action) => {
         case GET_ORDERS: {
             return {...state, orders: [...action.payload]}
         }
+
+        case GET_MODERATORS: {
+            return {...state, moderators: [...action.payload]}
+        }
+        case GET_MORE_MODERATORS: {
+            return {...state, moderators: [...state.moderators, ...action.payload]}
+        }
+        case LOAD_MODERATORS: {
+            return {...state, statusNoMoreModerators: false}
+        }
+        case CANNOT_LOAD_MODERATORS: {
+            return {...state, statusNoMoreModerators: true}
+        }
+
         default:
             return state
     }
@@ -84,6 +105,10 @@ export const getSupplyProductsActionCreator = (payload) => ({type: GET_SUPPLY_PR
 export const getInventoriesActionCreator = (payload) => ({type: GET_INVENTORIES, payload})
 export const getMoreInventoriesActionCreator = (payload) => ({type: GET_MORE_INVENTORIES, payload})
 export const cannotLoadInventoriesActionCreator = () => ({type: CANNOT_LOAD_INVENTORIES})
+
+export const getModeratorsActionCreator = (payload) => ({type: GET_MODERATORS, payload})
+export const getMoreModeratorsActionCreator = (payload) => ({type: GET_MORE_MODERATORS, payload})
+export const cannotLoadModeratorsActionCreator = () => ({type: CANNOT_LOAD_MODERATORS})
 
 export const getInventoryProductsActionCreator = (payload) => ({type: GET_INVENTORY_PRODUCTS, payload})
 export const getProductsToInventoryActionCreator = (payload) => ({type: GET_PRODUCTS_TO_INVENTORY, payload})

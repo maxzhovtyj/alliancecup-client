@@ -101,4 +101,34 @@ export class UserService {
 
         return createdAt.join(" ")
     }
+
+    static validateSignUp (signUpForm, setSignUpErrors) {
+        let tmp = {}
+
+        tmp.lastname = !signUpForm.lastname
+        tmp.firstname = !signUpForm.firstname
+        tmp.middleName = !signUpForm.middleName
+        tmp.email = !(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(signUpForm.email)
+        tmp.phoneNumber = signUpForm.phoneNumber?.length < 19
+        tmp.password = signUpForm.password < 4 || signUpForm.password !== signUpForm.repeatPassword
+        tmp.repeatPassword = signUpForm.repeatPassword < 4 || signUpForm.password !== signUpForm.repeatPassword
+
+        setSignUpErrors({
+            ...tmp
+        })
+        return Object.values(tmp).every(value => value === false)
+    }
+
+    static validateSignIn (signInForm, setSignInErrors) {
+        let tmp = {}
+
+        tmp.email = !(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(signInForm.email)
+        tmp.password = !signInForm.password
+
+        setSignInErrors({
+            ...tmp
+        })
+
+        return Object.values(tmp).every(value => value === false)
+    }
 }

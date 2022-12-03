@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
     cartPage: cartReducer,
     favouritesPage: favouritesReducer,
     admin: adminReducer,
-    user: userReducer
+    user: userReducer,
 })
 
 let store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))

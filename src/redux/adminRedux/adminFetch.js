@@ -1,10 +1,17 @@
 import $api from "../../http/http";
 import {
     cannotLoadInventoriesActionCreator,
+    cannotLoadModeratorsActionCreator,
     cannotLoadSupplyActionCreator,
-    getInventoriesActionCreator, getInventoryProductsActionCreator, getMoreInventoriesActionCreator,
-    getMoreSupplyActionCreator, getOrdersActionCreator, getProductsToInventoryActionCreator,
-    getSupplyActionCreator, getSupplyProductsActionCreator
+    getInventoriesActionCreator,
+    getInventoryProductsActionCreator,
+    getModeratorsActionCreator,
+    getMoreInventoriesActionCreator, getMoreModeratorsActionCreator,
+    getMoreSupplyActionCreator,
+    getOrdersActionCreator,
+    getProductsToInventoryActionCreator,
+    getSupplyActionCreator,
+    getSupplyProductsActionCreator
 } from "./adminReducer";
 import {AdminService} from "../../service/AdminService";
 import {SupplyService} from "../../service/SupplyService";
@@ -95,6 +102,28 @@ export const fetchOrders = (createdAt, orderStatus, search) => {
             dispatch(getOrdersActionCreator([]))
         } else {
             dispatch(getOrdersActionCreator(response.data))
+        }
+    }
+}
+
+export const fetchModerators = (createdAt) => {
+    return async (dispatch) => {
+        const response = await AdminService.getModerators(createdAt)
+        if (response.data === null) {
+            dispatch(cannotLoadModeratorsActionCreator())
+        } else {
+            dispatch(getModeratorsActionCreator(response.data))
+        }
+    }
+}
+
+export const fetchMoreModerators = (createdAt) => {
+    return async (dispatch) => {
+        const response = await AdminService.getModerators(createdAt)
+        if (response.data === null) {
+            dispatch(cannotLoadModeratorsActionCreator())
+        } else {
+            dispatch(getMoreModeratorsActionCreator(response.data))
         }
     }
 }

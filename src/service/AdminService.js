@@ -225,6 +225,24 @@ export class AdminService {
         }
     }
 
+    static async getModerators(createdAt) {
+        try {
+            return await $api.get(`/api/admin/super/moderator?createdAt=${createdAt}`).catch(function (error) {
+                if (error.response.status === 401) {
+                    throw new Error("Спочатку увійдіть")
+                }
+                if (error.response.status === 403) {
+                    throw new Error("Доступ заборонено")
+                }
+                if (error.response.status === 500) {
+                    throw new Error("Щось пішло не так")
+                }
+            })
+        } catch (e) {
+            return e
+        }
+    }
+
     static HandleMoney(price) {
         return Number(parseFloat(String(price)).toPrecision(15))
     }

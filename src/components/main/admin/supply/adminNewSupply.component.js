@@ -22,18 +22,20 @@ import {useSnackbar} from "../../../../hooks/useSnackbar";
 import AllianceSnackbar from "../../../../UI/snackbar";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 
-import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
-import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AlliancePaper} from "../../../../UI/AlliancePaper";
-import {DateTimePicker} from "@mui/x-date-pickers";
+import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
+import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
 
 function AdminNewSupplyComponent() {
     const snackbar = useSnackbar()
 
+    const [showDialog, setShowDialog] = useState(false)
+    const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
+
     const [productsOptions, setProductsOptions] = useState([])
 
     const [supplyInfo, setSupplyInfo] = useState({
-        supplier: '', comment: '', supplyTime: new Date(),
+        supplier: "", comment: "", supplyTime: "",
     })
     const [supplyInfoErr, setSupplyInfoErr] = useState({
         supplier: false,
@@ -69,6 +71,7 @@ function AdminNewSupplyComponent() {
 
     const handleSupplyInfo = (event) => {
         setSupplyInfo({...supplyInfo, [event.target.name]: event.target.value})
+        setShowDialog(true)
     }
 
     const handlePaymentInfo = (index, event) => {
@@ -77,11 +80,15 @@ function AdminNewSupplyComponent() {
             values[index][event.target.name] = parseFloat(event.target.value) || 0
         } else values[index][event.target.name] = event.target.value
         setPaymentInfo(values)
+
+        setShowDialog(true)
     }
 
     const handleAddPayment = () => {
         setPaymentInfo([...paymentInfo, {paymentType: "", paymentSum: 0}])
         setPaymentErr([...paymentErr, {paymentType: false, paymentSum: false}])
+
+        setShowDialog(true)
     }
 
     const handleRemovePayment = (index) => {
@@ -92,6 +99,8 @@ function AdminNewSupplyComponent() {
         const valuesErr = [...paymentErr]
         valuesErr.splice(index, 1)
         setPaymentErr(valuesErr)
+
+        setShowDialog(true)
     }
 
     const handleProduct = (index, event) => {
@@ -104,6 +113,8 @@ function AdminNewSupplyComponent() {
             values[index][event.target.name] = parseFloat(event.target.value) || 0
         } else values[index][event.target.name] = event.target.value
         setProducts(values)
+
+        setShowDialog(true)
     }
 
     const handleAddProduct = () => {
@@ -124,6 +135,8 @@ function AdminNewSupplyComponent() {
             priceForUnit: false,
             tax: false,
         }])
+
+        setShowDialog(true)
     }
 
     const handleRemoveProduct = (index) => {
@@ -134,6 +147,8 @@ function AdminNewSupplyComponent() {
         const valuesErr = [...productsErr]
         valuesErr.splice(index, 1)
         setProductsErr(valuesErr)
+
+        setShowDialog(true)
     }
 
     const handlePriceWithoutTax = (price, index) => {
@@ -232,12 +247,11 @@ function AdminNewSupplyComponent() {
         return infoValidate && paymentValidate && productsValidate
     }
 
-    // TODO wrong supply time parsing on server
     const createNewSupply = () => {
         const reqBody = {
-            info: supplyInfo,
-            payment: paymentInfo,
-            products: products,
+            info: {...supplyInfo},
+            payment: [...paymentInfo],
+            products: [...products],
         }
 
         if (!validate(reqBody)) {
@@ -246,39 +260,34 @@ function AdminNewSupplyComponent() {
             return
         }
 
+        reqBody.info.supplyTime = `${reqBody.info.supplyTime}:00Z`
+
         SupplyService.newSupply(reqBody).then(res => {
-            snackbar.setMessage(res?.message)
-            snackbar.handleClick()
+            if (res?.status === 200 || res?.status === 201) {
+                snackbar.setMessage("Поставка додана")
+                snackbar.handleClick()
+                setShowDialog(false)
+            } else {
+                snackbar.setMessage(res?.message)
+                snackbar.handleClick()
+            }
         })
 
-        setProductsOptions([])
-        setSupplyInfo({
-            supplier: '', comment: '',
-        })
-        setPaymentInfo([
-            {paymentType: "", paymentSum: 0},
-        ])
-        setProducts([
-            {
-                productId: null,
-                packaging: "",
-                amount: 0,
-                priceForUnit: 0,
-                sumWithoutTax: 0,
-                tax: 0,
-                totalSum: 0,
-            },
-        ])
+        setShowDialog(true)
     }
 
     function HandleMoney(price) {
         return Number(parseFloat(String(price)).toPrecision(15))
     }
 
-    // TODO Errors handling
-    // TODO Fields validation
     return (
         <div>
+            <RouterDialog
+                showDialog={showPrompt}
+                confirmNavigation={confirmNavigation}
+                cancelNavigation={cancelNavigation}
+            />
+
             <div className={classes.supplyInfoWrapper}>
                 <p className={classes.pageTitle}>
                     Нове постачання
@@ -289,16 +298,16 @@ function AdminNewSupplyComponent() {
                         <div className={classes.supplyInfoTitle}>
                             <p>Час постачання</p>
                         </div>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DateTimePicker
-                                validationError={supplyInfoErr.supplyTime}
-                                value={supplyInfo.supplyTime}
-                                onChange={(newValue) => {
-                                    setSupplyInfo({...supplyInfo, "supplyTime": newValue.toDate()})
-                                }}
-                                renderInput={(params) => <TextField {...params} />}
-                            />
-                        </LocalizationProvider>
+                        <TextField
+                            type="datetime-local"
+                            name={"supplyTime"}
+                            value={supplyInfo.supplyTime}
+                            onChange={handleSupplyInfo}
+                            error={supplyInfoErr.supplyTime}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
                     </div>
 
                     <div className={classes.supplyInfoItem}>
@@ -393,7 +402,7 @@ function AdminNewSupplyComponent() {
                                                 setValue={(event, newValue) => handleSetProductIdValue(index, newValue)}
                                                 getOptionLabel={option => option.productTitle}
                                                 noOptionsText={"Товарів не знайдено"}
-                                                IsOptionEqualToValue={(option, value) => option.productTitle === value.productTitle}
+                                                IsOptionEqualToValue={() => true}
                                                 error={productsErr[index]["productId"]}
                                             />
                                         </TableCell>
