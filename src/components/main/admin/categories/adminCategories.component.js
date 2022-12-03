@@ -8,6 +8,7 @@ import {useSnackbar} from "../../../../hooks/useSnackbar";
 import ContextMenuCategory from "../../../../UI/contextMenu/contextMenuCategory";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import {NavLink} from "react-router-dom";
+import {AllianceTextField} from "../../../../UI/styles";
 
 function AdminCategoriesComponent() {
     const dispatch = useDispatch()
@@ -46,7 +47,9 @@ function AdminCategoriesComponent() {
                                         >
                                             <TableCell align={"center"}>{row.id}</TableCell>
                                             <TableCell align={"center"}>{row.categoryTitle}</TableCell>
-                                            <TableCell align={"center"}>{row.imgUrl || "---"}</TableCell>
+                                            <TableCell align={"center"}>
+                                                <AllianceTextField value={row.imgUrl || "---"}/>
+                                            </TableCell>
                                             <TableCell align={"center"}>{row.imgUUID || "---"}</TableCell>
                                             <TableCell align={"center"}>{row.description || "---"}</TableCell>
                                             <TableCell align={"center"}>

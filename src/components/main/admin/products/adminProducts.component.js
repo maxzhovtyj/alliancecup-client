@@ -14,7 +14,7 @@ import {
     TableRow
 } from "@mui/material";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
-import {AllianceInputLabel, AllianceSelect} from "../../../../UI/styles";
+import {AllianceInputLabel, AllianceSelect, AllianceTextField} from "../../../../UI/styles";
 import SearchBar from "../../../../UI/searchBar/searchBar";
 import AllianceSnackbar from "../../../../UI/snackbar";
 import ContextMenuProduct from "../../../../UI/contextMenu/contextMenuProduct";
@@ -91,7 +91,7 @@ function AdminProductsComponent() {
                 <AllianceButton mt={"1rem"} mb={"1rem"}>Додати товар</AllianceButton>
             </NavLink>
 
-            <TableContainer component={AlliancePaper}>
+            <TableContainer component={AlliancePaper} className={classes.productsTable}>
                 <Table sx={{minWidth: 200}}>
                     <TableHead>
                         <TableRow>
@@ -134,7 +134,9 @@ function AdminProductsComponent() {
                                                 </>
                                             </TableCell>
                                             <TableCell align="center">{row.amountInStock}</TableCell>
-                                            <TableCell align="center">{row.imgUrl || "---"}</TableCell>
+                                            <TableCell align="center">
+                                                <AllianceTextField value={row.imgUrl || "---"}/>
+                                            </TableCell>
                                             <TableCell align="center">{row.imgUUID || "---"}</TableCell>
                                             <TableCell align="center">
                                                 <ContextMenuProduct

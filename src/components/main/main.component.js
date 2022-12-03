@@ -2,8 +2,8 @@ import classes from './main.module.scss'
 
 import {Route, Routes, Navigate} from "react-router-dom";
 
-import PrivateRoute from "../../utils/PrivateRoute"; // TODO invalid navigation
-import AdminRoute from "../../utils/AdminRoute"; // TODO invalid navigation
+import PrivateRoute from "../../utils/PrivateRoute";
+import AdminRoute from "../../utils/AdminRoute";
 import NavbarComponent from "./navbar/navbar.component";
 import CartComponent from "./cart/cart.component";
 import CategoriesComponent from "./categories/categories.component";
