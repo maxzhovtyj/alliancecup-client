@@ -1,12 +1,12 @@
 import $api from "../../http/http";
 import {
     cannotLoadInventoriesActionCreator,
-    cannotLoadModeratorsActionCreator,
+    cannotLoadModeratorsActionCreator, cannotLoadOrdersActionCreator,
     cannotLoadSupplyActionCreator,
     getInventoriesActionCreator,
     getInventoryProductsActionCreator,
     getModeratorsActionCreator,
-    getMoreInventoriesActionCreator, getMoreModeratorsActionCreator,
+    getMoreInventoriesActionCreator, getMoreModeratorsActionCreator, getMoreOrdersActionCreator,
     getMoreSupplyActionCreator,
     getOrdersActionCreator,
     getProductsToInventoryActionCreator,
@@ -102,6 +102,18 @@ export const fetchOrders = (createdAt, orderStatus, search) => {
             dispatch(getOrdersActionCreator([]))
         } else {
             dispatch(getOrdersActionCreator(response.data))
+        }
+    }
+}
+
+
+export const fetchMoreOrders = (createdAt, status, search) => {
+    return async (dispatch) => {
+        const response = await AdminService.getOrders(createdAt, status, search)
+        if (response.data === null) {
+            dispatch(cannotLoadOrdersActionCreator())
+        } else {
+            dispatch(getMoreOrdersActionCreator(response.data))
         }
     }
 }

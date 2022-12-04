@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 
-import {fetchOrders} from "../../../../redux/adminRedux/adminFetch";
+import {fetchMoreOrders, fetchOrders} from "../../../../redux/adminRedux/adminFetch";
 
 import ContextMenuOrders from "../../../../UI/contextMenu/contextMenuOrders";
 import {
@@ -31,6 +31,7 @@ const COMPLETED = "COMPLETED"
 function AdminOrdersComponent() {
     const dispatch = useDispatch()
     const orders = useSelector(state => state.admin.orders)
+    const canLoad = useSelector(state => state.admin.statusNoMoreOrders)
 
     const [orderStatus, setOrderStatus] = useState("")
     const [searchOrders, setSearchOrders] = useState("")
@@ -59,6 +60,11 @@ function AdminOrdersComponent() {
     const handleOnSearch = (event) => {
         event.preventDefault()
         setSearchOrders(searchBar)
+    }
+
+    const loadMoreOrders = () => {
+        const lastOrderCreatedAt = orders[orders.length - 1].createdAt
+        dispatch(fetchMoreOrders(lastOrderCreatedAt, orderStatus, searchOrders))
     }
 
     return (
@@ -137,6 +143,15 @@ function AdminOrdersComponent() {
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            {
+                !canLoad
+                    ?
+                    <AllianceButton onClick={loadMoreOrders} mb={"2rem"}>
+                        Завантажити ще
+                    </AllianceButton>
+                    : ""
+            }
         </div>
     );
 }

@@ -23,6 +23,7 @@ function AdminInventoryComponent() {
         const lastInventoryCreatedAt = inventories[inventories.length - 1].createdAt
         dispatch(fetchMoreInventories(lastInventoryCreatedAt))
     }
+
     return (
         <div>
             <p className={classes.inventoryTitle}>

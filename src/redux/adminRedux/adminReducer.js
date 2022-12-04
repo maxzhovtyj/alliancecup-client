@@ -8,6 +8,7 @@ let adminDefaultState = {
     statusNoMoreSupply: false,
     statusNoMoreInventories: false,
     statusNoMoreModerators: false,
+    statusNoMoreOrders: false,
 }
 
 const GET_ALL_SUPPLY = "GET_ALL_SUPPLY"
@@ -32,6 +33,9 @@ const GET_INVENTORY_PRODUCTS = "GET_INVENTORY_PRODUCTS"
 const GET_PRODUCTS_TO_INVENTORY = "GET_PRODUCTS_TO_INVENTORY"
 
 const GET_ORDERS = "GET_ORDERS"
+const GET_MORE_ORDERS = "GET_MORE_ORDERS"
+const LOAD_ORDERS = "LOAD_ORDERS"
+const CANNOT_LOAD_ORDERS = "CANNOT_LOAD_ORDERS"
 
 export const adminReducer = (state = adminDefaultState, action) => {
     switch (action.type) {
@@ -76,6 +80,15 @@ export const adminReducer = (state = adminDefaultState, action) => {
         case GET_ORDERS: {
             return {...state, orders: [...action.payload]}
         }
+        case GET_MORE_ORDERS: {
+            return {...state, orders: [...state.orders, ...action.payload]}
+        }
+        case LOAD_ORDERS: {
+            return {...state, statusNoMoreOrders: false}
+        }
+        case CANNOT_LOAD_ORDERS: {
+            return {...state, statusNoMoreOrders: true}
+        }
 
         case GET_MODERATORS: {
             return {...state, moderators: [...action.payload]}
@@ -114,3 +127,5 @@ export const getInventoryProductsActionCreator = (payload) => ({type: GET_INVENT
 export const getProductsToInventoryActionCreator = (payload) => ({type: GET_PRODUCTS_TO_INVENTORY, payload})
 
 export const getOrdersActionCreator = (payload) => ({type: GET_ORDERS, payload})
+export const getMoreOrdersActionCreator = (payload) => ({type: GET_MORE_ORDERS, payload})
+export const cannotLoadOrdersActionCreator = () => ({type: CANNOT_LOAD_ORDERS})
