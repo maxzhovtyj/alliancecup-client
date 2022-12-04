@@ -10,7 +10,7 @@ import {ShoppingService} from "../../../../service/ShoppingService";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 
-function ProductItemComponent({product, setMessage, handleClick, deleteFavourite}) {
+function ProductItem({product, setMessage, handleClick, deleteFavourite}) {
     let [amount, setAmount] = useState(1)
     let [priceAmount, setPriceAmount] = useState(Number(product.price))
 
@@ -61,6 +61,7 @@ function ProductItemComponent({product, setMessage, handleClick, deleteFavourite
             return product.imgUrl
         } else return noopImg
     }
+
     return (
         <div className={classes.productItem}>
             <Link to={`/product/${product.id}`}>
@@ -124,4 +125,4 @@ function ProductItemComponent({product, setMessage, handleClick, deleteFavourite
     );
 }
 
-export default ProductItemComponent;
+export default ProductItem;

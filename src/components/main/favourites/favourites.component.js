@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useSnackbar} from "../../../hooks/useSnackbar";
 
 import {fetchFavourites} from "../../../redux/userFavouritesRedux/favouritesFetch";
-import ProductItemComponent from "../categories/products/productItem.component";
+import ProductItem from "../categories/products/productItem";
 
 import classes from './favourites.module.scss'
 
@@ -25,7 +25,7 @@ function FavouritesComponent() {
                     favouritesList.length !== 0
                         ?
                         favouritesList.map(
-                            item => <ProductItemComponent
+                            item => <ProductItem
                                 product={item}
                                 setMessage={setMessage}
                                 handleClick={handleClick}

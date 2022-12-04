@@ -17,6 +17,7 @@ export default function RangeSlider({value, setValue, onCommitted}) {
             },
         },
     });
+
     return (
         <Box sx={{width: 300, padding: "0 1rem"}}>
             <ThemeProvider theme={theme}>

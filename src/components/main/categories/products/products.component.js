@@ -8,16 +8,14 @@ import {
 } from "../../../../redux/shopRedux/shopFetch";
 import {Link, useParams} from "react-router-dom";
 
-import ProductItemComponent from "./productItem.component";
-
 import classes from './products.module.scss'
 import {Stack} from "@mui/material";
 import AllianceSnackbar from "../../../../UI/snackbar";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import RangeSlider from "../../../../UI/rangeSlider/rangeSlider";
-import FiltrationItem from "../filtrationItem/filtrationItem";
 import AllianceChip from "../../../../UI/AllianceChip";
-import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
+import ProductsListComponent from "./productsList.component";
+import FiltrationListComponent from "../filtration/filtrationList.component";
 
 function ProductsComponent() {
     const dispatch = useDispatch()
@@ -127,54 +125,20 @@ function ProductsComponent() {
                     </div>
                 </div>
                 <div className={classes.productsWrapper}>
-                    {
-                        filtrationList
-                            ?
-                            <div className={classes.filtrationList}>
-                                {
-                                    filtrationList
-                                        .map((item, index) =>
-                                            <FiltrationItem
-                                                onClick={handleCharacteristic}
-                                                key={index}
-                                                item={item}
-                                            />
-                                        )
-                                }
-                            </div>
-                            : ""
-                    }
-                    {
-                        !products
-                            ?
-                            <div className={classes.noItemsTitle}>Товарів не знайдено</div>
-                            :
-                            <div>
-                                <div className={classes.productsList}>
-                                    {
-                                        products.map(
-                                            item => <ProductItemComponent
-                                                product={item}
-                                                setMessage={setMessage}
-                                                handleClick={handleClick}
-                                                key={item.article}
-                                            />
-                                        )
-                                    }
-                                </div>
-                                {
-                                    cannotLoadMore
-                                        ? ""
-                                        :
-                                        <AllianceButton onClick={loadMore} mt={"1rem"}>
-                                            Завантажити ще
-                                        </AllianceButton>
-                                }
-                                <AllianceSnackbar open={open} message={message} handleClose={handleClose}/>
-                            </div>
-                    }
+                    <FiltrationListComponent
+                        filtrationList={filtrationList}
+                        handleCharacteristic={handleCharacteristic}
+                    />
+                    <ProductsListComponent
+                        products={products}
+                        loadMore={loadMore}
+                        cannotLoadMore={cannotLoadMore}
+                        handleClick={handleClick}
+                        setMessage={setMessage}
+                    />
                 </div>
             </div>
+            <AllianceSnackbar open={open} message={message} handleClose={handleClose}/>
         </>
     );
 }
