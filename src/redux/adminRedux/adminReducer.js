@@ -110,7 +110,7 @@ export const adminReducer = (state = adminDefaultState, action) => {
 
 export const getSupplyActionCreator = (payload) => ({type: GET_ALL_SUPPLY, payload})
 export const getMoreSupplyActionCreator = (payload) => ({type: GET_MORE_SUPPLY, payload})
-export const loadSupplyActionCreator = () => ({type: LOAD_SUPPLY})
+// export const loadSupplyActionCreator = () => ({type: LOAD_SUPPLY})
 export const cannotLoadSupplyActionCreator = () => ({type: CANNOT_LOAD_SUPPLY})
 
 export const getSupplyProductsActionCreator = (payload) => ({type: GET_SUPPLY_PRODUCTS, payload})

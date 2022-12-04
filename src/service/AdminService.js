@@ -202,6 +202,23 @@ export class AdminService {
         }
     }
 
+    static async getOrderInfo(id) {
+        try {
+            return await $api.get(
+                `/api/admin/order?id=${id}`
+            ).catch(function (error) {
+                if (error.response.status === 403) {
+                    throw new Error("Доступ заборонено")
+                }
+                if (error.response.status === 500) {
+                    throw new Error("Щось пішло не так...")
+                }
+            })
+        } catch (e) {
+            return e
+        }
+    }
+
     static async doInventory(form) {
         try {
             return await $api.post("api/admin/super/inventory", form).catch(function (err) {
