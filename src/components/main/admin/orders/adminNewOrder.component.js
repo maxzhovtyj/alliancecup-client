@@ -133,7 +133,6 @@ function AdminNewOrderComponent() {
             ...tmp
         ])
 
-        console.log(productsErr)
         return tmp
             .map(value => Object.values(value).every(el => el === false))
             .every(item => item === true)

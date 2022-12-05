@@ -206,7 +206,7 @@ function AdminNewProductComponent() {
         let form = new FormData()
 
         form.append("file", productImg)
-        form.append("categoryTitle", "Одноразові стакани")
+        form.append("categoryTitle", productForm.categoryTitle)
         form.append("article", productForm.article)
         form.append("productTitle", productForm.productTitle)
         form.append("imgUrl", productForm.imgUrl)
@@ -216,8 +216,14 @@ function AdminNewProductComponent() {
         form.append("price", productForm.price)
 
         AdminService.addProduct(form).then(res => {
-            snackbar.setMessage(res.message)
-            snackbar.handleClick()
+            if (res?.status === 200 || res?.status === 201 ) {
+                setShowDialog(false)
+                snackbar.setMessage("Товар успішно додано")
+                snackbar.handleClick()
+            } else {
+                snackbar.setMessage(res?.message)
+                snackbar.handleClick()
+            }
         })
     }
 

@@ -38,7 +38,7 @@ function AdminCategoriesComponent() {
                     <TableBody>
                         <>
                             {
-                                (categories)
+                                (categories?.length)
                                     ?
                                     categories.map((row) => (
                                         <TableRow
@@ -57,7 +57,7 @@ function AdminCategoriesComponent() {
                                             </TableCell>
                                         </TableRow>
                                     ))
-                                    : <TableRow><TableCell align="left">Немає товарів</TableCell></TableRow>
+                                    : <TableRow><TableCell align="left">Немає категорій</TableCell></TableRow>
                             }
                         </>
                     </TableBody>

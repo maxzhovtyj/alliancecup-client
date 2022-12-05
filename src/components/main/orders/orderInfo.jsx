@@ -91,8 +91,8 @@ function OrderInfo({
                     error={errors.deliveryTypeTitle}
                 >
                     {
-                        deliveryTypes?.map(item => <MenuItem value={item.delivery_type_title}
-                                                             key={item.id}>{item.delivery_type_title}</MenuItem>)
+                        deliveryTypes?.map(item => <MenuItem value={item?.delivery_type_title}
+                                                             key={item.id}>{item?.delivery_type_title}</MenuItem>)
                     }
                 </AllianceSelect>
             </FormControl>

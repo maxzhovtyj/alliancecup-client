@@ -28,8 +28,13 @@
 
 .novaPoshtaDelivery {
   display: flex;
+  gap: 1rem;
   justify-content: space-between;
   margin-bottom: 1rem;
+}
+
+.orderPageInfo {
+  max-width: 500px;
 }
 
 .orderContactInfo {

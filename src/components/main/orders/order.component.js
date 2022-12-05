@@ -97,7 +97,7 @@ function OrderComponent() {
         makeOrderForm.products = cartProducts.cart
 
         setDisabled(true)
-        ShoppingService.newOrder(makeOrderForm, setMessage, handleClick)
+        ShoppingService.newOrder(makeOrderForm)
             .then((res) => {
                 if (res?.status === 200 || res?.status === 201) {
                     setDisabled(true)
@@ -112,7 +112,7 @@ function OrderComponent() {
 
     return (
         <div className={orderClasses.orderPage}>
-            <div>
+            <div className={orderClasses.orderPageInfo}>
                 <OrderInfo orderInfo={orderInfo}
                            handleOrderInfo={handleOrderInfo}
                            errors={errors}

@@ -3,7 +3,7 @@ import $api, {$fileApi} from "../http/http";
 export class AdminService {
     static async addProduct(form) {
         try {
-            await $api.post("api/admin/product", form).catch(function (error) {
+            return await $api.post("api/admin/product", form).catch(function (error) {
                 if (error.response.status === 403) {
                     throw new Error("Доступ заборонено")
                 }
@@ -14,10 +14,6 @@ export class AdminService {
                     throw new Error("Щось пішло не так")
                 }
             })
-
-            return {
-                message: "Товар успішно додано"
-            }
         } catch (e) {
             return e
         }
