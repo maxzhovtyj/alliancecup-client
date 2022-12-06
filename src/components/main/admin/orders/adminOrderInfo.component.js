@@ -6,7 +6,20 @@ import classes from "./adminOrder.module.scss"
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {AlliancePaper} from "../../../../UI/AlliancePaper";
 import ContextMenuInventory from "../../../../UI/contextMenu/contextMenuInventory";
+import {IN_PROGRESS} from "./adminOrders.component";
+import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 
+function adminDeliveryInfo(deliveryInfo, cls, valueCls) {
+    return Object.entries(deliveryInfo).map(e => {
+        const [key, value] = e;
+        return (
+            <div className={cls} key={key}>
+                <p>{key}</p>
+                <p className={valueCls}>{value}</p>
+            </div>
+        );
+    })
+}
 
 function AdminOrderInfoComponent() {
     const {id} = useParams()
@@ -24,7 +37,6 @@ function AdminOrderInfoComponent() {
             sumPrice: "",
         },
         products: [],
-        delivery: []
     })
 
     useEffect(() => {
@@ -32,6 +44,12 @@ function AdminOrderInfoComponent() {
             setOrder(res.data)
         })
     }, [id])
+
+    function processedOrder() {
+        AdminService.processedOrder(order?.info?.id).then(res => {
+            console.log(res)
+        })
+    }
 
     return (
         <div className={classes.orderPage}>
@@ -64,6 +82,19 @@ function AdminOrderInfoComponent() {
                     <p className={classes.orderPageInfoItemValue}>{order.info?.userPhoneNumber}</p>
                 </div>
                 <div className={classes.orderPageInfoItem}>
+                    <p>Доставка</p>
+                    <p className={classes.orderPageInfoItemValue}>{order?.info?.deliveryTypeTitle}</p>
+                </div>
+                <div className={classes.orderPageInfoItem}>
+                    <p>Оплата</p>
+                    <p className={classes.orderPageInfoItemValue}>{order?.info?.paymentTypeTitle}</p>
+                </div>
+                {
+                    order?.info?.delivery
+                        ? adminDeliveryInfo(order?.info?.delivery, classes.orderPageInfoItem, classes.orderPageInfoItemValue)
+                        : ""
+                }
+                <div className={classes.orderPageInfoItem}>
                     <p>Статус замовлення</p>
                     <p className={classes.orderPageInfoItemValue}>{order.info?.status}</p>
                 </div>
@@ -72,6 +103,12 @@ function AdminOrderInfoComponent() {
                     <p className={classes.orderPageInfoItemValue}>{order.info?.sumPrice}</p>
                 </div>
             </div>
+
+            {
+                order?.info?.status === IN_PROGRESS
+                    ? <AllianceButton onClick={processedOrder} mt={"1rem"} mb={"1rem"}>Обробити замовлення</AllianceButton>
+                    : ""
+            }
 
             <TableContainer component={AlliancePaper}>
                 <Table sx={{minWidth: 200}} aria-label="simple table">

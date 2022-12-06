@@ -68,7 +68,8 @@ function OrderComponent() {
                 userEmail: orderInfo.email,
                 sumPrice: cartProducts.sum,
                 deliveryTypeTitle: orderInfo.deliveryTypeTitle,
-                paymentTypeTitle: orderInfo.paymentTypeTitle
+                paymentTypeTitle: orderInfo.paymentTypeTitle,
+                delivery: {}
             }
         }
 
@@ -78,10 +79,8 @@ function OrderComponent() {
                 setMessage("Ви не заповнили усі поля")
                 return
             }
-            makeOrderForm.delivery = [
-                {delivery_title: "Місто", delivery_description: city.Description},
-                {delivery_title: "Відділення", delivery_description: department.Description},
-            ]
+            makeOrderForm.order.delivery["Місто"] = city.Description
+            makeOrderForm.order.delivery["Відділення"] = department.Description
         }
         if (isInTown) {
             if (address === "") {
@@ -89,9 +88,8 @@ function OrderComponent() {
                 setMessage("Ви не заповнили усі поля")
                 return
             }
-            makeOrderForm.delivery = [
-                {delivery_description: "Адрес", delivery_title: address},
-            ]
+
+            makeOrderForm.order.delivery["Адреса"] = address
         }
 
         makeOrderForm.products = cartProducts.cart

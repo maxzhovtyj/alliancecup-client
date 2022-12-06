@@ -8,10 +8,11 @@ import {IconButton, Paper} from "@mui/material";
 import classes from './orderItem.module.scss'
 import {UserService} from "../../../../../../service/UserService";
 import {NavLink} from "react-router-dom";
+import {OrderService} from "../../../../../../service/OrderService";
 
 function OrderItem({order}) {
     const [showDropdown, setShowDropdown] = useState(false)
-    const {info, products, delivery} = order
+    const {info, products} = order
 
     const toggleShowProduct = () => {
         setShowDropdown(prevState => !prevState)
@@ -42,13 +43,8 @@ function OrderItem({order}) {
                             <div>
                                 <p>Доставка: {info.deliveryTypeTitle}</p>
                                 {
-                                    delivery?.length
-                                        ?
-                                        <div>
-                                            {delivery.map((item, index) =>
-                                                <p key={index}>{item.deliveryDescription}</p>
-                                            )}
-                                        </div>
+                                    order?.info?.delivery
+                                        ? OrderService.deliveryInfo(order?.info?.delivery)
                                         : ""
                                 }
                             </div>

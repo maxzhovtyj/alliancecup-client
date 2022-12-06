@@ -22,7 +22,7 @@ function FavouritesComponent() {
             <h1 className={classes.pageTitle}>Обрані товари</h1>
             <div className={classes.favouriteList}>
                 {
-                    favouritesList.length !== 0
+                    favouritesList?.length !== 0
                         ?
                         favouritesList.map(
                             item => <ProductItem

@@ -159,7 +159,8 @@ function AdminNewOrderComponent() {
                 userPhoneNumber: orderInfo.phone,
                 userEmail: orderInfo.email,
                 deliveryTypeTitle: orderInfo.deliveryTypeTitle,
-                paymentTypeTitle: orderInfo.paymentTypeTitle
+                paymentTypeTitle: orderInfo.paymentTypeTitle,
+                delivery: {}
             }
         }
 
@@ -169,10 +170,9 @@ function AdminNewOrderComponent() {
                 snackbar.setMessage("Ви не заповнили усі поля")
                 return
             }
-            makeOrderForm.delivery = [
-                {delivery_title: "Місто", delivery_description: city.Description},
-                {delivery_title: "Відділення", delivery_description: department.Description},
-            ]
+
+            makeOrderForm.order.delivery["Місто"] = city.Description
+            makeOrderForm.order.delivery["Відділення"] = department.Description
         }
 
         if (isInTown) {
@@ -181,9 +181,8 @@ function AdminNewOrderComponent() {
                 snackbar.setMessage("Ви не заповнили усі поля")
                 return
             }
-            makeOrderForm.delivery = [
-                {delivery_description: "Адрес", delivery_title: address},
-            ]
+
+            makeOrderForm.order.delivery["Адреса"] = address
         }
 
         makeOrderForm.products = products
@@ -193,6 +192,8 @@ function AdminNewOrderComponent() {
             .then((res) => {
                 if (res?.status === 200 || res?.status === 201) {
                     setDisabled(true)
+                    snackbar.setMessage("Замовлення успішно створено")
+                    snackbar.handleClick()
                 } else {
                     snackbar.setMessage(res?.message)
                     snackbar.handleClick()

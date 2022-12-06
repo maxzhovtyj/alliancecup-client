@@ -28,7 +28,23 @@
   gap: 2rem;
   &Value {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
+    text-align: end;
   }
+}
+
+.borderStyleGreen {
+  border-radius: 5px;
+  border-left: 2px solid green !important;
+}
+
+.borderStyleYellow {
+  border-radius: 5px;
+  border-left: 2px solid yellow !important;
+}
+
+.borderStyleRed {
+  border-radius: 5px;
+  border-left: 2px solid red !important;
 }

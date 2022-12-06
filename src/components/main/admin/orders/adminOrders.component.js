@@ -24,9 +24,11 @@ import {UserService} from "../../../../service/UserService";
 import {AlliancePaper} from "../../../../UI/AlliancePaper";
 import {AdminService} from "../../../../service/AdminService";
 
-const IN_PROGRESS = "IN_PROGRESS"
-const PROCESSED = "PROCESSED"
-const COMPLETED = "COMPLETED"
+import classes from "./adminOrder.module.scss"
+
+export const IN_PROGRESS = "IN_PROGRESS"
+export const PROCESSED = "PROCESSED"
+export const COMPLETED = "COMPLETED"
 
 function AdminOrdersComponent() {
     const dispatch = useDispatch()
@@ -67,6 +69,18 @@ function AdminOrdersComponent() {
         dispatch(fetchMoreOrders(lastOrderCreatedAt, orderStatus, searchOrders))
     }
 
+    const getStatusBorder = (status) => {
+        if (status === IN_PROGRESS) {
+            return classes.borderStyleRed
+        }
+        if (status === PROCESSED) {
+            return classes.borderStyleYellow
+        }
+        if (status === COMPLETED) {
+            return classes.borderStyleGreen
+        }
+    }
+
     return (
         <div>
             <p>Замовлення</p>
@@ -101,6 +115,7 @@ function AdminOrdersComponent() {
                     <TableHead>
                         <TableRow>
                             <TableCell align={"center"}>Id</TableCell>
+                            <TableCell align={"center"}>Статус</TableCell>
                             <TableCell align={"center"}>Замовник</TableCell>
                             <TableCell align={"center"}>Номер телефону</TableCell>
                             <TableCell align={"center"}>Сума</TableCell>
@@ -120,7 +135,10 @@ function AdminOrdersComponent() {
                                             key={row.id}
                                             sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                         >
-                                            <TableCell align={"center"}>{row.id}</TableCell>
+                                            <TableCell align={"center"} className={getStatusBorder(row.status)}>
+                                                {row.id}
+                                            </TableCell>
+                                            <TableCell align={"center"}>{row.status}</TableCell>
                                             <TableCell align={"center"}>
                                                 {[row.userLastname, row.userFirstname, row.userMiddleName].join(" ")}
                                             </TableCell>

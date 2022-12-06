@@ -26,4 +26,11 @@ export class OrderService {
 
         return Object.values(tmp).every(value => value === false)
     }
+
+    static deliveryInfo(deliveryInfo) {
+        return Object.entries(deliveryInfo).map(e => {
+            const [key, value] = e;
+            return <p key={key}>{key}: {value}</p>;
+        })
+    }
 }
