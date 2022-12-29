@@ -39,6 +39,7 @@ import PageWasNotFound from "../errorPages/pageWasNotFound";
 import PermissionForbidden from "../errorPages/permissionForbidden";
 import AdminModeratorsComponent from "./admin/moderators/adminModerators.component";
 import AdminNewModeratorComponent from "./admin/moderators/adminNewModerator.component";
+import AdminNewCharacteristicComponent from "./admin/categories/adminNewCharacteristic.component";
 
 function MainComponent() {
     return (
@@ -71,6 +72,7 @@ function MainComponent() {
 
                                 <Route path={"categories"} element={<AdminCategoriesComponent/>}/>
                                 <Route path={"new-category"} element={<AdminNewCategory/>}/>
+                                <Route path={"new-characteristics"} element={<AdminNewCharacteristicComponent/>}/>
 
                                 <Route path={"orders"} element={<AdminOrdersComponent/>}/>
                                 <Route path={"orders/:id"} element={<AdminOrderInfoComponent/>}/>

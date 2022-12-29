@@ -29,6 +29,13 @@ export const fetchCategories = () => {
     }
 }
 
+export const fetchFiltrationItems = () => {
+    return async (dispatch) => {
+        const response = await $api.get('/api/admin/characteristics')
+        dispatch(getFiltrationListActionCreator(response.data))
+    }
+}
+
 export const fetchProducts = ({
                                   id,
                                   createdAt,
