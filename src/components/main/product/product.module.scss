@@ -30,6 +30,44 @@
   color: $alliance-grey;
 }
 
+.description {
+  display: flex;
+  flex-direction: column;
+}
+.descriptionTitle {
+  font-size: 2rem;
+}
+.descriptionText {
+  font-size: 1rem;
+}
+
+dl { width: 400px }
+dt { float: left; width: 300px; overflow: hidden; white-space: nowrap }
+dd { float: left; width: 100px; overflow: hidden }
+
+dt p:after { content: " .................................................................................." }
+dd p { margin-left: 5px;}
+
+.characteristics {
+  max-width: 320px;
+}
+.characteristicsTitle {
+  font-size: 2rem;
+}
+.characteristicsList {
+  width: 100%;
+}
+.characteristicsItem {
+  display: flex;
+  align-items: center;
+}
+.characteristicsItemKey {
+  &:after {
+    content: "...........................................";
+
+  }
+}
+
 @media all and (max-width: 425px) {
   .productInfo {
     flex-direction: column;

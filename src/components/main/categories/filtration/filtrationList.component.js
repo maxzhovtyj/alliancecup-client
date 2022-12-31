@@ -3,26 +3,21 @@ import FiltrationItem from "./filtrationItem";
 import classes from "../products/products.module.scss";
 
 function FiltrationListComponent({filtrationList, handleCharacteristic}) {
-    return (
-        <>
+    if (!filtrationList) {
+        return ""
+    } else return (
+        <div className={classes.filtrationList}>
             {
                 filtrationList
-                    ?
-                    <div className={classes.filtrationList}>
-                        {
-                            filtrationList
-                                .map((item, index) =>
-                                    <FiltrationItem
-                                        onClick={handleCharacteristic}
-                                        key={index}
-                                        item={item}
-                                    />
-                                )
-                        }
-                    </div>
-                    : ""
+                    .map((item, index) =>
+                        <FiltrationItem
+                            onClick={handleCharacteristic}
+                            key={index}
+                            item={item}
+                        />
+                    )
             }
-        </>
+        </div>
     );
 }
 

@@ -48,7 +48,6 @@ function AdminNewCharacteristicComponent() {
     };
 
     const newFiltrationItem = () => {
-        console.log(filtrationForm)
         let form = new FormData()
 
         form.append("file", itemImg)
@@ -82,7 +81,7 @@ function AdminNewCharacteristicComponent() {
                         <MenuItem value=""><em>None</em></MenuItem>
                         {
                             categories?.map(item =>
-                                <MenuItem value={item.categoryId} key={item.id}>
+                                <MenuItem value={item.id} key={item.id}>
                                     {item.categoryTitle}
                                 </MenuItem>)
                         }

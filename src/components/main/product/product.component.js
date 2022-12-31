@@ -5,6 +5,8 @@ import {useParams} from "react-router-dom";
 import classes from './product.module.scss'
 
 import noopImg from '../../../assets/noopProduct.svg'
+import ProductCharacteristics from "./productCharacteristics";
+import ProductPackaging from "./productPackaging";
 
 function ProductComponent() {
     const {id} = useParams()
@@ -34,15 +36,29 @@ function ProductComponent() {
 
     return (
         <div className={classes.productWrapper}>
+            <p className={classes.productTitle}>{product.productTitle}</p>
             <div className={classes.productInfo}>
                 <img className={classes.productImg} src={getProductImage()} alt="img"/>
                 <div className={classes.textInfo}>
-                    <p className={classes.productTitle}>{product.productTitle}</p>
                     <p className={classes.productArticle}>Артикул: {product.article}</p>
+                    <ProductPackaging packaging={product?.packaging}/>
+                    <ProductDescription description={product?.description}/>
+                    <ProductCharacteristics characteristics={product?.characteristics}/>
                 </div>
             </div>
         </div>
     );
+}
+
+function ProductDescription({description}) {
+    if (description) {
+        return (
+            <div className={classes.description}>
+                <p className={classes.descriptionTitle}>Опис</p>
+                <p className={classes.descriptionText}>{description}</p>
+            </div>
+        );
+    } else return ""
 }
 
 export default ProductComponent;

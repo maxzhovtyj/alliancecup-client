@@ -9,11 +9,9 @@ import {
 import {Link, useParams} from "react-router-dom";
 
 import classes from './products.module.scss'
-import {Stack} from "@mui/material";
 import AllianceSnackbar from "../../../../UI/snackbar";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import RangeSlider from "../../../../UI/rangeSlider/rangeSlider";
-import AllianceChip from "../../../../UI/AllianceChip";
 import ProductsListComponent from "./productsList.component";
 import FiltrationListComponent from "../filtration/filtrationList.component";
 
@@ -27,7 +25,6 @@ function ProductsComponent() {
 
     let {open, setMessage, handleClick, message, handleClose} = useSnackbar()
 
-    const [paramsChips, setParamsChips] = useState([])
     let [filtrationParent, setFiltrationParent] = useState({
         parentName: "category_id",
         id: useParams().id
@@ -66,7 +63,6 @@ function ProductsComponent() {
 
     function handleCharacteristic(searchKey, searchCharacteristic, id) {
         setFiltrationParent({parentName: "filtration_list_id", id: id})
-        setParamsChips([...paramsChips, searchCharacteristic])
         setSearchParams({...searchParams, characteristic: searchKey + ":" + searchCharacteristic})
     }
 
@@ -74,22 +70,8 @@ function ProductsComponent() {
         setSearchParams({...searchParams, price: rangePrice})
     }
 
-    const handleDelete = (name) => {
-        setParamsChips(prevState => prevState.filter(item => item !== name))
-        setSearchParams({...searchParams, characteristic: ""})
-    };
-
     return (
         <>
-            <Stack direction="row" spacing={1} className={classes.chipsList}>
-                <>
-                    {
-                        paramsChips.map((chipItem, index) =>
-                            <AllianceChip key={index} name={chipItem} label={chipItem} onDelete={handleDelete}
-                                          variant="outlined"/>)
-                    }
-                </>
-            </Stack>
             <div className={classes.productsPageWrapper}>
                 <div className={classes.sidebar}>
                     <div className={classes.sidebarWrapper}>
