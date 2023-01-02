@@ -1,5 +1,3 @@
-import noopImg from '../../../assets/noopProduct.svg'
-
 import classes from './cart.module.scss'
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -17,7 +15,7 @@ function CartItem({product, order}) {
     return (
         <div className={classes.productItem}>
             <NavLink to={`/product/${product.id}`} className={classes.productImg}>
-                <img src={product.imgUrl || noopImg} alt="product_image"/>
+                <img src={ShoppingService.getImage(product)} alt="product_image"/>
             </NavLink>
             <div className={classes.productInfo}>
                 <NavLink to={`/product/${product.id}`}>

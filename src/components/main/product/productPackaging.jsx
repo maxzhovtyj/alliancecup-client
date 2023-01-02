@@ -1,12 +1,17 @@
+import classes from "./product.module.scss";
+
 function ProductPackaging({packaging}) {
     return (
-        <div>
+        <div className={classes.packagingList}>
             {
                 packaging
                     ?
                     Object.entries(packaging).map(entry => {
                         const [key, value] = entry
-                        return <span key={key}>{value} {key}</span>
+                        return (
+                            <div key={key} className={classes.packagingItem}>
+                                <p>{value} {key}</p>
+                            </div>);
                     })
                     : ""
             }

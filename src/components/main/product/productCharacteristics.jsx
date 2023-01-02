@@ -13,7 +13,7 @@ function ProductCharacteristics({characteristics}) {
                         return (
                             <div key={key} className={classes.characteristicsItem}>
                                 <dt><p>{key}</p></dt>
-                                <dd><p>{value}</p></dd>
+                                <dd className={classes.characteristicsValue}><p>{value}</p></dd>
                             </div>
                         );
                     })
