@@ -1,5 +1,4 @@
 import $api, {$fileApi} from "../http/http";
-import {IN_PROGRESS} from "../components/main/admin/orders/adminOrders.component";
 
 export class AdminService {
     static async addProduct(form) {
@@ -244,10 +243,30 @@ export class AdminService {
     }
 
     static async processedOrder(orderId) {
-        const data = {orderId: orderId, toStatus: IN_PROGRESS}
+        const data = {orderId: orderId}
 
         try {
             return await $api.put("/api/admin/processed-order", data).catch(function (error) {
+                if (error.response.status === 403) {
+                    throw new Error("Доступ заборонено")
+                }
+                if (error.response.status === 400) {
+                    throw new Error("Ви надали хибні дані")
+                }
+                if (error.response.status === 500) {
+                    throw new Error("Щось пішло не так...")
+                }
+            })
+        } catch (e) {
+            return e
+        }
+    }
+
+    static async completeOrder(orderId) {
+        const data = {orderId: orderId}
+
+        try {
+            return await $api.put("/api/admin/complete-order", data).catch(function (error) {
                 if (error.response.status === 403) {
                     throw new Error("Доступ заборонено")
                 }

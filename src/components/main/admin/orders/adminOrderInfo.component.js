@@ -6,8 +6,10 @@ import classes from "./adminOrder.module.scss"
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {AlliancePaper} from "../../../../UI/AlliancePaper";
 import ContextMenuInventory from "../../../../UI/contextMenu/contextMenuInventory";
-import {IN_PROGRESS} from "./adminOrders.component";
+import {IN_PROGRESS, PROCESSED} from "./adminOrders.component";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
+import {useSnackbar} from "../../../../hooks/useSnackbar";
+import AllianceSnackbar from "../../../../UI/snackbar";
 
 function adminDeliveryInfo(deliveryInfo, cls, valueCls) {
     return Object.entries(deliveryInfo).map(e => {
@@ -24,6 +26,7 @@ function adminDeliveryInfo(deliveryInfo, cls, valueCls) {
 function AdminOrderInfoComponent() {
     const {id} = useParams()
 
+    const snackbar = useSnackbar()
     const [order, setOrder] = useState({
         info: {
             id: 0,
@@ -47,7 +50,17 @@ function AdminOrderInfoComponent() {
 
     function processedOrder() {
         AdminService.processedOrder(order?.info?.id).then(res => {
-            console.log(res)
+            if (res?.status !== 200) {
+                snackbar.setMessage(res)
+            } else window.location.reload()
+        })
+    }
+
+    function completeOrder() {
+        AdminService.completeOrder(order?.info?.id).then(res => {
+            if (res?.status !== 200) {
+                snackbar.setMessage(res)
+            } else window.location.reload()
         })
     }
 
@@ -106,7 +119,15 @@ function AdminOrderInfoComponent() {
 
             {
                 order?.info?.status === IN_PROGRESS
-                    ? <AllianceButton onClick={processedOrder} mt={"1rem"} mb={"1rem"}>Обробити замовлення</AllianceButton>
+                    ? <AllianceButton onClick={processedOrder} mt={"1rem"} mb={"1rem"}>Обробити
+                        замовлення</AllianceButton>
+                    : ""
+            }
+
+            {
+                order?.info?.status === PROCESSED
+                    ? <AllianceButton onClick={completeOrder} mt={"1rem"} mb={"1rem"}>Завершити
+                        замовлення</AllianceButton>
                     : ""
             }
 
@@ -154,6 +175,7 @@ function AdminOrderInfoComponent() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <AllianceSnackbar handleClose={snackbar.handleClose} message={snackbar.message} open={snackbar.open}/>
         </div>
     );
 }
