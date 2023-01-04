@@ -3,11 +3,11 @@ import classes from "./authDialogs.module.scss";
 import {FormControl, IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DialogContent from "@mui/material/DialogContent";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 
 import {TextMaskCustom} from "../../../utils/TextMask";
 import {AllianceTextField} from "../../styles";
+import AllianceButton from "../../allianceCupButton/allianceButton";
 
 function SignUpDialog({
                           signUpOpen,
@@ -102,12 +102,12 @@ function SignUpDialog({
                 </DialogContent>
 
                 <div className={classes.requestBtn}>
-                    <Button onClick={signUp} variant={"outlined"} size={"large"}>Зареєструватись</Button>
+                    <AllianceButton onClick={signUp} variant={"outlined"} size={"large"}>Зареєструватись</AllianceButton>
                 </div>
 
                 <div className={classes.redirect}>
                     <p>Маєте акаунт?</p>
-                    <Button onClick={handleSignInOpen}>Увійти</Button>
+                    <AllianceButton onClick={handleSignInOpen} variant={"text"}>Увійти</AllianceButton>
                 </div>
             </div>
         </Dialog>

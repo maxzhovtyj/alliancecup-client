@@ -75,6 +75,33 @@ export class AdminService {
         }
     }
 
+    static async deleteFiltrationItem(id) {
+        try {
+            const res = await $api.delete(`api/admin/filtration?id=${id}`).catch(function (error) {
+                if (error?.response?.status === 403) {
+                    throw new Error("Доступ заборонено")
+                }
+                if (error?.response?.status === 400) {
+                    throw new Error("Ви надали хибні дані")
+                }
+                if (error?.response?.status === 500) {
+                    throw new Error("Щось пішло не так")
+                }
+            })
+
+            if (res?.status === 200) {
+                return {message: "Фільтрацію успішно видалено", status: 200}
+            } else {
+                return {
+                    message: "Щось пішло не так"
+                }
+            }
+        } catch (e) {
+            return e
+        }
+    }
+
+
     static async deleteProduct(productId) {
         try {
             const response = await $api.delete(`/api/admin/product?id=${productId}`).catch(function (error) {

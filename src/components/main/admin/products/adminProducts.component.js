@@ -17,7 +17,7 @@ import {useSnackbar} from "../../../../hooks/useSnackbar";
 import {AllianceInputLabel, AllianceSelect, AllianceTextField} from "../../../../UI/styles";
 import SearchBar from "../../../../UI/searchBar/searchBar";
 import AllianceSnackbar from "../../../../UI/snackbar";
-import ContextMenuProduct from "../../../../UI/contextMenu/contextMenuProduct";
+import ContextMenuProduct from "./contextMenuProduct";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import {AlliancePaper} from "../../../../UI/AlliancePaper";
 import classes from "./adminProduct.module.scss";
@@ -123,13 +123,9 @@ function AdminProductsComponent() {
                                             <TableCell align="center">
                                                 <>
                                                     {
-                                                        row.packaging
-                                                            ?
-                                                            Object.entries(row.packaging).map(e => {
-                                                                const [key, value] = e;
-                                                                return <span key={key}>{value} {key} </span>;
-                                                            })
-                                                            : "---"
+                                                        Object.entries(row.packaging).map(([key, value]) => {
+                                                            return <span key={key}>{value} {key} </span>;
+                                                        })
                                                     }
                                                 </>
                                             </TableCell>

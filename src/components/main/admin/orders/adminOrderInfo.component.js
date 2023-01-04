@@ -5,7 +5,7 @@ import {AdminService} from "../../../../service/AdminService";
 import classes from "./adminOrder.module.scss"
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {AlliancePaper} from "../../../../UI/AlliancePaper";
-import ContextMenuInventory from "../../../../UI/contextMenu/contextMenuInventory";
+import ContextMenuInventory from "../inventory/contextMenuInventory";
 import {IN_PROGRESS, PROCESSED} from "./adminOrders.component";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import {useSnackbar} from "../../../../hooks/useSnackbar";

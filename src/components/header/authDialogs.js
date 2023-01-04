@@ -9,6 +9,7 @@ import {useSnackbar} from "../../hooks/useSnackbar";
 import AllianceSnackbar from "../../UI/snackbar";
 import {AuthContext} from "../../context/AuthContext";
 import {UserService} from "../../service/UserService";
+import ForgotPasswordDialog from "../../UI/dialogs/forgotPasswordDialog/forgotPasswordDialog";
 
 export default function AuthDialogs() {
     const {isAuth, login} = useContext(AuthContext)
@@ -16,6 +17,7 @@ export default function AuthDialogs() {
     let {open, message, setMessage, handleClose, handleClick} = useSnackbar()
 
     const [signInForm, setSignInForm] = useState({email: "", password: ""})
+    const [forgotPasswordForm, setForgotPasswordForm] = useState({email: ""})
     const [signUpForm, setSignUpForm] = useState({
         email: "",
         lastname: "",
@@ -41,6 +43,7 @@ export default function AuthDialogs() {
     })
 
     const [signInOpen, setSignInOpen] = useState(false)
+    const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false)
     const [signUpOpen, setSignUpOpen] = useState(false)
 
     const handleSignInOpen = () => {
@@ -50,6 +53,15 @@ export default function AuthDialogs() {
 
     const handleSignInClose = () => {
         setSignInOpen(false);
+    };
+
+    const handleForgotPasswordOpen = () => {
+        setSignInOpen(false);
+        setForgotPasswordOpen(true);
+    };
+
+    const handleForgotPasswordClose = () => {
+        setForgotPasswordOpen(false);
     };
 
     const handleSignUpOpen = () => {
@@ -63,6 +75,10 @@ export default function AuthDialogs() {
 
     function signInFormHandler(e) {
         setSignInForm({...signInForm, [e.target.name]: e.target.value})
+    }
+
+    function forgotPasswordFormHandler(e) {
+        setForgotPasswordForm({...forgotPasswordForm, [e.target.name]: e.target.value})
     }
 
     function signUpFormHandler(e) {
@@ -86,6 +102,10 @@ export default function AuthDialogs() {
                 handleClick()
             }
         })
+    }
+
+    function forgotPassword() {
+
     }
 
     function signUp() {
@@ -137,7 +157,17 @@ export default function AuthDialogs() {
                 signIn={signIn}
                 handleSignUpOpen={handleSignUpOpen}
                 errors={signInErrors}
+                handleForgotPasswordOpen={handleForgotPasswordOpen}
             />
+
+            <ForgotPasswordDialog
+                handleForgotPassword={forgotPassword}
+                formHandler={forgotPasswordFormHandler}
+                open={forgotPasswordOpen}
+                handleOpen={handleForgotPasswordOpen}
+                handleClose={handleForgotPasswordClose}
+            />
+
 
             <SignUpDialog
                 signUpOpen={signUpOpen}

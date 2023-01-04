@@ -49,7 +49,7 @@ function MainComponent() {
                 <Routes>
                     <Route path={"/"} element={<HomePageComponent/>}/>
                     <Route path={"/categories"} element={<CategoriesComponent/>}/>
-                    <Route path={"/categories/:id"} element={<ProductsComponent/>}/>
+                    <Route path={"/products"} element={<ProductsComponent/>}/>
                     <Route path={"/product/:id"} element={<ProductComponent/>}/>
                     <Route path={"/cart"} element={<CartComponent/>}/>
                     <Route path={"/delivery"} element={<DeliveryComponent/>}/>

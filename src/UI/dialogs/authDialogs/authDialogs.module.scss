@@ -13,11 +13,13 @@
   font-size: 1.5rem;
   font-weight: 300;
   color: white;
+
   img {
     width: 36px;
     height: 36px;
     margin-right: 10px;
   }
+
   @media all and (max-width: 425px) {
     font-size: 14px;
     img {
@@ -52,6 +54,7 @@
   align-items: center;
   margin-top: 1rem;
   padding-bottom: 1rem;
+
   &:after {
     content: "";
     position: absolute;
@@ -69,6 +72,7 @@
   font-size: 2rem;
   font-weight: 300;
   position: relative;
+
   h2 {
     padding: 0;
     margin: 0;
@@ -76,10 +80,30 @@
 }
 
 .requestBtn {
-  margin: 1rem 0;
+  margin-top: 1rem;
   @include toCenter;
-  padding-bottom: 1rem;
   @include btn;
+}
+
+.forgotPassword {
+  display: flex;
+  justify-content: center;
+  color: $alliance-grey;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  position: relative;
+  padding: .75rem 0;
+
+  p {
+    text-align: center;
+    width: fit-content;
+    &:hover {
+      color: $alliance-orange;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
   &:after {
     content: "";
     position: absolute;
@@ -90,6 +114,21 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
+  transition: .3s ease-in-out;
+
+}
+
+.forgotPasswordBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.forgotPasswordText {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 1rem;
 }
 
 .passwordInputs {
@@ -101,12 +140,14 @@
 
 .redirect {
   @include toCenter;
+  margin-top: 1rem;
   p {
     text-transform: uppercase;
     font-size: 1rem;
     font-family: 'Roboto', serif;
     margin-right: .5rem;
   }
+
   button {
     color: $alliance-orange;
   }

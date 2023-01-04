@@ -190,26 +190,34 @@ footer {
 }
 
 .schedule, .deliveryTown {
-  font-size: 1.5rem;
-
   p:nth-child(1) {
     color: $alliance-orange;
   }
 
   @media all and (max-width: 1440px) {
-    font-size: 1.125rem;
+    p {
+      font-size: 1.125rem ;
+    }
   }
   @media all and (max-width: 1024px) {
-    font-size: 1rem;
+    p {
+      font-size: 1rem;
+    }
   }
   @media all and (max-width: 768px) {
-    font-size: .875rem;
+    p {
+      font-size: .875rem;
+    }
   }
   @media all and (max-width: 425px) {
-    font-size: .625rem;
+    p {
+      font-size: .625rem;
+    }
   }
   @media all and (max-width: 375px) {
-    font-size: .5rem;
+    p {
+      font-size: .5rem !important;
+    }
   }
   @media all and (max-width: 320px) {
 

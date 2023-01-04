@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 
 import {fetchMoreOrders, fetchOrders} from "../../../../redux/adminRedux/adminFetch";
 
-import ContextMenuOrders from "../../../../UI/contextMenu/contextMenuOrders";
+import ContextMenuOrders from "./contextMenuOrders";
 import {
     FormControl,
     Table,

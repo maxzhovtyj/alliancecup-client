@@ -5,10 +5,11 @@ import AllianceSnackbar from "../../../../UI/snackbar";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchCategories, fetchFiltrationItems} from "../../../../redux/shopRedux/shopFetch";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
-import ContextMenuCategory from "../../../../UI/contextMenu/contextMenuCategory";
+import ContextMenuCategory from "./contextMenuCategory";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import {NavLink} from "react-router-dom";
 import {AllianceTextField} from "../../../../UI/styles";
+import ContextMenuCharacteristics from "./contextMenuCharacteristics";
 
 function AdminCategoriesComponent() {
     const snackbar = useSnackbar()
@@ -106,9 +107,13 @@ function AdminCategoriesComponent() {
                                             <TableCell align={"center"}>
                                                 <AllianceTextField value={row.imgUrl || "---"}/>
                                             </TableCell>
-                                            <TableCell align={"center"}>{row.imgUUID}</TableCell>
+                                            <TableCell align={"center"}>{row.imgUUID || "---"}</TableCell>
                                             <TableCell align={"center"}>
-                                                <ContextMenuCategory item={row}/>
+                                                <ContextMenuCharacteristics
+                                                    item={row}
+                                                    setMessage={snackbar.setMessage}
+                                                    handleClickSnackBar={snackbar.handleClick}
+                                                />
                                             </TableCell>
                                         </TableRow>
                                     ))

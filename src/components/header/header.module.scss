@@ -40,19 +40,20 @@
   font-size: 1.5rem;
   font-weight: 300;
   color: white;
+
   img {
     width: 36px;
     height: 36px;
     margin-right: 10px;
   }
-  
+
   @media all and (max-width: 768px) {
     font-size: 1rem;
   }
 }
 
 .authMenu {
-  @media all and (max-width: 425px) {
+  @media all and (max-width: 625px) {
     display: none;
   }
 }
@@ -71,7 +72,7 @@
   padding-bottom: 1rem;
   display: flex;
   justify-content: space-between;
-  @media all and (max-width: 425px) {
+  @media all and (max-width: 625px) {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -86,7 +87,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  @media all and (max-width: 425px) {
+  @media all and (max-width: 625px) {
     font-size: 1.2rem;
     grid-area: logo;
   }
@@ -96,7 +97,10 @@
   text-align: center;
   @include toCenter;
   @include light-font;
-  @media all and (max-width: 425px) {
+  @media all and (max-width: 1100px) {
+    font-size: 1rem;
+  }
+  @media all and (max-width: 625px) {
     grid-area: slogan;
   }
 }
@@ -106,6 +110,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   img {
     width: 34px;
     height: 34px;
@@ -164,8 +169,8 @@
   align-items: center;
   justify-content: center;
   line-height: 1.8rem;
-  @media all and (max-width: 425px) {
-    justify-content: space-around;
+  @media all and (max-width: 625px) {
+    gap: 5px;
     grid-area: contactInfo;
   }
 }
@@ -174,6 +179,7 @@
   @include light-font;
   @include header-img;
   @include toCenter;
+
   span {
     margin: auto 0;
     @include toCenter;
@@ -181,14 +187,14 @@
 }
 
 .cart {
-  @media all and (max-width: 425px) {
+  @media all and (max-width: 625px) {
     grid-area: cart;
     align-self: start;
   }
 }
 
 .favourites {
-  @media all and (max-width: 425px) {
+  @media all and (max-width: 625px) {
     grid-area: favourites;
     align-self: end;
   }

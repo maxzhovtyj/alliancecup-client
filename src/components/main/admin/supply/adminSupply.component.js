@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 
 import {fetchMoreSupply, fetchSupply} from "../../../../redux/adminRedux/adminFetch";
 import {NavLink} from "react-router-dom";
-import ContextMenuSupply from "../../../../UI/contextMenu/contextMenuSupply";
+import ContextMenuSupply from "./contextMenuSupply";
 
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";

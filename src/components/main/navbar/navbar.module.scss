@@ -3,7 +3,7 @@
 .navWrapper {
   @include left-right-padding;
   border-bottom: 1px solid $alliance-grey;
-  @media all and (max-width: 425px) {
+  @media all and (max-width: 625px) {
     display: none;
   }
 }

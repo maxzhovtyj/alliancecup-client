@@ -6,7 +6,7 @@ import {
     fetchMoreProducts,
     fetchProducts
 } from "../../../../redux/shopRedux/shopFetch";
-import {Link, useParams} from "react-router-dom";
+import {Link, useParams, useSearchParams} from "react-router-dom";
 
 import classes from './products.module.scss'
 import AllianceSnackbar from "../../../../UI/snackbar";
@@ -15,8 +15,13 @@ import RangeSlider from "../../../../UI/rangeSlider/rangeSlider";
 import ProductsListComponent from "./productsList.component";
 import FiltrationListComponent from "../filtration/filtrationList.component";
 
+const parentCategory = "category_id"
+const parentFiltrationList = "filtration_list_id"
+
 function ProductsComponent() {
     const dispatch = useDispatch()
+
+    const [queryParams, setQueryParams] = useSearchParams()
 
     const categories = useSelector(state => state.shop.categories)
     const products = useSelector(state => state.shop.products)
@@ -25,30 +30,37 @@ function ProductsComponent() {
 
     let {open, setMessage, handleClick, message, handleClose} = useSnackbar()
 
-    let [filtrationParent, setFiltrationParent] = useState({
-        parentName: "category_id",
-        id: useParams().id
-    })
+    const [parentName, setParentName] = useState(
+        queryParams.get("filtrationId") === null
+            ? parentCategory
+            : parentFiltrationList
+    )
+
+    const [filtrationId, setFiltrationId] = useState(
+        queryParams.get("filtrationId") === null
+            ? queryParams.get("categoryId")
+            : queryParams.get("filtrationId")
+    )
 
     const [rangePrice, setRangePrice] = useState([0, 100])
     const [searchParams, setSearchParams] = useState({
-        id: useParams().id,
+        id: queryParams.get("categoryId"),
         price: [0, 100],
         size: "",
-        characteristic: "",
+        characteristic: queryParams.get("filtration") || "",
         createdAt: "",
         search: "",
     })
 
-
     useEffect(() => {
         dispatch(fetchCategories())
-    }, [dispatch])
+    }, [dispatch, queryParams])
 
     useEffect(() => {
+        console.log(parentName, filtrationId)
         dispatch(fetchProducts(searchParams))
-        dispatch(fetchFiltrationList(filtrationParent.parentName, filtrationParent.id))
-    }, [dispatch, filtrationParent.id, filtrationParent.parentName, searchParams])
+        dispatch(fetchFiltrationList(parentName, filtrationId))
+    }, [dispatch, filtrationId, parentName, searchParams])
 
     function loadMore() {
         let lastCreatedAt = products[products.length - 1].createdAt
@@ -61,9 +73,23 @@ function ProductsComponent() {
         setSearchParams({...searchParams, id: useParams().id})
     }
 
+    const pushFiltration = (searchKey, searchCharacteristic) => {
+        const queryFiltration = queryParams.get("filtration")
+        if (!queryFiltration) {
+            return `${searchKey}:${searchCharacteristic}`
+        } else return queryFiltration + `|${searchKey}:${searchCharacteristic}`
+    }
+
     function handleCharacteristic(searchKey, searchCharacteristic, id) {
-        setFiltrationParent({parentName: "filtration_list_id", id: id})
-        setSearchParams({...searchParams, characteristic: searchKey + ":" + searchCharacteristic})
+        const filtration = pushFiltration(searchKey, searchCharacteristic)
+        setQueryParams({
+            categoryId: queryParams.get("categoryId"),
+            filtration: filtration,
+            filtrationId: id,
+        })
+        setParentName(parentFiltrationList)
+        setFiltrationId(id)
+        setSearchParams({...searchParams, characteristic: filtration})
     }
 
     function onRangeCommitted() {
@@ -92,11 +118,9 @@ function ProductsComponent() {
                                 {
                                     categories
                                         .map(item =>
-                                            <Link
-                                                to={`/categories/${item.id}`}
-                                                key={item.id}
-                                                onClick={useSetCategoryId}
-
+                                            <Link to={`/categories/${item.id}`}
+                                                  key={item.id}
+                                                  onClick={useSetCategoryId}
                                             >
                                                 <p className={classes.catalogItem}>{item.categoryTitle}</p>
                                             </Link>

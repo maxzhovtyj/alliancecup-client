@@ -7,7 +7,7 @@ import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {AlliancePaper} from "../../../../UI/AlliancePaper";
 import {UserService} from "../../../../service/UserService";
-import ContextMenuInventory from "../../../../UI/contextMenu/contextMenuInventory";
+import ContextMenuInventory from "../inventory/contextMenuInventory";
 
 function AdminModeratorsComponent() {
     const dispatch = useDispatch()

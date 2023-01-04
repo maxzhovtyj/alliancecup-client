@@ -2,7 +2,7 @@ import {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchInventories, fetchMoreInventories} from "../../../../redux/adminRedux/adminFetch";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import ContextMenuInventory from "../../../../UI/contextMenu/contextMenuInventory";
+import ContextMenuInventory from "./contextMenuInventory";
 
 import classes from './inventory.module.scss'
 import {NavLink} from "react-router-dom";
