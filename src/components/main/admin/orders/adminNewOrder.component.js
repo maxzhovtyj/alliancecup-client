@@ -12,9 +12,14 @@ import {OrderService} from "../../../../service/OrderService";
 import {ShoppingService} from "../../../../service/ShoppingService";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import AllianceSnackbar from "../../../../UI/snackbar";
+import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
+import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
 
 function AdminNewOrderComponent() {
     const snackbar = useSnackbar()
+
+    const [showDialog, setShowDialog] = useState(false)
+    const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
 
     const [disabled, setDisabled] = useState(false)
     const [productsOptions, setProductsOptions] = useState([])
@@ -37,7 +42,19 @@ function AdminNewOrderComponent() {
         }
     ])
 
-    const [deliveryTypes, paymentTypes, handleOrderInfo, handleCities, handleSetCityValue, handleSetDepartmentValue, orderInfo, isNovaPoshta, isInTown, cities, city, departments, department] = useOrder()
+    const [deliveryTypes,
+        paymentTypes,
+        handleOrderInfo,
+        handleCities,
+        handleSetCityValue,
+        handleSetDepartmentValue,
+        orderInfo,
+        isNovaPoshta,
+        isInTown,
+        cities,
+        city,
+        departments,
+        department] = useOrder(setShowDialog)
 
     const [address, setAddress] = useState(null)
 
@@ -70,6 +87,7 @@ function AdminNewOrderComponent() {
             setProducts(values)
         }
         setProductsOptions([])
+        setShowDialog(true)
     }
 
     const handleProductsOptions = (event) => {
@@ -78,6 +96,7 @@ function AdminNewOrderComponent() {
                 setProductsOptions(res.data)
             }
         })
+        setShowDialog(true)
     }
 
     const handleProduct = (event, index) => {
@@ -86,6 +105,7 @@ function AdminNewOrderComponent() {
         values[index][event.target.name] = quantity
         values[index]["priceForQuantity"] = quantity * values[index]["price"]
         setProducts(values)
+        setShowDialog(true)
     }
 
     const handleRemoveProduct = (index) => {
@@ -96,6 +116,7 @@ function AdminNewOrderComponent() {
         const valuesErr = [...productsErr]
         valuesErr.splice(index, 1)
         setProductsErr(valuesErr)
+        setShowDialog(true)
     }
 
     const handleAddProduct = () => {
@@ -114,6 +135,7 @@ function AdminNewOrderComponent() {
             price: false,
             priceForQuantity: false,
         }])
+        setShowDialog(true)
     }
 
     const validateProducts = () => {
@@ -205,6 +227,11 @@ function AdminNewOrderComponent() {
     // noinspection JSValidateTypes
     return (
         <div>
+            <RouterDialog
+                showDialog={showPrompt}
+                confirmNavigation={confirmNavigation}
+                cancelNavigation={cancelNavigation}
+            />
             <p className={classes.pageTitle}>Нове замовлення</p>
             <div className={classes.newOrderInfoWrapper}>
                 <OrderInfo

@@ -57,7 +57,6 @@ function ProductsComponent() {
     }, [dispatch, queryParams])
 
     useEffect(() => {
-        console.log(parentName, filtrationId)
         dispatch(fetchProducts(searchParams))
         dispatch(fetchFiltrationList(parentName, filtrationId))
     }, [dispatch, filtrationId, parentName, searchParams])
@@ -118,7 +117,7 @@ function ProductsComponent() {
                                 {
                                     categories
                                         .map(item =>
-                                            <Link to={`/categories/${item.id}`}
+                                            <Link to={`/products?categoryId=${item.id}`}
                                                   key={item.id}
                                                   onClick={useSetCategoryId}
                                             >

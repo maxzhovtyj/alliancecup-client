@@ -1,17 +1,12 @@
 import $api from "../http/http";
-import noopImg from "../assets/noopProduct.svg";
 
 export class ShoppingService {
     static getImage(item) {
-        if (!item?.imgUrl) {
-            item.imgUrl = "https://www.fil.ion.ucl.ac.uk/wp-content/uploads/2019/05/grey-background-750x500.jpg"
-        }
-
         if (item?.imgUUID) {
             return `http://localhost:9000/images/${item?.imgUUID}`
         } else if (item?.imgUrl) {
             return item.imgUrl
-        } else return noopImg
+        } else return "https://www.fil.ion.ucl.ac.uk/wp-content/uploads/2019/05/grey-background-750x500.jpg"
     }
 
     static async newOrder(makeOrderForm, admin = false) {

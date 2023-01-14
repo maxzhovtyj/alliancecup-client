@@ -8,9 +8,13 @@ import {AdminService} from "../../../../service/AdminService";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import {AllianceTextField} from "../../../../UI/styles";
 import AllianceSnackbar from "../../../../UI/snackbar";
+import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
+import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
 
 function AdminNewCategory() {
     const snackbar = useSnackbar()
+    const [showDialog, setShowDialog] = useState(false)
+    const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
 
     const dispatch = useDispatch()
 
@@ -28,10 +32,12 @@ function AdminNewCategory() {
 
     const handleCategoryForm = (event) => {
         setCategoryForm({...categoryForm, [event.target.name]: event.target.value})
+        setShowDialog(true)
     }
 
     const handleSetCategoryImg = (event) => {
         setCategoryImg(event.target.files[0])
+        setShowDialog(true)
     }
 
     const newCategory = () => {
@@ -45,10 +51,21 @@ function AdminNewCategory() {
         AdminService.addCategory(form).then(res => {
             snackbar.setMessage(res?.message)
             snackbar.handleClick()
+            console.log(res)
+            if (res?.status === 200 || res?.status === 201) {
+                setShowDialog(false)
+            }
         })
+
+
     }
     return (
         <div>
+            <RouterDialog
+                showDialog={showPrompt}
+                confirmNavigation={confirmNavigation}
+                cancelNavigation={cancelNavigation}
+            />
             <p className={classes.newProductTitle}>Нова категорія</p>
             <FormControl className={classes.newProductInfo}>
                 <input type={"file"} onChange={handleSetCategoryImg}/>

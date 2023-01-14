@@ -1,25 +1,19 @@
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import {useSnackbar} from "../../../../hooks/useSnackbar";
 import {NavLink} from "react-router-dom";
 import {fetchCategories, fetchMoreProducts, fetchProducts} from "../../../../redux/shopRedux/shopFetch";
+import AdminProductsTableComponent from "./adminProductsTable.component";
 
 import {
     FormControl,
     MenuItem,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow
 } from "@mui/material";
-import {useSnackbar} from "../../../../hooks/useSnackbar";
-import {AllianceInputLabel, AllianceSelect, AllianceTextField} from "../../../../UI/styles";
+import {AllianceInputLabel, AllianceSelect} from "../../../../UI/styles";
 import SearchBar from "../../../../UI/searchBar/searchBar";
 import AllianceSnackbar from "../../../../UI/snackbar";
-import ContextMenuProduct from "./contextMenuProduct";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
-import {AlliancePaper} from "../../../../UI/AlliancePaper";
+
 import classes from "./adminProduct.module.scss";
 
 function AdminProductsComponent() {
@@ -28,7 +22,7 @@ function AdminProductsComponent() {
     const categories = useSelector(state => state.shop.categories)
     const cannotLoadMore = useSelector(state => state.shop.statusNoMoreProducts)
 
-    const {open, setMessage, message, handleClick, handleClose} = useSnackbar()
+    const snackbar = useSnackbar()
 
     const [searchBar, setSearchBar] = useState("")
     const [searchParams, setSearchParams] = useState({
@@ -91,64 +85,8 @@ function AdminProductsComponent() {
                 <AllianceButton mt={"1rem"} mb={"1rem"}>Додати товар</AllianceButton>
             </NavLink>
 
-            <TableContainer component={AlliancePaper} className={classes.productsTable}>
-                <Table sx={{minWidth: 200}}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align={"center"}>Id</TableCell>
-                            <TableCell align={"center"}>Категорія</TableCell>
-                            <TableCell align="left">Назва</TableCell>
-                            <TableCell align="center">Ціна</TableCell>
-                            <TableCell align="center">Пакування</TableCell>
-                            <TableCell align="center">Кількість</TableCell>
-                            <TableCell align="center">Посилання на фотографію</TableCell>
-                            <TableCell align="center">Номер у сховищі</TableCell>
-                            <TableCell align="center">Управління</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <>
-                            {
-                                (products)
-                                    ?
-                                    products.map((row) => (
-                                        <TableRow
-                                            key={row.id}
-                                            sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                                        >
-                                            <TableCell align={"center"}>{row.id}</TableCell>
-                                            <TableCell align={"center"}>{row.categoryTitle}</TableCell>
-                                            <TableCell component="th" scope="row">{row.productTitle}</TableCell>
-                                            <TableCell align="center">{row.price}</TableCell>
-                                            <TableCell align="center">
-                                                <>
-                                                    {
-                                                        Object.entries(row.packaging).map(([key, value]) => {
-                                                            return <span key={key}>{value} {key} </span>;
-                                                        })
-                                                    }
-                                                </>
-                                            </TableCell>
-                                            <TableCell align="center">{row.amountInStock}</TableCell>
-                                            <TableCell align="center">
-                                                <AllianceTextField value={row.imgUrl || "---"}/>
-                                            </TableCell>
-                                            <TableCell align="center">{row.imgUUID || "---"}</TableCell>
-                                            <TableCell align="center">
-                                                <ContextMenuProduct
-                                                    item={row}
-                                                    setSnackbarMessage={setMessage}
-                                                    clickSnackbar={handleClick}
-                                                />
-                                            </TableCell>
-                                        </TableRow>
-                                    ))
-                                    : <TableRow><TableCell align="left">Немає товарів</TableCell></TableRow>
-                            }
-                        </>
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <AdminProductsTableComponent products={products} snackbar={snackbar}/>
+
             {
                 cannotLoadMore ? "" :
                     <AllianceButton
@@ -161,7 +99,8 @@ function AdminProductsComponent() {
                         Завантажити ще
                     </AllianceButton>
             }
-            <AllianceSnackbar open={open} message={message} handleClose={handleClose}/>
+
+            <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
         </div>
     )
         ;

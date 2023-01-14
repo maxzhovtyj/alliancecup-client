@@ -6,9 +6,11 @@ import {MoreVertRounded} from "@mui/icons-material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {AdminService} from "../../../../service/AdminService";
+import {useNavigate} from "react-router-dom";
 
 export default function ContextMenuProduct({item, setSnackbarMessage, clickSnackbar}) {
     const [anchorEl, setAnchorEl] = useState(null);
+    const navigate = useNavigate()
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -16,6 +18,11 @@ export default function ContextMenuProduct({item, setSnackbarMessage, clickSnack
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleSetToUpdate = () => {
+        setAnchorEl(null);
+        navigate(`/user/admin/update-product/${item.id}`)
+    }
 
     const handleDelete = () => {
         AdminService.deleteProduct(item.id).then(res => {
@@ -44,7 +51,7 @@ export default function ContextMenuProduct({item, setSnackbarMessage, clickSnack
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleSetToUpdate}>
                     <ListItemIcon>
                         <EditIcon fontSize="small" />
                     </ListItemIcon>

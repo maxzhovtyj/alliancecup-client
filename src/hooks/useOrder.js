@@ -5,7 +5,7 @@ import {NovaPoshtaService} from "../service/NovaPoshtaService";
 export const NovaOption = "Нова Пошта"
 export const inTownOption = "Доставка AllianceCup по м. Рівне"
 
-const useOrder = () => {
+const useOrder = (setShowDialog) => {
     const [deliveryTypes, setDeliveryTypes] = useState([])
     const [paymentTypes, setPaymentTypes] = useState([])
 
@@ -49,14 +49,23 @@ const useOrder = () => {
         }
 
         setOrderInfo({...orderInfo, [e.target.name]: e.target.value})
+        if (setShowDialog) {
+            setShowDialog(true)
+        }
     }
 
     const handleCities = (event) => {
         NovaPoshtaService.getCities(event.target.value).then(res => setCities(res))
+        if (setShowDialog) {
+            setShowDialog(true)
+        }
     }
 
     const handleDepartments = (cityValueRef) => {
         NovaPoshtaService.getDepartments(cityValueRef).then(res => setDepartments(res))
+        if (setShowDialog) {
+            setShowDialog(true)
+        }
     }
 
     const handleSetCityValue = (event, newValue) => {
@@ -65,10 +74,16 @@ const useOrder = () => {
         setCity(newValue)
 
         handleDepartments(newValue?.Ref)
+        if (setShowDialog) {
+            setShowDialog(true)
+        }
     }
 
     const handleSetDepartmentValue = (event, newValue) => {
         setDepartment(newValue)
+        if (setShowDialog) {
+            setShowDialog(true)
+        }
     }
 
     return [deliveryTypes, paymentTypes, handleOrderInfo, handleCities, handleSetCityValue, handleSetDepartmentValue, orderInfo, isNovaPoshta, isInTown, cities, city, departments, department]

@@ -8,9 +8,14 @@ import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import AllianceSnackbar from "../../../../UI/snackbar";
 import {useEffect, useState} from "react";
 import {AdminService} from "../../../../service/AdminService";
+import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
+import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
 
 function AdminNewCharacteristicComponent() {
     const snackbar = useSnackbar()
+
+    const [showDialog, setShowDialog] = useState(false)
+    const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
 
     const dispatch = useDispatch()
     const categories = useSelector(state => state.shop.categories)
@@ -37,14 +42,17 @@ function AdminNewCharacteristicComponent() {
 
     const handleFiltrationForm = (event) => {
         setFiltrationForm({...filtrationForm, [event.target.name]: event.target.value})
+        setShowDialog(true)
     }
 
     const handleSetFiltrationItemImg = (event) => {
         setItemImg(event.target.files[0])
+        setShowDialog(true)
     }
 
     const handleRadioChange = (event) => {
         setValue(event.target.value);
+        setShowDialog(true)
     };
 
     const newFiltrationItem = () => {
@@ -63,6 +71,9 @@ function AdminNewCharacteristicComponent() {
         AdminService.addFiltrationItem(form).then(res => {
             snackbar.setMessage(res?.message)
             snackbar.handleClick()
+            if (res?.status === 201 || res?.status === 200) {
+                setShowDialog(false)
+            }
         })
     }
 
@@ -114,6 +125,12 @@ function AdminNewCharacteristicComponent() {
 
     return (
         <div>
+            <RouterDialog
+                showDialog={showPrompt}
+                confirmNavigation={confirmNavigation}
+                cancelNavigation={cancelNavigation}
+            />
+
             <p className={classes.newProductTitle}>Нова пошукова характеристика</p>
 
             <FormControl className={classes.newProductInfo}>

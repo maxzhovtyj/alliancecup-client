@@ -11,9 +11,11 @@ import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import AllianceSnackbar from "../../../../UI/snackbar";
 import {AllianceInputLabel, AllianceSelect, AllianceTextField} from "../../../../UI/styles";
-import AddIcon from "@mui/icons-material/Add";
-import {FormControl, IconButton, MenuItem} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+import {FormControl, MenuItem} from "@mui/material";
+import usePackaging from "../../../../hooks/usePackaging";
+import useCharacteristics from "../../../../hooks/useCharacteristics";
+import AdminProductCharacteristicsForm from "./adminProductCharacteristicsForm";
+import AdminProductPackagingForm from "./adminProductPackagingForm";
 
 function AdminNewProductComponent() {
     const snackbar = useSnackbar()
@@ -40,19 +42,23 @@ function AdminNewProductComponent() {
         price: false,
     })
 
-    const [characteristics, setCharacteristics] = useState([{
-        name: "", description: ""
-    }])
-    const [characteristicsErr, setCharacteristicsErr] = useState([{
-        name: false, description: false
-    }])
+    const {
+        characteristics,
+        characteristicsErr,
+        setCharacteristicsErr,
+        handleAddCharacteristic,
+        handleRemoveCharacteristics,
+        handleCharacteristics
+    } = useCharacteristics(setShowDialog)
 
-    const [packaging, setPackaging] = useState([{
-        type: "", amount: 0,
-    }])
-    const [packagingErr, setPackagingErr] = useState([{
-        type: false, amount: false,
-    }])
+    const {
+        packaging,
+        packagingErr,
+        setPackagingErr,
+        handlePackaging,
+        handleAddPackaging,
+        handleRemovePackaging,
+    } = usePackaging(setShowDialog)
 
     const [productImg, setProductImg] = useState({})
 
@@ -84,62 +90,8 @@ function AdminNewProductComponent() {
         setShowDialog(true)
     }
 
-    const handleCharacteristics = (event, index) => {
-        const values = [...characteristics]
-        values[index][event.target.name] = event.target.value
-        setCharacteristics(values)
-        setShowDialog(true)
-    }
-
-    const handleAddCharacteristic = () => {
-        setCharacteristics([...characteristics, {name: "", description: ""}])
-        setCharacteristicsErr([...characteristicsErr, {name: false, description: false}])
-        setShowDialog(true)
-    }
-
-    const handleRemoveCharacteristics = (index) => {
-        const values = [...characteristics]
-        values.splice(index, 1)
-        setCharacteristics(values)
-
-        const valuesErr = [...characteristicsErr]
-        valuesErr.splice(index, 1)
-        setCharacteristicsErr(valuesErr)
-
-        setShowDialog(true)
-    }
-
-    const handlePackaging = (event, index) => {
-        const values = [...packaging]
-        values[index][event.target.name] = event.target.value
-        setPackaging(values)
-
-        setShowDialog(true)
-    }
-
-    const handleAddPackaging = () => {
-        setPackaging([...packaging, {type: "", amount: 0}])
-        setPackagingErr([...packagingErr, {type: false, amount: false}])
-
-        setShowDialog(true)
-    }
-
-    const handleRemovePackaging = (index) => {
-        const values = [...packaging]
-        values.splice(index, 1)
-        setPackaging(values)
-
-        const valuesErr = [...packagingErr]
-        valuesErr.splice(index, 1)
-        setPackagingErr(valuesErr)
-
-        setShowDialog(true)
-    }
-
     const validate = () => {
-        let tmp = {}
-
-        tmp.info = {
+        let tmp = {
             article: !productForm.article,
             categoryTitle: !productForm.categoryTitle,
             productTitle: !productForm.productTitle,
@@ -147,43 +99,11 @@ function AdminNewProductComponent() {
             price: !parseFloat(productForm.price),
         }
 
-        setProductFormErr({...tmp.info})
+        setProductFormErr(tmp)
 
-        const resProductChar = []
-        const productCharacteristics = {}
-        characteristics.forEach(item => {
-            resProductChar.push({
-                name: !(item.name && !(item.name in productCharacteristics)),
-                description: !item.description,
-            })
-            productCharacteristics[`${item.name}`] = item.description
-        })
-
-        setCharacteristicsErr([...resProductChar])
-
-        const resProductPackaging = []
-        const productPackaging = {}
-        packaging.forEach(item => {
-            resProductPackaging.push({
-                type: !(item.type && !(item.type in productPackaging)),
-                amount: !item.amount,
-            })
-            productPackaging[`${item.type}`] = item.amount
-        })
-
-        setPackagingErr([...resProductPackaging])
-
-        const validateProductInfo = Object.values(tmp.info).every(item => item === false)
-
-        const validateCharacteristics = resProductChar
-            .map(value => Object.values(value).every(el => el === false))
-            .every(item => item === true)
-
-        const validatePackaging = resProductPackaging
-            .map(value => Object.values(value).every(el => el === false))
-            .every(item => item === true)
-
-        return validateProductInfo && validateCharacteristics && validatePackaging
+        return Object.values(tmp.info).every(item => item === false) &&
+            AdminService.validateCharacteristics(characteristics, setCharacteristicsErr) &&
+            AdminService.validatePackaging(packaging, setPackagingErr)
     }
 
     const newProduct = () => {
@@ -216,10 +136,10 @@ function AdminNewProductComponent() {
         form.append("price", productForm.price)
 
         AdminService.addProduct(form).then(res => {
-            if (res?.status === 200 || res?.status === 201 ) {
-                setShowDialog(false)
+            if (res?.status === 200 || res?.status === 201) {
                 snackbar.setMessage("Товар успішно додано")
                 snackbar.handleClick()
+                setShowDialog(false)
             } else {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
@@ -244,7 +164,6 @@ function AdminNewProductComponent() {
                     <AllianceSelect
                         defaultValue={""}
                         name="categoryTitle"
-                        label="Категорія"
                         value={productForm.categoryTitle}
                         onChange={handleProductForm}
                         error={productFormErr.categoryTitle}
@@ -283,77 +202,22 @@ function AdminNewProductComponent() {
                                    onChange={handleProductPrice}
                                    error={productFormErr.price}
                 />
-                <div className={classes.specifications}>
-                    <div className={classes.specificationsTitle}>
-                        <p>Характеристики</p>
-                        <IconButton onClick={handleAddCharacteristic}>
-                            <AddIcon/>
-                        </IconButton>
-                    </div>
-                    <div className={classes.specificationsList}>
-                        {characteristics.map((item, index) => {
-                            return (
-                                <div className={classes.specificationsItem} key={index}>
-                                    <AllianceTextField
-                                        label={"Назва"}
-                                        name={"name"}
-                                        value={item.name}
-                                        onChange={(event) => handleCharacteristics(event, index)}
-                                        error={characteristicsErr[index]["name"]}
-                                    />
-                                    <AllianceTextField
-                                        label={"Опис"}
-                                        name={"description"}
-                                        value={item.description}
-                                        onChange={(event) => handleCharacteristics(event, index)}
-                                        error={characteristicsErr[index]["description"]}
-                                    />
-                                    <IconButton
-                                        onClick={() => handleRemoveCharacteristics(index)}
-                                    >
-                                        <DeleteIcon/>
-                                    </IconButton>
-                                </div>
-                            )
-                        })}
-                    </div>
-                </div>
 
-                <div className={classes.specifications}>
-                    <div className={classes.specificationsTitle}>
-                        <p>Пакування</p>
-                        <IconButton onClick={handleAddPackaging}>
-                            <AddIcon/>
-                        </IconButton>
-                    </div>
-                    <div className={classes.specificationsList}>
-                        {packaging.map((item, index) => {
-                            return (
-                                <div className={classes.specificationsItem} key={index}>
-                                    <AllianceTextField
-                                        label={"Тип"}
-                                        name={"type"}
-                                        value={item.type}
-                                        onChange={(event) => handlePackaging(event, index)}
-                                        error={packagingErr[index]["type"]}
-                                    />
-                                    <AllianceTextField
-                                        label={"Кількість"}
-                                        name={"amount"}
-                                        value={item.amount}
-                                        onChange={(event) => handlePackaging(event, index)}
-                                        error={packagingErr[index]["amount"]}
-                                    />
-                                    <IconButton
-                                        onClick={() => handleRemovePackaging(index)}
-                                    >
-                                        <DeleteIcon/>
-                                    </IconButton>
-                                </div>
-                            )
-                        })}
-                    </div>
-                </div>
+                <AdminProductCharacteristicsForm
+                    characteristics={characteristics}
+                    characteristicsErr={characteristicsErr}
+                    handleCharacteristics={handleCharacteristics}
+                    handleRemoveCharacteristics={handleRemoveCharacteristics}
+                    handleAddCharacteristic={handleAddCharacteristic}
+                />
+
+                <AdminProductPackagingForm
+                    packaging={packaging}
+                    handlePackaging={handlePackaging}
+                    handleAddPackaging={handleAddPackaging}
+                    handleRemovePackaging={handleRemovePackaging}
+                    packagingErr={packagingErr}
+                />
 
             </FormControl>
 

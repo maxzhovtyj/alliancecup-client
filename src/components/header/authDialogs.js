@@ -32,6 +32,9 @@ export default function AuthDialogs() {
         email: false,
         password: false
     })
+    const [forgotPasswordErrors, setForgotPasswordErrors] = useState({
+        email: false,
+    })
     const [signUpErrors, setSignUpErrors] = useState({
         email: false,
         lastname: false,
@@ -95,7 +98,7 @@ export default function AuthDialogs() {
         UserService.signIn(signInForm).then(res => {
             if (res.status === 200) {
                 localStorage.clear()
-                login(res.data.accessToken, res.data.userId, res.data.userRoleCode)
+                login(res.data?.accessToken, res.data.userId, res.data.userRoleCode)
                 handleSignUpClose()
             } else {
                 setMessage(res?.message)
@@ -105,7 +108,16 @@ export default function AuthDialogs() {
     }
 
     function forgotPassword() {
+        if (!UserService.validateForgotPassword(forgotPasswordForm, setForgotPasswordErrors)) {
+            setMessage("Поля не пройшли ваділацію")
+            handleClick()
+            return
+        }
 
+        UserService.forgotPassword(forgotPasswordForm).then(res => {
+            setMessage(res.message)
+            handleClick()
+        })
     }
 
     function signUp() {
@@ -114,6 +126,7 @@ export default function AuthDialogs() {
             handleClick()
             return
         }
+
 
         const reqForm = {
             email: signUpForm.email,
@@ -166,8 +179,8 @@ export default function AuthDialogs() {
                 open={forgotPasswordOpen}
                 handleOpen={handleForgotPasswordOpen}
                 handleClose={handleForgotPasswordClose}
+                errors={forgotPasswordErrors}
             />
-
 
             <SignUpDialog
                 signUpOpen={signUpOpen}

@@ -49,6 +49,55 @@ export class UserService {
         }
     }
 
+    static async forgotPassword(form) {
+
+        try {
+            const response = await $api.post('/api/forgot-password', form).catch(function (error) {
+                if (error.response.status === 400) {
+                    throw new Error("Помилка: Хибні дані")
+                }
+                if (error.response.status === 500) {
+                    throw new Error("Помилка: щось пішло не так")
+                }
+            })
+
+            if (response.status === 200) {
+                return {
+                    message: "Інструкції по відновленню були надіслані вам на пошту",
+                    status: 200
+                }
+            }
+        } catch (e) {
+            return e
+        }
+    }
+
+    static async restorePassword(form) {
+        const newPasswordForm = {
+            password: form.password
+        }
+
+        try {
+            const response = await $api.put('/api/restore-password', newPasswordForm).catch(function (error) {
+                if (error.response.status === 400) {
+                    throw new Error("Помилка: Хибні дані")
+                }
+                if (error.response.status === 500) {
+                    throw new Error("Помилка: щось пішло не так")
+                }
+            })
+
+            if (response.status === 200) {
+                return {
+                    message: "Пароль успішно змінено",
+                    status: 200
+                }
+            }
+        } catch (e) {
+            return e
+        }
+    }
+
     static async updateUserInfo(changeInfo) {
         try {
             return await $api.put("/api/client/personal-info", changeInfo).catch(function (err) {
@@ -126,6 +175,18 @@ export class UserService {
         tmp.password = !signInForm.password
 
         setSignInErrors({
+            ...tmp
+        })
+
+        return Object.values(tmp).every(value => value === false)
+    }
+
+    static validateForgotPassword(forgotPasswordForm, setForgotPasswordErrors) {
+        let tmp = {}
+
+        tmp.email = !(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(forgotPasswordForm.email)
+
+        setForgotPasswordErrors({
             ...tmp
         })
 

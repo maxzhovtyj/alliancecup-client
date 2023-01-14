@@ -40,6 +40,8 @@ import PermissionForbidden from "../errorPages/permissionForbidden";
 import AdminModeratorsComponent from "./admin/moderators/adminModerators.component";
 import AdminNewModeratorComponent from "./admin/moderators/adminNewModerator.component";
 import AdminNewCharacteristicComponent from "./admin/categories/adminNewCharacteristic.component";
+import RestorePasswordComponent from "./restorePassword/restorePassword.component";
+import AdminUpdateProductComponent from "./admin/products/adminUpdateProduct.component";
 
 function MainComponent() {
     return (
@@ -57,6 +59,7 @@ function MainComponent() {
                     <Route path={"/contacts"} element={<ContactsComponent/>}/>
                     <Route path={"/for-wholesalers"} element={<ForWholesalersComponent/>}/>
                     <Route path={"/favourites"} element={<FavouritesComponent/>}/>
+                    <Route path={"/restore-password"} element={<RestorePasswordComponent/>}/>
                     <Route element={<PrivateRoute/>}>
                         <Route path={"/user"} element={<UserCabinetComponent/>}>
                             <Route index element={<Navigate to="personal-info" replace/>}/>
@@ -68,6 +71,7 @@ function MainComponent() {
                             <Route path={"/user/admin"} element={<AdminComponent/>}>
                                 <Route index element={<Navigate to="products" replace/>}/>
                                 <Route path={"products"} element={<AdminProductsComponent/>}/>
+                                <Route path={"update-product/:id"} element={<AdminUpdateProductComponent/>}/>
                                 <Route path={"new-product"} element={<AdminNewProductComponent/>}/>
 
                                 <Route path={"categories"} element={<AdminCategoriesComponent/>}/>

@@ -10,8 +10,7 @@ import {
     TableCell,
     TableContainer,
     TableHead,
-    TableRow,
-    TextField
+    TableRow
 } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -298,7 +297,7 @@ function AdminNewSupplyComponent() {
                         <div className={classes.supplyInfoTitle}>
                             <p>Час постачання</p>
                         </div>
-                        <TextField
+                        <AllianceTextField
                             type="datetime-local"
                             name={"supplyTime"}
                             value={supplyInfo.supplyTime}
@@ -407,7 +406,7 @@ function AdminNewSupplyComponent() {
                                             />
                                         </TableCell>
                                         <TableCell align="center">
-                                            <TextField
+                                            <AllianceTextField
                                                 name={"packaging"}
                                                 value={item.packaging}
                                                 onChange={event => handleProduct(index, event)}
@@ -415,7 +414,7 @@ function AdminNewSupplyComponent() {
                                             />
                                         </TableCell>
                                         <TableCell align="center">
-                                            <TextField
+                                            <AllianceTextField
                                                 name={"amount"}
                                                 value={item.amount}
                                                 onChange={event => handleProduct(index, event)}
@@ -423,7 +422,7 @@ function AdminNewSupplyComponent() {
                                             />
                                         </TableCell>
                                         <TableCell align="center">
-                                            <TextField
+                                            <AllianceTextField
                                                 name={"priceForUnit"}
                                                 value={item.priceForUnit}
                                                 onChange={event => handleProduct(index, event)}
@@ -431,13 +430,13 @@ function AdminNewSupplyComponent() {
                                             />
                                         </TableCell>
                                         <TableCell align="center">
-                                            <TextField
+                                            <AllianceTextField
                                                 name={"sumWithoutTax"}
                                                 value={handlePriceWithoutTax(item.amount * item.priceForUnit, index)}
                                             />
                                         </TableCell>
                                         <TableCell align="center">
-                                            <TextField
+                                            <AllianceTextField
                                                 name={"tax"}
                                                 value={item.tax}
                                                 onChange={event => handleProduct(index, event)}
@@ -445,7 +444,7 @@ function AdminNewSupplyComponent() {
                                             />
                                         </TableCell>
                                         <TableCell align="center">
-                                            <TextField
+                                            <AllianceTextField
                                                 name={"totalSum"}
                                                 value={handleTotalSum(item.sumWithoutTax, item.tax, index)}
                                             />

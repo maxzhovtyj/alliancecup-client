@@ -6,6 +6,7 @@ import {Divider, IconButton, ListItemIcon, ListItemText, Menu} from "@mui/materi
 import {MoreVertRounded} from "@mui/icons-material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import {AdminService} from "../../../../service/AdminService";
 
 
 export default function ContextMenuCategory({item}) {
@@ -21,6 +22,7 @@ export default function ContextMenuCategory({item}) {
     };
 
     const handleDelete = () => {
+        AdminService.deleteCategory(item.id).then()
         setAnchorEl(null);
     }
     return (

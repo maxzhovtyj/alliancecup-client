@@ -35,6 +35,7 @@ export class AdminService {
 
             if (res?.status === 200 || res?.status === 201) {
                 return {
+                    status: res?.status,
                     message: "Категорію успішно додано"
                 }
             } else {
@@ -63,11 +64,8 @@ export class AdminService {
 
             if (res?.status === 200 || res?.status === 201) {
                 return {
+                    status: res?.status,
                     message: "Фільтрацію успішно додано"
-                }
-            } else {
-                return {
-                    message: "Щось пішло не так"
                 }
             }
         } catch (e) {
@@ -101,6 +99,77 @@ export class AdminService {
         }
     }
 
+    static validateCharacteristics(characteristics, setCharacteristicsErr) {
+        const resProductChar = []
+        const productCharacteristics = {}
+        characteristics.forEach(item => {
+            resProductChar.push({
+                name: !(item.name && !(item.name in productCharacteristics)),
+                description: !item.description,
+            })
+            productCharacteristics[`${item.name}`] = item.description
+        })
+
+        setCharacteristicsErr([...resProductChar])
+
+        return resProductChar
+            .map(value => Object.values(value).every(el => el === false))
+            .every(item => item === true)
+    }
+
+    static validatePackaging(packaging, setPackagingErr) {
+        const resProductPackaging = []
+        const productPackaging = {}
+        packaging.forEach(item => {
+            resProductPackaging.push({
+                type: !(item.type && !(item.type in productPackaging)),
+                amount: !item.amount,
+            })
+            productPackaging[`${item.type}`] = item.amount
+        })
+
+        setPackagingErr([...resProductPackaging])
+
+        return resProductPackaging
+            .map(value => Object.values(value).every(el => el === false))
+            .every(item => item === true)
+    }
+
+    static async updateProduct(product) {
+        try {
+            return await $api.put("api/admin/product", product).catch(function (error) {
+                if (error.response.status === 403) {
+                    throw new Error("Доступ заборонено")
+                }
+                if (error.response.status === 400) {
+                    throw new Error("Ви надали хибні дані")
+                }
+                if (error.response.status === 500) {
+                    throw new Error("Щось пішло не так")
+                }
+            })
+        } catch (e) {
+            return e
+        }
+    }
+
+    static async updateProductImage(form) {
+        try {
+            return await $api.put("api/admin/product-image", form).catch(function (error) {
+                if (error.response.status === 403) {
+                    throw new Error("Доступ заборонено")
+                }
+                if (error.response.status === 400) {
+                    throw new Error("Ви надали хибні дані")
+                }
+                if (error.response.status === 500) {
+                    throw new Error("Щось пішло не так")
+                }
+            })
+        } catch (e) {
+            return e
+        }
+    }
 
     static async deleteProduct(productId) {
         try {

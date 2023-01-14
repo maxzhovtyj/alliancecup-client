@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
-import $api from "../../../http/http";
 import {useParams} from "react-router-dom";
+import {useSnackbar} from "../../../hooks/useSnackbar";
+import {ProductService} from "../../../service/ProductService";
 
 import classes from './product.module.scss'
 
@@ -11,7 +12,6 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import {ShoppingService} from "../../../service/ShoppingService";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import {IconButton} from "@mui/material";
-import {useSnackbar} from "../../../hooks/useSnackbar";
 import AllianceSnackbar from "../../../UI/snackbar";
 import AllianceButton from "../../../UI/allianceCupButton/allianceButton";
 
@@ -65,17 +65,9 @@ function ProductComponent() {
     let [priceAmount, setPriceAmount] = useState(Number(product.price))
 
     useEffect(() => {
-        async function fetchProduct() {
-            try {
-                await $api.get(`api/product?id=${id}`).then(res => {
-                    setProduct(res.data)
-                })
-            } catch (e) {
-                console.log(e)
-            }
-        }
-
-        fetchProduct().then()
+        ProductService.getProduct(id).then(res => {
+            setProduct(res?.data)
+        })
     }, [id])
 
     function setProductAmount(e) {

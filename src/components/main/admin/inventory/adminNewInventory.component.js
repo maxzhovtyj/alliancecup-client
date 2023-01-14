@@ -64,7 +64,6 @@ function AdminNewInventoryComponent() {
         })))
     }, [products])
 
-    // TODO inventory
     const doInventory = () => {
         AdminService.doInventory(inventory).then(res => {
             if (res?.status === 201 || res?.status === 200) {
@@ -77,19 +76,19 @@ function AdminNewInventoryComponent() {
         })
     }
 
+    // TODO
     const saveInventory = () => {
-        AdminService.saveInventoryProducts(inventory).then(res => {
-            if (res?.status === 200) {
-                snackbar.setMessage("Інвентаризацію збережено")
-                snackbar.handleClick()
-            } else {
-                snackbar.setMessage(res?.message)
-                snackbar.handleClick()
-            }
-        })
+        // AdminService.saveInventoryProducts(inventory).then(res => {
+        //     if (res?.status === 200) {
+        //         snackbar.setMessage("Інвентаризацію збережено")
+        //         snackbar.handleClick()
+        //     } else {
+        //         snackbar.setMessage(res?.message)
+        //         snackbar.handleClick()
+        //     }
+        // })
     }
 
-    // TODO sum counting
     const countInventorySum = (values) => {
         let sum = 0
         for (let i = 0; i < values.length; i++) {
@@ -101,7 +100,6 @@ function AdminNewInventoryComponent() {
         return sum
     }
 
-    // TODO save form data on submit
     return (
         <div>
             <p>Нова інвентаризація</p>
@@ -128,7 +126,7 @@ function AdminNewInventoryComponent() {
                     <TableBody>
                         <>
                             {
-                                (inventory)
+                                (inventory && inventory.length !== 0)
                                     ?
                                     inventory.map((row, index) => (
                                         <TableRow

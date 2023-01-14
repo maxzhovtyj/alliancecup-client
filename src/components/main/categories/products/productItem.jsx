@@ -2,12 +2,13 @@ import {useState} from 'react';
 import {Link} from 'react-router-dom'
 import classes from './products.module.scss'
 
+import CloseIcon from "@mui/icons-material/Close";
 import {IconButton} from "@mui/material";
 import {ShoppingService} from "../../../../service/ShoppingService";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 
-function ProductItem({product, setMessage, handleClick}) {
+function ProductItem({product, setMessage, handleClick, deleteFavourite}) {
     let [amount, setAmount] = useState(1)
     let [priceAmount, setPriceAmount] = useState(Number(product.price))
 
@@ -45,6 +46,12 @@ function ProductItem({product, setMessage, handleClick}) {
         })
     }
 
+    function deleteFromFavourites() {
+        ShoppingService.deleteFromFavourites(product.id).then(() => {
+            window.location.reload()
+        })
+    }
+
     return (
         <div className={classes.productItem}>
             <Link to={`/product/${product.id}`}>
@@ -67,10 +74,12 @@ function ProductItem({product, setMessage, handleClick}) {
                                 : ""
                         }
                     </div>
+
                     <div className={classes.priceInfo}>
                         <span className={classes.rightBorder}>{product.price} грн/уп</span>
                         <input onChange={setProductAmount} value={amount}/>
                     </div>
+
                     {
                         product.amountInStock === 0
                             ?
@@ -84,14 +93,25 @@ function ProductItem({product, setMessage, handleClick}) {
                             </div>
                     }
 
-                    <IconButton
-                        className={classes.IconBtn}
-                        aria-label="close"
-                        onClick={addToFavourites}
-                    >
-                        <FavoriteBorderIcon/>
-                    </IconButton>
-
+                    {
+                        deleteFavourite
+                            ?
+                            <IconButton
+                                className={classes.IconBtn}
+                                aria-label="close"
+                                onClick={deleteFromFavourites}
+                            >
+                                <CloseIcon/>
+                            </IconButton>
+                            :
+                            <IconButton
+                                className={classes.IconBtn}
+                                aria-label="close"
+                                onClick={addToFavourites}
+                            >
+                                <FavoriteBorderIcon/>
+                            </IconButton>
+                    }
                 </div>
             </div>
         </div>
