@@ -5,10 +5,13 @@ import {IconButton, ListItemIcon, ListItemText, Menu} from "@mui/material";
 import {MoreVertRounded} from "@mui/icons-material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {AdminService} from "../../../../service/AdminService";
+import {useNavigate} from "react-router-dom";
 
 export default function ContextMenuCharacteristics({item, setMessage, handleClickSnackBar}) {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+
+    const navigate = useNavigate()
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -17,6 +20,10 @@ export default function ContextMenuCharacteristics({item, setMessage, handleClic
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleUpdate = () => {
+        navigate(`/user/admin/update-characteristic/${item.id}`)
+    }
 
     const handleDelete = () => {
         AdminService.deleteFiltrationItem(item.id).then(res => {

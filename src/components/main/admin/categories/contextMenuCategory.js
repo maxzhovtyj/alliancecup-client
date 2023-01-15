@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {NavLink} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 import MenuItem from '@mui/material/MenuItem';
 import {Divider, IconButton, ListItemIcon, ListItemText, Menu} from "@mui/material";
@@ -13,6 +13,8 @@ export default function ContextMenuCategory({item}) {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
+    const navigate = useNavigate()
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -20,6 +22,11 @@ export default function ContextMenuCategory({item}) {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleUpdate = () => {
+        setAnchorEl(null);
+        navigate(`/user/admin/update-category/${item.id}`)
+    }
 
     const handleDelete = () => {
         AdminService.deleteCategory(item.id).then()
@@ -45,14 +52,12 @@ export default function ContextMenuCategory({item}) {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <NavLink to={`/user/admin/category/${item.id}`}>
-                    <MenuItem onClick={handleClose}>
-                        <ListItemIcon>
-                            <EditIcon fontSize="small"/>
-                        </ListItemIcon>
-                        <ListItemText>Змінити</ListItemText>
-                    </MenuItem>
-                </NavLink>
+                <MenuItem onClick={handleUpdate}>
+                    <ListItemIcon>
+                        <EditIcon fontSize="small"/>
+                    </ListItemIcon>
+                    <ListItemText>Змінити</ListItemText>
+                </MenuItem>
 
                 <Divider/>
 

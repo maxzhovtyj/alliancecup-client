@@ -42,6 +42,8 @@ import AdminNewModeratorComponent from "./admin/moderators/adminNewModerator.com
 import AdminNewCharacteristicComponent from "./admin/categories/adminNewCharacteristic.component";
 import RestorePasswordComponent from "./restorePassword/restorePassword.component";
 import AdminUpdateProductComponent from "./admin/products/adminUpdateProduct.component";
+import AdminUpdateCategoryComponent from "./admin/categories/adminUpdateCategory.component";
+import AdminUpdateCharacteristicComponent from "./admin/categories/adminUpdateCharacteristic.component";
 
 function MainComponent() {
     return (
@@ -76,7 +78,9 @@ function MainComponent() {
 
                                 <Route path={"categories"} element={<AdminCategoriesComponent/>}/>
                                 <Route path={"new-category"} element={<AdminNewCategory/>}/>
+                                <Route path={"update-category/:id"} element={<AdminUpdateCategoryComponent/>}/>
                                 <Route path={"new-characteristics"} element={<AdminNewCharacteristicComponent/>}/>
+                                <Route path={"update-characteristic/:id"} element={<AdminUpdateCharacteristicComponent/>}/>
 
                                 <Route path={"orders"} element={<AdminOrdersComponent/>}/>
                                 <Route path={"orders/:id"} element={<AdminOrderInfoComponent/>}/>

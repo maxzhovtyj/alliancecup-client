@@ -1,9 +1,7 @@
-import React from 'react';
 import {Link} from "react-router-dom";
-
 import classes from './navbar.module.scss'
 
-function NavbarComponent(props) {
+function NavbarComponent() {
     return (
         <nav>
             <div className={classes.navWrapper}>
@@ -25,9 +23,6 @@ function NavbarComponent(props) {
                         </div>
                         <div className={classes.listItem}>
                             <Link to="/for-wholesalers">Для оптовиків</Link>
-                        </div>
-                        <div className={classes.listItem}>
-                            <Link to="/for-wholesalers">Відгуки</Link>
                         </div>
                     </div>
                 </div>

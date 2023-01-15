@@ -365,7 +365,6 @@ function AdminNewSupplyComponent() {
                         <AllianceTextField
                             name={"comment"}
                             fullWidth
-                            id="outlined-multiline-static"
                             multiline
                             rows={2}
                             defaultValue=""

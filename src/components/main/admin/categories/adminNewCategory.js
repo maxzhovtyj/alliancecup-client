@@ -51,14 +51,13 @@ function AdminNewCategory() {
         AdminService.addCategory(form).then(res => {
             snackbar.setMessage(res?.message)
             snackbar.handleClick()
-            console.log(res)
+
             if (res?.status === 200 || res?.status === 201) {
                 setShowDialog(false)
             }
         })
-
-
     }
+
     return (
         <div>
             <RouterDialog
@@ -74,7 +73,7 @@ function AdminNewCategory() {
                 <AllianceTextField label="Посилання на фотографію" name={"imgUrl"} value={categoryForm.imgUrl}
                                    onChange={handleCategoryForm}/>
                 <AllianceTextField label="Опис" name={"description"} value={categoryForm.description}
-                                   onChange={handleCategoryForm}/>
+                                   onChange={handleCategoryForm} multiline rows={2}/>
             </FormControl>
             <AllianceButton onClick={newCategory} mt={"1rem"} mb={"1rem"}>Додати</AllianceButton>
             <AllianceSnackbar message={snackbar.message} handleClose={snackbar.handleClose} open={snackbar.open}/>
