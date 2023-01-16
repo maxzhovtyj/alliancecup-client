@@ -114,7 +114,7 @@ function AdminNewCharacteristicComponent() {
                         {
                             filtrationList?.map(item =>
                                 <MenuItem value={item.id} key={item.id}>
-                                    {item.filtrationTitle}
+                                    {item.id} - {item.filtrationTitle}
                                 </MenuItem>)
                         }
                     </AllianceSelect>

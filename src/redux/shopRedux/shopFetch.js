@@ -43,11 +43,12 @@ export const fetchProducts = ({
                                   size,
                                   characteristic,
                                   search,
+                                  isActive
                               }) => {
 
     return async (dispatch) => {
         dispatch(loadProductsActionCreator())
-        ProductService.getProducts(id, createdAt, price, size, characteristic, search).then(res => {
+        ProductService.getProducts(id, createdAt, price, size, characteristic, search, isActive).then(res => {
             if (!res || res?.status !== 200) {
                 dispatch(getProductsActionCreator([]))
             }

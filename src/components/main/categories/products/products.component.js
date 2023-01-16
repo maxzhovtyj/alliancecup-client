@@ -50,6 +50,7 @@ function ProductsComponent() {
         characteristic: queryParams.get("filtration") || "",
         createdAt: "",
         search: "",
+        isActive: true
     })
 
     useEffect(() => {

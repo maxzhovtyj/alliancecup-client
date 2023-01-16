@@ -53,4 +53,20 @@ export class ProductService {
             return e
         }
     }
+
+    static async productVisibility(id, isActive) {
+        try {
+            return await $api.put(`api/admin/product-visibility`, {id, isActive})
+                .catch(function (error) {
+                    if (error.response.status === 403) {
+                        throw new Error("Помилка: У вас немає доступу")
+                    }
+                    if (error.response.status === 500) {
+                        throw new Error("Помилка: щось пішло не так")
+                    }
+                })
+        } catch (e) {
+            return e
+        }
+    }
 }

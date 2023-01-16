@@ -2,11 +2,35 @@ import {useState} from "react";
 import MenuItem from '@mui/material/MenuItem';
 import {Divider, IconButton, ListItemIcon, ListItemText, Menu} from "@mui/material";
 
-import {MoreVertRounded} from "@mui/icons-material";
+import {MoreVertRounded, Visibility, VisibilityOff} from "@mui/icons-material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {AdminService} from "../../../../service/AdminService";
 import {useNavigate} from "react-router-dom";
+import {ProductService} from "../../../../service/ProductService";
+
+function IsActiveItem({isActive, handleHideProduct, handleShowProduct}) {
+    if (isActive) {
+        return (
+            <MenuItem onClick={handleHideProduct}>
+                <ListItemIcon>
+                    <VisibilityOff fontSize="small"/>
+                </ListItemIcon>
+                <ListItemText>Приховати товар</ListItemText>
+            </MenuItem>
+        );
+    } else {
+        return (
+            <MenuItem onClick={handleShowProduct}>
+                <ListItemIcon>
+                    <Visibility fontSize="small"/>
+                </ListItemIcon>
+                <ListItemText>Показати товар</ListItemText>
+            </MenuItem>
+        );
+    }
+
+}
 
 export default function ContextMenuProduct({item, setSnackbarMessage, clickSnackbar}) {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -31,6 +55,35 @@ export default function ContextMenuProduct({item, setSnackbarMessage, clickSnack
         })
         setAnchorEl(null);
     }
+
+    const handleHideProduct = () => {
+        ProductService.productVisibility(item.id, false).then(res => {
+            if (res?.status === 200) {
+                setSnackbarMessage("Товар приховано")
+                clickSnackbar()
+                setAnchorEl(null);
+            } else {
+                setSnackbarMessage(res?.message)
+                clickSnackbar()
+            }
+        })
+        setAnchorEl(null);
+    }
+
+    const handleShowProduct = () => {
+        ProductService.productVisibility(item.id, true).then(res => {
+            if (res?.status === 200) {
+                setSnackbarMessage("Товар відкрито для придбання")
+                clickSnackbar()
+                setAnchorEl(null);
+            } else {
+                setSnackbarMessage(res?.message)
+                clickSnackbar()
+            }
+        })
+    }
+
+
     return (
         <div>
             <IconButton
@@ -53,14 +106,18 @@ export default function ContextMenuProduct({item, setSnackbarMessage, clickSnack
             >
                 <MenuItem onClick={handleSetToUpdate}>
                     <ListItemIcon>
-                        <EditIcon fontSize="small" />
+                        <EditIcon fontSize="small"/>
                     </ListItemIcon>
                     <ListItemText>Змінити</ListItemText>
                 </MenuItem>
+
+                <IsActiveItem isActive={item.isActive} handleHideProduct={handleHideProduct}
+                              handleShowProduct={handleShowProduct}/>
+
                 <Divider/>
                 <MenuItem onClick={handleDelete}>
                     <ListItemIcon>
-                        <DeleteIcon fontSize="small" />
+                        <DeleteIcon fontSize="small"/>
                     </ListItemIcon>
                     <ListItemText>Видалити</ListItemText>
                 </MenuItem>
