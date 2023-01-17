@@ -4,6 +4,7 @@ import {useSnackbar} from "../../../hooks/useSnackbar";
 
 import {fetchFavourites} from "../../../redux/userFavouritesRedux/favouritesFetch";
 import ProductItem from "../categories/products/productItem";
+import AllianceSnackbar from "../../../UI/snackbar";
 
 import classes from './favourites.module.scss'
 
@@ -11,7 +12,7 @@ function FavouritesComponent() {
     const dispatch = useDispatch()
     const favouritesList = useSelector(state => state.favouritesPage.favouritesList)
 
-    const {setMessage, handleClick} = useSnackbar()
+    const snackbar = useSnackbar()
 
     useEffect(() => {
         dispatch(fetchFavourites())
@@ -27,8 +28,8 @@ function FavouritesComponent() {
                         favouritesList.map(
                             item => <ProductItem
                                 product={item}
-                                setMessage={setMessage}
-                                handleClick={handleClick}
+                                setMessage={snackbar.setMessage}
+                                handleClick={snackbar.handleClick}
                                 key={item.article}
                                 deleteFavourite
                             />
@@ -36,6 +37,7 @@ function FavouritesComponent() {
                         : <p className={classes.emptyTitle}>Товари в обраному відсутні</p>
                 }
             </div>
+            <AllianceSnackbar message={snackbar.message} open={snackbar.open} handleClose={snackbar.handleClose}/>
         </div>
     );
 }

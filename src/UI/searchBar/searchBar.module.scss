@@ -1,7 +1,6 @@
 @import '../../variables';
 
 .searchBar {
-  @include btn;
   display: flex;
   align-items: center;
   justify-content: flex-start;

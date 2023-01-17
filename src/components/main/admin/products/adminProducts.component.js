@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
-import {NavLink} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {fetchCategories, fetchMoreProducts, fetchProducts} from "../../../../redux/shopRedux/shopFetch";
 import AdminProductsTableComponent from "./adminProductsTable.component";
 
@@ -22,6 +22,7 @@ function AdminProductsComponent() {
     const categories = useSelector(state => state.shop.categories)
     const cannotLoadMore = useSelector(state => state.shop.statusNoMoreProducts)
 
+    const navigate = useNavigate()
     const snackbar = useSnackbar()
 
     const [searchBar, setSearchBar] = useState("")
@@ -58,6 +59,10 @@ function AdminProductsComponent() {
         event.preventDefault()
     }
 
+    const navigateToAddNewProduct = () => {
+        navigate("/user/admin/new-product")
+    }
+
     return (
         <div className={classes.productsWrapper}>
             <FormControl sx={{marginBottom: "1rem", minWidth: 200}}>
@@ -81,9 +86,7 @@ function AdminProductsComponent() {
 
             <SearchBar value={searchBar} setValue={setSearchBar} onSearch={onSearch}/>
 
-            <NavLink to={"/user/admin/new-product"}>
-                <AllianceButton mt={"1rem"} mb={"1rem"}>Додати товар</AllianceButton>
-            </NavLink>
+            <AllianceButton onClick={navigateToAddNewProduct} mt={"1rem"} mb={"1rem"}>Додати товар</AllianceButton>
 
             <AdminProductsTableComponent products={products} snackbar={snackbar}/>
 

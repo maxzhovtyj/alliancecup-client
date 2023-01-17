@@ -102,7 +102,8 @@ function SignUpDialog({
                 </DialogContent>
 
                 <div className={classes.requestBtn}>
-                    <AllianceButton onClick={signUp} variant={"outlined"} size={"large"}>Зареєструватись</AllianceButton>
+                    <AllianceButton onClick={signUp} variant={"outlined"} mt={"1rem"}
+                                    size={"large"}>Зареєструватись</AllianceButton>
                 </div>
 
                 <div className={classes.redirect}>

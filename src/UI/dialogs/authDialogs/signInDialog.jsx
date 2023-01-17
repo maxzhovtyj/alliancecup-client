@@ -3,7 +3,6 @@ import classes from "./authDialogs.module.scss";
 import {FormControl, IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DialogContent from "@mui/material/DialogContent";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import {AllianceTextField} from "../../styles";
 import AllianceButton from "../../allianceCupButton/allianceButton";
@@ -57,13 +56,11 @@ function SignInDialog({
                 </DialogContent>
 
                 <div className={classes.requestBtn}>
-                    <Button onClick={signIn} variant={"outlined"} size={"large"}>Увійти</Button>
+                    <AllianceButton onClick={signIn} variant={"outlined"} size={"large"} mt={"1rem"}>Увійти</AllianceButton>
                 </div>
 
-                <div onClick={handleForgotPasswordOpen} className={classes.forgotPassword}>
-                    <p>
-                        Забули пароль?
-                    </p>
+                <div className={classes.forgotPassword}>
+                    <p onClick={handleForgotPasswordOpen}>Забули пароль?</p>
                 </div>
 
                 <div className={classes.redirect}>

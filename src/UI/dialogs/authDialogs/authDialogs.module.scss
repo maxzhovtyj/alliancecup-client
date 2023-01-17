@@ -80,9 +80,7 @@
 }
 
 .requestBtn {
-  margin-top: 1rem;
   @include toCenter;
-  @include btn;
 }
 
 .forgotPassword {

@@ -5,7 +5,7 @@ import {AuthContext} from "../../../context/AuthContext";
 import {UserService} from "../../../service/UserService";
 
 import classes from './userCabinet.module.scss'
-import Button from "@mui/material/Button";
+import AllianceButton from "../../../UI/allianceCupButton/allianceButton";
 
 function UserCabinetComponent() {
     const {isAdmin, isModerator, logout} = useContext(AuthContext)
@@ -34,12 +34,12 @@ function UserCabinetComponent() {
                 <Outlet/>
             </div>
             <div className={classes.logoutBtn}>
-                <Button onClick={userLogout}>Вийти</Button>
+                <AllianceButton onClick={userLogout}>Вийти</AllianceButton>
                 {
                     (isAdmin || isModerator)
                         ?
                         <NavLink to={"admin"}>
-                            <Button variant={"outlined"} sx={{marginLeft: "1rem"}}>Панель адміністратора</Button>
+                            <AllianceButton variant={"outlined"}>Панель адміністратора</AllianceButton>
                         </NavLink>
                         : ""
                 }

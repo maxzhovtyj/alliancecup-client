@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './searchBar.module.scss';
-import {Button} from "@mui/material";
 import {AllianceTextField} from "../styles";
+import AllianceButton from "../allianceCupButton/allianceButton";
 
 function SearchBar({value, setValue, onSearch}) {
     const handleValue = (event) => {
@@ -11,7 +11,8 @@ function SearchBar({value, setValue, onSearch}) {
     return (
         <form className={classes.searchBar}>
             <AllianceTextField value={value} onChange={handleValue} className={classes.searchBarInput}/>
-            <Button type={"submit"} onSubmit={onSearch} onClick={onSearch} variant={"text"}>Search</Button>
+            <AllianceButton type={"submit"} onSubmit={onSearch} onClick={onSearch}
+                            variant={"text"}>Search</AllianceButton>
         </form>
     );
 }

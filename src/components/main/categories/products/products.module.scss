@@ -23,7 +23,7 @@
 }
 
 .sidebar {
-  max-width: 396px;
+  min-width: 396px;
 }
 
 .sidebarWrapper {
@@ -101,6 +101,7 @@
     border: 1px solid $alliance-grey;
     max-width: 4rem;
     width: 100%;
+    text-align: center;
 
     &:focus-visible {
       outline: 1px solid $alliance-orange;

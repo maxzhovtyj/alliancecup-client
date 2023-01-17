@@ -89,33 +89,12 @@ $alliance-grey: #BBBBBB;
     font-size: .75rem;
     line-height: .8rem;
   }
-  @media all and (max-width: 375px) {
-    font-size: .6rem;
-    line-height: .8rem;
-  }
 }
 
 @mixin toCenter {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-@mixin btn {
-  position: relative;
-  button {
-    cursor: pointer;
-    color: $alliance-orange;
-    background-color: white;
-    border: 1px solid $alliance-orange;
-    transition: .3s ease-in-out;
-
-    &:hover {
-      background-color: $alliance-orange;
-      color: white;
-      border: 1px solid $alliance-orange;
-    }
-  }
 }
 
 @mixin rightBorder {

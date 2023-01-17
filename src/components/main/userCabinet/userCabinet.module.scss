@@ -83,7 +83,8 @@
 }
 
 .logoutBtn {
-  @include btn;
+  display: flex;
+  gap: 1rem;
   @media all and (max-width: 425px) {
     @include toCenter;
   }
