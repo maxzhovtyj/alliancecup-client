@@ -55,12 +55,26 @@ function ProductsComponent() {
 
     useEffect(() => {
         dispatch(fetchCategories())
-    }, [dispatch, queryParams])
+        console.log(1)
+    }, [dispatch])
 
     useEffect(() => {
-        dispatch(fetchProducts(searchParams))
+        dispatch(fetchProducts({
+            ...searchParams,
+            characteristic: queryParams.get("filtration") || ""
+        }))
+
+        setParentName(queryParams.get("filtrationId") === null
+            ? parentCategory
+            : parentFiltrationList)
+
+        setFiltrationId(queryParams.get("filtrationId") === null
+            ? queryParams.get("categoryId")
+            : queryParams.get("filtrationId"))
+
         dispatch(fetchFiltrationList(parentName, filtrationId))
-    }, [dispatch, filtrationId, parentName, searchParams])
+        console.log(2)
+    }, [dispatch, filtrationId, parentName, queryParams, searchParams])
 
     function loadMore() {
         let lastCreatedAt = products[products.length - 1].createdAt

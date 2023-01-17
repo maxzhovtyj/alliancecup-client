@@ -101,7 +101,7 @@ function AdminNewProductComponent() {
 
         setProductFormErr(tmp)
 
-        return Object.values(tmp.info).every(item => item === false) &&
+        return Object.values(tmp).every(item => item === false) &&
             AdminService.validateCharacteristics(characteristics, setCharacteristicsErr) &&
             AdminService.validatePackaging(packaging, setPackagingErr)
     }
