@@ -81,29 +81,57 @@
   margin-bottom: 1rem;
 }
 
-.rangePrices {
-  padding-left: 10px;
+.rangePricesForm {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  position: relative;
+  justify-content: space-between;
+  padding-left: 10px;
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  font-size: 18px;
+}
 
-  span {
-    font-family: 'Roboto', serif;
-    font-weight: 300;
-    font-size: 18px;
+.rangePricesInputs {
+  position: relative;
+  display: flex;
+  gap: 3rem;
+
+  input {
+    border-radius: 5px;
+    border: 1px solid $alliance-grey;
+    max-width: 4rem;
+    width: 100%;
+
+    &:focus-visible {
+      outline: 1px solid $alliance-orange;
+    }
   }
 
-  &:before {
+  &:after {
     position: absolute;
-    content: "";
-    right: 0;
     left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     margin: auto;
-    height: 2px;
-    width: 2rem;
+    content: "";
+    height: 1px;
+    width: 1rem;
     background-color: $alliance-grey;
+  }
+}
 
+.rangePriceSubmitBtn {
+  background: none;
+  border: 1px solid $alliance-orange;
+  border-radius: 5px;
+  width: 4rem;
+  transition: .3s ease-in-out;
+  margin-left: 1rem;
+  &:hover {
+    color: white;
+
+    background-color: $alliance-orange;
   }
 }
 

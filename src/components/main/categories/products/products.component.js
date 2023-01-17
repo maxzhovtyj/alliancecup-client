@@ -11,9 +11,9 @@ import {Link, useParams, useSearchParams} from "react-router-dom";
 import classes from './products.module.scss'
 import AllianceSnackbar from "../../../../UI/snackbar";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
-import RangeSlider from "../../../../UI/rangeSlider/rangeSlider";
 import ProductsListComponent from "./productsList.component";
 import FiltrationListComponent from "../filtration/filtrationList.component";
+import RangeSliderComponent from "./rangeSlider.component";
 
 const parentCategory = "category_id"
 const parentFiltrationList = "filtration_list_id"
@@ -22,13 +22,12 @@ function ProductsComponent() {
     const dispatch = useDispatch()
 
     const [queryParams, setQueryParams] = useSearchParams()
+    const snackbar = useSnackbar()
 
     const categories = useSelector(state => state.shop.categories)
     const products = useSelector(state => state.shop.products)
     const cannotLoadMore = useSelector(state => state.shop.statusNoMoreProducts)
     const filtrationList = useSelector(state => state.shop.filtrationList)
-
-    let {open, setMessage, handleClick, message, handleClose} = useSnackbar()
 
     const [parentName, setParentName] = useState(
         queryParams.get("filtrationId") === null
@@ -43,6 +42,7 @@ function ProductsComponent() {
     )
 
     const [rangePrice, setRangePrice] = useState([0, 100])
+    const [rangePriceForm, setRangePriceForm] = useState([0, 100])
     const [searchParams, setSearchParams] = useState({
         id: queryParams.get("categoryId"),
         price: [0, 100],
@@ -106,8 +106,27 @@ function ProductsComponent() {
         setSearchParams({...searchParams, characteristic: filtration})
     }
 
+    const handlePriceRangeForm = (event) => {
+        if (event.target.name === "min") {
+            setRangePriceForm(prevState => [parseInt(event.target.value), prevState[1]])
+        } else if (event.target.name === "max") {
+            setRangePriceForm(prevState => [prevState[0], parseInt(event.target.value)])
+        }
+    }
+
+    const applyRangePrice = (event) => {
+        event.preventDefault()
+        setSearchParams({...searchParams, price: rangePriceForm})
+        setRangePrice(rangePriceForm)
+    }
+
     function onRangeCommitted() {
         setSearchParams({...searchParams, price: rangePrice})
+    }
+
+    const onPriceRangeChange = (event, newValue) => {
+        setRangePrice(newValue)
+        setRangePriceForm(newValue)
     }
 
     return (
@@ -118,15 +137,13 @@ function ProductsComponent() {
                         <div className={classes.sidebarContainer}>
                             <div className={classes.priceRange}>
                                 <p className={classes.priceRangeTitle}>Ціна</p>
-                                <RangeSlider
-                                    value={rangePrice}
-                                    setValue={setRangePrice}
-                                    onCommitted={onRangeCommitted}
+                                <RangeSliderComponent rangePrice={rangePrice}
+                                                      onPriceRangeChange={onPriceRangeChange}
+                                                      onRangeCommitted={onRangeCommitted}
+                                                      applyRangePrice={applyRangePrice}
+                                                      rangePriceForm={rangePriceForm}
+                                                      handlePriceRangeForm={handlePriceRangeForm}
                                 />
-                                <div className={classes.rangePrices}>
-                                    <span>{rangePrice[0]}</span>
-                                    <span>{rangePrice[1]}</span>
-                                </div>
                             </div>
                             <div className={classes.catalog}>
                                 {
@@ -153,12 +170,12 @@ function ProductsComponent() {
                         products={products}
                         loadMore={loadMore}
                         cannotLoadMore={cannotLoadMore}
-                        handleClick={handleClick}
-                        setMessage={setMessage}
+                        handleClick={snackbar.handleClick}
+                        setMessage={snackbar.setMessage}
                     />
                 </div>
             </div>
-            <AllianceSnackbar open={open} message={message} handleClose={handleClose}/>
+            <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
         </>
     );
 }
