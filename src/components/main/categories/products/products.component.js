@@ -41,11 +41,23 @@ function ProductsComponent() {
             : queryParams.get("filtrationId")
     )
 
-    const [rangePrice, setRangePrice] = useState([0, 100])
-    const [rangePriceForm, setRangePriceForm] = useState([0, 100])
+    const getQueryPriceParam = () => {
+        let param = queryParams.get("price")
+        if (!param) return [0, 100]
+        else return param.split(":").map(item => parseInt(item))
+    }
+
+    const getQueryParamMaxPrice = () => {
+        let param = queryParams.get("price")
+        if (!param) return 100
+        else return param.split(":").map(item => parseInt(item))[1]
+    }
+
+    const [rangePrice, setRangePrice] = useState(getQueryPriceParam())
+    const [rangePriceForm, setRangePriceForm] = useState(getQueryPriceParam())
     const [searchParams, setSearchParams] = useState({
         id: queryParams.get("categoryId"),
-        price: [0, 100],
+        price: getQueryPriceParam(),
         size: "",
         characteristic: queryParams.get("filtration") || "",
         createdAt: "",
@@ -55,7 +67,6 @@ function ProductsComponent() {
 
     useEffect(() => {
         dispatch(fetchCategories())
-        console.log(1)
     }, [dispatch])
 
     useEffect(() => {
@@ -73,7 +84,6 @@ function ProductsComponent() {
             : queryParams.get("filtrationId"))
 
         dispatch(fetchFiltrationList(parentName, filtrationId))
-        console.log(2)
     }, [dispatch, filtrationId, parentName, queryParams, searchParams])
 
     function loadMore() {
@@ -96,11 +106,15 @@ function ProductsComponent() {
 
     function handleCharacteristic(searchKey, searchCharacteristic, id) {
         const filtration = pushFiltration(searchKey, searchCharacteristic)
-        setQueryParams({
+
+        let queryParamsObj = {
             categoryId: queryParams.get("categoryId"),
             filtration: filtration,
             filtrationId: id,
-        })
+        }
+        if (queryParams.get("price")) queryParamsObj["price"] = queryParams.get("price")
+
+        setQueryParams(queryParamsObj)
         setParentName(parentFiltrationList)
         setFiltrationId(id)
         setSearchParams({...searchParams, characteristic: filtration})
@@ -108,9 +122,9 @@ function ProductsComponent() {
 
     const handlePriceRangeForm = (event) => {
         if (event.target.name === "min") {
-            setRangePriceForm(prevState => [parseInt(event.target.value), prevState[1]])
+            setRangePriceForm(prevState => [parseInt(event.target.value) || 0, prevState[1]])
         } else if (event.target.name === "max") {
-            setRangePriceForm(prevState => [prevState[0], parseInt(event.target.value)])
+            setRangePriceForm(prevState => [prevState[0], parseInt(event.target.value) || 0])
         }
     }
 
@@ -118,10 +132,26 @@ function ProductsComponent() {
         event.preventDefault()
         setSearchParams({...searchParams, price: rangePriceForm})
         setRangePrice(rangePriceForm)
+
+        let queryParamsObj = {
+            categoryId: queryParams.get("categoryId"),
+            price: `${rangePriceForm[0]}:${rangePriceForm[1]}`
+        }
+        if (queryParams.get("filtrationId")) queryParamsObj["filtrationId"] = filtrationId
+        if (queryParams.get("filtration")) queryParamsObj["filtration"] = searchParams.characteristic
+
+        setQueryParams(queryParamsObj)
     }
 
     function onRangeCommitted() {
         setSearchParams({...searchParams, price: rangePrice})
+        let queryParamsObj = {
+            categoryId: queryParams.get("categoryId"),
+            price: `${rangePrice[0]}:${rangePrice[1]}`
+        }
+        if (queryParams.get("filtrationId")) queryParamsObj["filtrationId"] = filtrationId
+        if (queryParams.get("filtration")) queryParamsObj["filtration"] = searchParams.characteristic
+        setQueryParams(queryParamsObj)
     }
 
     const onPriceRangeChange = (event, newValue) => {
@@ -143,6 +173,7 @@ function ProductsComponent() {
                                                       applyRangePrice={applyRangePrice}
                                                       rangePriceForm={rangePriceForm}
                                                       handlePriceRangeForm={handlePriceRangeForm}
+                                                      max={getQueryParamMaxPrice()}
                                 />
                             </div>
                             <div className={classes.catalog}>

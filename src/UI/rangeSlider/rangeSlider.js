@@ -1,32 +1,58 @@
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import {createTheme, ThemeProvider} from "@mui/material/styles";
+import {styled} from "@mui/material";
 
-export default function RangeSlider({value, onChangeCallback, onCommitted}) {
-    const theme = createTheme({
-        components: {
-            MuiSlider: {
-                styleOverrides: {
-                    root: {
-                        color: '#F7A500',
-                    },
-                },
-            },
+const AllianceSlider = styled(Slider)({
+    color: '#F7A500',
+    height: 8,
+    '& .MuiSlider-track': {
+        border: 'none',
+    },
+    '& .MuiSlider-thumb': {
+        height: 24,
+        width: 24,
+        backgroundColor: '#fff',
+        border: '2px solid currentColor',
+        '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+            boxShadow: 'inherit',
         },
-    });
+        '&:before': {
+            display: 'none',
+        },
+    },
+    '& .MuiSlider-valueLabel': {
+        lineHeight: 1.2,
+        fontSize: 12,
+        background: 'unset',
+        padding: 0,
+        width: 32,
+        height: 32,
+        borderRadius: '50% 50% 50% 0',
+        backgroundColor: '#F7A500',
+        transformOrigin: 'bottom left',
+        transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
+        '&:before': {display: 'none'},
+        '&.MuiSlider-valueLabelOpen': {
+            transform: 'translate(50%, -100%) rotate(-45deg) scale(1)',
+        },
+        '& > *': {
+            transform: 'rotate(45deg)',
+        },
+    },
+});
 
+export default function RangeSlider({value, onChangeCallback, onCommitted, max}) {
     return (
         <Box sx={{padding: "0 1rem"}}>
-            <ThemeProvider theme={theme}>
-                <Slider
-                    getAriaLabel={() => 'Price range'}
-                    value={value}
-                    onChange={onChangeCallback}
-                    onChangeCommitted={onCommitted}
-                    valueLabelDisplay="auto"
-                    disableSwap
-                />
-            </ThemeProvider>
+            <AllianceSlider
+                getAriaLabel={() => 'Price range'}
+                value={value}
+                onChange={onChangeCallback}
+                onChangeCommitted={onCommitted}
+                valueLabelDisplay="auto"
+                max={max}
+                disableSwap
+            />
         </Box>
     );
 }

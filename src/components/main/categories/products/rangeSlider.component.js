@@ -2,19 +2,22 @@ import classes from "./products.module.scss";
 import RangeSlider from "../../../../UI/rangeSlider/rangeSlider";
 
 function RangeSliderComponent({
-                         rangePrice,
-                         onPriceRangeChange,
-                         onRangeCommitted,
-                         applyRangePrice,
-                         rangePriceForm,
-                         handlePriceRangeForm,
-                     }) {
+                                  rangePrice,
+                                  onPriceRangeChange,
+                                  onRangeCommitted,
+                                  applyRangePrice,
+                                  rangePriceForm,
+                                  handlePriceRangeForm,
+                                  min, max,
+                              }) {
     return (
         <>
             <RangeSlider
                 value={rangePrice}
                 onChangeCallback={onPriceRangeChange}
                 onCommitted={onRangeCommitted}
+                min={min}
+                max={max}
             />
             <form className={classes.rangePricesForm} onSubmit={applyRangePrice}>
                 <div className={classes.rangePricesInputs}>
