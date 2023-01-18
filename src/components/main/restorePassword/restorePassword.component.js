@@ -18,7 +18,6 @@ function RestorePasswordComponent() {
     const [passwordForm, setPasswordForm] = useState({password: "", repeatPassword: ""})
     const [passwordFormErrors, setPasswordFormErrors] = useState({password: false, repeatPassword: false})
 
-
     useEffect(() => {
         if (queryParams.get("token") === null) {
             navigate("/")
@@ -30,12 +29,11 @@ function RestorePasswordComponent() {
     }
 
     const validate = () => {
-        let tmp = {}
+        let tmp = {
+            password: passwordForm.password >= 4 && passwordForm.password === passwordForm.repeatPassword,
+            repeatPassword: passwordForm.repeatPassword >= 4 && passwordForm.password === passwordForm.repeatPassword
+        }
 
-        tmp.password = passwordForm.password < 4 || passwordForm.password !== passwordForm.repeatPassword
-        tmp.repeatPassword = passwordForm.repeatPassword < 4 || passwordForm.password !== passwordForm.repeatPassword
-
-        // TODO
         setPasswordFormErrors({
             ...tmp
         })
@@ -50,7 +48,12 @@ function RestorePasswordComponent() {
             return
         }
 
-        UserService.restorePassword(passwordForm).then(res => {
+        const token = queryParams.get("token")
+        if (!token) {
+            navigate("/")
+        }
+
+        UserService.restorePassword(passwordForm, token).then(res => {
             snackbar.setMessage(res.message)
             snackbar.handleClick()
         })

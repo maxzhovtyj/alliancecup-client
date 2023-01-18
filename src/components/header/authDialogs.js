@@ -115,8 +115,14 @@ export default function AuthDialogs() {
         }
 
         UserService.forgotPassword(forgotPasswordForm).then(res => {
-            setMessage(res.message)
-            handleClick()
+            if (res?.status === 200) {
+                setMessage("Інструкції по відновленню були надіслані вам на пошту")
+                handleClick()
+                setForgotPasswordForm({email: ""})
+            } else {
+                setMessage(res.message)
+                handleClick()
+            }
         })
     }
 

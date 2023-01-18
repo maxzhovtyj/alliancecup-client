@@ -1,4 +1,5 @@
-import $api from "../http/http";
+import $api, {API_URL} from "../http/http";
+import axios from "axios";
 
 export class UserService {
     static async orders() {
@@ -50,7 +51,6 @@ export class UserService {
     }
 
     static async forgotPassword(form) {
-
         try {
             const response = await $api.post('/api/forgot-password', form).catch(function (error) {
                 if (error.response.status === 400) {
@@ -72,13 +72,22 @@ export class UserService {
         }
     }
 
-    static async restorePassword(form) {
+    static async restorePassword(form, token) {
         const newPasswordForm = {
             password: form.password
         }
 
         try {
-            const response = await $api.put('/api/restore-password', newPasswordForm).catch(function (error) {
+            const response = await axios.put(
+                '/api/client/restore-password',
+                newPasswordForm,
+                {
+                    baseURL: API_URL,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+            ).catch(function (error) {
                 if (error.response.status === 400) {
                     throw new Error("Помилка: Хибні дані")
                 }
@@ -143,7 +152,7 @@ export class UserService {
         }
     }
 
-    static truncTimestamp (createdAt) {
+    static truncTimestamp(createdAt) {
         createdAt = createdAt.split(/[TZ]/g)
         let dotInd = createdAt[1].indexOf(".")
         createdAt[1] = createdAt[1].slice(0, dotInd)
@@ -151,7 +160,7 @@ export class UserService {
         return createdAt.join(" ")
     }
 
-    static validateSignUp (signUpForm, setSignUpErrors) {
+    static validateSignUp(signUpForm, setSignUpErrors) {
         let tmp = {}
 
         tmp.lastname = !signUpForm.lastname
@@ -168,7 +177,7 @@ export class UserService {
         return Object.values(tmp).every(value => value === false)
     }
 
-    static validateSignIn (signInForm, setSignInErrors) {
+    static validateSignIn(signInForm, setSignInErrors) {
         let tmp = {}
 
         tmp.email = !(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(signInForm.email)
