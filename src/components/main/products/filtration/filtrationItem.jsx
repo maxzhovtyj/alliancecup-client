@@ -1,4 +1,4 @@
-import classes from './filtrationItem.module.scss'
+import classes from './filtration.module.scss'
 import {ShoppingService} from "../../../../service/ShoppingService";
 
 function FiltrationItem({onClick, item: {filtrationTitle, imgUrl, imgUUID, searchKey, searchCharacteristic, id}}) {

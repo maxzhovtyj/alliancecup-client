@@ -7,12 +7,13 @@ import {fetchCategories, fetchFiltrationItems} from "../../../../redux/shopRedux
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import ContextMenuCategory from "./contextMenuCategory";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
-import {NavLink} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {AllianceTextField} from "../../../../UI/styles";
 import ContextMenuCharacteristics from "./contextMenuCharacteristics";
 
 function AdminCategoriesComponent() {
     const snackbar = useSnackbar()
+    const navigate = useNavigate()
 
     const dispatch = useDispatch()
     const categories = useSelector(state => state.shop.categories)
@@ -22,11 +23,20 @@ function AdminCategoriesComponent() {
         dispatch(fetchCategories())
         dispatch(fetchFiltrationItems())
     }, [dispatch])
+
+    const navigateToNewCharacteristic = () => {
+        navigate("/user/admin/new-characteristics")
+    }
+
+    const navigateToNewCategory = () => {
+        navigate("/user/admin/new-category")
+    }
+
     return (
         <div>
-            <NavLink to={"/user/admin/new-category"}>
-                <AllianceButton mt={"1rem"} mb={"1rem"}>Додати категорію</AllianceButton>
-            </NavLink>
+            <AllianceButton onClick={navigateToNewCategory} mt={"1rem"} mb={"1rem"}>
+                Додати категорію
+            </AllianceButton>
             <TableContainer component={AlliancePaper}>
                 <Table sx={{minWidth: 200}}>
                     <TableHead>
@@ -68,11 +78,10 @@ function AdminCategoriesComponent() {
                 </Table>
             </TableContainer>
 
-            <div>
-                <NavLink to={"/user/admin/new-characteristics"}>
-                    <AllianceButton mt={"1rem"} mb={"1rem"}>Додати пошукову характеристику</AllianceButton>
-                </NavLink>
-            </div>
+            <AllianceButton onClick={navigateToNewCharacteristic} mt={"1rem"} mb={"1rem"}>
+                Додати пошукову характеристику
+            </AllianceButton>
+
             <TableContainer component={AlliancePaper}>
                 <Table sx={{minWidth: 200}}>
                     <TableHead>
@@ -117,8 +126,10 @@ function AdminCategoriesComponent() {
                                             </TableCell>
                                         </TableRow>
                                     ))
-                                    : <TableRow><TableCell align="left">Немає пошукових
-                                        характеристик</TableCell></TableRow>
+                                    :
+                                    <TableRow><TableCell align="left">
+                                        Немає пошукових характеристик
+                                    </TableCell></TableRow>
                             }
                         </>
                     </TableBody>

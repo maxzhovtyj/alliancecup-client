@@ -1,5 +1,22 @@
 @import '../../../../variables';
 
+.filtrationList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-auto-rows: auto;
+  grid-gap: 1rem;
+  margin-bottom: 2rem;
+
+  @media all and (max-width: 1200px) {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  @media all and (max-width: 600px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .filtrationItem {
   cursor: pointer;
   max-width: 260px;
@@ -17,17 +34,20 @@
     z-index: -1;
   }
   p {
-    @include light-font;
     color: white;
     position: absolute;
-    top: 10px;
-    left: 1rem;
+    top: 8px;
+    left: 16px;
+    @media all and (max-width: 600px) {
+      font-size: 1rem;
+    }
     @media all and (max-width: 425px) {
-      font-size: 1.5rem;
+      font-size: 1rem;
     }
   }
-  @media all and (max-width: 1440px) {
-    width: 260px;
+  @media all and (max-width: 600px) {
+    max-width: 240px;
+    height: 100px;
   }
 }
 
