@@ -4,9 +4,9 @@ import classes from './products.module.scss'
 
 import CloseIcon from "@mui/icons-material/Close";
 import {IconButton} from "@mui/material";
-import {ShoppingService} from "../../../../service/ShoppingService";
+import {ShoppingService} from "../../../service/ShoppingService";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
+import AllianceButton from "../../../UI/allianceCupButton/allianceButton";
 
 function ProductItem({product, setMessage, handleClick, deleteFavourite}) {
     let [amount, setAmount] = useState(1)

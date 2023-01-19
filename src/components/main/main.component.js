@@ -8,7 +8,7 @@ import NavbarComponent from "./navbar/navbar.component";
 import CartComponent from "./cart/cart.component";
 import CategoriesComponent from "./categories/categories.component";
 import HomePageComponent from "./homePage/homePage.component";
-import ProductsComponent from "./categories/products/products.component";
+import ProductsComponent from "./products/products.component";
 import DeliveryComponent from "./delivery/delivery.component";
 import ContactsComponent from "./contacts/contacts.component";
 import ForWholesalersComponent from "./forWholesalers/forWholesalers.component";

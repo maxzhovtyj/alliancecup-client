@@ -1,5 +1,5 @@
 import ProductItem from "./productItem";
-import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
+import AllianceButton from "../../../UI/allianceCupButton/allianceButton";
 
 import classes from "./products.module.scss";
 
@@ -20,14 +20,16 @@ function ProductsListComponent({products, setMessage, handleClick, cannotLoadMor
                     )
                 }
             </div>
-            {
-                cannotLoadMore
-                    ? ""
-                    :
-                    <AllianceButton onClick={loadMore} mt={"1rem"}>
-                        Завантажити ще
-                    </AllianceButton>
-            }
+            <div className={classes.productsListLoadMoreBtn}>
+                {
+                    cannotLoadMore
+                        ? ""
+                        :
+                        <AllianceButton onClick={loadMore}>
+                            Завантажити ще
+                        </AllianceButton>
+                }
+            </div>
         </div>
     );
 }

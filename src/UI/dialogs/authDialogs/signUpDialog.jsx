@@ -2,7 +2,6 @@ import React from 'react';
 import classes from "./authDialogs.module.scss";
 import {FormControl, IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import DialogContent from "@mui/material/DialogContent";
 import Dialog from "@mui/material/Dialog";
 
 import {TextMaskCustom} from "../../../utils/TextMask";
@@ -34,7 +33,7 @@ function SignUpDialog({
                         <CloseIcon/>
                     </IconButton>
                 </div>
-                <DialogContent className={classes.authInputs}>
+                <div className={classes.authInputs}>
                     <FormControl className={classes.formInput}>
                         <AllianceTextField
                             value={value.phoneNumber}
@@ -99,7 +98,7 @@ function SignUpDialog({
                             />
                         </div>
                     </FormControl>
-                </DialogContent>
+                </div>
 
                 <div className={classes.requestBtn}>
                     <AllianceButton onClick={signUp} variant={"outlined"} mt={"1rem"}

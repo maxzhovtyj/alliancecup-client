@@ -1,5 +1,5 @@
 import classes from "./products.module.scss";
-import RangeSlider from "../../../../UI/rangeSlider/rangeSlider";
+import RangeSlider from "../../../UI/rangeSlider/rangeSlider";
 
 function RangeSliderComponent({
                                   rangePrice,

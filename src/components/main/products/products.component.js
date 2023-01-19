@@ -5,15 +5,16 @@ import {
     fetchFiltrationList,
     fetchMoreProducts,
     fetchProducts
-} from "../../../../redux/shopRedux/shopFetch";
+} from "../../../redux/shopRedux/shopFetch";
 import {Link, useParams, useSearchParams} from "react-router-dom";
 
 import classes from './products.module.scss'
-import AllianceSnackbar from "../../../../UI/snackbar";
-import {useSnackbar} from "../../../../hooks/useSnackbar";
+import AllianceSnackbar from "../../../UI/snackbar";
+import {useSnackbar} from "../../../hooks/useSnackbar";
 import ProductsListComponent from "./productsList.component";
-import FiltrationListComponent from "../filtration/filtrationList.component";
+import FiltrationListComponent from "./filtration/filtrationList.component";
 import RangeSliderComponent from "./rangeSlider.component";
+import SearchBar from "../../../UI/searchBar/searchBar";
 
 const parentCategory = "category_id"
 const parentFiltrationList = "filtration_list_id"
@@ -28,6 +29,8 @@ function ProductsComponent() {
     const products = useSelector(state => state.shop.products)
     const cannotLoadMore = useSelector(state => state.shop.statusNoMoreProducts)
     const filtrationList = useSelector(state => state.shop.filtrationList)
+
+    const [search, setSearch] = useState(queryParams.get("search") || "")
 
     const [parentName, setParentName] = useState(
         queryParams.get("filtrationId") === null
@@ -56,12 +59,12 @@ function ProductsComponent() {
     const [rangePrice, setRangePrice] = useState(getQueryPriceParam())
     const [rangePriceForm, setRangePriceForm] = useState(getQueryPriceParam())
     const [searchParams, setSearchParams] = useState({
-        id: queryParams.get("categoryId"),
+        id: queryParams.get("categoryId") || "",
         price: getQueryPriceParam(),
         size: "",
         characteristic: queryParams.get("filtration") || "",
         createdAt: "",
-        search: "",
+        search: queryParams.get("search") || "",
         isActive: true
     })
 
@@ -72,7 +75,8 @@ function ProductsComponent() {
     useEffect(() => {
         dispatch(fetchProducts({
             ...searchParams,
-            characteristic: queryParams.get("filtration") || ""
+            characteristic: queryParams.get("filtration") || "",
+            search: queryParams.get("search") || ""
         }))
 
         setParentName(queryParams.get("filtrationId") === null
@@ -85,6 +89,22 @@ function ProductsComponent() {
 
         dispatch(fetchFiltrationList(parentName, filtrationId))
     }, [dispatch, filtrationId, parentName, queryParams, searchParams])
+
+    const handleOnSearch = (e) => {
+        e.preventDefault()
+
+        let searchParams = {
+            categoryId: queryParams.get("categoryId"),
+            search: search
+        }
+
+        if (queryParams.get("filtrationId")) searchParams["filtrationId"] = queryParams.get("filtrationId")
+        if (queryParams.get("filtration")) searchParams["filtration"] = queryParams.get("filtration")
+        if (queryParams.get("price")) searchParams["price"] = queryParams.get("price")
+
+        setQueryParams(searchParams)
+    }
+
 
     function loadMore() {
         let lastCreatedAt = products[products.length - 1].createdAt
@@ -113,6 +133,7 @@ function ProductsComponent() {
             filtrationId: id,
         }
         if (queryParams.get("price")) queryParamsObj["price"] = queryParams.get("price")
+        if (queryParams.get("search")) queryParamsObj["search"] = queryParams.get("search")
 
         setQueryParams(queryParamsObj)
         setParentName(parentFiltrationList)
@@ -137,8 +158,10 @@ function ProductsComponent() {
             categoryId: queryParams.get("categoryId"),
             price: `${rangePriceForm[0]}:${rangePriceForm[1]}`
         }
+
         if (queryParams.get("filtrationId")) queryParamsObj["filtrationId"] = filtrationId
         if (queryParams.get("filtration")) queryParamsObj["filtration"] = searchParams.characteristic
+        if (queryParams.get("search")) queryParamsObj["search"] = queryParams.get("search")
 
         setQueryParams(queryParamsObj)
     }
@@ -149,8 +172,11 @@ function ProductsComponent() {
             categoryId: queryParams.get("categoryId"),
             price: `${rangePrice[0]}:${rangePrice[1]}`
         }
+
         if (queryParams.get("filtrationId")) queryParamsObj["filtrationId"] = filtrationId
+        if (queryParams.get("search")) queryParamsObj["search"] = queryParams.get("search")
         if (queryParams.get("filtration")) queryParamsObj["filtration"] = searchParams.characteristic
+
         setQueryParams(queryParamsObj)
     }
 
@@ -161,6 +187,9 @@ function ProductsComponent() {
 
     return (
         <>
+            <div className={classes.searchBar}>
+                <SearchBar value={search} setValue={setSearch} onSearch={handleOnSearch}/>
+            </div>
             <div className={classes.productsPageWrapper}>
                 <div className={classes.sidebar}>
                     <div className={classes.sidebarWrapper}>

@@ -31,6 +31,23 @@
   padding-bottom: 8px;
   background-color: $alliance-orange;
   border-bottom: 1px solid $alliance-grey;
+  @media all and (max-width: 425px) {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.topBarInfo {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.topBarAuth {
+  display: none;
+  @media all and (max-width: 625px) {
+    display: block;
+  }
 }
 
 .topItem {

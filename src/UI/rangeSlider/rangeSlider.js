@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import {styled} from "@mui/material";
 
@@ -43,16 +42,14 @@ const AllianceSlider = styled(Slider)({
 
 export default function RangeSlider({value, onChangeCallback, onCommitted, max}) {
     return (
-        <Box sx={{padding: "0 1rem"}}>
-            <AllianceSlider
-                getAriaLabel={() => 'Price range'}
-                value={value}
-                onChange={onChangeCallback}
-                onChangeCommitted={onCommitted}
-                valueLabelDisplay="auto"
-                max={max}
-                disableSwap
-            />
-        </Box>
+        <AllianceSlider
+            getAriaLabel={() => 'Price range'}
+            value={value}
+            onChange={onChangeCallback}
+            onChangeCommitted={onCommitted}
+            valueLabelDisplay="auto"
+            max={max}
+            disableSwap
+        />
     );
 }

@@ -21,12 +21,15 @@ function HeaderComponent() {
     return (
         <header className={classes.headerWrapper}>
             <div className={classes.topBar}>
-                <div>
+                <div className={classes.topBarInfo}>
                     <ul className={classes.socials}>
                         <li><a href={"google.com"}><img src={instIcon} alt="inst"/></a></li>
                         <li><a href={"google.com"}><img src={tgIcon} alt="tg"/></a></li>
                         <li><a href={"google.com"}><img src={vbIcon} alt="vb"/></a></li>
                     </ul>
+                    <div className={classes.topBarAuth}>
+                        <AuthDialogs/>
+                    </div>
                 </div>
                 <div className={classes.authMenu}>
                     {

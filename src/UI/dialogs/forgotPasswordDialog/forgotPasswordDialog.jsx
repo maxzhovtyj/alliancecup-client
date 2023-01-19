@@ -1,6 +1,5 @@
 import {IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import DialogContent from "@mui/material/DialogContent";
 import Dialog from "@mui/material/Dialog";
 import {AllianceTextField} from "../../styles";
 
@@ -30,7 +29,7 @@ function ForgotPasswordDialog({
                         <CloseIcon/>
                     </IconButton>
                 </div>
-                <DialogContent className={classes.authInputs}>
+                <div className={classes.authInputs}>
                     <AllianceTextField
                         className={classes.formInput}
                         name={"email"}
@@ -39,7 +38,7 @@ function ForgotPasswordDialog({
                         label="Email"
                         error={errors?.email}
                     />
-                </DialogContent>
+                </div>
 
                 <p className={classes.forgotPasswordText}>
                     Подальші інстрункції щодо відновлення пароля будуть надіслані вам на пошту, що була вказана при

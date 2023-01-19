@@ -1,15 +1,13 @@
-import {useContext, useState} from "react";
+import {useState} from "react";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import classes from './burgerMenu.module.scss'
 import {IconButton} from "@mui/material";
-import {AuthContext} from "../../context/AuthContext";
 import {NavLink} from "react-router-dom";
 
 export default function BurgerMenu() {
-    const {isAuth} = useContext(AuthContext)
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -41,14 +39,6 @@ export default function BurgerMenu() {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                {
-                    isAuth
-                        ?
-                        <MenuItem onClick={handleClose}>
-                            <NavLink to="/user">Кабінет</NavLink>
-                        </MenuItem>
-                        : ""
-                }
                 <MenuItem onClick={handleClose}>
                     <NavLink to="/categories">Каталог</NavLink>
                 </MenuItem>

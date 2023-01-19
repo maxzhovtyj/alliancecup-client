@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useSnackbar} from "../../../hooks/useSnackbar";
 
 import {fetchFavourites} from "../../../redux/userFavouritesRedux/favouritesFetch";
-import ProductItem from "../categories/products/productItem";
+import ProductItem from "../products/productItem";
 import AllianceSnackbar from "../../../UI/snackbar";
 
 import classes from './favourites.module.scss'

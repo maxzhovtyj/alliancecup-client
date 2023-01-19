@@ -1,6 +1,6 @@
 import FiltrationItem from "./filtrationItem";
 
-import classes from "../products/products.module.scss";
+import classes from "../products.module.scss";
 
 function FiltrationListComponent({filtrationList, handleCharacteristic}) {
     if (!filtrationList) {

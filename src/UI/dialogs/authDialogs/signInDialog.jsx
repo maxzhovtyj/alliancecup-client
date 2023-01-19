@@ -2,7 +2,6 @@ import React from 'react';
 import classes from "./authDialogs.module.scss";
 import {FormControl, IconButton} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import DialogContent from "@mui/material/DialogContent";
 import Dialog from "@mui/material/Dialog";
 import {AllianceTextField} from "../../styles";
 import AllianceButton from "../../allianceCupButton/allianceButton";
@@ -33,7 +32,7 @@ function SignInDialog({
                     </IconButton>
                 </div>
 
-                <DialogContent className={classes.authInputs}>
+                <div className={classes.authInputs}>
                     <FormControl>
                         <AllianceTextField
                             className={classes.formInput}
@@ -53,7 +52,7 @@ function SignInDialog({
                             error={errors.password}
                         />
                     </FormControl>
-                </DialogContent>
+                </div>
 
                 <div className={classes.requestBtn}>
                     <AllianceButton onClick={signIn} variant={"outlined"} size={"large"} mt={"1rem"}>Увійти</AllianceButton>
