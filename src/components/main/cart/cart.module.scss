@@ -23,6 +23,20 @@
   font-size: 2rem;
 }
 
+.topText {
+  padding-left: 200px;
+  display: grid;
+  grid-template-columns: 3fr 1fr .5fr 1fr;
+  width: 100%;
+  margin-bottom: 1rem;
+  p {
+    text-align: center;
+  }
+  @media all and (max-width: 765px) {
+    display: none;
+  }
+}
+
 .productsList {
   display: flex;
   flex-direction: column;
@@ -36,19 +50,31 @@
   display: flex;
   align-items: center;
   position: relative;
+  @media all and (max-width: 765px) {
+    flex-direction: column;
+  }
 }
 
 .productInfo {
   display: grid;
   grid-template-columns: 3fr 1fr .5fr 1fr;
   width: 100%;
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  @media all and (max-width: 765px) {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+  }
 }
 
 .productImg {
-  display: block;
   img {
+    max-width: 200px;
     border-radius: 10px;
-    width: 250px;
+    @media all and (max-width: 765px) {
+      margin: 1rem;
+    }
   }
 }
 
@@ -58,40 +84,23 @@
   font-weight: 300;
   text-align: center;
   transition: .3s ease-in-out;
+  position: relative;
   &:hover {
     color: $alliance-orange;
-  }
-  @media all and (max-width: 1024px) {
-    font-size: 1rem;
-  }
-  @media all and (max-width: 768px) {
-    font-size: 14px;
-  }
-  @media all and (max-width: 1024px) {
-    font-size: 1rem;
-  }
-  @media all and (max-width: 1024px) {
-    font-size: 1rem;
-  }
-  @media all and (max-width: 1024px) {
-    font-size: 1rem;
   }
 }
 
 .productPrice {
-  @include light-font;
   @include toCenter;
   word-wrap: normal;
 }
 
 .productQuantity {
-  @include light-font;
   @include toCenter;
 
 }
 
 .productPriceForQuantity {
-  @include light-font;
   @include toCenter;
 }
 
@@ -100,19 +109,6 @@
   top: 5px;
   right: 5px;
   left: auto;
-}
-
-.helperText {
-  @include light-font;
-  font-size: 14px;
-  display: grid;
-  grid-template-columns: 7fr 1fr 1fr 1fr;
-}
-
-.orderSum {
-  font-family: 'Roboto', serif;
-  font-size: 1.5rem;
-  font-weight: 300;
 }
 
 .bottomInfo {

@@ -9,6 +9,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media all and (max-width: 745px) {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-direction: column;
+  }
 }
 
 .dropdownWrapper {
@@ -16,6 +22,11 @@
   display: grid;
   grid-template-columns: 3fr 4fr;
   gap: 2rem;
+  @media all and (max-width: 825px) {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+  }
 }
 
 .orderProducts {
@@ -28,10 +39,9 @@
 .orderProductItem {
   display: flex;
   width: 100%;
-  justify-content: space-between;
-  align-items: center;
   gap: 2rem;
   img {
+    margin: auto;
     width: 45px;
     height: 45px;
   }
@@ -41,10 +51,23 @@
     color: $alliance-grey;
     font-size: 14px;
   }
+
   .orderProductInfo {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    width: 100%;
+    @media all and (max-width: 485px) {
+      display: flex;
+      gap: 1rem;
+      flex-direction: column;
+    }
+  }
+
+  .orderProductInfoItem {
     display: flex;
+    text-align: center;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
   }
   .productTitle {
@@ -52,6 +75,12 @@
     &:hover{
       color: $alliance-orange;
     }
+  }
+
+  @media all and (max-width: 485px) {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
   }
 }
 
@@ -68,5 +97,11 @@
   gap: 1rem;
   p {
     font-size: 1.5rem;
+  }
+  @media all and (max-width: 745px) {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-direction: column;
   }
 }

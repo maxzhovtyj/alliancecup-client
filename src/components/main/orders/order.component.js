@@ -130,7 +130,7 @@ function OrderComponent() {
                 {
                     cartProducts?.cart?.map(item => <CartItem product={item} key={item.id} order={true}/>)
                 }
-                <p className={cartClasses.orderSum}>Сума замовлення: {cartProducts.sum}</p>
+                <p>Сума замовлення: {cartProducts.sum}</p>
             </div>
 
             <AllianceSnackbar open={open} message={message} handleClose={handleClose}/>

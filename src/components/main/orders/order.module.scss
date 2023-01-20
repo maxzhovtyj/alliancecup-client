@@ -3,6 +3,10 @@
   grid-template-columns: 2fr 3fr;
   gap: 2rem;
   margin: 2rem 0;
+  @media all and (max-width: 1200px) {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .orderPersonalInfo {

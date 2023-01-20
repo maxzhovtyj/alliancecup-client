@@ -22,8 +22,8 @@ function CartItem({product, order}) {
                     <p className={classes.productTitle}>{product.productTitle}</p>
                 </NavLink>
                 <p className={classes.productPrice}>{product.price} грн/уп</p>
-                <span className={classes.productQuantity}>{product.quantity}</span>
-                <span className={classes.productPriceForQuantity}>{product.priceForQuantity} грн</span>
+                <p className={classes.productQuantity}>{product.quantity}</p>
+                <p className={classes.productPriceForQuantity}>{product.priceForQuantity} грн</p>
                 {
                     order
                         ? ""

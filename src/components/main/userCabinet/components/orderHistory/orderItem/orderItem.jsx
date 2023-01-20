@@ -54,19 +54,21 @@ function OrderItem({order}) {
                             {products.map(p =>
                                 <div key={p.id} className={classes.orderProductItem}>
                                     <img src={p.imgUrl || noopImg} alt="img"/>
-                                    <NavLink to={`/product/${p.id}`}>
-                                        <div className={classes.orderProductInfo}>
+                                    <div className={classes.orderProductInfo}>
+                                        <NavLink to={`/product/${p.id}`}>
+                                        <div className={classes.orderProductInfoItem}>
                                             <span>Товар</span>
                                             <p className={classes.productTitle}>{p.productTitle}</p>
                                         </div>
                                     </NavLink>
-                                    <div className={classes.orderProductInfo}>
-                                        <span>Кількість</span>
-                                        <p>{p.quantity}</p>
-                                    </div>
-                                    <div className={classes.orderProductInfo}>
-                                        <span>Сума</span>
-                                        <p>{p.priceForQuantity} грн</p>
+                                        <div className={classes.orderProductInfoItem}>
+                                            <span>Кількість</span>
+                                            <p>{p.quantity}</p>
+                                        </div>
+                                        <div className={classes.orderProductInfoItem}>
+                                            <span>Сума</span>
+                                            <p>{p.priceForQuantity} грн</p>
+                                        </div>
                                     </div>
                                 </div>
                             )}

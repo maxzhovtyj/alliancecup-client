@@ -39,11 +39,17 @@ function CartComponent() {
                     ?
                     <>
                         <h1 className={classes.cartTitle}>Кошик</h1>
+                        <div className={classes.topText}>
+                            <p>Товар</p>
+                            <p>Ціна</p>
+                            <p>Кількість</p>
+                            <p>Сума</p>
+                        </div>
                         <div className={classes.productsList}>
                             {cartPage?.cart.map(item => <CartItem key={item.id} product={item}/>)}
                         </div>
                         <div className={classes.bottomInfo}>
-                            <p className={classes.orderSum}>Загальна вартість: {cartPage.sum}</p>
+                            <p>Загальна вартість: {cartPage.sum}</p>
                             <NavLink to={"/cart/order"}>
                                 <AllianceButton>
                                     Оформити замовлення
