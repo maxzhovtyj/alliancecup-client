@@ -12,7 +12,7 @@ function SearchBar({value, setValue, onSearch}) {
         <form className={classes.searchBar} onSubmit={onSearch}>
             <AllianceTextField value={value} onChange={handleValue} className={classes.searchBarInput}/>
             <AllianceButton type={"submit"} onSubmit={onSearch} onClick={onSearch}
-                            variant={"text"}>Search</AllianceButton>
+                            variant={"text"}>Пошук</AllianceButton>
         </form>
     );
 }

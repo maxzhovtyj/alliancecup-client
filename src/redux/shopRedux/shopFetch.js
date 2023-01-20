@@ -57,10 +57,10 @@ export const fetchProducts = ({
     }
 }
 
-export const fetchMoreProducts = ({id, createdAt, price, size, characteristic, search}) => {
+export const fetchMoreProducts = ({id, createdAt, price, size, characteristic, search, isActive}) => {
     return async (dispatch) => {
         dispatch(setFetchingActionCreator())
-        ProductService.getProducts(id, createdAt, price, size, characteristic, search).then(res => {
+        ProductService.getProducts(id, createdAt, price, size, characteristic, search, isActive).then(res => {
             if (res.data !== null) {
                 dispatch(getMoreProductsActionCreator(res.data))
             } else {

@@ -66,14 +66,14 @@ function AdminNewCategory() {
                 cancelNavigation={cancelNavigation}
             />
             <p className={classes.newProductTitle}>Нова категорія</p>
-            <FormControl className={classes.newProductInfo}>
+            <FormControl className={classes.newProductInfo} fullWidth>
                 <input type={"file"} onChange={handleSetCategoryImg}/>
                 <AllianceTextField label="Назва" name={"title"} value={categoryForm.title}
                                    onChange={handleCategoryForm}/>
                 <AllianceTextField label="Посилання на фотографію" name={"imgUrl"} value={categoryForm.imgUrl}
                                    onChange={handleCategoryForm}/>
                 <AllianceTextField label="Опис" name={"description"} value={categoryForm.description}
-                                   onChange={handleCategoryForm} multiline rows={2}/>
+                                   onChange={handleCategoryForm} multiline rows={4}/>
             </FormControl>
             <AllianceButton onClick={newCategory} mt={"1rem"} mb={"1rem"}>Додати</AllianceButton>
             <AllianceSnackbar message={snackbar.message} handleClose={snackbar.handleClose} open={snackbar.open}/>

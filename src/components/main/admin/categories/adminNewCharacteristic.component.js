@@ -1,15 +1,17 @@
 import {useSnackbar} from "../../../../hooks/useSnackbar";
+import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
 import {fetchCategories, fetchFiltrationItems} from "../../../../redux/shopRedux/shopFetch";
-import classes from "../products/adminProduct.module.scss";
+import {AdminService} from "../../../../service/AdminService";
+
 import {FormControl, FormControlLabel, MenuItem, Radio, RadioGroup} from "@mui/material";
 import {AllianceInputLabel, AllianceSelect, AllianceTextField} from "../../../../UI/styles";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import AllianceSnackbar from "../../../../UI/snackbar";
-import {useEffect, useState} from "react";
-import {AdminService} from "../../../../service/AdminService";
 import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
-import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
+
+import classes from "../products/adminProduct.module.scss";
 
 function AdminNewCharacteristicComponent() {
     const snackbar = useSnackbar()
@@ -80,7 +82,7 @@ function AdminNewCharacteristicComponent() {
     const parentRadioOption = () => {
         if (value === "categoryId") {
             return (
-                <FormControl sx={{minWidth: 200}}>
+                <FormControl>
                     <AllianceInputLabel>Категорія</AllianceInputLabel>
                     <AllianceSelect
                         defaultValue={""}
@@ -101,7 +103,7 @@ function AdminNewCharacteristicComponent() {
             );
         } else if (value === "filtrationListId") {
             return (
-                <FormControl sx={{minWidth: 200}}>
+                <FormControl>
                     <AllianceInputLabel>Підкатегорія</AllianceInputLabel>
                     <AllianceSelect
                         label="Підкатегорія"
@@ -147,7 +149,9 @@ function AdminNewCharacteristicComponent() {
                 </div>
 
                 {parentRadioOption()}
+            </FormControl>
 
+            <FormControl className={classes.newProductInfo} fullWidth>
                 <AllianceTextField label="Назва"
                                    name={"filtrationTitle"}
                                    value={filtrationForm.filtrationTitle}
@@ -156,8 +160,9 @@ function AdminNewCharacteristicComponent() {
                 <AllianceTextField label="Опис"
                                    name={"filtrationDescription"}
                                    value={filtrationForm.filtrationDescription}
-                                   onChange={handleFiltrationForm
-                                   }/>
+                                   onChange={handleFiltrationForm}
+                                   multiline rows={4}
+                />
                 <AllianceTextField label="Посилання на фотографію"
                                    name={"imgUrl"}
                                    value={filtrationForm.imgUrl}
