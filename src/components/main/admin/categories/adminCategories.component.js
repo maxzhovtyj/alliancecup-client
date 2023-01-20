@@ -45,7 +45,6 @@ function AdminCategoriesComponent() {
                             <TableCell align={"center"}>Категорія</TableCell>
                             <TableCell align={"center"}>URL Фотографії</TableCell>
                             <TableCell align={"center"}>Номер фотографії в сховищі</TableCell>
-                            <TableCell align={"center"}>Опис</TableCell>
                             <TableCell align={"center"}>Управління</TableCell>
                         </TableRow>
                     </TableHead>
@@ -65,7 +64,6 @@ function AdminCategoriesComponent() {
                                                 <AllianceTextField value={row.imgUrl || "---"}/>
                                             </TableCell>
                                             <TableCell align={"center"}>{row.imgUUID || "---"}</TableCell>
-                                            <TableCell align={"center"}>{row.description || "---"}</TableCell>
                                             <TableCell align={"center"}>
                                                 <ContextMenuCategory item={row}/>
                                             </TableCell>

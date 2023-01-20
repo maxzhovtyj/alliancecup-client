@@ -1,7 +1,5 @@
 import {useState} from "react";
 
-import noopImg from '../../../../../../assets/noopProduct.svg'
-
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {IconButton, Paper} from "@mui/material";
@@ -9,6 +7,7 @@ import classes from './orderItem.module.scss'
 import {UserService} from "../../../../../../service/UserService";
 import {NavLink} from "react-router-dom";
 import {OrderService} from "../../../../../../service/OrderService";
+import {ShoppingService} from "../../../../../../service/ShoppingService";
 
 function OrderItem({order}) {
     const [showDropdown, setShowDropdown] = useState(false)
@@ -53,7 +52,7 @@ function OrderItem({order}) {
                         <div className={classes.orderProducts}>
                             {products.map(p =>
                                 <div key={p.id} className={classes.orderProductItem}>
-                                    <img src={p.imgUrl || noopImg} alt="img"/>
+                                    <img src={ShoppingService.getImage(p)} alt="img"/>
                                     <div className={classes.orderProductInfo}>
                                         <NavLink to={`/product/${p.id}`}>
                                         <div className={classes.orderProductInfoItem}>
