@@ -55,7 +55,7 @@ function ProductItem({product, setMessage, handleClick, deleteFavourite}) {
     return (
         <div className={classes.productItem}>
             <Link to={`/product/${product.id}`}>
-                <img className={classes.productImg} src={ShoppingService.getImage(product)} alt={"img"}/>
+                <img className={classes.productImg} src={ShoppingService.getImage(product)} alt={""}/>
             </Link>
             <div className={classes.productInfoWrapper}>
                 <Link to={`/product/${product.id}`}>

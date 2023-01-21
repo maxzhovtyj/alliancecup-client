@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {
     fetchCategories,
@@ -44,11 +44,11 @@ function ProductsComponent() {
             : queryParams.get("filtrationId")
     )
 
-    const getQueryPriceParam = () => {
+    const getQueryPriceParam = useCallback(() => {
         let param = queryParams.get("price")
         if (!param) return [0, 100]
         else return param.split(":").map(item => parseInt(item))
-    }
+    }, [queryParams])
 
     const getQueryParamMaxPrice = () => {
         let param = queryParams.get("price")
@@ -60,8 +60,7 @@ function ProductsComponent() {
     const [rangePriceForm, setRangePriceForm] = useState(getQueryPriceParam())
     const [searchParams, setSearchParams] = useState({
         id: queryParams.get("categoryId") || "",
-        price: getQueryPriceParam(),
-        size: "",
+        price: queryParams.get("price")?.split(":")?.map(item => parseInt(item)) || "",
         characteristic: queryParams.get("filtration") || "",
         createdAt: "",
         search: queryParams.get("search") || "",
@@ -73,10 +72,18 @@ function ProductsComponent() {
     }, [dispatch])
 
     useEffect(() => {
+        setRangePriceForm(getQueryPriceParam())
+        setRangePrice(getQueryPriceParam())
+
+        let searchParamPrice = (queryParams.get("price") !== null)
+            ? queryParams.get("price").split(":").map(item => parseInt(item))
+            : ""
+
         dispatch(fetchProducts({
             ...searchParams,
             characteristic: queryParams.get("filtration") || "",
-            search: queryParams.get("search") || ""
+            search: queryParams.get("search") || "",
+            price: searchParamPrice,
         }))
 
         setParentName(queryParams.get("filtrationId") === null
@@ -88,7 +95,7 @@ function ProductsComponent() {
             : queryParams.get("filtrationId"))
 
         dispatch(fetchFiltrationList(parentName, filtrationId))
-    }, [dispatch, filtrationId, parentName, queryParams, searchParams])
+    }, [dispatch, filtrationId, getQueryPriceParam, parentName, queryParams, searchParams])
 
     const handleOnSearch = (e) => {
         e.preventDefault()
@@ -105,11 +112,15 @@ function ProductsComponent() {
         setQueryParams(searchParams)
     }
 
-
     function loadMore() {
         let lastCreatedAt = products[products.length - 1].createdAt
         dispatch(fetchMoreProducts({
-            ...searchParams, createdAt: lastCreatedAt
+            id: searchParams.id,
+            createdAt: lastCreatedAt,
+            price: searchParams.price,
+            characteristic: searchParams.characteristic,
+            search: searchParams.search,
+            isActive: true,
         }))
     }
 

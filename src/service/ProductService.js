@@ -17,15 +17,15 @@ export class ProductService {
         }
     }
 
-    static async getProducts(id, createdAt, price, size, characteristic, search, isActive = "") {
+    static async getProducts(id, createdAt, price, characteristic, search, isActive) {
         try {
-            createdAt = (!!createdAt) ? createdAt : ""
-            price = (!!price) ? `${price[0]}:${price[1]}` : ""
-            size = (!!size) ? size : ""
-            characteristic = (!!characteristic) ? characteristic : ""
-            search = (!!search) ? search : ""
+            createdAt = (createdAt) ? createdAt : ""
+            price = (price) ? `${price[0]}:${price[1]}` : ""
+            characteristic = (characteristic) ? characteristic : ""
+            search = (search) ? search : ""
+            isActive = (isActive) ? isActive : ""
 
-            const reqUrl = `/api/products?category=${id}&createdAt=${createdAt}&priceRange=${price}&size=${size}&characteristic=${characteristic}&search=${search}&isActive=${isActive}`
+            const reqUrl = `/api/products?category=${id}&createdAt=${createdAt}&priceRange=${price}&characteristic=${characteristic}&search=${search}&isActive=${isActive}`
 
             return await $api.get(reqUrl)
                 .catch(function (error) {

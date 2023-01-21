@@ -9,6 +9,7 @@
 
   @media all and (max-width: 1200px) {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
   }
   @media all and (max-width: 600px) {
