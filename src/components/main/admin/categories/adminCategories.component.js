@@ -9,7 +9,7 @@ import ContextMenuCategory from "./contextMenuCategory";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import {useNavigate} from "react-router-dom";
 import {AllianceTextField} from "../../../../UI/styles";
-import ContextMenuCharacteristics from "./contextMenuCharacteristics";
+import ContextMenuFiltrationItem from "./contextMenuFiltrationItem";
 
 function AdminCategoriesComponent() {
     const snackbar = useSnackbar()
@@ -121,7 +121,7 @@ function AdminCategoriesComponent() {
                                             </TableCell>
                                             <TableCell align={"center"}>{row.imgUUID || "---"}</TableCell>
                                             <TableCell align={"center"}>
-                                                <ContextMenuCharacteristics
+                                                <ContextMenuFiltrationItem
                                                     item={row}
                                                     setMessage={snackbar.setMessage}
                                                     handleClickSnackBar={snackbar.handleClick}

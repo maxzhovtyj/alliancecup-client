@@ -39,11 +39,11 @@ import PageWasNotFound from "../errorPages/pageWasNotFound";
 import PermissionForbidden from "../errorPages/permissionForbidden";
 import AdminModeratorsComponent from "./admin/moderators/adminModerators.component";
 import AdminNewModeratorComponent from "./admin/moderators/adminNewModerator.component";
-import AdminNewCharacteristicComponent from "./admin/categories/adminNewCharacteristic.component";
+import AdminNewFiltrationItemComponent from "./admin/categories/adminNewFiltrationItem.component";
 import RestorePasswordComponent from "./restorePassword/restorePassword.component";
 import AdminUpdateProductComponent from "./admin/products/adminUpdateProduct.component";
 import AdminUpdateCategoryComponent from "./admin/categories/adminUpdateCategory.component";
-import AdminUpdateCharacteristicComponent from "./admin/categories/adminUpdateCharacteristic.component";
+import AdminUpdateFiltrationItemComponent from "./admin/categories/adminUpdateFiltrationItem.component";
 
 function MainComponent() {
     return (
@@ -79,8 +79,8 @@ function MainComponent() {
                                 <Route path={"categories"} element={<AdminCategoriesComponent/>}/>
                                 <Route path={"new-category"} element={<AdminNewCategory/>}/>
                                 <Route path={"update-category/:id"} element={<AdminUpdateCategoryComponent/>}/>
-                                <Route path={"new-characteristics"} element={<AdminNewCharacteristicComponent/>}/>
-                                <Route path={"update-characteristic/:id"} element={<AdminUpdateCharacteristicComponent/>}/>
+                                <Route path={"new-characteristics"} element={<AdminNewFiltrationItemComponent/>}/>
+                                <Route path={"update-characteristic/:id"} element={<AdminUpdateFiltrationItemComponent/>}/>
 
                                 <Route path={"orders"} element={<AdminOrdersComponent/>}/>
                                 <Route path={"orders/:id"} element={<AdminOrderInfoComponent/>}/>

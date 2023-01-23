@@ -3,7 +3,6 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
 import {fetchCategories, fetchFiltrationItems} from "../../../../redux/shopRedux/shopFetch";
-import {AdminService} from "../../../../service/AdminService";
 
 import {FormControl, FormControlLabel, MenuItem, Radio, RadioGroup} from "@mui/material";
 import {AllianceInputLabel, AllianceSelect, AllianceTextField} from "../../../../UI/styles";
@@ -12,8 +11,9 @@ import AllianceSnackbar from "../../../../UI/snackbar";
 import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
 
 import classes from "../products/adminProduct.module.scss";
+import {FiltrationService} from "../../../../service/FiltrationService";
 
-function AdminNewCharacteristicComponent() {
+function AdminNewFiltrationItemComponent() {
     const snackbar = useSnackbar()
 
     const [showDialog, setShowDialog] = useState(false)
@@ -23,7 +23,7 @@ function AdminNewCharacteristicComponent() {
     const categories = useSelector(state => state.shop.categories)
     const filtrationList = useSelector(state => state.shop.filtrationList)
 
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState("");
 
     const [filtrationForm, setFiltrationForm] = useState({
         categoryId: "",
@@ -70,7 +70,7 @@ function AdminNewCharacteristicComponent() {
         form.append("searchKey", filtrationForm.searchKey)
         form.append("searchCharacteristic", filtrationForm.searchCharacteristic)
 
-        AdminService.addFiltrationItem(form).then(res => {
+        FiltrationService.addFiltrationItem(form).then(res => {
             snackbar.setMessage(res?.message)
             snackbar.handleClick()
             if (res?.status === 201 || res?.status === 200) {
@@ -139,7 +139,6 @@ function AdminNewCharacteristicComponent() {
                 <input type={"file"} onChange={handleSetFiltrationItemImg}/>
                 <div>
                     <RadioGroup
-                        name="quiz"
                         value={value}
                         onChange={handleRadioChange}
                     >
@@ -186,4 +185,4 @@ function AdminNewCharacteristicComponent() {
     );
 }
 
-export default AdminNewCharacteristicComponent;
+export default AdminNewFiltrationItemComponent;

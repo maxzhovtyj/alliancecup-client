@@ -18,7 +18,7 @@ import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
 import {AllianceInputLabel, AllianceSelect} from "../../../../UI/styles";
 import SearchBar from "../../../../UI/searchBar/searchBar";
-import {NavLink} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import {UserService} from "../../../../service/UserService";
 import {AlliancePaper} from "../../../../UI/AlliancePaper";
@@ -34,6 +34,8 @@ function AdminOrdersComponent() {
     const dispatch = useDispatch()
     const orders = useSelector(state => state.admin.orders)
     const canLoad = useSelector(state => state.admin.statusNoMoreOrders)
+
+    const navigate = useNavigate()
 
     const [orderStatus, setOrderStatus] = useState("")
     const [searchOrders, setSearchOrders] = useState("")
@@ -53,6 +55,10 @@ function AdminOrdersComponent() {
             link.download = `invoice-${orderId}.pdf`;
             link.click();
         })
+    }
+
+    const navigateToNewOrder = () => {
+        navigate("/user/admin/new-order")
     }
 
     const handleOrderStatus = (event) => {
@@ -104,11 +110,9 @@ function AdminOrdersComponent() {
 
             <SearchBar value={searchBar} setValue={setSearchBar} onSearch={handleOnSearch}/>
 
-            <NavLink to={"/user/admin/new-order"}>
-                <AllianceButton mb={"1rem"} mt={"1rem"}>
-                    Нове замовлення
-                </AllianceButton>
-            </NavLink>
+            <AllianceButton onClick={navigateToNewOrder} mb={"1rem"} mt={"1rem"}>
+                Нове замовлення
+            </AllianceButton>
 
             <TableContainer component={AlliancePaper} sx={{marginBottom: "2rem"}}>
                 <Table sx={{minWidth: 200}}>
