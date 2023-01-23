@@ -6,10 +6,12 @@ import {Divider, IconButton, ListItemIcon, ListItemText, Menu} from "@mui/materi
 import {MoreVertRounded} from "@mui/icons-material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import HideImageRoundedIcon from '@mui/icons-material/HideImageRounded';
+
 import {AdminService} from "../../../../service/AdminService";
 
 
-export default function ContextMenuCategory({item}) {
+export default function ContextMenuCategory({item, setMessage, handleClickSnackbar}) {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -29,9 +31,31 @@ export default function ContextMenuCategory({item}) {
     }
 
     const handleDelete = () => {
-        AdminService.deleteCategory(item.id).then()
-        setAnchorEl(null);
+        AdminService.deleteCategory(item.id).then(res => {
+            if (res.status === 200) {
+                setMessage("Категорію успішно видалено")
+                handleClickSnackbar()
+            } else {
+                setMessage(res?.message)
+                handleClickSnackbar()
+            }
+            setAnchorEl(null);
+        })
     }
+
+    const handleDeleteImage = () => {
+        AdminService.deleteCategoryImage(item.id).then(res => {
+            if (res.status === 200) {
+                setMessage("Фотографію категорії успішно видалено")
+                handleClickSnackbar()
+            } else {
+                setMessage(res?.message)
+                handleClickSnackbar()
+            }
+            setAnchorEl(null);
+        })
+    }
+
     return (
         <div>
             <IconButton
@@ -60,6 +84,13 @@ export default function ContextMenuCategory({item}) {
                 </MenuItem>
 
                 <Divider/>
+
+                <MenuItem onClick={handleDeleteImage}>
+                    <HideImageRoundedIcon>
+                        <DeleteIcon fontSize="small"/>
+                    </HideImageRoundedIcon>
+                    <ListItemText>Видалити фото</ListItemText>
+                </MenuItem>
 
                 <MenuItem onClick={handleDelete}>
                     <ListItemIcon>

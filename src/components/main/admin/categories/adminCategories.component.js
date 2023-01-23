@@ -15,6 +15,7 @@ function AdminCategoriesComponent() {
     const snackbar = useSnackbar()
     const navigate = useNavigate()
 
+
     const dispatch = useDispatch()
     const categories = useSelector(state => state.shop.categories)
     const filtrationList = useSelector(state => state.shop.filtrationList)
@@ -65,7 +66,11 @@ function AdminCategoriesComponent() {
                                             </TableCell>
                                             <TableCell align={"center"}>{row.imgUUID || "---"}</TableCell>
                                             <TableCell align={"center"}>
-                                                <ContextMenuCategory item={row}/>
+                                                <ContextMenuCategory
+                                                    item={row}
+                                                    setMessage={snackbar.setMessage}
+                                                    handleClickSnackbar={snackbar.handleClick}
+                                                />
                                             </TableCell>
                                         </TableRow>
                                     ))

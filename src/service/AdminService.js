@@ -197,9 +197,30 @@ export class AdminService {
         }
     }
 
+    static async deleteProductImage(productId) {
+        try {
+            return await $api.delete(`/api/admin/product-image?id=${productId}`).catch(function (error) {
+                if (error.response.status === 401) {
+                    throw new Error("Спочатку увійдіть")
+                }
+                if (error.response.status === 403) {
+                    throw new Error("Доступ заборонено")
+                }
+                if (error.response.status === 400) {
+                    throw new Error("Ви надали хибні дані")
+                }
+                if (error.response.status === 500) {
+                    throw new Error("Щось пішло не так під час видалення фотографії товару")
+                }
+            })
+        } catch (e) {
+            return e
+        }
+    }
+
     static async deleteCategory(categoryId) {
         try {
-            const response = await $api.delete(`/api/admin/category?id=${categoryId}`).catch(function (error) {
+            return await $api.delete(`/api/admin/category?id=${categoryId}`).catch(function (error) {
                 if (error.response.status === 401) {
                     throw new Error("Спочатку увійдіть")
                 }
@@ -213,11 +234,27 @@ export class AdminService {
                     throw new Error("Щось пішло не так під час видалення категорії")
                 }
             })
+        } catch (e) {
+            return e
+        }
+    }
 
-            return {
-                id: response.data.id,
-                message: "Категорію успішно видалено"
-            }
+    static async deleteCategoryImage(categoryId) {
+        try {
+            return $api.delete(`/api/admin/category-image?id=${categoryId}`).catch(function (error) {
+                if (error.response.status === 401) {
+                    throw new Error("Спочатку увійдіть")
+                }
+                if (error.response.status === 403) {
+                    throw new Error("Доступ заборонено")
+                }
+                if (error.response.status === 400) {
+                    throw new Error("Ви надали хибні дані")
+                }
+                if (error.response.status === 500) {
+                    throw new Error("Щось пішло не так під час видалення фотографії категорії")
+                }
+            })
         } catch (e) {
             return e
         }

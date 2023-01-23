@@ -29,9 +29,6 @@ function AdminProductsComponent() {
     const [searchParams, setSearchParams] = useState({
         id: "",
         createdAt: "",
-        price: [0, 100],
-        size: "",
-        characteristic: "",
         search: "",
     })
 
@@ -105,8 +102,7 @@ function AdminProductsComponent() {
 
             <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
         </div>
-    )
-        ;
+    );
 }
 
 export default AdminProductsComponent;
