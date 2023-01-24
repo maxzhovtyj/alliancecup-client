@@ -7,7 +7,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import HideImageRoundedIcon from '@mui/icons-material/HideImageRounded';
 
-import {AdminService} from "../../../../service/AdminService";
 import {useNavigate} from "react-router-dom";
 import {ProductService} from "../../../../service/ProductService";
 
@@ -51,7 +50,7 @@ export default function ContextMenuProduct({item, setSnackbarMessage, clickSnack
     }
 
     const handleDeleteImage = () => {
-        AdminService.deleteProductImage(item.id).then(res => {
+        ProductService.deleteProductImage(item.id).then(res => {
             if (res.status === 200) {
                 setSnackbarMessage("Фото товару успішно видалено")
                 clickSnackbar()
@@ -63,7 +62,7 @@ export default function ContextMenuProduct({item, setSnackbarMessage, clickSnack
     }
 
     const handleDelete = () => {
-        AdminService.deleteProduct(item.id).then(res => {
+        ProductService.deleteProduct(item.id).then(res => {
             setSnackbarMessage(res.message)
             clickSnackbar()
         })

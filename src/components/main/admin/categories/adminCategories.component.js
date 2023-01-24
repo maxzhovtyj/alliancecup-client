@@ -25,8 +25,8 @@ function AdminCategoriesComponent() {
         dispatch(fetchFiltrationItems())
     }, [dispatch])
 
-    const navigateToNewCharacteristic = () => {
-        navigate("/user/admin/new-characteristics")
+    const navigateToNewFiltration = () => {
+        navigate("/user/admin/new-filtration")
     }
 
     const navigateToNewCategory = () => {
@@ -81,8 +81,8 @@ function AdminCategoriesComponent() {
                 </Table>
             </TableContainer>
 
-            <AllianceButton onClick={navigateToNewCharacteristic} mt={"1rem"} mb={"1rem"}>
-                Додати пошукову характеристику
+            <AllianceButton onClick={navigateToNewFiltration} mt={"1rem"} mb={"1rem"}>
+                Додати пошукову фільтрацію
             </AllianceButton>
 
             <TableContainer component={AlliancePaper}>
@@ -131,7 +131,7 @@ function AdminCategoriesComponent() {
                                     ))
                                     :
                                     <TableRow><TableCell align="left">
-                                        Немає пошукових характеристик
+                                        Немає пошукових фільтрацій
                                     </TableCell></TableRow>
                             }
                         </>

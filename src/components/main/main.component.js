@@ -79,8 +79,8 @@ function MainComponent() {
                                 <Route path={"categories"} element={<AdminCategoriesComponent/>}/>
                                 <Route path={"new-category"} element={<AdminNewCategory/>}/>
                                 <Route path={"update-category/:id"} element={<AdminUpdateCategoryComponent/>}/>
-                                <Route path={"new-characteristics"} element={<AdminNewFiltrationItemComponent/>}/>
-                                <Route path={"update-characteristic/:id"} element={<AdminUpdateFiltrationItemComponent/>}/>
+                                <Route path={"new-filtration"} element={<AdminNewFiltrationItemComponent/>}/>
+                                <Route path={"update-filtration/:id"} element={<AdminUpdateFiltrationItemComponent/>}/>
 
                                 <Route path={"orders"} element={<AdminOrdersComponent/>}/>
                                 <Route path={"orders/:id"} element={<AdminOrderInfoComponent/>}/>

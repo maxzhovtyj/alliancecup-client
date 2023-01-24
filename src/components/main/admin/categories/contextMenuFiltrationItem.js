@@ -24,7 +24,7 @@ export default function ContextMenuFiltrationItem({item, setMessage, handleClick
     };
 
     const handleUpdate = () => {
-        navigate(`/user/admin/update-characteristic/${item.id}`)
+        navigate(`/user/admin/update-filtration/${item.id}`)
     }
 
     const handleDelete = () => {

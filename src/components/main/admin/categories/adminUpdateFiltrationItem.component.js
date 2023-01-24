@@ -50,6 +50,7 @@ function AdminUpdateFiltrationItemComponent() {
     useEffect(() => {
         FiltrationService.getFiltrationItem(params.id).then(res => {
             setFiltrationItem(res?.data)
+            setRadioValue(res?.data?.categoryId ? "categoryId" : "filtrationListId")
         })
     }, [params.id])
 
@@ -69,15 +70,20 @@ function AdminUpdateFiltrationItemComponent() {
     }
 
     const handleRadioChange = (event) => {
+        if (event.target.value === "categoryId") {
+            filtrationItem.filtrationListId = ""
+        } else if (event.target.value === "filtrationListId") {
+            filtrationItem.categoryId = ""
+        }
         setRadioValue(event.target.value);
-        setShowDialog(true)
+        setShowFormDialog(true)
     };
 
     function updateImage() {
         let form = new FormData()
 
-        form.append("file", image)
         form.append("id", filtrationItem.id)
+        form.append("file", image)
 
         FiltrationService.updateFiltrationItemImg(form).then(res => {
             if (res?.status === 200 || res?.status === 201) {
@@ -85,7 +91,7 @@ function AdminUpdateFiltrationItemComponent() {
                 snackbar.handleClick()
 
                 setShowImgDialog(false)
-                setShowDialog(showImgDialog || showFormDialog)
+                setShowDialog(showFormDialog)
             } else {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
@@ -118,7 +124,7 @@ function AdminUpdateFiltrationItemComponent() {
                 snackbar.handleClick()
 
                 setShowFormDialog(false)
-                setShowDialog(showImgDialog || showFormDialog)
+                setShowDialog(showImgDialog)
             } else {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
@@ -188,7 +194,7 @@ function AdminUpdateFiltrationItemComponent() {
                 <p>Фото</p>
 
                 <img src={ShoppingService.getImage(filtrationItem)} alt="img"/>
-                <input type="file" onClick={handleSetFiltrationItemImg}/>
+                <input type="file" onChange={handleSetFiltrationItemImg}/>
             </FormControl>
 
             <AllianceButton onClick={updateImage} mt={"1rem"} mb={"1rem"}>Оновити фото</AllianceButton>

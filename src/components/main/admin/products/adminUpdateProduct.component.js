@@ -1,6 +1,5 @@
 import {ProductService} from "../../../../service/ProductService";
 import {ShoppingService} from "../../../../service/ShoppingService";
-import {AdminService} from "../../../../service/AdminService";
 
 import {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
@@ -25,6 +24,8 @@ function AdminUpdateProductComponent() {
     const params = useParams()
     const snackbar = useSnackbar()
 
+    const [showImgDialog, setShowImgDialog] = useState(false)
+    const [showFormDialog, setShowFormDialog] = useState(false)
     const [showDialog, setShowDialog] = useState(false)
     const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
 
@@ -82,6 +83,7 @@ function AdminUpdateProductComponent() {
 
     const handleSetProductImg = (event) => {
         setProductImg(event.target.files[0])
+        setShowImgDialog(true)
     }
 
     const handleProductPrice = (event) => {
@@ -90,12 +92,12 @@ function AdminUpdateProductComponent() {
             ...product,
             price: productPrice || ""
         })
-        setShowDialog(true)
+        setShowFormDialog(true)
     }
 
     const handleProductForm = (event) => {
         setProduct({...product, [event.target.name]: event.target.value})
-        setShowDialog(true)
+        setShowFormDialog(true)
     }
 
     const validateProduct = () => {
@@ -110,8 +112,8 @@ function AdminUpdateProductComponent() {
         setProductErr({...tmp.info})
 
         return Object.values(tmp.info).every(item => item === false) &&
-            AdminService.validateCharacteristics(characteristics, setCharacteristicsErr) &&
-            AdminService.validatePackaging(packaging, setPackagingErr)
+            ProductService.validateCharacteristics(characteristics, setCharacteristicsErr) &&
+            ProductService.validatePackaging(packaging, setPackagingErr)
     }
 
     function changeImage() {
@@ -120,10 +122,13 @@ function AdminUpdateProductComponent() {
         form.append("file", productImg)
         form.append("id", product.id)
 
-        AdminService.updateProductImage(form).then(res => {
+        ProductService.updateProductImage(form).then(res => {
             if (res?.status === 200) {
                 snackbar.setMessage("Фото успішно оновлено")
                 snackbar.handleClick()
+
+                setShowImgDialog(false)
+                setShowDialog(showFormDialog)
             } else {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
@@ -159,10 +164,13 @@ function AdminUpdateProductComponent() {
             packaging: productPackaging
         }
 
-        AdminService.updateProduct(productForm).then(res => {
+        ProductService.updateProduct(productForm).then(res => {
             if (res?.status === 200) {
                 snackbar.setMessage("Товар успішно оновлено")
                 snackbar.handleClick()
+
+                setShowFormDialog(false)
+                setShowDialog(showImgDialog)
             } else {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
@@ -214,14 +222,14 @@ function AdminUpdateProductComponent() {
                                        label={"Артикул"}
                                        value={product.article}
                                        onChange={handleProductForm}
-                                       error={productErr.article}
+                                       error={productErr.article} required
                     />
                     <AllianceTextField name={"productTitle"}
                                        label={"Назва"}
                                        value={product.productTitle}
                                        fullWidth
                                        onChange={handleProductForm}
-                                       error={productErr.productTitle}
+                                       error={productErr.productTitle} required
                     />
                     <AllianceTextField name={"imgUrl"}
                                        label={"Посилання на фотографію"}
@@ -232,7 +240,7 @@ function AdminUpdateProductComponent() {
                                        label={"Ціна"}
                                        value={product.price}
                                        onChange={handleProductPrice}
-                                       error={productErr.price}
+                                       error={productErr.price} required
                     />
 
                     <AdminProductCharacteristicsForm

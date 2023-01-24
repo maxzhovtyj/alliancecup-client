@@ -51,7 +51,7 @@ function AdminOrderInfoComponent() {
     function processedOrder() {
         AdminService.processedOrder(order?.info?.id).then(res => {
             if (res?.status !== 200) {
-                snackbar.setMessage(res)
+                snackbar.setMessage(res?.message)
             } else window.location.reload()
         })
     }
@@ -59,7 +59,7 @@ function AdminOrderInfoComponent() {
     function completeOrder() {
         AdminService.completeOrder(order?.info?.id).then(res => {
             if (res?.status !== 200) {
-                snackbar.setMessage(res)
+                snackbar.setMessage(res?.message)
             } else window.location.reload()
         })
     }

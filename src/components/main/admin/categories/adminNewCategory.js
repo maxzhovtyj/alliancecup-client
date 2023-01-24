@@ -1,15 +1,16 @@
 import {useDispatch} from "react-redux";
-import {fetchCategories} from "../../../../redux/shopRedux/shopFetch";
-import classes from "../products/adminProduct.module.scss";
-import {FormControl} from "@mui/material";
-import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
-import {useEffect, useState} from "react";
-import {AdminService} from "../../../../service/AdminService";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
+import {useEffect, useState} from "react";
+import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
+import {fetchCategories} from "../../../../redux/shopRedux/shopFetch";
+import {CategoryService} from "../../../../service/CategoryService";
+import {FormControl} from "@mui/material";
 import {AllianceTextField} from "../../../../UI/styles";
+import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import AllianceSnackbar from "../../../../UI/snackbar";
 import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
-import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
+
+import classes from "../products/adminProduct.module.scss";
 
 function AdminNewCategory() {
     const snackbar = useSnackbar()
@@ -23,6 +24,7 @@ function AdminNewCategory() {
         imgUrl: "",
         description: "",
     })
+    const [categoryFormErr, setCategoryFormErr] = useState({title: false})
 
     useEffect(() => {
         dispatch(fetchCategories())
@@ -40,7 +42,22 @@ function AdminNewCategory() {
         setShowDialog(true)
     }
 
+    const validate = () => {
+        let tmp = {
+            title: !categoryForm.title
+        }
+
+        setCategoryFormErr(tmp)
+
+        return Object.values(tmp).every(item => item === false)
+    }
+
     const newCategory = () => {
+        if (!validate()) {
+            snackbar.setMessage("Поля не пройшли валідацію")
+            snackbar.handleClick()
+        }
+
         let form = new FormData()
 
         form.append("file", categoryImg)
@@ -48,12 +65,14 @@ function AdminNewCategory() {
         form.append("imgUrl", categoryForm.imgUrl)
         form.append("description", categoryForm.description)
 
-        AdminService.addCategory(form).then(res => {
-            snackbar.setMessage(res?.message)
-            snackbar.handleClick()
-
+        CategoryService.addCategory(form).then(res => {
             if (res?.status === 200 || res?.status === 201) {
+                snackbar.setMessage("Категорію успішно додано")
+                snackbar.handleClick()
                 setShowDialog(false)
+            } else {
+                snackbar.setMessage(res?.message)
+                snackbar.handleClick()
             }
         })
     }
@@ -69,7 +88,7 @@ function AdminNewCategory() {
             <FormControl className={classes.newProductInfo} fullWidth>
                 <input type={"file"} onChange={handleSetCategoryImg}/>
                 <AllianceTextField label="Назва" name={"title"} value={categoryForm.title}
-                                   onChange={handleCategoryForm}/>
+                                   onChange={handleCategoryForm} required error={categoryFormErr.title}/>
                 <AllianceTextField label="Посилання на фотографію" name={"imgUrl"} value={categoryForm.imgUrl}
                                    onChange={handleCategoryForm}/>
                 <AllianceTextField label="Опис" name={"description"} value={categoryForm.description}

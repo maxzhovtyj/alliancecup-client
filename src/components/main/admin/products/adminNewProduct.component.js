@@ -2,20 +2,19 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
-
+import useCharacteristics from "../../../../hooks/useCharacteristics";
+import usePackaging from "../../../../hooks/usePackaging";
+import {ProductService} from "../../../../service/ProductService";
 import {fetchCategories} from "../../../../redux/shopRedux/shopFetch";
-import {AdminService} from "../../../../service/AdminService";
 
-import classes from './adminProduct.module.scss'
 import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import AllianceSnackbar from "../../../../UI/snackbar";
 import {AllianceInputLabel, AllianceSelect, AllianceTextField} from "../../../../UI/styles";
 import {FormControl, MenuItem} from "@mui/material";
-import usePackaging from "../../../../hooks/usePackaging";
-import useCharacteristics from "../../../../hooks/useCharacteristics";
-import AdminProductCharacteristicsForm from "./adminProductCharacteristicsForm";
 import AdminProductPackagingForm from "./adminProductPackagingForm";
+import AdminProductCharacteristicsForm from "./adminProductCharacteristicsForm";
+import classes from './adminProduct.module.scss'
 
 function AdminNewProductComponent() {
     const snackbar = useSnackbar()
@@ -102,8 +101,8 @@ function AdminNewProductComponent() {
         setProductFormErr(tmp)
 
         return Object.values(tmp).every(item => item === false) &&
-            AdminService.validateCharacteristics(characteristics, setCharacteristicsErr) &&
-            AdminService.validatePackaging(packaging, setPackagingErr)
+            ProductService.validateCharacteristics(characteristics, setCharacteristicsErr) &&
+            ProductService.validatePackaging(packaging, setPackagingErr)
     }
 
     const newProduct = () => {
@@ -135,7 +134,7 @@ function AdminNewProductComponent() {
         form.append("amountInStock", productForm.amountInStock)
         form.append("price", productForm.price)
 
-        AdminService.addProduct(form).then(res => {
+        ProductService.addProduct(form).then(res => {
             if (res?.status === 200 || res?.status === 201) {
                 snackbar.setMessage("Товар успішно додано")
                 snackbar.handleClick()
@@ -180,12 +179,12 @@ function AdminNewProductComponent() {
                 <AllianceTextField label="Артикул" name={"article"}
                                    value={productForm.article}
                                    onChange={handleProductForm}
-                                   error={productFormErr.article}
+                                   error={productFormErr.article} required
                 />
                 <AllianceTextField label="Назва" name={"productTitle"}
                                    value={productForm.productTitle}
                                    onChange={handleProductForm}
-                                   error={productFormErr.productTitle}
+                                   error={productFormErr.productTitle} required
                 />
                 <AllianceTextField label="Посилання на фотографію" name={"imgUrl"}
                                    value={productForm.imgUrl}
@@ -200,7 +199,7 @@ function AdminNewProductComponent() {
                                    name={"price"}
                                    value={productForm.price}
                                    onChange={handleProductPrice}
-                                   error={productFormErr.price}
+                                   error={productFormErr.price} required
                 />
 
                 <AdminProductCharacteristicsForm

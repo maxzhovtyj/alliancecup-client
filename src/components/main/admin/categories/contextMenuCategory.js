@@ -8,8 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import HideImageRoundedIcon from '@mui/icons-material/HideImageRounded';
 
-import {AdminService} from "../../../../service/AdminService";
-
+import {CategoryService} from "../../../../service/CategoryService";
 
 export default function ContextMenuCategory({item, setMessage, handleClickSnackbar}) {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -31,7 +30,7 @@ export default function ContextMenuCategory({item, setMessage, handleClickSnackb
     }
 
     const handleDelete = () => {
-        AdminService.deleteCategory(item.id).then(res => {
+        CategoryService.deleteCategory(item.id).then(res => {
             if (res.status === 200) {
                 setMessage("Категорію успішно видалено")
                 handleClickSnackbar()
@@ -44,7 +43,7 @@ export default function ContextMenuCategory({item, setMessage, handleClickSnackb
     }
 
     const handleDeleteImage = () => {
-        AdminService.deleteCategoryImage(item.id).then(res => {
+        CategoryService.deleteCategoryImage(item.id).then(res => {
             if (res.status === 200) {
                 setMessage("Фотографію категорії успішно видалено")
                 handleClickSnackbar()

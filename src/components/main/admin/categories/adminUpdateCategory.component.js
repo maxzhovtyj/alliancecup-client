@@ -16,6 +16,8 @@ function AdminUpdateCategoryComponent() {
     const params = useParams()
 
     const snackbar = useSnackbar()
+    const [showImgDialog, setShowImgDialog] = useState(false)
+    const [showFormDialog, setShowFormDialog] = useState(false)
     const [showDialog, setShowDialog] = useState(false)
     const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
 
@@ -41,12 +43,12 @@ function AdminUpdateCategoryComponent() {
 
     const handleCategoryForm = (event) => {
         setCategory({...category, [event.target.name]: event.target.value})
-        setShowDialog(true)
+        setShowFormDialog(true)
     }
 
     const handleSetCategoryImg = (event) => {
         setCategoryImg(event.target.files[0])
-        setShowDialog(true)
+        setShowImgDialog(true)
     }
 
     function updateCategoryImage() {
@@ -57,9 +59,11 @@ function AdminUpdateCategoryComponent() {
 
         CategoryService.updateCategoryImage(form).then(res => {
             if (res?.status === 200 || res?.status === 201) {
-                snackbar.setMessage("Фотографію успішно оновлено")
+                snackbar.setMessage("Фото категорії успішно оновлено")
                 snackbar.handleClick()
-                setShowDialog(false)
+
+                setShowImgDialog(false)
+                setShowDialog(showFormDialog)
             } else {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
@@ -90,6 +94,9 @@ function AdminUpdateCategoryComponent() {
             if (res?.status === 200) {
                 snackbar.setMessage("Категорію успішно оновлено")
                 snackbar.handleClick()
+
+                setShowFormDialog(false)
+                setShowDialog(showImgDialog)
             } else {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
@@ -118,7 +125,7 @@ function AdminUpdateCategoryComponent() {
                 <p>Інформація</p>
 
                 <AllianceTextField label="Назва" name={"categoryTitle"} value={category.categoryTitle}
-                                   onChange={handleCategoryForm} error={categoryErr.categoryTitle}/>
+                                   onChange={handleCategoryForm} error={categoryErr.categoryTitle} required/>
                 <AllianceTextField label="Посилання на фотографію" name={"imgUrl"} value={category.imgUrl || ""}
                                    onChange={handleCategoryForm} error={categoryErr.imgUrl}/>
                 <AllianceTextField label="Опис" name={"description"} value={category.description || ""}
