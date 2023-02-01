@@ -52,6 +52,9 @@ export class AdminService {
                 if (error.response.status === 400) {
                     throw new Error("Ви надали хибні дані")
                 }
+                if (error.response.status === 500) {
+                    throw new Error("Щось пішло не так під час запиту на сервер")
+                }
             })
         } catch (e) {
             return e
@@ -60,7 +63,7 @@ export class AdminService {
 
     static async saveInventoryProducts(inventory) {
         try {
-            return await $api.post(`/api/admin/super/save-inventory`, inventory).catch(function (error) {
+            return await $api.put(`/api/admin/super/save-inventory`, inventory).catch(function (error) {
                 if (error.response.status === 401) {
                     throw new Error("Спочатку увійдіть")
                 }

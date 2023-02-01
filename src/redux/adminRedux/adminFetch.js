@@ -89,7 +89,7 @@ export const fetchProductsToInventory = () => {
         if (response.data === null) {
             // dispatch(cannotLoadInventoriesActionCreator())
         } else {
-            dispatch(getProductsToInventoryActionCreator(response.data))
+            dispatch(getProductsToInventoryActionCreator(response?.data))
         }
     }
 }

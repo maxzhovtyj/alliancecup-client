@@ -18,10 +18,14 @@ import {AdminService} from "../../../../service/AdminService";
 import {useSnackbar} from "../../../../hooks/useSnackbar";
 import AllianceSnackbar from "../../../../UI/snackbar";
 import {UserService} from "../../../../service/UserService";
+import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
+import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
 
 function AdminNewInventoryComponent() {
     const snackbar = useSnackbar()
 
+    const [showDialog, setShowDialog] = useState(false)
+    const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
     const dispatch = useDispatch()
     const products = useSelector(state => state.admin.products)
 
@@ -33,17 +37,18 @@ function AdminNewInventoryComponent() {
 
         if (event.target.name === "realAmount") {
             const productPrice = values[index]["productPrice"]
-            const realAmount = event.target.value
+            const realAmount = parseInt(event.target.value)
             const currentAmount = values[index]["currentAmount"]
             const difference = realAmount - currentAmount
 
             values[index][event.target.name] = Number(realAmount) || 0
-            values[index]["realAmountPrice"] = realAmount * productPrice
-            values[index]["difference"] = difference
-            values[index]["differencePrice"] = difference * productPrice
+            values[index]["realAmountPrice"] = parseFloat((realAmount * productPrice).toFixed(2)) || 0
+            values[index]["difference"] = difference || 0
+            values[index]["differencePrice"] = difference * productPrice || 0
         }
 
         setInventory(values)
+        setShowDialog(true)
     }
 
     useEffect(() => {
@@ -69,6 +74,7 @@ function AdminNewInventoryComponent() {
             if (res?.status === 201 || res?.status === 200) {
                 snackbar.setMessage("Товари успішно проінвентаризовано")
                 snackbar.handleClick()
+                setShowDialog(false)
             } else {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
@@ -76,17 +82,17 @@ function AdminNewInventoryComponent() {
         })
     }
 
-    // TODO
     const saveInventory = () => {
-        // AdminService.saveInventoryProducts(inventory).then(res => {
-        //     if (res?.status === 200) {
-        //         snackbar.setMessage("Інвентаризацію збережено")
-        //         snackbar.handleClick()
-        //     } else {
-        //         snackbar.setMessage(res?.message)
-        //         snackbar.handleClick()
-        //     }
-        // })
+        AdminService.saveInventoryProducts(inventory).then(res => {
+            if (res?.status === 200) {
+                snackbar.setMessage("Інвентаризацію збережено")
+                snackbar.handleClick()
+                setShowDialog(false)
+            } else {
+                snackbar.setMessage(res?.message)
+                snackbar.handleClick()
+            }
+        })
     }
 
     const countInventorySum = (values) => {
@@ -97,14 +103,21 @@ function AdminNewInventoryComponent() {
             }
         }
 
-        return sum
+        return parseFloat(sum.toFixed(2))
     }
 
     return (
         <div>
+            <RouterDialog
+                showDialog={showPrompt}
+                confirmNavigation={confirmNavigation}
+                cancelNavigation={cancelNavigation}
+            />
+
             <p>Нова інвентаризація</p>
+
             <TableContainer component={AlliancePaper} sx={{margin: "2rem 0"}}>
-                <Table sx={{minWidth: 200}} aria-label="simple table">
+                <Table sx={{minWidth: 200}}>
                     <TableHead>
                         <TableRow>
                             <TableCell align={"center"}>Id</TableCell>
@@ -182,6 +195,7 @@ function AdminNewInventoryComponent() {
                     </TableBody>
                 </Table>
             </TableContainer>
+
             <div className={classes.inventoryBottomWrapper}>
                 <div>
                     <span className={classes.inventorySumTitle}>Всього:</span>
@@ -191,6 +205,7 @@ function AdminNewInventoryComponent() {
                         {inventorySum} ₴
                     </span>
                 </div>
+
                 <div className={classes.newInventoryButtons}>
                     <AllianceButton onClick={saveInventory} mb={"2rem"}>
                         Зберегти інвентаризацію
