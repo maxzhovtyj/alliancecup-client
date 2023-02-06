@@ -35,6 +35,8 @@
   position: relative;
 
   img {
+    object-fit: cover;
+    object-position: center;
     border-radius: 0.3125rem;
     z-index: -1;
   }

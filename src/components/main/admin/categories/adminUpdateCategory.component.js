@@ -33,7 +33,7 @@ function AdminUpdateCategoryComponent() {
         description: false,
     })
 
-    const [categoryImg, setCategoryImg] = useState({})
+    const [categoryImg, setCategoryImg] = useState()
 
     useEffect(() => {
         CategoryService.getCategory(params.id).then(res => {
@@ -56,6 +56,8 @@ function AdminUpdateCategoryComponent() {
 
         form.append("file", categoryImg)
         form.append("id", category.id)
+
+        console.log(categoryImg)
 
         CategoryService.updateCategoryImage(form).then(res => {
             if (res?.status === 200 || res?.status === 201) {
@@ -115,7 +117,7 @@ function AdminUpdateCategoryComponent() {
             <div className={classes.updateCategoryImage}>
                 <p>Фотографія</p>
                 <img src={ShoppingService.getImage(category)} alt="img"/>
-                <input type={"file"} onClick={handleSetCategoryImg}/>
+                <input type={"file"} onChange={handleSetCategoryImg}/>
                 <AllianceButton onClick={updateCategoryImage} mt={"1rem"} mb={"1rem"}>Оновити</AllianceButton>
             </div>
 

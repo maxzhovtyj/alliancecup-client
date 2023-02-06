@@ -55,6 +55,7 @@ export class CategoryService {
     }
 
     static async updateCategoryImage(form) {
+        console.log(form)
         try {
             return await $api.put('/api/admin/category-image', form)
                 .catch(function (error) {

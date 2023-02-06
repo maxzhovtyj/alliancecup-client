@@ -53,7 +53,7 @@ function HeaderComponent() {
                     </Link>
                 </li>
                 <li className={classes.slogan}>
-                    Якийсь дуже<br/>крутий слоган
+                    <span>Надійний постачальник <br/> для вашого бізнесу</span>
                 </li>
                 <li className={classes.contactInfo}>
                     <span><img src={pin} alt="pin"/>м.Рівне</span>

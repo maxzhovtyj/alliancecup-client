@@ -1,21 +1,9 @@
 import $api from "../http/http";
-import axios from "axios";
 
 export class ShoppingService {
-    static async fetchImg(url) {
-        const config = {
-            headers:{
-                "Access-Control-Allow-Origin": "*",
-                "Content-Type": "application/json",
-            }
-        };
-
-        return await axios.get(url, config)
-    }
-
     static getImage(item) {
         if (item?.imgUUID) {
-            return $api.get(`http://localhost:9001/images/${item?.imgUUID}`)
+            return `http://localhost:9000/images/${item?.imgUUID}`
         } else if (item?.imgUrl) {
             return item.imgUrl
         } else return "https://www.fil.ion.ucl.ac.uk/wp-content/uploads/2019/05/grey-background-750x500.jpg"
