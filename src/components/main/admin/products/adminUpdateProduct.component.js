@@ -61,11 +61,16 @@ function AdminUpdateProductComponent() {
 
     const [productImg, setProductImg] = useState()
 
+    const [disabledBtn, setDisabledBtn] = useState(false)
+
     useEffect(() => {
         ProductService.getProduct(params.id).then((res) => {
             setProduct(res?.data)
 
-            const chars = Object.entries(res?.data?.characteristics).map(entry => ({name: entry[0], description: entry[1]}))
+            const chars = Object.entries(res?.data?.characteristics).map(entry => ({
+                name: entry[0],
+                description: entry[1]
+            }))
             const charsErr = Object.entries(res?.data?.characteristics).map(() => ({name: false, description: false}))
             setCharacteristics([...chars])
             setCharacteristicsErr([...charsErr])
@@ -122,6 +127,7 @@ function AdminUpdateProductComponent() {
         form.append("file", productImg)
         form.append("id", product.id)
 
+        setDisabledBtn(true)
         ProductService.updateProductImage(form).then(res => {
             if (res?.status === 200) {
                 snackbar.setMessage("Фото успішно оновлено")
@@ -133,6 +139,7 @@ function AdminUpdateProductComponent() {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
             }
+            setDisabledBtn(false)
         })
     }
 
@@ -164,6 +171,7 @@ function AdminUpdateProductComponent() {
             packaging: productPackaging
         }
 
+        setDisabledBtn(true)
         ProductService.updateProduct(productForm).then(res => {
             if (res?.status === 200) {
                 snackbar.setMessage("Товар успішно оновлено")
@@ -175,6 +183,7 @@ function AdminUpdateProductComponent() {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
             }
+            setDisabledBtn(false)
         })
     }
 
@@ -192,7 +201,8 @@ function AdminUpdateProductComponent() {
                 <p>Фотографія</p>
                 <img src={ShoppingService.getImage(product)} alt="img" className={classes.updateProductImg}/>
                 <input type={"file"} onChange={handleSetProductImg}/>
-                <AllianceButton onClick={changeImage} mt={"1rem"} mb={"1rem"}>Зберегти фотографію</AllianceButton>
+                <AllianceButton onClick={changeImage} disabled={disabledBtn} mt={"1rem"} mb={"1rem"}>Зберегти
+                    фотографію</AllianceButton>
             </div>
 
             <Divider/>
@@ -258,10 +268,9 @@ function AdminUpdateProductComponent() {
                         handleRemovePackaging={handleRemovePackaging}
                         packagingErr={packagingErr}
                     />
-
-
                 </FormControl>
-                <AllianceButton onClick={updateProduct} mt={"1rem"} mb={"1rem"}>Оновити товар</AllianceButton>
+                <AllianceButton onClick={updateProduct} disabled={disabledBtn} mt={"1rem"} mb={"1rem"}>Оновити
+                    товар</AllianceButton>
             </div>
 
             <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>

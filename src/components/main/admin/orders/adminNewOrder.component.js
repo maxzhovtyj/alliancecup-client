@@ -220,8 +220,8 @@ function AdminNewOrderComponent() {
                     snackbar.setMessage(res?.message)
                     snackbar.handleClick()
                 }
+                setDisabled(false)
             })
-        setDisabled(false)
     }
 
     // noinspection JSValidateTypes

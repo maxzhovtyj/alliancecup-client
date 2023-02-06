@@ -16,6 +16,8 @@ function AdminNewModeratorComponent() {
     const [showDialog, setShowDialog] = useState(false)
     const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
 
+    const [disabledBtn, setDisabledBtn] = useState(false)
+
     const [signUpForm, setSignUpForm] = useState({
         email: "",
         lastname: "",
@@ -57,6 +59,7 @@ function AdminNewModeratorComponent() {
             middleName: signUpForm.middleName,
         }
 
+        setDisabledBtn(true)
         UserService.signUp(reqForm).then(res => {
             if (res.status === 201 || res.status === 200) {
                 snackbar.setMessage("Користувача успішно створено")
@@ -65,6 +68,7 @@ function AdminNewModeratorComponent() {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
             }
+            setDisabledBtn(false)
         })
     }
 
@@ -143,7 +147,8 @@ function AdminNewModeratorComponent() {
                 </div>
             </FormControl>
 
-            <AllianceButton onClick={signUp} mt={"1rem"} mb={"1rem"}>Зареєструвати модератора</AllianceButton>
+            <AllianceButton onClick={signUp} disabled={disabledBtn} mt={"1rem"} mb={"1rem"}>Зареєструвати
+                модератора</AllianceButton>
 
             <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
         </div>

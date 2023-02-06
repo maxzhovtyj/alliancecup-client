@@ -138,6 +138,8 @@ function AdminNewSupplyComponent() {
         setShowDialog(true)
     }
 
+    const [disabledBtn, setDisabledBtn] = useState(false)
+
     const handleRemoveProduct = (index) => {
         const values = [...products]
         values.splice(index, 1)
@@ -261,6 +263,7 @@ function AdminNewSupplyComponent() {
 
         reqBody.info.supplyTime = `${reqBody.info.supplyTime}:00Z`
 
+        setDisabledBtn(true)
         SupplyService.newSupply(reqBody).then(res => {
             if (res?.status === 200 || res?.status === 201) {
                 snackbar.setMessage("Поставка додана")
@@ -270,6 +273,7 @@ function AdminNewSupplyComponent() {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
             }
+            setDisabledBtn(false)
         })
 
         setShowDialog(true)
@@ -466,7 +470,7 @@ function AdminNewSupplyComponent() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <AllianceButton onClick={createNewSupply} mt={"2rem"} mb={"2rem"}>
+            <AllianceButton onClick={createNewSupply} disabled={disabledBtn} mt={"2rem"} mb={"2rem"}>
                 Створити
             </AllianceButton>
             <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>

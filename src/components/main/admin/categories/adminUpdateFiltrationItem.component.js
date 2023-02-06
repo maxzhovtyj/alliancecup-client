@@ -26,6 +26,8 @@ function AdminUpdateFiltrationItemComponent() {
     const categories = useSelector(state => state.shop.categories)
     const filtrationList = useSelector(state => state.shop.filtrationList)
 
+    const [disabledBtn, setDisabledBtn] = useState(false)
+
     const [radioValue, setRadioValue] = useState("");
 
     const [filtrationItem, setFiltrationItem] = useState({
@@ -43,7 +45,7 @@ function AdminUpdateFiltrationItemComponent() {
         searchKey: false,
         searchCharacteristic: false,
     })
-    const [image, setImage] = useState({})
+    const [image, setImage] = useState()
 
     const params = useParams()
 
@@ -85,6 +87,7 @@ function AdminUpdateFiltrationItemComponent() {
         form.append("id", filtrationItem.id)
         form.append("file", image)
 
+        setDisabledBtn(true)
         FiltrationService.updateFiltrationItemImg(form).then(res => {
             if (res?.status === 200 || res?.status === 201) {
                 snackbar.setMessage("Фотографію успішно оновлено")
@@ -96,6 +99,7 @@ function AdminUpdateFiltrationItemComponent() {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
             }
+            setDisabledBtn(false)
         })
     }
 
@@ -118,6 +122,7 @@ function AdminUpdateFiltrationItemComponent() {
             return
         }
 
+        setDisabledBtn(true)
         FiltrationService.updateFiltrationItem(filtrationItem).then(res => {
             if (res.status === 200) {
                 snackbar.setMessage("Успішно оновлено")
@@ -129,6 +134,7 @@ function AdminUpdateFiltrationItemComponent() {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
             }
+            setDisabledBtn(false)
         })
     }
 
@@ -197,7 +203,8 @@ function AdminUpdateFiltrationItemComponent() {
                 <input type="file" onChange={handleSetFiltrationItemImg}/>
             </FormControl>
 
-            <AllianceButton onClick={updateImage} mt={"1rem"} mb={"1rem"}>Оновити фото</AllianceButton>
+            <AllianceButton onClick={updateImage} disabled={disabledBtn} mt={"1rem"} mb={"1rem"}>Оновити
+                фото</AllianceButton>
 
             <FormControl className={classes.updateFiltrationForm} fullWidth>
                 <p>Інформація</p>
@@ -249,7 +256,8 @@ function AdminUpdateFiltrationItemComponent() {
                                    fullWidth
                 />
             </FormControl>
-            <AllianceButton onClick={updateFiltrationItem} mt={"1rem"} mb={"1rem"}>Оновити</AllianceButton>
+            <AllianceButton onClick={updateFiltrationItem} disabled={disabledBtn} mt={"1rem"}
+                            mb={"1rem"}>Оновити</AllianceButton>
         </div>
     );
 }

@@ -21,6 +21,8 @@ function AdminUpdateCategoryComponent() {
     const [showDialog, setShowDialog] = useState(false)
     const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
 
+    const [disabledBtn, setDisabledBtn] = useState(false)
+
     const [category, setCategory] = useState({
         categoryTitle: "",
         imgUrl: "",
@@ -57,8 +59,7 @@ function AdminUpdateCategoryComponent() {
         form.append("file", categoryImg)
         form.append("id", category.id)
 
-        console.log(categoryImg)
-
+        setDisabledBtn(true)
         CategoryService.updateCategoryImage(form).then(res => {
             if (res?.status === 200 || res?.status === 201) {
                 snackbar.setMessage("Фото категорії успішно оновлено")
@@ -70,6 +71,8 @@ function AdminUpdateCategoryComponent() {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
             }
+
+            setDisabledBtn(false)
         })
     }
 
@@ -92,6 +95,7 @@ function AdminUpdateCategoryComponent() {
             return
         }
 
+        setDisabledBtn(true)
         CategoryService.updateCategory(category).then(res => {
             if (res?.status === 200) {
                 snackbar.setMessage("Категорію успішно оновлено")
@@ -103,6 +107,7 @@ function AdminUpdateCategoryComponent() {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
             }
+            setDisabledBtn(false)
         })
     }
 
@@ -134,7 +139,7 @@ function AdminUpdateCategoryComponent() {
                                    onChange={handleCategoryForm} error={categoryErr.description} multiline rows={2}/>
             </FormControl>
 
-            <AllianceButton onClick={updateCategory} mt={"1rem"} mb={"1rem"}>Оновити</AllianceButton>
+            <AllianceButton onClick={updateCategory} disabled={disabledBtn} mt={"1rem"} mb={"1rem"}>Оновити</AllianceButton>
 
             <AllianceSnackbar message={snackbar.message} handleClose={snackbar.handleClose} open={snackbar.open}/>
         </div>

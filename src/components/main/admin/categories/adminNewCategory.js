@@ -17,6 +17,8 @@ function AdminNewCategory() {
     const [showDialog, setShowDialog] = useState(false)
     const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
 
+    const [disabledBtn, setDisabledBtn] = useState(false)
+
     const dispatch = useDispatch()
 
     const [categoryForm, setCategoryForm] = useState({
@@ -65,6 +67,7 @@ function AdminNewCategory() {
         form.append("imgUrl", categoryForm.imgUrl)
         form.append("description", categoryForm.description)
 
+        setDisabledBtn(true)
         CategoryService.addCategory(form).then(res => {
             if (res?.status === 200 || res?.status === 201) {
                 snackbar.setMessage("Категорію успішно додано")
@@ -74,6 +77,7 @@ function AdminNewCategory() {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
             }
+            setDisabledBtn(false)
         })
     }
 
@@ -94,7 +98,7 @@ function AdminNewCategory() {
                 <AllianceTextField label="Опис" name={"description"} value={categoryForm.description}
                                    onChange={handleCategoryForm} multiline rows={4}/>
             </FormControl>
-            <AllianceButton onClick={newCategory} mt={"1rem"} mb={"1rem"}>Додати</AllianceButton>
+            <AllianceButton onClick={newCategory} mt={"1rem"} mb={"1rem"} disabled={disabledBtn}>Додати</AllianceButton>
             <AllianceSnackbar message={snackbar.message} handleClose={snackbar.handleClose} open={snackbar.open}/>
         </div>
     );

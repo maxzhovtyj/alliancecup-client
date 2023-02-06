@@ -98,14 +98,13 @@ function OrderComponent() {
         ShoppingService.newOrder(makeOrderForm)
             .then((res) => {
                 if (res?.status === 200 || res?.status === 201) {
-                    setDisabled(true)
                     navigate("/")
                 } else {
                     setMessage(res?.message)
                     handleClick()
+                    setDisabled(false)
                 }
             })
-        setDisabled(false)
     }
 
     return (

@@ -59,7 +59,9 @@ function AdminNewProductComponent() {
         handleRemovePackaging,
     } = usePackaging(setShowDialog)
 
-    const [productImg, setProductImg] = useState({})
+    const [productImg, setProductImg] = useState()
+
+    const [disabledBtn, setDisabledBtn] = useState(false)
 
     useEffect(() => {
         dispatch(fetchCategories())
@@ -134,6 +136,7 @@ function AdminNewProductComponent() {
         form.append("amountInStock", productForm.amountInStock)
         form.append("price", productForm.price)
 
+        setDisabledBtn(true)
         ProductService.addProduct(form).then(res => {
             if (res?.status === 200 || res?.status === 201) {
                 snackbar.setMessage("Товар успішно додано")
@@ -143,6 +146,7 @@ function AdminNewProductComponent() {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
             }
+            setDisabledBtn(false)
         })
     }
 
@@ -220,7 +224,7 @@ function AdminNewProductComponent() {
 
             </FormControl>
 
-            <AllianceButton onClick={newProduct} mt={"1rem"} mb={"1rem"}>Додати</AllianceButton>
+            <AllianceButton onClick={newProduct} disabled={disabledBtn} mt={"1rem"} mb={"1rem"}>Додати</AllianceButton>
 
             <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
         </div>

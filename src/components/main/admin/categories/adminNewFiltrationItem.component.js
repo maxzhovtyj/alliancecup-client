@@ -23,6 +23,8 @@ function AdminNewFiltrationItemComponent() {
     const categories = useSelector(state => state.shop.categories)
     const filtrationList = useSelector(state => state.shop.filtrationList)
 
+    const [disabledBtn, setDisabledBtn] = useState(false)
+
     const [value, setValue] = useState("");
 
     const [filtrationForm, setFiltrationForm] = useState({
@@ -70,12 +72,15 @@ function AdminNewFiltrationItemComponent() {
         form.append("searchKey", filtrationForm.searchKey)
         form.append("searchCharacteristic", filtrationForm.searchCharacteristic)
 
+        setDisabledBtn(true)
         FiltrationService.addFiltrationItem(form).then(res => {
             snackbar.setMessage(res?.message)
             snackbar.handleClick()
             if (res?.status === 201 || res?.status === 200) {
                 setShowDialog(false)
             }
+
+            setDisabledBtn(false)
         })
     }
 
@@ -179,7 +184,8 @@ function AdminNewFiltrationItemComponent() {
                 />
             </FormControl>
 
-            <AllianceButton onClick={newFiltrationItem} mt={"1rem"} mb={"1rem"}>Додати</AllianceButton>
+            <AllianceButton onClick={newFiltrationItem} mt={"1rem"} mb={"1rem"}
+                            disabled={disabledBtn}>Додати</AllianceButton>
             <AllianceSnackbar message={snackbar.message} handleClose={snackbar.handleClose} open={snackbar.open}/>
         </div>
     );

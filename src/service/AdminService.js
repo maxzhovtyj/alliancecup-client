@@ -178,7 +178,7 @@ export class AdminService {
         try {
             return await $fileApi.get(`/api/invoice?id=${orderId}`)
         } catch (e) {
-            console.log(e)
+            return e
         }
     }
 

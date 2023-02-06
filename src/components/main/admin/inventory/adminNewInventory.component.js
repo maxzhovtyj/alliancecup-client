@@ -29,6 +29,8 @@ function AdminNewInventoryComponent() {
     const dispatch = useDispatch()
     const products = useSelector(state => state.admin.products)
 
+    const [disabledBtn, setDisabledBtn] = useState(false)
+
     const [inventory, setInventory] = useState([])
     const [inventorySum, setInventorySum] = useState(0)
 
@@ -70,6 +72,7 @@ function AdminNewInventoryComponent() {
     }, [products])
 
     const doInventory = () => {
+        setDisabledBtn(true)
         AdminService.doInventory(inventory).then(res => {
             if (res?.status === 201 || res?.status === 200) {
                 snackbar.setMessage("Товари успішно проінвентаризовано")
@@ -79,10 +82,12 @@ function AdminNewInventoryComponent() {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
             }
+            setDisabledBtn(false)
         })
     }
 
     const saveInventory = () => {
+        setDisabledBtn(true)
         AdminService.saveInventoryProducts(inventory).then(res => {
             if (res?.status === 200) {
                 snackbar.setMessage("Інвентаризацію збережено")
@@ -92,6 +97,7 @@ function AdminNewInventoryComponent() {
                 snackbar.setMessage(res?.message)
                 snackbar.handleClick()
             }
+            setDisabledBtn(false)
         })
     }
 
@@ -207,11 +213,11 @@ function AdminNewInventoryComponent() {
                 </div>
 
                 <div className={classes.newInventoryButtons}>
-                    <AllianceButton onClick={saveInventory} mb={"2rem"}>
+                    <AllianceButton onClick={saveInventory} mb={"2rem"} disabled={disabledBtn}>
                         Зберегти інвентаризацію
                     </AllianceButton>
 
-                    <AllianceButton onClick={doInventory} mb={"2rem"}>
+                    <AllianceButton onClick={doInventory} mb={"2rem"} disabled={disabledBtn}>
                         Провести інвентаризацію
                     </AllianceButton>
                 </div>

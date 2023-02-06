@@ -3,8 +3,8 @@ import FiltrationItem from "./filtrationItem";
 import classes from "./filtration.module.scss"
 
 function FiltrationListComponent({filtrationList, handleCharacteristic}) {
-    if (!filtrationList) {
-        return ""
+    if (!filtrationList || filtrationList.length === 0) {
+        return <></>
     } else return (
         <div className={classes.filtrationList}>
             {
