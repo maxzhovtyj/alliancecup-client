@@ -57,7 +57,7 @@ function HeaderComponent() {
                 </li>
                 <li className={classes.contactInfo}>
                     <span><img src={pin} alt="pin"/>м.Рівне</span>
-                    <span>+38(096) 612-15-16</span>
+                    <span>+38 (096) 612-15-16</span>
                     <span>allince.cup.ua@gmail.com</span>
                 </li>
                 <li className={classes.cart}>
