@@ -3,6 +3,9 @@
 # IDE
 .idea
 
+# config file
+/src/config.json
+
 # dependencies
 /node_modules
 /.pnp

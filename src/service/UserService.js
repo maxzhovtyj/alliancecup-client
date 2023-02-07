@@ -1,5 +1,7 @@
-import $api, {API_URL} from "../http/http";
+import $api from "../http/http";
 import axios from "axios";
+
+import configData from "../config.json"
 
 export class UserService {
     static async orders() {
@@ -82,7 +84,7 @@ export class UserService {
                 '/api/client/restore-password',
                 newPasswordForm,
                 {
-                    baseURL: API_URL,
+                    baseURL: configData.API_URL,
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

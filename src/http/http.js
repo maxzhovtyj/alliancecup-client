@@ -2,18 +2,17 @@ import axios from 'axios'
 
 import jwtDecode from "jwt-decode";
 import dayjs from "dayjs";
-
-export const API_URL = `http://localhost:8000`
+import configData from "../config.json"
 
 const $api = axios.create({
     withCredentials: true,
-    baseURL: API_URL,
+    baseURL: configData.API_URL,
 })
 
 export const $fileApi = axios.create({
     responseType: "arraybuffer",
     withCredentials: true,
-    baseURL: API_URL,
+    baseURL: configData.API_URL,
 })
 
 export const storageName = "userData"
@@ -29,7 +28,8 @@ $api.interceptors.request.use(async (config) => {
     const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1
     if (!isExpired) return config
 
-    const response = await axios.post(`${API_URL}/auth/refresh`, {}, {withCredentials: true})
+    const refreshUrl = `${configData.API_URL}/auth/refresh`
+    const response = await axios.post(refreshUrl, {}, {withCredentials: true})
         .catch(function () {
             localStorage.removeItem(storageName)
             window.location.reload()
