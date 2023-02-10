@@ -102,9 +102,15 @@ footer {
   font-size: 1rem;
   color: #B7B7B7;
   margin-bottom: .5rem;
+  img {
+    margin-right: 5px;
+  }
   @media all and (max-width: 768px) {
     font-size: .625rem;
     margin-bottom: .375rem;
+    img {
+      margin-right: 2px;
+    }
   }
   @media all and (max-width: 375px) {
     img {

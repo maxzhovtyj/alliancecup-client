@@ -19,9 +19,8 @@ function FooterComponent() {
                     <p className={classes.logo}>AllianceCup</p>
                     <p className={classes.text}>Продаж паперових<br/>стаканчиків<br/>і не тільки</p>
                     <span className={classes.copyright}>
-                    <img src={copyright} alt="copyright"/>
-                    AllianceCup. All rights reserved
-                </span>
+                        <img src={copyright} alt="copyright"/> AllianceCup. All rights reserved
+                    </span>
                     <ul className={classes.socials}>
                         <li>
                             <a href="https://www.instagram.com/alliance_cup/">
