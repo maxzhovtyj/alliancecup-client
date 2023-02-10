@@ -1,20 +1,21 @@
 import {useEffect} from 'react';
-import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import {AlliancePaper} from "../../../../UI/AlliancePaper";
-import AllianceSnackbar from "../../../../UI/snackbar";
+import {useSnackbar} from "../../../../hooks/useSnackbar";
+import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchCategories, fetchFiltrationItems} from "../../../../redux/shopRedux/shopFetch";
-import {useSnackbar} from "../../../../hooks/useSnackbar";
+
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {AllianceTextField} from "../../../../UI/styles";
+
+import {AlliancePaper} from "../../../../UI/AlliancePaper";
 import ContextMenuCategory from "./contextMenuCategory";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
-import {useNavigate} from "react-router-dom";
-import {AllianceTextField} from "../../../../UI/styles";
+import AllianceSnackbar from "../../../../UI/snackbar";
 import ContextMenuFiltrationItem from "./contextMenuFiltrationItem";
 
 function AdminCategoriesComponent() {
     const snackbar = useSnackbar()
     const navigate = useNavigate()
-
 
     const dispatch = useDispatch()
     const categories = useSelector(state => state.shop.categories)

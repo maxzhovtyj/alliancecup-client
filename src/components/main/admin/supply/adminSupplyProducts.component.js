@@ -16,7 +16,6 @@ function AdminSupplyProductsComponent() {
         dispatch(fetchSupplyProducts(id))
     }, [dispatch, id])
 
-
     return (
         <div>
             <TableContainer component={AlliancePaper} sx={{margin: "2rem 0"}}>

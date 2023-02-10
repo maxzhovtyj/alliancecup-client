@@ -9,11 +9,15 @@ import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import {UserService} from "../../../../service/UserService";
 import {AlliancePaper} from "../../../../UI/AlliancePaper";
+import {useSnackbar} from "../../../../hooks/useSnackbar";
+import AllianceSnackbar from "../../../../UI/snackbar";
 
 function AdminSupplyComponent() {
     const dispatch = useDispatch()
     const supply = useSelector(state => state.admin.supply)
     const loadMoreStatus = useSelector(state => state.admin.statusNoMoreSupply)
+    const snackbar = useSnackbar()
+
     useEffect(() => {
         dispatch(fetchSupply())
     }, [dispatch])
@@ -21,6 +25,7 @@ function AdminSupplyComponent() {
     const loadMore = () => {
         dispatch(fetchMoreSupply(supply[supply.length - 1].createdAt))
     }
+
     return (
         <div>
             <NavLink to={"/user/admin/new-supply"}>
@@ -42,7 +47,7 @@ function AdminSupplyComponent() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {
+                        <>{
                             (supply.length !== 0)
                                 ?
                                 supply.map((row) => (
@@ -61,7 +66,7 @@ function AdminSupplyComponent() {
                                             {UserService.truncTimestamp(row.createdAt)}
                                         </TableCell>
                                         <TableCell align="center">
-                                            <ContextMenuSupply item={row}/>
+                                            <ContextMenuSupply item={row} snackbar={snackbar}/>
                                         </TableCell>
                                     </TableRow>
                                 ))
@@ -69,16 +74,19 @@ function AdminSupplyComponent() {
                                 <TableRow>
                                     <TableCell align="left">Постачань не знайдено</TableCell>
                                 </TableRow>
-                        }
+                        }</>
                     </TableBody>
                 </Table>
             </TableContainer>
+
             {
                 loadMoreStatus ? "" :
                     <AllianceButton onClick={loadMore} mb={"2rem"}>
                         Завантажити ще
                     </AllianceButton>
             }
+
+            <AllianceSnackbar handleClose={snackbar.handleClose} message={snackbar.message} open={snackbar.open}/>
         </div>
     );
 }

@@ -31,7 +31,7 @@ export const fetchCategories = () => {
 
 export const fetchFiltrationItems = () => {
     return async (dispatch) => {
-        const response = await $api.get('/api/admin/characteristics')
+        const response = await $api.get('/api/admin/filtration-list')
         dispatch(getFiltrationListActionCreator(response.data))
     }
 }

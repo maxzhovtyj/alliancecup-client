@@ -7,8 +7,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import InventoryIcon from '@mui/icons-material/Inventory';
 
 import {NavLink} from "react-router-dom";
+import {SupplyService} from "../../../../service/SupplyService";
 
-export default function ContextMenuSupply({item}) {
+export default function ContextMenuSupply({item, snackbar}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
@@ -21,8 +22,18 @@ export default function ContextMenuSupply({item}) {
     };
 
     const handleDelete = () => {
-        setAnchorEl(null);
+        handleClose()
+        SupplyService.deleteSupply(item.id).then(res => {
+            if (res?.status === 200) {
+                snackbar.setMessage("Поставку успішно видалено")
+            } else {
+                snackbar.setMessage(res?.message)
+            }
+
+            snackbar.handleClick()
+        })
     }
+
     return (
         <div>
             <IconButton

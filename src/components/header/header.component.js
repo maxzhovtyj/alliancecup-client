@@ -23,9 +23,21 @@ function HeaderComponent() {
             <div className={classes.topBar}>
                 <div className={classes.topBarInfo}>
                     <ul className={classes.socials}>
-                        <li><a href={"google.com"}><img src={instIcon} alt="inst"/></a></li>
-                        <li><a href={"google.com"}><img src={tgIcon} alt="tg"/></a></li>
-                        <li><a href={"google.com"}><img src={vbIcon} alt="vb"/></a></li>
+                        <li>
+                            <a href={"https://www.instagram.com/alliance_cup/"} target={"_blank"} rel="noreferrer">
+                                <img src={instIcon} alt="inst"/>
+                            </a>
+                        </li>
+                        <li>
+                            <a href={"https://www.instagram.com/alliance_cup/"} target={"_blank"} rel="noreferrer">
+                                <img src={tgIcon} alt="tg"/>
+                            </a>
+                        </li>
+                        <li>
+                            <a href={"https://www.instagram.com/alliance_cup/"} target={"_blank"} rel="noreferrer">
+                                <img src={vbIcon} alt="vb"/>
+                            </a><
+                        /li>
                     </ul>
                     <div className={classes.topBarAuth}>
                         <AuthDialogs/>

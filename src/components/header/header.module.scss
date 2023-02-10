@@ -95,7 +95,7 @@
     grid-template-rows: 1fr 1fr;
     grid-template-areas:
             "logo contactInfo favourites"
-            "slogan contactInfo cart";
+            "logo contactInfo cart";
   }
 }
 
@@ -105,8 +105,9 @@
   align-items: center;
   justify-content: center;
   @media all and (max-width: 625px) {
-    font-size: 1.2rem;
+    font-size: 1rem;
     grid-area: logo;
+    margin: auto 0;
   }
 }
 
@@ -118,7 +119,7 @@
     font-size: 1rem;
   }
   @media all and (max-width: 625px) {
-    grid-area: slogan;
+    display: none;
   }
 }
 
