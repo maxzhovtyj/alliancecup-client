@@ -1,7 +1,8 @@
 @import '../../variables.scss';
 
 footer {
-  @include horizontal-lines;
+  border-bottom: 1px solid $alliance-grey;
+  border-top: 1px solid $alliance-grey;
 }
 
 .footerWrapper {
@@ -102,9 +103,11 @@ footer {
   font-size: 1rem;
   color: #B7B7B7;
   margin-bottom: .5rem;
+
   img {
     margin-right: 5px;
   }
+
   @media all and (max-width: 768px) {
     font-size: .625rem;
     margin-bottom: .375rem;
@@ -202,7 +205,7 @@ footer {
 
   @media all and (max-width: 1440px) {
     p {
-      font-size: 1.125rem ;
+      font-size: 1.125rem;
     }
   }
   @media all and (max-width: 1024px) {
