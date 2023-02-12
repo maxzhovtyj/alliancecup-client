@@ -19,7 +19,7 @@ function HeaderComponent() {
     const {isAuth} = useContext(AuthContext)
 
     return (
-        <header className={classes.headerWrapper}>
+        <>
             <div className={classes.topBar}>
                 <div className={classes.topBarInfo}>
                     <ul className={classes.socials}>
@@ -58,32 +58,34 @@ function HeaderComponent() {
                 </div>
                 <BurgerMenu/>
             </div>
-            <ul className={classes.headerList}>
-                <li className={classes.logo}>
-                    <Link to="/">
-                        <span>AllianceCup</span>
-                    </Link>
-                </li>
-                <li className={classes.slogan}>
-                    <span>Надійний постачальник <br/> для вашого бізнесу</span>
-                </li>
-                <li className={classes.contactInfo}>
-                    <span><img src={pin} alt="pin"/>м.Рівне</span>
-                    <span>+38 (096) 612-15-16</span>
-                    <span>allince.cup.ua@gmail.com</span>
-                </li>
-                <li className={classes.cart}>
-                    <Link to={"/cart"}>
-                        <span><img src={cart} alt="cart"/>Кошик</span>
-                    </Link>
-                </li>
-                <li className={classes.favourites}>
-                    <Link to={"/favourites"}>
-                        <span><img src={star} alt="star"/>Обрані</span>
-                    </Link>
-                </li>
-            </ul>
-        </header>
+            <header className={classes.headerWrapper}>
+                <ul className={classes.headerList}>
+                    <li className={classes.logo}>
+                        <Link to="/">
+                            <span>AllianceCup</span>
+                        </Link>
+                    </li>
+                    <li className={classes.slogan}>
+                        <span>Надійний постачальник <br/> для вашого бізнесу</span>
+                    </li>
+                    <li className={classes.contactInfo}>
+                        <span><img src={pin} alt="pin"/>м.Рівне</span>
+                        <span>+38 (096) 612-15-16</span>
+                        <span>allince.cup.ua@gmail.com</span>
+                    </li>
+                    <li className={classes.cart}>
+                        <Link to={"/cart"}>
+                            <span><img src={cart} alt="cart"/>Кошик</span>
+                        </Link>
+                    </li>
+                    <li className={classes.favourites}>
+                        <Link to={"/favourites"}>
+                            <span><img src={star} alt="star"/>Обрані</span>
+                        </Link>
+                    </li>
+                </ul>
+            </header>
+        </>
     );
 }
 

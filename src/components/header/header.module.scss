@@ -31,6 +31,11 @@
   padding-bottom: 8px;
   background-color: $alliance-orange;
   border-bottom: 1px solid $alliance-grey;
+  @media all and (max-width: 625px) {
+    z-index: 1000;
+    position: sticky;
+    top: 0;
+  }
   @media all and (max-width: 425px) {
     padding-top: 0;
     padding-bottom: 0;

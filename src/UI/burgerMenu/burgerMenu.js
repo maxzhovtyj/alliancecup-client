@@ -8,12 +8,13 @@ import {IconButton} from "@mui/material";
 import {NavLink} from "react-router-dom";
 
 export default function BurgerMenu() {
-
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -44,6 +45,10 @@ export default function BurgerMenu() {
                 </MenuItem>
 
                 <MenuItem onClick={handleClose}>
+                    <NavLink to="/user">Кабінет</NavLink>
+                </MenuItem>
+
+                <MenuItem onClick={handleClose}>
                     <NavLink to="/about-us">Про нас</NavLink>
                 </MenuItem>
 
@@ -57,10 +62,6 @@ export default function BurgerMenu() {
 
                 <MenuItem onClick={handleClose}>
                     <NavLink to="/for-wholesalers">Для оптовиків</NavLink>
-                </MenuItem>
-
-                <MenuItem onClick={handleClose}>
-                    <NavLink to="/for-wholesalers">Відгуки</NavLink>
                 </MenuItem>
             </Menu>
         </div>
