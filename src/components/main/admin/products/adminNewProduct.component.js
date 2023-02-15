@@ -163,8 +163,10 @@ function AdminNewProductComponent() {
             <FormControl className={classes.newProductInfo}>
                 <input type={"file"} onChange={handleSetProductImg}/>
                 <FormControl sx={{minWidth: 200}}>
-                    <AllianceInputLabel>Категорія</AllianceInputLabel>
+                    <AllianceInputLabel id={"addSelectCategory"}>Категорія</AllianceInputLabel>
                     <AllianceSelect
+                        label={"Категорія"}
+                        labelId={"addSelectCategory"}
                         defaultValue={""}
                         name="categoryTitle"
                         value={productForm.categoryTitle}

@@ -211,8 +211,10 @@ function AdminUpdateProductComponent() {
                 <p className={classes.updateProductFormTitle}>Інформація</p>
                 <FormControl className={classes.updateProductForm} fullWidth>
                     <FormControl sx={{minWidth: 200}}>
-                        <AllianceInputLabel>Категорія</AllianceInputLabel>
+                        <AllianceInputLabel id={"selectCategory"}>Категорія</AllianceInputLabel>
                         <AllianceSelect
+                            labelId={"selectCategory"}
+                            label={"Категорія"}
                             name="categoryTitle"
                             defaultValue={""}
                             value={product.categoryTitle || ""}

@@ -6,15 +6,14 @@ import {
     fetchMoreProducts,
     fetchProducts
 } from "../../../redux/shopRedux/shopFetch";
-import {Link, useParams, useSearchParams} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 
 import classes from './products.module.scss'
 import AllianceSnackbar from "../../../UI/snackbar";
 import {useSnackbar} from "../../../hooks/useSnackbar";
 import ProductsListComponent from "./productsList.component";
 import FiltrationListComponent from "./filtration/filtrationList.component";
-import RangeSliderComponent from "./rangeSlider.component";
-import SearchBar from "../../../UI/searchBar/searchBar";
+import ProductsPageSidebar from "./sidebar/productsPageSidebar";
 
 const parentCategory = "category_id"
 const parentFiltrationList = "filtration_list_id"
@@ -29,8 +28,6 @@ function ProductsComponent() {
     const products = useSelector(state => state.shop.products)
     const cannotLoadMore = useSelector(state => state.shop.statusNoMoreProducts)
     const filtrationList = useSelector(state => state.shop.filtrationList)
-
-    const [search, setSearch] = useState(queryParams.get("search") || "")
 
     const [parentName, setParentName] = useState(
         queryParams.get("filtrationId") === null
@@ -97,21 +94,6 @@ function ProductsComponent() {
         dispatch(fetchFiltrationList(parentName, filtrationId))
     }, [dispatch, filtrationId, getQueryPriceParam, parentName, queryParams, searchParams])
 
-    const handleOnSearch = (e) => {
-        e.preventDefault()
-
-        let searchParams = {
-            categoryId: queryParams.get("categoryId"),
-            search: search
-        }
-
-        if (queryParams.get("filtrationId")) searchParams["filtrationId"] = queryParams.get("filtrationId")
-        if (queryParams.get("filtration")) searchParams["filtration"] = queryParams.get("filtration")
-        if (queryParams.get("price")) searchParams["price"] = queryParams.get("price")
-
-        setQueryParams(searchParams)
-    }
-
     function loadMore() {
         let lastCreatedAt = products[products.length - 1].createdAt
         dispatch(fetchMoreProducts({
@@ -124,8 +106,9 @@ function ProductsComponent() {
         }))
     }
 
-    function useSetCategoryId() {
-        setSearchParams({...searchParams, id: useParams().id})
+    function handleSetCategoryId(id) {
+        setSearchParams({...searchParams, id})
+        setQueryParams({categoryId: id})
     }
 
     const pushFiltration = (searchKey, searchCharacteristic) => {
@@ -198,40 +181,14 @@ function ProductsComponent() {
 
     return (
         <>
-            <div className={classes.searchBar}>
-                <SearchBar value={search} setValue={setSearch} onSearch={handleOnSearch}/>
-            </div>
             <div className={classes.productsPageWrapper}>
-                <div className={classes.sidebar}>
-                    <div className={classes.sidebarWrapper}>
-                        <div className={classes.sidebarContainer}>
-                            <div className={classes.priceRange}>
-                                <p className={classes.priceRangeTitle}>Ціна</p>
-                                <RangeSliderComponent rangePrice={rangePrice}
-                                                      onPriceRangeChange={onPriceRangeChange}
-                                                      onRangeCommitted={onRangeCommitted}
-                                                      applyRangePrice={applyRangePrice}
-                                                      rangePriceForm={rangePriceForm}
-                                                      handlePriceRangeForm={handlePriceRangeForm}
-                                                      max={getQueryParamMaxPrice()}
-                                />
-                            </div>
-                            <div className={classes.catalog}>
-                                {
-                                    categories
-                                        .map(item =>
-                                            <Link to={`/products?categoryId=${item.id}`}
-                                                  key={item.id}
-                                                  onClick={useSetCategoryId}
-                                            >
-                                                <p className={classes.catalogItem}>{item.categoryTitle}</p>
-                                            </Link>
-                                        )
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ProductsPageSidebar categories={categories}
+                                     applyRangePrice={applyRangePrice} rangePrice={rangePrice}
+                                     getQueryParamMaxPrice={getQueryParamMaxPrice}
+                                     handlePriceRangeForm={handlePriceRangeForm} onPriceRangeChange={onPriceRangeChange}
+                                     rangePriceForm={rangePriceForm} onRangeCommitted={onRangeCommitted}
+                                     handleSetCategoryId={handleSetCategoryId}
+                />
                 <div className={classes.productsWrapper}>
                     <FiltrationListComponent
                         filtrationList={filtrationList}
