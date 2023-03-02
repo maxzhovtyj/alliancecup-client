@@ -127,7 +127,6 @@ export class ShoppingService {
                 paymentTypes: response.data.paymentTypes
             }
         } catch (e) {
-            console.log(e.message)
             return (e.message)
         }
     }

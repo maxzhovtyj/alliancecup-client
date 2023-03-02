@@ -2,8 +2,13 @@ import ProductItem from "./productItem";
 import AllianceButton from "../../../UI/allianceCupButton/allianceButton";
 
 import classes from "./products.module.scss";
+import CircularIndeterminate from "../../../UI/CircularProgress";
 
-function ProductsListComponent({products, setMessage, handleClick, cannotLoadMore, loadMore}) {
+function ProductsListComponent({products, setMessage, handleClick, cannotLoadMore, loadMore, isLoading}) {
+    if (isLoading) {
+        return <CircularIndeterminate/>
+    }
+
     if (!products) {
         return <div className={classes.noItemsTitle}>Товарів не знайдено</div>
     } else return (

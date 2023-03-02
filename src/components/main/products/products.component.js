@@ -28,6 +28,7 @@ function ProductsComponent() {
     const products = useSelector(state => state.shop.products)
     const cannotLoadMore = useSelector(state => state.shop.statusNoMoreProducts)
     const filtrationList = useSelector(state => state.shop.filtrationList)
+    const isLoading = useSelector(state => state.shop.isFetching)
 
     const [parentName, setParentName] = useState(
         queryParams.get("filtrationId") === null
@@ -196,6 +197,7 @@ function ProductsComponent() {
                         handleCharacteristic={handleCharacteristic}
                     />
                     <ProductsListComponent
+                        isLoading={isLoading}
                         products={products}
                         loadMore={loadMore}
                         cannotLoadMore={cannotLoadMore}

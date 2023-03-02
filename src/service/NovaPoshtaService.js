@@ -18,7 +18,6 @@ export class NovaPoshtaService {
 
             return JSON.parse(JSON.stringify(response.data.data))
         } catch (e) {
-            console.log(e)
             return e
         }
     }
@@ -38,7 +37,6 @@ export class NovaPoshtaService {
 
             return JSON.parse(JSON.stringify(response.data.data))
         } catch (e) {
-            console.log(e)
             return e
         }
     }

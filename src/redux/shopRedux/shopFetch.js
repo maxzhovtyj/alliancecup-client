@@ -2,7 +2,7 @@ import {
     cannotLoadProductsActionCreator, clearFiltrationListActionCreator,
     getCategoriesActionCreator, getFiltrationListActionCreator,
     getMoreProductsActionCreator,
-    getProductsActionCreator, loadProductsActionCreator, setFetchingActionCreator, setNotFetchingActionCreator
+    getProductsActionCreator, setFetchingActionCreator, setNotFetchingActionCreator
 } from "./shopReducer";
 import $api from "../../http/http";
 import {ProductService} from "../../service/ProductService";
@@ -46,13 +46,16 @@ export const fetchProducts = ({
                               }) => {
 
     return async (dispatch) => {
-        dispatch(loadProductsActionCreator())
+        dispatch(setFetchingActionCreator())
+
         ProductService.getProducts(id, createdAt, price, characteristic, search, isActive).then(res => {
             if (!res || res?.status !== 200) {
                 dispatch(getProductsActionCreator([]))
             }
             dispatch(getProductsActionCreator(res?.data))
         })
+
+        dispatch(setNotFetchingActionCreator())
     }
 }
 
