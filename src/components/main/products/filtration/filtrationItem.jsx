@@ -5,8 +5,7 @@ function FiltrationItem({onClick, item: {filtrationTitle, imgUrl, imgUUID, searc
     return (
         <div onClick={() => onClick(searchKey, searchCharacteristic, id)} className={classes.filtrationItem}>
             <img className={classes.filtrationItemImg} src={ShoppingService.getImage({imgUUID, imgUrl})} alt="img"/>
-            <div className={classes.filtrationBgItem}/>
-            <p>{filtrationTitle}</p>
+            <p className={classes.filtrationItemTitle}>{filtrationTitle}</p>
         </div>
     );
 }
