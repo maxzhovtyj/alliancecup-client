@@ -10,14 +10,17 @@ function ProductsPageSidebar({
                                  handlePriceRangeForm,
                                  getQueryParamMaxPrice,
                                  categories,
-                                 handleSetCategoryId
+                                 handleSetCategoryId,
+                                 currentCategoryId,
                              }) {
+    currentCategoryId = Number(currentCategoryId)
+
     return (
         <div className={classes.sidebar}>
             <div className={classes.sidebarWrapper}>
                 <div className={classes.sidebarContainer}>
+                    <h4 className={classes.categoriesTitle}>Ціна</h4>
                     <div className={classes.priceRange}>
-                        <p className={classes.priceRangeTitle}>Ціна</p>
                         <RangeSliderComponent rangePrice={rangePrice}
                                               onPriceRangeChange={onPriceRangeChange}
                                               onRangeCommitted={onRangeCommitted}
@@ -27,12 +30,23 @@ function ProductsPageSidebar({
                                               max={getQueryParamMaxPrice()}
                         />
                     </div>
+                    <h4 className={classes.categoriesTitle}>Категорії</h4>
                     <div className={classes.catalog}>
                         {
                             categories
                                 .map(item =>
-                                    <p key={item.id} onClick={() => handleSetCategoryId(item.id)}
-                                       className={classes.catalogItem}>{item.categoryTitle}</p>
+                                    <p key={item.id}
+                                       onClick={() => handleSetCategoryId(item.id)}
+                                       className={
+                                           [
+                                               classes.catalogItem,
+                                               (currentCategoryId === item.id) ? classes.activeCategory : ""
+                                           ].join(" ")
+                                       }
+                                    >
+                                        {item.id}
+                                        {item.categoryTitle}
+                                    </p>
                                 )
                         }
                     </div>

@@ -188,6 +188,7 @@ function ProductsComponent() {
                                      handlePriceRangeForm={handlePriceRangeForm} onPriceRangeChange={onPriceRangeChange}
                                      rangePriceForm={rangePriceForm} onRangeCommitted={onRangeCommitted}
                                      handleSetCategoryId={handleSetCategoryId}
+                                     currentCategoryId={searchParams.id}
                 />
                 <div className={classes.productsWrapper}>
                     <FiltrationListComponent
