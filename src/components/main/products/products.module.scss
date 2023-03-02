@@ -41,13 +41,14 @@
   font-weight: 300;
   margin: 1rem 0;
   font-size: 1.5rem;
+  text-align: center;
 }
 
 .catalog {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1rem;
+  gap: .5rem;
   font-size: 1.5rem;
   font-family: 'Roboto', serif;
   font-weight: 300;
@@ -65,7 +66,10 @@
 
 .catalogItem {
   cursor: pointer;
-  transition: 300ms ease-in-out;
+  padding: .5rem;
+  transition: .3ms ease-in-out;
+  width: 100%;
+  border-radius: .5rem;
 
   &:hover {
     color: $alliance-orange;
@@ -73,8 +77,11 @@
 }
 
 .activeCategory {
-  color: $alliance-orange !important;
-  text-decoration: underline !important;
+  background-color: $alliance-orange !important;
+  color: white;
+  &:hover {
+    color: white;
+  }
 }
 
 .productsWrapper {
@@ -157,9 +164,14 @@
   font-weight: 300;
 }
 
-.productsList {
+.productsListWrapper {
   display: flex;
   justify-content: center;
+}
+
+.productsList {
+  display: flex;
+  flex: 1;
   flex-wrap: wrap;
   gap: 1rem;
 

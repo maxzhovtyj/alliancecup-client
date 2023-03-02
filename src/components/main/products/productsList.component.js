@@ -13,17 +13,19 @@ function ProductsListComponent({products, setMessage, handleClick, cannotLoadMor
         return <div className={classes.noItemsTitle}>Товарів не знайдено</div>
     } else return (
         <div>
-            <div className={classes.productsList}>
-                {
-                    products.map(
-                        item => <ProductItem
-                            key={item.article}
-                            product={item}
-                            setMessage={setMessage}
-                            handleClick={handleClick}
-                        />
-                    )
-                }
+            <div className={classes.productsListWrapper}>
+                <div className={classes.productsList}>
+                    {
+                        products.map(
+                            item => <ProductItem
+                                key={item.article}
+                                product={item}
+                                setMessage={setMessage}
+                                handleClick={handleClick}
+                            />
+                        )
+                    }
+                </div>
             </div>
             <div className={classes.productsListLoadMoreBtn}>
                 {
