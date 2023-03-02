@@ -44,7 +44,6 @@ function ProductsPageSidebar({
                                            ].join(" ")
                                        }
                                     >
-                                        {item.id}
                                         {item.categoryTitle}
                                     </p>
                                 )
