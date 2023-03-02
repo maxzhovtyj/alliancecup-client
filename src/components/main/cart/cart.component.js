@@ -1,6 +1,6 @@
-import {useContext, useEffect} from 'react';
+import {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {AuthContext} from "../../../context/AuthContext";
+import {useAuthContext} from "../../../context/AuthContext";
 import {fetchUserCart} from "../../../redux/userCartRedux/fetchUserCart";
 import CartItem from "./cartItem";
 
@@ -23,7 +23,7 @@ const EmptyCart = () => {
 }
 
 function CartComponent() {
-    const {isAuth} = useContext(AuthContext)
+    const {isAuth} = useAuthContext()
 
     const dispatch = useDispatch()
     const cartPage = useSelector(state => state.cartPage)

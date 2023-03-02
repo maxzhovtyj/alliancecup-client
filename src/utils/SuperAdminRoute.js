@@ -1,9 +1,8 @@
-import {useContext} from "react";
-import {AuthContext} from "../context/AuthContext";
+import {useAuthContext} from "../context/AuthContext";
 import {Navigate, Outlet} from "react-router-dom";
 
 function SuperAdminRoute() {
-    const {isAdmin} = useContext(AuthContext)
+    const {isAdmin} = useAuthContext()
 
     return (
         (isAdmin) ? <Outlet/> : <Navigate to={"/permission-forbidden"}/>

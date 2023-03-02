@@ -1,17 +1,18 @@
-import {useContext, useState} from "react";
-
-import classes from '../../UI/dialogs/authDialogs/authDialogs.module.scss'
-import enter from "../../assets/svgs/log-in.svg";
-
-import SignUpDialog from "../../UI/dialogs/authDialogs/signUpDialog";
-import SignInDialog from "../../UI/dialogs/authDialogs/signInDialog";
-import {AuthContext} from "../../context/AuthContext";
-import {UserService} from "../../service/UserService";
-import ForgotPasswordDialog from "../../UI/dialogs/forgotPasswordDialog/forgotPasswordDialog";
+import {useState} from "react";
+import {useAuthContext} from "../../context/AuthContext";
 import {useSnackbarContext} from "../../context/SnackbarContext";
 
+import enter from "../../assets/svgs/log-in.svg";
+import SignUpDialog from "../../UI/dialogs/authDialogs/signUpDialog";
+import SignInDialog from "../../UI/dialogs/authDialogs/signInDialog";
+import ForgotPasswordDialog from "../../UI/dialogs/forgotPasswordDialog/forgotPasswordDialog";
+
+import {UserService} from "../../service/UserService";
+
+import classes from '../../UI/dialogs/authDialogs/authDialogs.module.scss'
+
 export default function AuthDialogs() {
-    const {isAuth, login} = useContext(AuthContext)
+    const {isAuth, login} = useAuthContext()
     const {setMessage, handleClick} = useSnackbarContext()
 
     const [signInForm, setSignInForm] = useState({email: "", password: ""})

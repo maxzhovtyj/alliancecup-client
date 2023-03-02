@@ -1,9 +1,9 @@
-import {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import useOrder from "../../../hooks/useOrder";
 import {useSnackbarContext} from "../../../context/SnackbarContext";
-import {AuthContext} from "../../../context/AuthContext";
+import {useAuthContext} from "../../../context/AuthContext";
 
 import {fetchUserCart} from "../../../redux/userCartRedux/fetchUserCart";
 
@@ -20,7 +20,7 @@ import CartItem from "../cart/cartItem";
 function OrderComponent() {
     const navigate = useNavigate()
 
-    const {isAuth} = useContext(AuthContext)
+    const {isAuth} = useAuthContext()
 
     const {setMessage, handleClick} = useSnackbarContext()
 

@@ -1,14 +1,13 @@
-import {useContext} from 'react';
-import {Link, NavLink, Outlet} from "react-router-dom";
-
-import {AuthContext} from "../../../context/AuthContext";
+import {useAuthContext} from "../../../context/AuthContext";
 import {UserService} from "../../../service/UserService";
 
-import classes from './userCabinet.module.scss'
+import {Link, NavLink, Outlet} from "react-router-dom";
 import AllianceButton from "../../../UI/allianceCupButton/allianceButton";
 
+import classes from './userCabinet.module.scss'
+
 function UserCabinetComponent() {
-    const {isAdmin, isModerator, logout} = useContext(AuthContext)
+    const {isAdmin, isModerator, logout} = useAuthContext()
 
     const userLogout = () => {
         UserService.logout().then(() => {

@@ -1,6 +1,4 @@
-import {useContext} from 'react';
-
-import classes from './header.module.scss'
+import {useAuthContext} from "../../context/AuthContext";
 
 import tgIcon from '../../assets/social/Telegram.svg'
 import instIcon from '../../assets/social/Instagram.svg'
@@ -12,11 +10,12 @@ import star from '../../assets/svgs/star-24.svg'
 
 import {Link} from "react-router-dom";
 import AuthDialogs from "./authDialogs";
-import {AuthContext} from "../../context/AuthContext";
 import BurgerMenu from "../../UI/burgerMenu/burgerMenu";
 
+import classes from './header.module.scss'
+
 function HeaderComponent() {
-    const {isAuth} = useContext(AuthContext)
+    const {isAuth} = useAuthContext()
 
     return (
         <>
