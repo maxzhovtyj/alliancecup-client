@@ -1,5 +1,6 @@
-import classes from "../products.module.scss";
 import RangeSliderComponent from "../rangeSlider.component";
+
+import classes from "./productsPageSidebar.module.scss";
 
 function ProductsPageSidebar({
                                  rangePrice,
