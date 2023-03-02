@@ -5,6 +5,7 @@ import {IconButton} from "@mui/material";
 
 import {NavLink} from "react-router-dom";
 import {ShoppingService} from "../../../service/ShoppingService";
+import ItemImage from "../../../UI/ItemImage";
 
 function CartItem({product, order}) {
     function deleteFromCart() {
@@ -14,8 +15,8 @@ function CartItem({product, order}) {
 
     return (
         <div className={classes.productItem}>
-            <NavLink to={`/product/${product.id}`} className={classes.productImg}>
-                <img src={ShoppingService.getImage(product)} alt="product_image"/>
+            <NavLink to={`/product/${product.id}`}>
+                <ItemImage item={product} alt={"product"} cls={classes.productImg}/>
             </NavLink>
             <div className={classes.productInfo}>
                 <NavLink to={`/product/${product.id}`}>

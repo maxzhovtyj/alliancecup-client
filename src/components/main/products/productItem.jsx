@@ -7,6 +7,7 @@ import {IconButton} from "@mui/material";
 import {ShoppingService} from "../../../service/ShoppingService";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AllianceButton from "../../../UI/allianceCupButton/allianceButton";
+import ItemImage from "../../../UI/ItemImage";
 
 function ProductItem({product, setMessage, handleClick, deleteFavourite}) {
     let [amount, setAmount] = useState(1)
@@ -55,7 +56,7 @@ function ProductItem({product, setMessage, handleClick, deleteFavourite}) {
     return (
         <div className={classes.productItem}>
             <Link to={`/product/${product.id}`}>
-                <img className={classes.productImg} src={ShoppingService.getImage(product)} alt={""}/>
+                <ItemImage item={product} alt="product-img" cls={classes.productImg}/>
             </Link>
             <div className={classes.productInfoWrapper}>
                 <Link to={`/product/${product.id}`}>

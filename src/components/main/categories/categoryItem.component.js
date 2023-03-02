@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
 
+import ItemImage from "../../../UI/ItemImage";
 import classes from './categories.module.scss'
-import {ShoppingService} from "../../../service/ShoppingService";
 
 function CategoryItemComponent({item: {id, categoryTitle, imgUrl, imgUUID}}) {
     const navigate = useNavigate()
@@ -12,8 +12,7 @@ function CategoryItemComponent({item: {id, categoryTitle, imgUrl, imgUUID}}) {
 
     return (
         <div className={classes.categoryItem} onClick={toCategory}>
-            <img className={classes.categoryImage} src={ShoppingService.getImage({imgUUID, imgUrl})}
-                 alt="category_img"/>
+            <ItemImage cls={classes.categoryImage} item={{imgUUID, imgUrl}} alt={"category-image"}/>
             <p className={classes.categoryTitle}>{categoryTitle}</p>
         </div>
     );

@@ -49,6 +49,7 @@
 }
 
 .filtrationItemImg {
+  background-color: $alliance-grey;
   display: block;
   width: 100%;
   height: 180px;
@@ -61,6 +62,7 @@
 }
 
 .filtrationItemTitle {
+  border-top: 2px solid $alliance-orange;
   flex-grow: 1;
   background-color: $alliance-orange;
   color: white;

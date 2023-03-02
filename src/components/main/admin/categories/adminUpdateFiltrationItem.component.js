@@ -7,7 +7,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchCategories, fetchFiltrationItems} from "../../../../redux/shopRedux/shopFetch";
 
 import {FiltrationService} from "../../../../service/FiltrationService";
-import {ShoppingService} from "../../../../service/ShoppingService";
 
 import {FormControl, FormControlLabel, MenuItem, Radio, RadioGroup} from "@mui/material";
 import {AllianceInputLabel, AllianceSelect, AllianceTextField} from "../../../../UI/styles";
@@ -15,6 +14,7 @@ import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
 
 import classes from "./adminCategories.module.scss";
+import ItemImage from "../../../../UI/ItemImage";
 
 function AdminUpdateFiltrationItemComponent() {
     const snackbar = useSnackbarContext()
@@ -198,8 +198,7 @@ function AdminUpdateFiltrationItemComponent() {
 
             <FormControl className={classes.updateFiltrationImage}>
                 <p>Фото</p>
-
-                <img src={ShoppingService.getImage(filtrationItem)} alt="img"/>
+                <ItemImage item={filtrationItem} alt={"filtration-item"}/>
                 <input type="file" onChange={handleSetFiltrationItemImg}/>
             </FormControl>
 

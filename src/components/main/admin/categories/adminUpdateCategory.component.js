@@ -4,7 +4,6 @@ import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
 import {useSnackbarContext} from "../../../../context/SnackbarContext";
 
 import {CategoryService} from "../../../../service/CategoryService";
-import {ShoppingService} from "../../../../service/ShoppingService";
 
 import {Divider, FormControl} from "@mui/material";
 import {AllianceTextField} from "../../../../UI/styles";
@@ -12,6 +11,7 @@ import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
 
 import classes from "./adminCategories.module.scss"
+import ItemImage from "../../../../UI/ItemImage";
 
 function AdminUpdateCategoryComponent() {
     const params = useParams()
@@ -122,7 +122,7 @@ function AdminUpdateCategoryComponent() {
 
             <div className={classes.updateCategoryImage}>
                 <p>Фотографія</p>
-                <img src={ShoppingService.getImage(category)} alt="img"/>
+                <ItemImage item={category} alt={"category"}/>
                 <input type={"file"} onChange={handleSetCategoryImg}/>
                 <AllianceButton onClick={updateCategoryImage} mt={"1rem"} mb={"1rem"}>Оновити</AllianceButton>
             </div>

@@ -3,11 +3,13 @@ import {useState} from "react";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {IconButton, Paper} from "@mui/material";
-import classes from './orderItem.module.scss'
-import {UserService} from "../../../../../../service/UserService";
+import ItemImage from "../../../../../../UI/ItemImage";
 import {NavLink} from "react-router-dom";
+
+import {UserService} from "../../../../../../service/UserService";
 import {OrderService} from "../../../../../../service/OrderService";
-import {ShoppingService} from "../../../../../../service/ShoppingService";
+
+import classes from './orderItem.module.scss'
 
 function OrderItem({order}) {
     const [showDropdown, setShowDropdown] = useState(false)
@@ -52,7 +54,7 @@ function OrderItem({order}) {
                         <div className={classes.orderProducts}>
                             {products.map(p =>
                                 <div key={p.id} className={classes.orderProductItem}>
-                                    <img src={ShoppingService.getImage(p)} alt="img"/>
+                                    <ItemImage item={p} alt={"product"}/>
                                     <div className={classes.orderProductInfo}>
                                         <NavLink to={`/product/${p.id}`}>
                                         <div className={classes.orderProductInfoItem}>

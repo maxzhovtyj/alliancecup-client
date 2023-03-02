@@ -14,6 +14,7 @@ import AllianceButton from "../../../UI/allianceCupButton/allianceButton";
 import {useSnackbarContext} from "../../../context/SnackbarContext";
 
 import classes from './product.module.scss'
+import ItemImage from "../../../UI/ItemImage";
 function InStock({inStock}) {
     if (inStock && inStock !== 0) {
         return (
@@ -106,7 +107,7 @@ function ProductComponent() {
         <div className={classes.productWrapper}>
             <div className={classes.productInfo}>
                 <div className={classes.productImg}>
-                    <img src={ShoppingService.getImage(product)} alt="img"/>
+                    <ItemImage item={product} alt={"product"}/>
                     <IconButton
                         className={classes.favouriteIcon}
                         aria-label="close"

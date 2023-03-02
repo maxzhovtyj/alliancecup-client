@@ -46,7 +46,7 @@
 .productItem {
   width: 100%;
   border: 1px solid $alliance-grey;
-  border-radius: 10px;
+  border-radius: .5rem;
   display: flex;
   align-items: center;
   position: relative;
@@ -69,13 +69,11 @@
 }
 
 .productImg {
-  img {
     max-width: 200px;
-    border-radius: 10px;
+    border-radius: .5rem;
     @media all and (max-width: 765px) {
       margin: 1rem;
     }
-  }
 }
 
 .productTitle {

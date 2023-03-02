@@ -1,16 +1,6 @@
 import $api from "../http/http";
 
-import configData from "../config.json"
-
 export class ShoppingService {
-    static getImage(item) {
-        if (item?.imgUUID) {
-            return `${configData.MINIO_URL}/images/${item?.imgUUID}`
-        } else if (item?.imgUrl) {
-            return item.imgUrl
-        } else return "https://www.fil.ion.ucl.ac.uk/wp-content/uploads/2019/05/grey-background-750x500.jpg"
-    }
-
     static async newOrder(makeOrderForm, admin = false) {
         const reqUrl = (admin) ? "/api/admin/order" : "/api/shopping/order"
 

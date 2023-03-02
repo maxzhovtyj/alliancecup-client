@@ -1,5 +1,4 @@
 import {ProductService} from "../../../../service/ProductService";
-import {ShoppingService} from "../../../../service/ShoppingService";
 
 import {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
@@ -17,6 +16,7 @@ import {fetchCategories} from "../../../../redux/shopRedux/shopFetch";
 import AdminProductCharacteristicsForm from "./adminProductCharacteristicsForm";
 import AdminProductPackagingForm from "./adminProductPackagingForm";
 import classes from "./adminProduct.module.scss"
+import ItemImage from "../../../../UI/ItemImage";
 
 function AdminUpdateProductComponent() {
     const dispatch = useDispatch()
@@ -198,7 +198,7 @@ function AdminUpdateProductComponent() {
 
             <div>
                 <p>Фотографія</p>
-                <img src={ShoppingService.getImage(product)} alt="img" className={classes.updateProductImg}/>
+                <ItemImage item={product} alt={"product"} cls={classes.updateProductImg}/>
                 <input type={"file"} onChange={handleSetProductImg}/>
                 <AllianceButton onClick={changeImage} disabled={disabledBtn} mt={"1rem"} mb={"1rem"}>Зберегти
                     фотографію</AllianceButton>
