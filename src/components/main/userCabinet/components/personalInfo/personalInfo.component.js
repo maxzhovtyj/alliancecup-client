@@ -1,15 +1,15 @@
 import {useEffect, useState} from "react";
+import {useSnackbarContext} from "../../../../../context/SnackbarContext";
 import {UserService} from "../../../../../service/UserService";
 
-import classes from './personalInfo.module.scss'
 import AllianceButton from "../../../../../UI/allianceCupButton/allianceButton";
 import {AllianceTextField} from "../../../../../UI/styles";
-import {useSnackbar} from "../../../../../hooks/useSnackbar";
-import AllianceSnackbar from "../../../../../UI/snackbar";
 import {TextMaskCustom} from "../../../../../utils/TextMask";
 
+import classes from './personalInfo.module.scss'
+
 function PersonalInfoComponent() {
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
 
     const [changeStatus, setChangeStatus] = useState(false)
     const [changeInfo, setChangeInfo] = useState({
@@ -97,7 +97,6 @@ function PersonalInfoComponent() {
                         <AllianceButton onClick={saveInfo}>Зберегти</AllianceButton>
                     </div>
             }
-            <AllianceSnackbar message={snackbar.message} handleClose={snackbar.handleClose} open={snackbar.open}/>
         </div>
     );
 }

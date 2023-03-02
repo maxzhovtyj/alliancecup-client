@@ -17,16 +17,15 @@ import AddIcon from '@mui/icons-material/Add';
 import {SupplyService} from "../../../../service/SupplyService";
 import AutoCompleteSelect from "../../../../UI/autoCompleteSelect/autoCompleteSelect";
 import {ProductService} from "../../../../service/ProductService";
-import {useSnackbar} from "../../../../hooks/useSnackbar";
-import AllianceSnackbar from "../../../../UI/snackbar";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 
 import {AlliancePaper} from "../../../../UI/AlliancePaper";
 import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
 import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
+import {useSnackbarContext} from "../../../../context/SnackbarContext";
 
 function AdminNewSupplyComponent() {
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
 
     const [showDialog, setShowDialog] = useState(false)
     const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
@@ -473,7 +472,6 @@ function AdminNewSupplyComponent() {
             <AllianceButton onClick={createNewSupply} disabled={disabledBtn} mt={"2rem"} mb={"2rem"}>
                 Створити
             </AllianceButton>
-            <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
         </div>
     );
 }

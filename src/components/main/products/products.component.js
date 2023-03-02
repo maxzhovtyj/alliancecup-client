@@ -7,13 +7,13 @@ import {
     fetchProducts
 } from "../../../redux/shopRedux/shopFetch";
 import {useSearchParams} from "react-router-dom";
+import {useSnackbarContext} from "../../../context/SnackbarContext";
 
-import classes from './products.module.scss'
-import AllianceSnackbar from "../../../UI/snackbar";
-import {useSnackbar} from "../../../hooks/useSnackbar";
 import ProductsListComponent from "./productsList.component";
 import FiltrationListComponent from "./filtration/filtrationList.component";
 import ProductsPageSidebar from "./sidebar/productsPageSidebar";
+
+import classes from './products.module.scss'
 
 const parentCategory = "category_id"
 const parentFiltrationList = "filtration_list_id"
@@ -22,7 +22,7 @@ function ProductsComponent() {
     const dispatch = useDispatch()
 
     const [queryParams, setQueryParams] = useSearchParams()
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
 
     const categories = useSelector(state => state.shop.categories)
     const products = useSelector(state => state.shop.products)
@@ -206,7 +206,6 @@ function ProductsComponent() {
                     />
                 </div>
             </div>
-            <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
         </>
     );
 }

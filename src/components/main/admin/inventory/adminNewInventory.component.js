@@ -1,4 +1,10 @@
 import {useEffect, useState} from 'react';
+import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchProductsToInventory} from "../../../../redux/adminRedux/adminFetch";
+import {useSnackbarContext} from "../../../../context/SnackbarContext";
+
+import {AllianceTextField} from "../../../../UI/styles";
 import {
     Table,
     TableBody,
@@ -7,22 +13,17 @@ import {
     TableHead,
     TableRow
 } from "@mui/material";
-import {useDispatch, useSelector} from "react-redux";
-import {fetchProductsToInventory} from "../../../../redux/adminRedux/adminFetch";
-import {AllianceTextField} from "../../../../UI/styles";
-
-import classes from './inventory.module.scss'
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import {AlliancePaper} from "../../../../UI/AlliancePaper";
-import {AdminService} from "../../../../service/AdminService";
-import {useSnackbar} from "../../../../hooks/useSnackbar";
-import AllianceSnackbar from "../../../../UI/snackbar";
-import {UserService} from "../../../../service/UserService";
 import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
-import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
+
+import {UserService} from "../../../../service/UserService";
+import {AdminService} from "../../../../service/AdminService";
+
+import classes from './inventory.module.scss'
 
 function AdminNewInventoryComponent() {
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
 
     const [showDialog, setShowDialog] = useState(false)
     const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
@@ -222,7 +223,6 @@ function AdminNewInventoryComponent() {
                     </AllianceButton>
                 </div>
             </div>
-            <AllianceSnackbar open={snackbar.open} handleClose={snackbar.handleClose} message={snackbar.message}/>
         </div>
     );
 }

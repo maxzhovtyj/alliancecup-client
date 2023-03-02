@@ -1,10 +1,9 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {useSnackbar} from "../../../hooks/useSnackbar";
+import {useSnackbarContext} from "../../../context/SnackbarContext";
 
 import {fetchFavourites} from "../../../redux/userFavouritesRedux/favouritesFetch";
 import ProductItem from "../products/productItem";
-import AllianceSnackbar from "../../../UI/snackbar";
 
 import classes from './favourites.module.scss'
 
@@ -12,7 +11,7 @@ function FavouritesComponent() {
     const dispatch = useDispatch()
     const favouritesList = useSelector(state => state.favouritesPage.favouritesList)
 
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
 
     useEffect(() => {
         dispatch(fetchFavourites())
@@ -37,7 +36,6 @@ function FavouritesComponent() {
                         : <p className={classes.emptyTitle}>Товари в обраному відсутні</p>
                 }
             </div>
-            <AllianceSnackbar message={snackbar.message} open={snackbar.open} handleClose={snackbar.handleClose}/>
         </div>
     );
 }

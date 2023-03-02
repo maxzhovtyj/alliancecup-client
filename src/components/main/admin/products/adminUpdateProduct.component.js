@@ -3,17 +3,16 @@ import {ShoppingService} from "../../../../service/ShoppingService";
 
 import {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import {useSnackbar} from "../../../../hooks/useSnackbar";
 import {useDispatch, useSelector} from "react-redux";
 import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
 import usePackaging from "../../../../hooks/usePackaging";
 import useCharacteristics from "../../../../hooks/useCharacteristics";
+import {useSnackbarContext} from "../../../../context/SnackbarContext";
 
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 import {Divider, FormControl, MenuItem} from "@mui/material";
 import {AllianceInputLabel, AllianceSelect, AllianceTextField} from "../../../../UI/styles";
 import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
-import AllianceSnackbar from "../../../../UI/snackbar";
 import {fetchCategories} from "../../../../redux/shopRedux/shopFetch";
 import AdminProductCharacteristicsForm from "./adminProductCharacteristicsForm";
 import AdminProductPackagingForm from "./adminProductPackagingForm";
@@ -22,7 +21,7 @@ import classes from "./adminProduct.module.scss"
 function AdminUpdateProductComponent() {
     const dispatch = useDispatch()
     const params = useParams()
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
 
     const [showImgDialog, setShowImgDialog] = useState(false)
     const [showFormDialog, setShowFormDialog] = useState(false)
@@ -274,8 +273,6 @@ function AdminUpdateProductComponent() {
                 <AllianceButton onClick={updateProduct} disabled={disabledBtn} mt={"1rem"} mb={"1rem"}>Оновити
                     товар</AllianceButton>
             </div>
-
-            <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
         </div>
     );
 }

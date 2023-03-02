@@ -1,23 +1,23 @@
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {useSnackbar} from "../../../../hooks/useSnackbar";
 import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
 import useCharacteristics from "../../../../hooks/useCharacteristics";
 import usePackaging from "../../../../hooks/usePackaging";
-import {ProductService} from "../../../../service/ProductService";
+import {useSnackbarContext} from "../../../../context/SnackbarContext";
 import {fetchCategories} from "../../../../redux/shopRedux/shopFetch";
+import {ProductService} from "../../../../service/ProductService";
 
 import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
-import AllianceSnackbar from "../../../../UI/snackbar";
 import {AllianceInputLabel, AllianceSelect, AllianceTextField} from "../../../../UI/styles";
 import {FormControl, MenuItem} from "@mui/material";
 import AdminProductPackagingForm from "./adminProductPackagingForm";
 import AdminProductCharacteristicsForm from "./adminProductCharacteristicsForm";
+
 import classes from './adminProduct.module.scss'
 
 function AdminNewProductComponent() {
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
     const [showDialog, setShowDialog] = useState(false)
     const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
 
@@ -227,8 +227,6 @@ function AdminNewProductComponent() {
             </FormControl>
 
             <AllianceButton onClick={newProduct} disabled={disabledBtn} mt={"1rem"} mb={"1rem"}>Додати</AllianceButton>
-
-            <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
         </div>
     );
 }

@@ -1,15 +1,16 @@
 import {NavLink, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {AdminService} from "../../../../service/AdminService";
 
-import classes from "./adminOrder.module.scss"
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {AlliancePaper} from "../../../../UI/AlliancePaper";
 import ContextMenuInventory from "../inventory/contextMenuInventory";
-import {IN_PROGRESS, PROCESSED} from "./adminOrders.component";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
-import {useSnackbar} from "../../../../hooks/useSnackbar";
-import AllianceSnackbar from "../../../../UI/snackbar";
+
+import {AdminService} from "../../../../service/AdminService";
+import {IN_PROGRESS, PROCESSED} from "./adminOrders.component";
+
+import classes from "./adminOrder.module.scss"
+import {useSnackbarContext} from "../../../../context/SnackbarContext";
 
 function adminDeliveryInfo(deliveryInfo, cls, valueCls) {
     return Object.entries(deliveryInfo).map(e => {
@@ -26,7 +27,7 @@ function adminDeliveryInfo(deliveryInfo, cls, valueCls) {
 function AdminOrderInfoComponent() {
     const {id} = useParams()
 
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
     const [order, setOrder] = useState({
         info: {
             id: 0,
@@ -175,7 +176,6 @@ function AdminOrderInfoComponent() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <AllianceSnackbar handleClose={snackbar.handleClose} message={snackbar.message} open={snackbar.open}/>
         </div>
     );
 }

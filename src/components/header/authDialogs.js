@@ -5,16 +5,14 @@ import enter from "../../assets/svgs/log-in.svg";
 
 import SignUpDialog from "../../UI/dialogs/authDialogs/signUpDialog";
 import SignInDialog from "../../UI/dialogs/authDialogs/signInDialog";
-import {useSnackbar} from "../../hooks/useSnackbar";
-import AllianceSnackbar from "../../UI/snackbar";
 import {AuthContext} from "../../context/AuthContext";
 import {UserService} from "../../service/UserService";
 import ForgotPasswordDialog from "../../UI/dialogs/forgotPasswordDialog/forgotPasswordDialog";
+import {useSnackbarContext} from "../../context/SnackbarContext";
 
 export default function AuthDialogs() {
     const {isAuth, login} = useContext(AuthContext)
-
-    let {open, message, setMessage, handleClose, handleClick} = useSnackbar()
+    const {setMessage, handleClick} = useSnackbarContext()
 
     const [signInForm, setSignInForm] = useState({email: "", password: ""})
     const [forgotPasswordForm, setForgotPasswordForm] = useState({email: ""})
@@ -198,8 +196,6 @@ export default function AuthDialogs() {
                 value={signUpForm}
                 errors={signUpErrors}
             />
-
-            <AllianceSnackbar open={open} message={message} handleClose={handleClose}/>
         </>
     );
 }

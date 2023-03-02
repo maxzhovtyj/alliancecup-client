@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {useSnackbar} from "../../../../hooks/useSnackbar";
 import {useNavigate} from "react-router-dom";
 import {fetchCategories, fetchMoreProducts, fetchProducts} from "../../../../redux/shopRedux/shopFetch";
 import AdminProductsTableComponent from "./adminProductsTable.component";
@@ -11,10 +10,10 @@ import {
 } from "@mui/material";
 import {AllianceInputLabel, AllianceSelect} from "../../../../UI/styles";
 import SearchBar from "../../../../UI/searchBar/searchBar";
-import AllianceSnackbar from "../../../../UI/snackbar";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
 
 import classes from "./adminProduct.module.scss";
+import {useSnackbarContext} from "../../../../context/SnackbarContext";
 
 function AdminProductsComponent() {
     const dispatch = useDispatch()
@@ -23,7 +22,7 @@ function AdminProductsComponent() {
     const cannotLoadMore = useSelector(state => state.shop.statusNoMoreProducts)
 
     const navigate = useNavigate()
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
 
     const [searchBar, setSearchBar] = useState("")
     const [searchParams, setSearchParams] = useState({
@@ -99,8 +98,6 @@ function AdminProductsComponent() {
                         Завантажити ще
                     </AllianceButton>
             }
-
-            <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
         </div>
     );
 }

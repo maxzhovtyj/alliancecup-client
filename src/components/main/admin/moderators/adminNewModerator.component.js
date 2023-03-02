@@ -1,17 +1,19 @@
-import classes from "../../../../UI/dialogs/authDialogs/authDialogs.module.scss";
+import {useState} from "react";
+import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
+import {useSnackbarContext} from "../../../../context/SnackbarContext";
+
 import {AllianceTextField} from "../../../../UI/styles";
 import {TextMaskCustom} from "../../../../utils/TextMask";
 import {FormControl} from "@mui/material";
-import {UserService} from "../../../../service/UserService";
-import {useSnackbar} from "../../../../hooks/useSnackbar";
-import {useState} from "react";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
-import AllianceSnackbar from "../../../../UI/snackbar";
-import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
 import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
 
+import {UserService} from "../../../../service/UserService";
+
+import classes from "../../../../UI/dialogs/authDialogs/authDialogs.module.scss";
+
 function AdminNewModeratorComponent() {
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
 
     const [showDialog, setShowDialog] = useState(false)
     const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
@@ -149,8 +151,6 @@ function AdminNewModeratorComponent() {
 
             <AllianceButton onClick={signUp} disabled={disabledBtn} mt={"1rem"} mb={"1rem"}>Зареєструвати
                 модератора</AllianceButton>
-
-            <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
         </div>
     );
 }

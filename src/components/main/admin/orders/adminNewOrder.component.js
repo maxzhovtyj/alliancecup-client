@@ -1,22 +1,24 @@
-import classes from './adminOrder.module.scss'
-import OrderInfo from "../../orders/orderInfo";
+import {useSnackbarContext} from "../../../../context/SnackbarContext";
 import {useState} from "react";
+import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
+import useOrder from "../../../../hooks/useOrder";
+
 import {IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {AllianceTextField} from "../../../../UI/styles";
-import AutoCompleteSelect from "../../../../UI/autoCompleteSelect/autoCompleteSelect";
-import {ProductService} from "../../../../service/ProductService";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AutoCompleteSelect from "../../../../UI/autoCompleteSelect/autoCompleteSelect";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
-import useOrder from "../../../../hooks/useOrder";
-import {OrderService} from "../../../../service/OrderService";
-import {ShoppingService} from "../../../../service/ShoppingService";
-import {useSnackbar} from "../../../../hooks/useSnackbar";
-import AllianceSnackbar from "../../../../UI/snackbar";
-import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
+import OrderInfo from "../../orders/orderInfo";
 import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
 
+import {ProductService} from "../../../../service/ProductService";
+import {OrderService} from "../../../../service/OrderService";
+import {ShoppingService} from "../../../../service/ShoppingService";
+
+import classes from './adminOrder.module.scss'
+
 function AdminNewOrderComponent() {
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
 
     const [showDialog, setShowDialog] = useState(false)
     const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
@@ -316,8 +318,6 @@ function AdminNewOrderComponent() {
             <AllianceButton disabled={disabled} onClick={makeOrder} mb={"1rem"}>
                 Виконати замовлення
             </AllianceButton>
-
-            <AllianceSnackbar handleClose={snackbar.handleClose} message={snackbar.message} open={snackbar.open}/>
         </div>
     );
 }

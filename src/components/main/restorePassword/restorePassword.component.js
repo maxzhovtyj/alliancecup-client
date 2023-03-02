@@ -1,16 +1,16 @@
+import {useEffect, useState} from "react";
+import {useSnackbarContext} from "../../../context/SnackbarContext";
+import {useNavigate, useSearchParams} from "react-router-dom";
+import {UserService} from "../../../service/UserService";
+
 import {FormControl} from "@mui/material";
 import {AllianceTextField} from "../../../UI/styles";
-import {useNavigate, useSearchParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {useSnackbar} from "../../../hooks/useSnackbar";
-import AllianceSnackbar from "../../../UI/snackbar";
-import {UserService} from "../../../service/UserService";
 import AllianceButton from "../../../UI/allianceCupButton/allianceButton";
 
 import classes from "./restorePassword.module.scss"
 
 function RestorePasswordComponent() {
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
 
     const [queryParams] = useSearchParams()
     const navigate = useNavigate()
@@ -73,8 +73,6 @@ function RestorePasswordComponent() {
             </FormControl>
 
             <AllianceButton onClick={restorePassword} mt={"1rem"} mb={"1rem"}>Відновити пароль</AllianceButton>
-
-            <AllianceSnackbar open={snackbar.open} handleClose={snackbar.handleClose} message={snackbar.message}/>
         </div>
     );
 }

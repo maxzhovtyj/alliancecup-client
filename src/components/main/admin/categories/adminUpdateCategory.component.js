@@ -1,21 +1,22 @@
 import {useEffect, useState} from "react";
-import {CategoryService} from "../../../../service/CategoryService";
 import {useParams} from "react-router-dom";
+import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
+import {useSnackbarContext} from "../../../../context/SnackbarContext";
+
+import {CategoryService} from "../../../../service/CategoryService";
 import {ShoppingService} from "../../../../service/ShoppingService";
-import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
+
 import {Divider, FormControl} from "@mui/material";
+import {AllianceTextField} from "../../../../UI/styles";
+import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
+import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
 
 import classes from "./adminCategories.module.scss"
-import {AllianceTextField} from "../../../../UI/styles";
-import {useSnackbar} from "../../../../hooks/useSnackbar";
-import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
-import AllianceSnackbar from "../../../../UI/snackbar";
-import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
 
 function AdminUpdateCategoryComponent() {
     const params = useParams()
 
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
     const [showImgDialog, setShowImgDialog] = useState(false)
     const [showFormDialog, setShowFormDialog] = useState(false)
     const [showDialog, setShowDialog] = useState(false)
@@ -140,8 +141,6 @@ function AdminUpdateCategoryComponent() {
             </FormControl>
 
             <AllianceButton onClick={updateCategory} disabled={disabledBtn} mt={"1rem"} mb={"1rem"}>Оновити</AllianceButton>
-
-            <AllianceSnackbar message={snackbar.message} handleClose={snackbar.handleClose} open={snackbar.open}/>
         </div>
     );
 }

@@ -1,9 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import {useSnackbar} from "../../../hooks/useSnackbar";
 import {ProductService} from "../../../service/ProductService";
 
-import classes from './product.module.scss'
 
 import ProductCharacteristics from "./productCharacteristics";
 import ProductPackaging from "./productPackaging";
@@ -12,9 +10,10 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import {ShoppingService} from "../../../service/ShoppingService";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import {IconButton} from "@mui/material";
-import AllianceSnackbar from "../../../UI/snackbar";
 import AllianceButton from "../../../UI/allianceCupButton/allianceButton";
+import {useSnackbarContext} from "../../../context/SnackbarContext";
 
+import classes from './product.module.scss'
 function InStock({inStock}) {
     if (inStock && inStock !== 0) {
         return (
@@ -57,7 +56,7 @@ function AddToCart({product, addToCart, amount, setProductAmount}) {
 }
 
 function ProductComponent() {
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
     const {id} = useParams()
     let [product, setProduct] = useState({})
 
@@ -131,7 +130,6 @@ function ProductComponent() {
                 <OrderInfo/>
             </div>
             <ProductCharacteristics characteristics={product?.characteristics}/>
-            <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
         </div>
     );
 }

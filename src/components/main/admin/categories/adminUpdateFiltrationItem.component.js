@@ -1,21 +1,23 @@
 import {useEffect, useState} from 'react';
-import {useSnackbar} from "../../../../hooks/useSnackbar";
 import {useParams} from "react-router-dom";
 import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
-import {FiltrationService} from "../../../../service/FiltrationService";
-import {ShoppingService} from "../../../../service/ShoppingService";
-import {FormControl, FormControlLabel, MenuItem, Radio, RadioGroup} from "@mui/material";
-import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
-import AllianceSnackbar from "../../../../UI/snackbar";
-import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
+import {useSnackbarContext} from "../../../../context/SnackbarContext";
 
-import classes from "./adminCategories.module.scss";
-import {AllianceInputLabel, AllianceSelect, AllianceTextField} from "../../../../UI/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchCategories, fetchFiltrationItems} from "../../../../redux/shopRedux/shopFetch";
 
+import {FiltrationService} from "../../../../service/FiltrationService";
+import {ShoppingService} from "../../../../service/ShoppingService";
+
+import {FormControl, FormControlLabel, MenuItem, Radio, RadioGroup} from "@mui/material";
+import {AllianceInputLabel, AllianceSelect, AllianceTextField} from "../../../../UI/styles";
+import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
+import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
+
+import classes from "./adminCategories.module.scss";
+
 function AdminUpdateFiltrationItemComponent() {
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
 
     const [showImgDialog, setShowImgDialog] = useState(false)
     const [showFormDialog, setShowFormDialog] = useState(false)
@@ -191,8 +193,6 @@ function AdminUpdateFiltrationItemComponent() {
                 confirmNavigation={confirmNavigation}
                 cancelNavigation={cancelNavigation}
             />
-
-            <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
 
             <h1>Оновити фільтраційний предмет</h1>
 

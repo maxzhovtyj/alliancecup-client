@@ -1,4 +1,3 @@
-import {useSnackbar} from "../../../../hooks/useSnackbar";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
@@ -7,14 +6,14 @@ import {fetchCategories, fetchFiltrationItems} from "../../../../redux/shopRedux
 import {FormControl, FormControlLabel, MenuItem, Radio, RadioGroup} from "@mui/material";
 import {AllianceInputLabel, AllianceSelect, AllianceTextField} from "../../../../UI/styles";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
-import AllianceSnackbar from "../../../../UI/snackbar";
 import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
 
 import classes from "../products/adminProduct.module.scss";
 import {FiltrationService} from "../../../../service/FiltrationService";
+import {useSnackbarContext} from "../../../../context/SnackbarContext";
 
 function AdminNewFiltrationItemComponent() {
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
 
     const [showDialog, setShowDialog] = useState(false)
     const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
@@ -186,7 +185,6 @@ function AdminNewFiltrationItemComponent() {
 
             <AllianceButton onClick={newFiltrationItem} mt={"1rem"} mb={"1rem"}
                             disabled={disabledBtn}>Додати</AllianceButton>
-            <AllianceSnackbar message={snackbar.message} handleClose={snackbar.handleClose} open={snackbar.open}/>
         </div>
     );
 }

@@ -1,15 +1,14 @@
 import React, {useState} from 'react';
-import {useSnackbar} from "../../../../../hooks/useSnackbar";
+import {useSnackbarContext} from "../../../../../context/SnackbarContext";
 
 import {AuthService} from "../../../../../service/AuthService";
 
 import {AllianceTextField} from "../../../../../UI/styles";
-
-import classes from './changePassword.module.scss'
-import AllianceSnackbar from "../../../../../UI/snackbar";
 import AllianceButton from "../../../../../UI/allianceCupButton/allianceButton";
 
-function ChangePasswordComponent(props) {
+import classes from './changePassword.module.scss'
+
+function ChangePasswordComponent() {
     const [errors, setErrors] = useState({
         oldPassword: false,
         newPassword: false,
@@ -21,7 +20,7 @@ function ChangePasswordComponent(props) {
         "repeatNewPassword": "",
     })
 
-    const {handleClick, setMessage, handleClose, open, message} = useSnackbar()
+    const {handleClick, setMessage} = useSnackbarContext()
 
     const handleForm = (event) => {
         setForm({...form, [event.target.name]: event.target.value})
@@ -97,7 +96,6 @@ function ChangePasswordComponent(props) {
                     </AllianceButton>
                 </div>
             </div>
-            <AllianceSnackbar open={open} message={message} handleClose={handleClose}/>
         </div>
     );
 }

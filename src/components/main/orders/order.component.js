@@ -1,30 +1,28 @@
 import {useContext, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import useOrder from "../../../hooks/useOrder";
+import {useSnackbarContext} from "../../../context/SnackbarContext";
 import {AuthContext} from "../../../context/AuthContext";
 
 import {fetchUserCart} from "../../../redux/userCartRedux/fetchUserCart";
 
-import CartItem from "../cart/cartItem";
-import AllianceSnackbar from "../../../UI/snackbar";
-
 import cartClasses from "../cart/cart.module.scss";
 import orderClasses from "./order.module.scss"
 
-import {useSnackbar} from "../../../hooks/useSnackbar";
-
-import {useNavigate} from "react-router-dom";
 import {ShoppingService} from "../../../service/ShoppingService";
-import OrderInfo from "./orderInfo";
 import {OrderService} from "../../../service/OrderService";
+
+import OrderInfo from "./orderInfo";
 import AllianceButton from "../../../UI/allianceCupButton/allianceButton";
-import useOrder from "../../../hooks/useOrder";
+import CartItem from "../cart/cartItem";
 
 function OrderComponent() {
     const navigate = useNavigate()
 
     const {isAuth} = useContext(AuthContext)
 
-    const {open, message, handleClose, setMessage, handleClick} = useSnackbar()
+    const {setMessage, handleClick} = useSnackbarContext()
 
     const dispatch = useDispatch()
     const cartProducts = useSelector(state => state.cartPage)
@@ -131,8 +129,6 @@ function OrderComponent() {
                 }
                 <p>Сума замовлення: {cartProducts.sum}</p>
             </div>
-
-            <AllianceSnackbar open={open} message={message} handleClose={handleClose}/>
         </div>
     );
 }

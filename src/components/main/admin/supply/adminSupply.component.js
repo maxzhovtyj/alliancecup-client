@@ -1,22 +1,22 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import {useSnackbarContext} from "../../../../context/SnackbarContext";
 
 import {fetchMoreSupply, fetchSupply} from "../../../../redux/adminRedux/adminFetch";
 import {NavLink} from "react-router-dom";
-import ContextMenuSupply from "./contextMenuSupply";
 
+import ContextMenuSupply from "./contextMenuSupply";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
-import {UserService} from "../../../../service/UserService";
 import {AlliancePaper} from "../../../../UI/AlliancePaper";
-import {useSnackbar} from "../../../../hooks/useSnackbar";
-import AllianceSnackbar from "../../../../UI/snackbar";
+
+import {UserService} from "../../../../service/UserService";
 
 function AdminSupplyComponent() {
     const dispatch = useDispatch()
     const supply = useSelector(state => state.admin.supply)
     const loadMoreStatus = useSelector(state => state.admin.statusNoMoreSupply)
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
 
     useEffect(() => {
         dispatch(fetchSupply())
@@ -85,8 +85,6 @@ function AdminSupplyComponent() {
                         Завантажити ще
                     </AllianceButton>
             }
-
-            <AllianceSnackbar handleClose={snackbar.handleClose} message={snackbar.message} open={snackbar.open}/>
         </div>
     );
 }

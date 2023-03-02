@@ -1,5 +1,4 @@
 import {useDispatch} from "react-redux";
-import {useSnackbar} from "../../../../hooks/useSnackbar";
 import {useEffect, useState} from "react";
 import {useCallbackPrompt} from "../../../../hooks/useCallbackPrompt";
 import {fetchCategories} from "../../../../redux/shopRedux/shopFetch";
@@ -7,13 +6,13 @@ import {CategoryService} from "../../../../service/CategoryService";
 import {FormControl} from "@mui/material";
 import {AllianceTextField} from "../../../../UI/styles";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
-import AllianceSnackbar from "../../../../UI/snackbar";
 import RouterDialog from "../../../../UI/dialogs/routerDialog/routerDialog";
 
 import classes from "../products/adminProduct.module.scss";
+import {useSnackbarContext} from "../../../../context/SnackbarContext";
 
 function AdminNewCategory() {
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
     const [showDialog, setShowDialog] = useState(false)
     const [showPrompt, confirmNavigation, cancelNavigation] = useCallbackPrompt(showDialog)
 
@@ -99,7 +98,6 @@ function AdminNewCategory() {
                                    onChange={handleCategoryForm} multiline rows={4}/>
             </FormControl>
             <AllianceButton onClick={newCategory} mt={"1rem"} mb={"1rem"} disabled={disabledBtn}>Додати</AllianceButton>
-            <AllianceSnackbar message={snackbar.message} handleClose={snackbar.handleClose} open={snackbar.open}/>
         </div>
     );
 }

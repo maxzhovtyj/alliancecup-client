@@ -1,5 +1,4 @@
 import {useEffect} from 'react';
-import {useSnackbar} from "../../../../hooks/useSnackbar";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchCategories, fetchFiltrationItems} from "../../../../redux/shopRedux/shopFetch";
@@ -10,11 +9,11 @@ import {AllianceTextField} from "../../../../UI/styles";
 import {AlliancePaper} from "../../../../UI/AlliancePaper";
 import ContextMenuCategory from "./contextMenuCategory";
 import AllianceButton from "../../../../UI/allianceCupButton/allianceButton";
-import AllianceSnackbar from "../../../../UI/snackbar";
 import ContextMenuFiltrationItem from "./contextMenuFiltrationItem";
+import {useSnackbarContext} from "../../../../context/SnackbarContext";
 
 function AdminCategoriesComponent() {
-    const snackbar = useSnackbar()
+    const snackbar = useSnackbarContext()
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
@@ -139,8 +138,6 @@ function AdminCategoriesComponent() {
                     </TableBody>
                 </Table>
             </TableContainer>
-
-            <AllianceSnackbar open={snackbar.open} message={snackbar.message} handleClose={snackbar.handleClose}/>
         </div>
     );
 }
