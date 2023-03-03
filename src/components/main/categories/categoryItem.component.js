@@ -12,7 +12,7 @@ function CategoryItemComponent({item: {id, categoryTitle, imgUrl, imgUUID}}) {
 
     return (
         <div className={classes.categoryItem} onClick={toCategory}>
-            <ItemImage cls={classes.categoryImage} item={{imgUUID, imgUrl}} alt={"category-image"}/>
+            <ItemImage cls={classes.categoryImage} item={{imgUUID, imgUrl}} plug={false} alt={"category-image"}/>
             <p className={classes.categoryTitle}>{categoryTitle}</p>
         </div>
     );

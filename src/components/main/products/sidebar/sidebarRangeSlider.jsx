@@ -1,15 +1,15 @@
-import classes from "./products.module.scss";
-import RangeSlider from "../../../UI/rangeSlider/rangeSlider";
+import RangeSlider from "../../../../UI/rangeSlider/rangeSlider";
+import classes from "./productsPageSidebar.module.scss";
 
-function RangeSliderComponent({
-                                  rangePrice,
-                                  onPriceRangeChange,
-                                  onRangeCommitted,
-                                  applyRangePrice,
-                                  rangePriceForm,
-                                  handlePriceRangeForm,
-                                  min, max,
-                              }) {
+function SidebarRangeSlider({
+                         rangePrice,
+                         onPriceRangeChange,
+                         onRangeCommitted,
+                         applyRangePrice,
+                         rangePriceForm,
+                         handlePriceRangeForm,
+                         min, max,
+                     }) {
     return (
         <>
             <RangeSlider
@@ -32,4 +32,4 @@ function RangeSliderComponent({
     );
 }
 
-export default RangeSliderComponent;
+export default SidebarRangeSlider;

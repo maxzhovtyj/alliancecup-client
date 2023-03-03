@@ -13,6 +13,10 @@
   gap: 1rem;
   margin-bottom: 2rem;
 
+  @media all and (max-width: 1200px) {
+    justify-content: center;
+  }
+
   @media all and (max-width: 600px) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -22,7 +26,6 @@
 .filtrationItem {
   display: flex;
   flex-direction: column;
-
   cursor: pointer;
   max-width: 260px;
   width: 100%;
@@ -49,7 +52,7 @@
 }
 
 .filtrationItemImg {
-  background-color: $alliance-grey;
+  background-color: #4E4E4E;
   display: block;
   width: 100%;
   height: 180px;
@@ -62,11 +65,14 @@
 }
 
 .filtrationItemTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-top: 2px solid $alliance-orange;
   flex-grow: 1;
   background-color: $alliance-orange;
   color: white;
-  padding: .5rem 0;
+  padding: .5rem .5rem;
   text-align: center;
   word-wrap: break-word;
   transition: .3s ease-in-out;

@@ -1,5 +1,4 @@
-import RangeSliderComponent from "../rangeSlider.component";
-
+import SidebarRangeSlider from "./sidebarRangeSlider";
 import classes from "./productsPageSidebar.module.scss";
 
 function ProductsPageSidebar({
@@ -22,13 +21,13 @@ function ProductsPageSidebar({
                 <div className={classes.sidebarContainer}>
                     <h4 className={classes.categoriesTitle}>Ціна</h4>
                     <div className={classes.priceRange}>
-                        <RangeSliderComponent rangePrice={rangePrice}
-                                              onPriceRangeChange={onPriceRangeChange}
-                                              onRangeCommitted={onRangeCommitted}
-                                              applyRangePrice={applyRangePrice}
-                                              rangePriceForm={rangePriceForm}
-                                              handlePriceRangeForm={handlePriceRangeForm}
-                                              max={getQueryParamMaxPrice()}
+                        <SidebarRangeSlider rangePrice={rangePrice}
+                                     onPriceRangeChange={onPriceRangeChange}
+                                     onRangeCommitted={onRangeCommitted}
+                                     applyRangePrice={applyRangePrice}
+                                     rangePriceForm={rangePriceForm}
+                                     handlePriceRangeForm={handlePriceRangeForm}
+                                     max={getQueryParamMaxPrice()}
                         />
                     </div>
                     <h4 className={classes.categoriesTitle}>Категорії</h4>

@@ -25,71 +25,6 @@
   }
 }
 
-.priceRange {
-  border-bottom: 1px solid $alliance-grey;
-  padding: 0 1rem 2rem;
-}
-
-.priceRangeTitle {
-  margin-bottom: 1rem;
-}
-
-.rangePricesForm {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 10px;
-  font-family: 'Roboto', serif;
-  font-weight: 300;
-  font-size: 18px;
-}
-
-.rangePricesInputs {
-  position: relative;
-  display: flex;
-  gap: 3rem;
-
-  input {
-    border-radius: 5px;
-    border: 1px solid $alliance-grey;
-    max-width: 4rem;
-    width: 100%;
-    text-align: center;
-
-    &:focus-visible {
-      outline: 1px solid $alliance-orange;
-    }
-  }
-
-  &:after {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    content: "";
-    height: 1px;
-    width: 1rem;
-    background-color: $alliance-grey;
-  }
-}
-
-.rangePriceSubmitBtn {
-  background: none;
-  border: 1px solid $alliance-orange;
-  border-radius: 5px;
-  width: 4rem;
-  margin-left: 1rem;
-  transition: .3s ease-in-out;
-
-  &:hover {
-    color: white;
-
-    background-color: $alliance-orange;
-  }
-}
-
 .noItemsTitle {
   font-family: 'Roboto', serif;
   font-size: 1.5rem;
@@ -135,11 +70,12 @@
   display: flex;
   flex-direction: column;
   max-width: 260px;
+  width: 100%;
   height: 600px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);
   font-family: 'Roboto', serif;
   background: #ffffff;
-  border-radius: 5px;
+  border-radius: .5rem;
   overflow: hidden;
   position: relative;
   transition: 350ms ease-in-out;
@@ -179,7 +115,7 @@
 }
 
 .productImg {
-  background-color: black;
+  background-color: #4E4E4E;
   margin: 0;
   display: block;
   width: 100%;
