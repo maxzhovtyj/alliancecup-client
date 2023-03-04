@@ -44,12 +44,13 @@ import RestorePasswordComponent from "./restorePassword/restorePassword.componen
 import AdminUpdateProductComponent from "./admin/products/adminUpdateProduct.component";
 import AdminUpdateCategoryComponent from "./admin/categories/adminUpdateCategory.component";
 import AdminUpdateFiltrationItemComponent from "./admin/categories/adminUpdateFiltrationItem.component";
+import BurgerMenuComponent from "../burgerMenu/burgerMenu.component";
 
-function MainComponent() {
+function MainComponent({showBurger}) {
     return (
         <div>
             <NavbarComponent/>
-            <div className={classes.mainWrapper}>
+            <main className={classes.mainWrapper}>
                 <Routes>
                     <Route path={"/"} element={<HomePageComponent/>}/>
                     <Route path={"/categories"} element={<CategoriesComponent/>}/>
@@ -105,7 +106,8 @@ function MainComponent() {
                     <Route path={"*"} element={<PageWasNotFound/>}/>
                     <Route path={"/permission-forbidden"} element={<PermissionForbidden/>}/>
                 </Routes>
-            </div>
+                <BurgerMenuComponent showBurger={showBurger}/>
+            </main>
         </div>
     );
 }

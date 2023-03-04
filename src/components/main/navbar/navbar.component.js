@@ -22,40 +22,38 @@ function NavbarComponent() {
     }
 
     return (
-        <nav>
-            <div className={classes.navWrapper}>
-                <div className={classes.list}>
-                    <div className={classes.catalogItem}>
-                        <Link to="/categories">
-                            <span className={classes.listItem}>Каталог</span>
-                        </Link>
+        <nav className={classes.navWrapper}>
+            <div className={classes.list}>
+                <div className={classes.catalogItem}>
+                    <Link to="/categories">
+                        <span className={classes.listItem}>Каталог</span>
+                    </Link>
+                </div>
+                <div className={classes.navInfoWrapper}>
+                    <div className={classes.listItem}>
+                        <Link to="/about-us">Про нас</Link>
                     </div>
-                    <div className={classes.navInfoWrapper}>
-                        <div className={classes.listItem}>
-                            <Link to="/about-us">Про нас</Link>
-                        </div>
-                        <div className={classes.listItem}>
-                            <Link to="/delivery">Доставка</Link>
-                        </div>
-                        <div className={classes.listItem}>
-                            <Link to="/contacts">Контакти</Link>
-                        </div>
-                        <div className={classes.listItem}>
-                            <Link to="/for-wholesalers">Для оптовиків</Link>
-                        </div>
-                        <div className={classes.searchBarIconBtn}>
-                            <IconButton onClick={toggleDropDown}>
-                                <SearchIcon/>
-                            </IconButton>
-                        </div>
+                    <div className={classes.listItem}>
+                        <Link to="/delivery">Доставка</Link>
+                    </div>
+                    <div className={classes.listItem}>
+                        <Link to="/contacts">Контакти</Link>
+                    </div>
+                    <div className={classes.listItem}>
+                        <Link to="/for-wholesalers">Для оптовиків</Link>
+                    </div>
+                    <div className={classes.searchBarIconBtn}>
+                        <IconButton onClick={toggleDropDown}>
+                            <SearchIcon/>
+                        </IconButton>
                     </div>
                 </div>
-                {
-                    dropDownSearchbar
-                        ? <SearchBar value={search} setValue={setSearch} onSearch={handleOnSearch}/>
-                        : ""
-                }
             </div>
+            {
+                dropDownSearchbar
+                    ? <SearchBar value={search} setValue={setSearch} onSearch={handleOnSearch}/>
+                    : ""
+            }
         </nav>
     );
 }

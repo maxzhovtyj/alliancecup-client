@@ -10,11 +10,13 @@ import star from '../../assets/svgs/star-24.svg'
 
 import {Link} from "react-router-dom";
 import AuthDialogs from "./authDialogs";
-import BurgerMenu from "../../UI/burgerMenu/burgerMenu";
+
+import MenuIcon from "@mui/icons-material/Menu";
+import {IconButton} from "@mui/material";
 
 import classes from './header.module.scss'
 
-function HeaderComponent() {
+function HeaderComponent({handleBurger}) {
     const {isAuth} = useAuthContext()
 
     return (
@@ -55,7 +57,9 @@ function HeaderComponent() {
                             <AuthDialogs/>
                     }
                 </div>
-                <BurgerMenu/>
+                <IconButton onClick={handleBurger} className={classes.burgerMenuBtn}>
+                    <MenuIcon style={{color: "white"}}/>
+                </IconButton>
             </div>
             <header className={classes.headerWrapper}>
                 <ul className={classes.headerList}>

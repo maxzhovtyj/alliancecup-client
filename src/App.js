@@ -12,10 +12,13 @@ import {ROLES} from "./index";
 
 import AllianceSnackbar from "./UI/snackbar";
 import {useSnackbar} from "./hooks/useSnackbar";
+import useBurgerMenu from "./hooks/useBurgerMenu";
 
 function App() {
     const {login, logout, userId, userRoleCode} = useAuth()
     const {setMessage, open, message, handleClick, handleClose} = useSnackbar()
+
+    const {toggleBurger, handleToggleBurger} = useBurgerMenu()
 
     const data = JSON.parse(localStorage.getItem("userData"))
     return (
@@ -33,8 +36,8 @@ function App() {
                 handleClick,
             }}>
                 <div className="App">
-                    <HeaderComponent/>
-                    <MainComponent/>
+                    <HeaderComponent handleBurger={handleToggleBurger}/>
+                    <MainComponent showBurger={toggleBurger}/>
                     <FooterComponent/>
                 </div>
                 <AllianceSnackbar open={open} handleClose={handleClose} message={message}/>
