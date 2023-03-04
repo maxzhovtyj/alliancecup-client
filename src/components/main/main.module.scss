@@ -1,6 +1,8 @@
 @import "../../variables";
 
 .mainWrapper {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   position: relative;
   min-height: 100%;
   @include left-right-padding;

@@ -33,7 +33,7 @@ function CartComponent() {
     }, [dispatch, isAuth])
 
     return (
-        <div className={classes.cartPageWrapper}>
+        <div>
             {
                 (cartPage.cart?.length)
                     ?

@@ -20,6 +20,15 @@
     margin-right: 10px;
   }
 
+  @media all and (max-width: 625px) {
+    font-size: 1.125rem;
+    img {
+      margin-right: 5px;
+      width: 25px;
+      height: 25px;
+    }
+  }
+
   @media all and (max-width: 425px) {
     font-size: 14px;
     img {
