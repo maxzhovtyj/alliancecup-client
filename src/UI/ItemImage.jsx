@@ -2,7 +2,7 @@ import configData from "../config.json";
 
 import NoImageItem from "../assets/NoImageItem.png"
 
-const ItemImage = ({cls,  plug = false, alt = "item-image", item: {imgUrl, imgUUID}}) => {
+const ItemImage = ({cls,  plug = true, alt = "item-image", item: {imgUrl, imgUUID}}) => {
     if (imgUUID) {
         const imgUrlUUID = `${configData.MINIO_URL}/images/${imgUUID}`
         return <img loading={"lazy"} src={imgUrlUUID} alt={alt} className={cls}/>

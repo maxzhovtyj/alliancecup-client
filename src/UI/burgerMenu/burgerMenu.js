@@ -1,11 +1,12 @@
 import {useState} from "react";
 import Menu from '@mui/material/Menu';
+
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
-
-import classes from './burgerMenu.module.scss'
 import {IconButton} from "@mui/material";
+
 import {NavLink} from "react-router-dom";
+import classes from './burgerMenu.module.scss'
 
 export default function BurgerMenu() {
     const [anchorEl, setAnchorEl] = useState(null);

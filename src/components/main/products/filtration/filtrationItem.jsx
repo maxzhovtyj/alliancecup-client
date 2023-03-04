@@ -4,7 +4,7 @@ import classes from './filtration.module.scss'
 function FiltrationItem({onClick, item: {filtrationTitle, imgUrl, imgUUID, searchKey, searchCharacteristic, id}}) {
     return (
         <div onClick={() => onClick(searchKey, searchCharacteristic, id)} className={classes.filtrationItem}>
-            <ItemImage cls={classes.filtrationItemImg} item={{imgUUID, imgUrl}} alt={"filtration-image"}/>
+            <ItemImage cls={classes.filtrationItemImg} item={{imgUUID, imgUrl}} alt={"filtration-image"} plug={false}/>
             <p className={classes.filtrationItemTitle}>{filtrationTitle}</p>
         </div>
     );

@@ -14,11 +14,14 @@
 
 .productImg {
   grid-area: image;
-  max-width: 400px;
+  width: 400px;
+  height: 400px;
   position: relative;
 
   img {
-    border-radius: 5px;
+    object-position: center;
+    object-fit: cover;
+    border-radius: .5rem;
     width: 100%;
     height: auto;
   }
@@ -105,15 +108,12 @@
   font-size: 1rem;
 }
 
-dd p {
-  margin-left: 5px;
-}
-
 .characteristics {
 }
 
 .characteristicsTitle {
   font-size: 2rem;
+  margin-bottom: 1rem;
 }
 
 .characteristicsList {
@@ -127,7 +127,22 @@ dd p {
   padding: .5rem 1rem;
   border-radius: 5px;
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 1.375fr 3fr;
+
+  dt {
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+  }
+
+  dd {
+    display: flex;
+    align-items: center;
+  }
+
+  @media all and (max-width: 600px) {
+    grid-template-columns: 1.25fr 2fr;
+  }
 }
 
 .characteristicsValue {
