@@ -46,7 +46,7 @@ import AdminUpdateCategoryComponent from "./admin/categories/adminUpdateCategory
 import AdminUpdateFiltrationItemComponent from "./admin/categories/adminUpdateFiltrationItem.component";
 import BurgerMenuComponent from "../burgerMenu/burgerMenu.component";
 
-function MainComponent({showBurger}) {
+function MainComponent({showBurger, toggleBurger}) {
     return (
         <div>
             <NavbarComponent/>
@@ -106,7 +106,7 @@ function MainComponent({showBurger}) {
                     <Route path={"*"} element={<PageWasNotFound/>}/>
                     <Route path={"/permission-forbidden"} element={<PermissionForbidden/>}/>
                 </Routes>
-                <BurgerMenuComponent showBurger={showBurger}/>
+                <BurgerMenuComponent showBurger={showBurger} handleToggleBurger={toggleBurger}/>
             </main>
         </div>
     );

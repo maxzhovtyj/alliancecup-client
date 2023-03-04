@@ -35,9 +35,9 @@ function App() {
                 setMessage,
                 handleClick,
             }}>
-                <div className="App">
-                    <HeaderComponent handleBurger={handleToggleBurger}/>
-                    <MainComponent showBurger={toggleBurger}/>
+                <div className={"App"}>
+                    <HeaderComponent showBurger={toggleBurger} handleBurger={handleToggleBurger}/>
+                    <MainComponent showBurger={toggleBurger} toggleBurger={handleToggleBurger}/>
                     <FooterComponent/>
                 </div>
                 <AllianceSnackbar open={open} handleClose={handleClose} message={message}/>

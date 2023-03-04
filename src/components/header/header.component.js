@@ -12,12 +12,29 @@ import {Link} from "react-router-dom";
 import AuthDialogs from "./authDialogs";
 
 import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from '@mui/icons-material/Close';
 import {IconButton} from "@mui/material";
 
 import classes from './header.module.scss'
 
-function HeaderComponent({handleBurger}) {
+function HeaderComponent({showBurger, handleBurger}) {
     const {isAuth} = useAuthContext()
+
+    const BurgerIconButton = () => {
+        if (!showBurger) {
+            return (
+                <IconButton onClick={handleBurger} className={classes.burgerMenuBtn}>
+                    <MenuIcon style={{color: "white"}}/>
+                </IconButton>
+            );
+        }
+
+        return (
+            <IconButton onClick={handleBurger} className={classes.burgerMenuBtn}>
+                <CloseIcon style={{color: "white"}}/>
+            </IconButton>
+        )
+    }
 
     return (
         <>
@@ -57,9 +74,7 @@ function HeaderComponent({handleBurger}) {
                             <AuthDialogs/>
                     }
                 </div>
-                <IconButton onClick={handleBurger} className={classes.burgerMenuBtn}>
-                    <MenuIcon style={{color: "white"}}/>
-                </IconButton>
+                <BurgerIconButton/>
             </div>
             <header className={classes.headerWrapper}>
                 <ul className={classes.headerList}>

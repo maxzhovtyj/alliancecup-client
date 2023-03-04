@@ -1,9 +1,10 @@
+@import "../../variables";
+
 .burgerContainer {
-  min-height: 100vh;
   width: 100%;
-  background-color: black;
+  background-color: $alliance-orange;
   z-index: 100;
-  transition: .3s ease-in-out;
+  transition: .6s ease-in-out;
   transform: translateX(-150%);
   top: 0;
   left: 0;
@@ -17,5 +18,24 @@
 }
 
 .isActive {
+  min-height: 100vh;
   transform: translateX(0);
+  @media all and (max-width: 625px) {
+  }
+}
+
+
+.sidebarList {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem 3rem;
+}
+
+.sidebarItem {
+  font-family: 'Roboto', serif;
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: black;
 }

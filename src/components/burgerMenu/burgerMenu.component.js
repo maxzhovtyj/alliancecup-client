@@ -1,12 +1,41 @@
 import React from 'react';
+import {useNavigate} from "react-router-dom";
 
 import classes from "./burgerMenu.module.scss"
 
-const BurgerMenuComponent = ({showBurger}) => {
+const BurgerMenuComponent = ({showBurger, handleToggleBurger}) => {
+    const navigate = useNavigate()
+    const onNavigation = (path) => {
+        return () => {
+            handleToggleBurger()
+            navigate(path)
+        }
+    }
+
     return (
         <div className={classes.burgerContainer + ` ${showBurger ? classes.isActive : ""}`}>
-            <ul>
-                <li>Hello world</li>
+            <ul className={classes.sidebarList}>
+                <li className={classes.sidebarItem} onClick={onNavigation("/categories")}>
+                    Каталог
+                </li>
+                <li className={classes.sidebarItem} onClick={onNavigation("/user")}>
+                    Кабінет
+                </li>
+                <li className={classes.sidebarItem}>
+                    Пошук
+                </li>
+                <li className={classes.sidebarItem} onClick={onNavigation("/about-us")}>
+                    Про нас
+                </li>
+                <li className={classes.sidebarItem} onClick={onNavigation("/delivery")}>
+                    Доставка
+                </li>
+                <li className={classes.sidebarItem} onClick={onNavigation("/contacts")}>
+                    Контакти
+                </li>
+                <li className={classes.sidebarItem} onClick={onNavigation("/for-wholesalers")}>
+                    Для оптовиків
+                </li>
             </ul>
         </div>
     );
