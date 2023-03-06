@@ -1,0 +1,10 @@
+.aboutUsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 1040px;
+
+  p {
+    font-size: 1.25rem;
+  }
+}

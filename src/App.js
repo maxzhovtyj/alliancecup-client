@@ -1,18 +1,18 @@
 import './App.css';
 
+import {useSnackbar} from "./hooks/useSnackbar";
+import {useAuth} from "./hooks/useAuth";
+import useBurgerMenu from "./hooks/useBurgerMenu";
+
 import HeaderComponent from './components/header/header.component'
-import FooterComponent from "./components/footer/footer.component";
 import MainComponent from "./components/main/main.component";
+import AllianceSnackbar from "./UI/snackbar";
+import FooterComponent from "./components/footer/footer.component";
+
 import {AuthContext} from "./context/AuthContext";
 import {SnackbarContext} from "./context/SnackbarContext";
 
-import {useAuth} from "./hooks/useAuth";
-
 import {ROLES} from "./index";
-
-import AllianceSnackbar from "./UI/snackbar";
-import {useSnackbar} from "./hooks/useSnackbar";
-import useBurgerMenu from "./hooks/useBurgerMenu";
 
 function App() {
     const {login, logout, userId, userRoleCode} = useAuth()

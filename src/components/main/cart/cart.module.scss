@@ -5,6 +5,7 @@
   justify-content: center;
   flex-direction: column;
   margin: 3rem 0;
+
   h1 {
     font-family: 'Roboto', serif;
     font-size: 36px;
@@ -25,9 +26,11 @@
   grid-template-columns: 3fr 1fr .5fr 1fr;
   width: 100%;
   margin-bottom: 1rem;
+
   p {
     text-align: center;
   }
+
   @media all and (max-width: 765px) {
     display: none;
   }
@@ -40,12 +43,20 @@
 }
 
 .productItem {
+  position: relative;
+  display: flex;
+  align-items: center;
   width: 100%;
   border: 1px solid $alliance-grey;
   border-radius: .5rem;
-  display: flex;
-  align-items: center;
-  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    .productTitle {
+      color: $alliance-orange;
+    }
+  }
+
   @media all and (max-width: 765px) {
     flex-direction: column;
   }
@@ -55,6 +66,7 @@
   display: grid;
   grid-template-columns: 3fr 1fr .5fr 1fr;
   width: 100%;
+  gap: 5px;
   font-family: 'Roboto', serif;
   font-weight: 300;
   @media all and (max-width: 765px) {
@@ -65,28 +77,33 @@
 }
 
 .productImg {
-    max-width: 200px;
-    border-radius: .5rem;
-    @media all and (max-width: 765px) {
-      margin: 1rem;
-    }
+  max-width: 200px;
+  border-radius: .5rem;
+  @media all and (max-width: 765px) {
+    margin: 1rem;
+  }
 }
 
 .productTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1.5rem;
   font-family: 'Roboto', serif;
   font-weight: 300;
   text-align: center;
   transition: .3s ease-in-out;
   position: relative;
+
   &:hover {
     color: $alliance-orange;
   }
 }
 
 .productPrice {
+  text-align: center;
   @include toCenter;
-  word-wrap: normal;
+  word-wrap: break-word;
 }
 
 .productQuantity {

@@ -49,7 +49,7 @@ function CartComponent() {
                             {cartPage?.cart.map(item => <CartItem key={item.id} product={item}/>)}
                         </div>
                         <div className={classes.bottomInfo}>
-                            <p>Загальна вартість: {cartPage.sum}</p>
+                            <p>Загальна вартість: {cartPage.sum} грн</p>
                             <NavLink to={"/cart/order"}>
                                 <AllianceButton>
                                     Оформити замовлення

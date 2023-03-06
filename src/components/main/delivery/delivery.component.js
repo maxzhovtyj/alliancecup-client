@@ -1,10 +1,8 @@
-import React from 'react';
+import {OrderInfo} from "../../../UI/OrderInfo";
 
-function DeliveryComponent(props) {
+function DeliveryComponent() {
     return (
-        <div>
-            Delivery
-        </div>
+        <OrderInfo/>
     );
 }
 

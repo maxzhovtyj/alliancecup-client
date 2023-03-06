@@ -127,7 +127,7 @@ function OrderComponent() {
                 {
                     cartProducts?.cart?.map(item => <CartItem product={item} key={item.id} order={true}/>)
                 }
-                <p>Сума замовлення: {cartProducts.sum}</p>
+                <p>Сума замовлення: {cartProducts.sum} грн</p>
             </div>
         </div>
     );

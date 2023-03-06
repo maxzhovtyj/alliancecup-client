@@ -1,46 +1,28 @@
 import {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
+import {useSnackbarContext} from "../../../context/SnackbarContext";
+
 import {ProductService} from "../../../service/ProductService";
+import {ShoppingService} from "../../../service/ShoppingService";
 
-
+import ItemImage from "../../../UI/ItemImage";
 import ProductCharacteristics from "./productCharacteristics";
 import ProductPackaging from "./productPackaging";
+import {OrderInfo} from "../../../UI/OrderInfo";
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import {ShoppingService} from "../../../service/ShoppingService";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import {IconButton} from "@mui/material";
 import AllianceButton from "../../../UI/allianceCupButton/allianceButton";
-import {useSnackbarContext} from "../../../context/SnackbarContext";
 
 import classes from './product.module.scss'
-import ItemImage from "../../../UI/ItemImage";
+
 function InStock({inStock}) {
     if (inStock && inStock !== 0) {
         return (
             <p className={classes.inStock}><CheckCircleIcon style={{color: "#F7A500"}}/> В наявності</p>
         );
     } else return <p className={classes.inStock}>Немає в наявності</p>
-}
-
-function OrderInfo() {
-    return (
-        <div className={classes.orderInfo}>
-            <p>Доставка</p>
-            <ul>
-                <li>- Самовивіз</li>
-                <li>- Доставка Новою Поштою</li>
-                <li>- Доставка по м. Рівне</li>
-            </ul>
-
-            <p>Оплата</p>
-            <ul>
-                <li>- Готівкою при отриманні</li>
-                <li>- Приват 24</li>
-                <li>- Монобанк</li>
-            </ul>
-        </div>
-    );
 }
 
 function AddToCart({product, addToCart, amount, setProductAmount}) {

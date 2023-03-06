@@ -101,7 +101,7 @@ function OrderInfo({
                     ?
                     <div className={orderClasses.novaPoshtaDelivery}>
                         <AutoCompleteSelect
-                            label={"Місто"}
+                            label={"Введіть місто"}
                             width={300}
                             options={selectCities.cities}
                             onChange={selectCities.handleCities}
@@ -111,7 +111,7 @@ function OrderInfo({
                             error={errors.novaPoshtaCity}
                         />
                         <AutoCompleteSelect
-                            label={"Відділення"}
+                            label={"Введіть відділення"}
                             width={300}
                             options={selectDepartments.departments}
                             value={selectDepartments.department}
