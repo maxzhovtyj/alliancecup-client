@@ -1,5 +1,4 @@
-import classes from './main.module.scss'
-
+import {useBurgerContext} from "../../context/BurgerContext";
 import {Route, Routes, Navigate} from "react-router-dom";
 
 import PrivateRoute from "../../utils/PrivateRoute";
@@ -46,11 +45,15 @@ import AdminUpdateCategoryComponent from "./admin/categories/adminUpdateCategory
 import AdminUpdateFiltrationItemComponent from "./admin/categories/adminUpdateFiltrationItem.component";
 import BurgerMenuComponent from "../burgerMenu/burgerMenu.component";
 
-function MainComponent({showBurger, toggleBurger}) {
+import classes from './main.module.scss'
+
+function MainComponent() {
+    const {showBurger} = useBurgerContext()
+
     return (
         <div>
             <NavbarComponent/>
-            <main className={classes.mainWrapper}>
+            <main className={[classes.mainWrapper, (showBurger) ? classes.activeBurger : ""].join(" ")}>
                 <Routes>
                     <Route path={"/"} element={<HomePageComponent/>}/>
                     <Route path={"/categories"} element={<CategoriesComponent/>}/>
@@ -106,7 +109,7 @@ function MainComponent({showBurger, toggleBurger}) {
                     <Route path={"*"} element={<PageWasNotFound/>}/>
                     <Route path={"/permission-forbidden"} element={<PermissionForbidden/>}/>
                 </Routes>
-                <BurgerMenuComponent showBurger={showBurger} handleToggleBurger={toggleBurger}/>
+                <BurgerMenuComponent/>
             </main>
         </div>
     );

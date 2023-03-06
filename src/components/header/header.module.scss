@@ -116,6 +116,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  span {
+    cursor: pointer;
+  }
+
   @media all and (max-width: 720px) {
     font-size: 1rem;
     grid-area: logo;
@@ -188,6 +193,7 @@
   @include toCenter;
 
   span {
+    cursor: pointer;
     margin: auto 0;
     @include toCenter;
   }

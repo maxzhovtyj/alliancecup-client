@@ -1,13 +1,13 @@
 import {useState} from "react";
 
 const useBurgerMenu = () => {
-    const [toggleBurger, setToggleBurger] = useState(false)
+    const [showBurger, setShowBurger] = useState(false)
 
-    function handleToggleBurger() {
-        setToggleBurger(prevState => !prevState)
+    function toggleBurger() {
+        setShowBurger(prevState => !prevState)
     }
 
-    return {toggleBurger, handleToggleBurger}
+    return {showBurger, setShowBurger, toggleBurger}
 }
 
 export default useBurgerMenu

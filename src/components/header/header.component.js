@@ -1,4 +1,5 @@
 import {useAuthContext} from "../../context/AuthContext";
+import {useBurgerContext} from "../../context/BurgerContext";
 
 import tgIcon from '../../assets/social/Telegram.svg'
 import instIcon from '../../assets/social/Instagram.svg'
@@ -8,7 +9,7 @@ import cart from '../../assets/svgs/Bag.svg'
 import user from '../../assets/svgs/profile.svg'
 import star from '../../assets/svgs/star-24.svg'
 
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import AuthDialogs from "./authDialogs";
 
 import MenuIcon from "@mui/icons-material/Menu";
@@ -17,20 +18,30 @@ import {IconButton} from "@mui/material";
 
 import classes from './header.module.scss'
 
-function HeaderComponent({showBurger, handleBurger}) {
+function HeaderComponent() {
     const {isAuth} = useAuthContext()
+    const {showBurger, setShowBurger, toggleBurger} = useBurgerContext()
+
+    const navigate = useNavigate()
+
+    const handleNavigate = (link) => {
+        return () => {
+            setShowBurger(false)
+            navigate(link)
+        }
+    }
 
     const BurgerIconButton = () => {
         if (!showBurger) {
             return (
-                <IconButton onClick={handleBurger} className={classes.burgerMenuBtn}>
+                <IconButton onClick={toggleBurger} className={classes.burgerMenuBtn}>
                     <MenuIcon style={{color: "white"}}/>
                 </IconButton>
             );
         }
 
         return (
-            <IconButton onClick={handleBurger} className={classes.burgerMenuBtn}>
+            <IconButton onClick={toggleBurger} className={classes.burgerMenuBtn}>
                 <CloseIcon style={{color: "white"}}/>
             </IconButton>
         )
@@ -79,9 +90,7 @@ function HeaderComponent({showBurger, handleBurger}) {
             <header className={classes.headerWrapper}>
                 <ul className={classes.headerList}>
                     <li className={classes.logo}>
-                        <Link to="/">
-                            <span>AllianceCup</span>
-                        </Link>
+                        <span onClick={handleNavigate("/")}>AllianceCup</span>
                     </li>
                     <li className={classes.slogan}>
                         <span>Надійний постачальник <br/> для вашого бізнесу</span>
@@ -92,14 +101,16 @@ function HeaderComponent({showBurger, handleBurger}) {
                         <span>allince.cup.ua@gmail.com</span>
                     </li>
                     <li className={classes.cart}>
-                        <Link to={"/cart"}>
-                            <span><img src={cart} alt="cart"/>Кошик</span>
-                        </Link>
+                        <span onClick={handleNavigate("/cart")}>
+                            <img src={cart} alt="cart"/>
+                            Кошик
+                        </span>
                     </li>
                     <li className={classes.favourites}>
-                        <Link to={"/favourites"}>
-                            <span><img src={star} alt="star"/>Обрані</span>
-                        </Link>
+                        <span onClick={handleNavigate("/favourites")}>
+                            <img src={star} alt="star"/>
+                            Обрані
+                        </span>
                     </li>
                 </ul>
             </header>

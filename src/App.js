@@ -13,14 +13,15 @@ import {AuthContext} from "./context/AuthContext";
 import {SnackbarContext} from "./context/SnackbarContext";
 
 import {ROLES} from "./index";
+import {BurgerContext} from "./context/BurgerContext";
 
 function App() {
     const {login, logout, userId, userRoleCode} = useAuth()
     const {setMessage, open, message, handleClick, handleClose} = useSnackbar()
-
-    const {toggleBurger, handleToggleBurger} = useBurgerMenu()
+    const {showBurger, setShowBurger, toggleBurger} = useBurgerMenu()
 
     const data = JSON.parse(localStorage.getItem("userData"))
+
     return (
         <AuthContext.Provider value={{
             isAuth: !!localStorage.getItem("userData"),
@@ -31,17 +32,21 @@ function App() {
             isAdmin: data?.userRoleCode === ROLES.SUPERADMIN,
             isModerator: data?.userRoleCode === ROLES.MODERATOR,
         }}>
-            <SnackbarContext.Provider value={{
-                setMessage,
-                handleClick,
+            <BurgerContext.Provider value={{
+                showBurger, setShowBurger, toggleBurger
             }}>
-                <div className={"App"}>
-                    <HeaderComponent showBurger={toggleBurger} handleBurger={handleToggleBurger}/>
-                    <MainComponent showBurger={toggleBurger} toggleBurger={handleToggleBurger}/>
-                    <FooterComponent/>
-                </div>
-                <AllianceSnackbar open={open} handleClose={handleClose} message={message}/>
-            </SnackbarContext.Provider>
+                <SnackbarContext.Provider value={{
+                    setMessage,
+                    handleClick,
+                }}>
+                    <div className={"App"}>
+                        <HeaderComponent/>
+                        <MainComponent/>
+                        <FooterComponent/>
+                    </div>
+                    <AllianceSnackbar open={open} handleClose={handleClose} message={message}/>
+                </SnackbarContext.Provider>
+            </BurgerContext.Provider>
         </AuthContext.Provider>
     );
 }

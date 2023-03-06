@@ -7,3 +7,8 @@
   min-height: 100%;
   @include left-right-padding;
 }
+
+.activeBurger {
+  overflow-y: hidden;
+  height: 800px;
+}

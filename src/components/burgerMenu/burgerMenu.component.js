@@ -2,18 +2,21 @@ import React from 'react';
 import {useNavigate} from "react-router-dom";
 
 import classes from "./burgerMenu.module.scss"
+import {useBurgerContext} from "../../context/BurgerContext";
 
-const BurgerMenuComponent = ({showBurger, handleToggleBurger}) => {
+const BurgerMenuComponent = () => {
+    const {showBurger, toggleBurger} = useBurgerContext()
     const navigate = useNavigate()
+
     const onNavigation = (path) => {
         return () => {
-            handleToggleBurger()
+            toggleBurger()
             navigate(path)
         }
     }
 
     return (
-        <div className={classes.burgerContainer + ` ${showBurger ? classes.isActive : ""}`}>
+        <div className={[classes.burgerContainer, (showBurger) ? classes.isActive : ""].join(" ")}>
             <ul className={classes.sidebarList}>
                 <li className={classes.sidebarItem} onClick={onNavigation("/categories")}>
                     Каталог

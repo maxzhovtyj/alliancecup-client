@@ -3,7 +3,6 @@
 .burgerContainer {
   width: 100%;
   background-color: $alliance-orange;
-  z-index: 100;
   transition: .6s ease-in-out;
   transform: translateX(-150%);
   top: 0;
@@ -12,18 +11,17 @@
   bottom: 0;
   position: absolute;
   display: none;
+  z-index: -1;
   @media all and (max-width: 625px) {
     display: block;
   }
 }
 
 .isActive {
-  min-height: 100vh;
+  z-index: 100;
+  min-height: 100%;
   transform: translateX(0);
-  @media all and (max-width: 625px) {
-  }
 }
-
 
 .sidebarList {
   text-align: center;
