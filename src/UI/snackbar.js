@@ -19,7 +19,7 @@ export default function AllianceSnackbar({message, handleClose, open}) {
 
     return (
         <Snackbar
-            sx={{minWidth: "500px"}}
+            sx={{maxWidth: "300px", width: "100%"}}
             open={open}
             autoHideDuration={2000}
             onClose={handleClose}
