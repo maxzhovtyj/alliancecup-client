@@ -28,12 +28,12 @@ function FooterComponent() {
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.instagram.com/alliance_cup/">
+                            <a href="https://t.me/Alliancecuprv">
                                 <img src={tgIcon} alt="TG-icon"/>
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.instagram.com/alliance_cup/">
+                            <a href="viber://chat?number=+380966121516">
                                 <img src={vbIcon} alt="VB-icon"/>
                             </a>
                         </li>

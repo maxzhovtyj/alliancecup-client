@@ -58,12 +58,12 @@ function HeaderComponent() {
                             </a>
                         </li>
                         <li>
-                            <a href={"https://www.instagram.com/alliance_cup/"} target={"_blank"} rel="noreferrer">
+                            <a href={"https://t.me/Alliancecuprv"} target={"_blank"} rel="noreferrer">
                                 <img src={tgIcon} alt="tg"/>
                             </a>
                         </li>
                         <li>
-                            <a href={"https://www.instagram.com/alliance_cup/"} target={"_blank"} rel="noreferrer">
+                            <a href={"viber://chat?number=+380966121516"} target={"_blank"} rel="noreferrer">
                                 <img src={vbIcon} alt="vb"/>
                             </a><
                         /li>
