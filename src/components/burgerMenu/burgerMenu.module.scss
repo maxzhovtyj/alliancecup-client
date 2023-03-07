@@ -13,6 +13,7 @@
   position: absolute;
   display: none;
   z-index: -1;
+  overflow: hidden;
   @media all and (max-width: 625px) {
     display: block;
   }
@@ -59,5 +60,4 @@
   font-family: 'Roboto', serif;
   font-weight: 300;
   font-size: 1.5rem;
-  color: black;
 }
