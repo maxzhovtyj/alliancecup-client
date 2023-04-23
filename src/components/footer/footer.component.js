@@ -43,7 +43,7 @@ function FooterComponent() {
                     <ul className={classes.contactInfo}>
                         <li><p><img src={pin} alt="pin"/>м.Рівне</p></li>
                         <li><p><img src={phone} alt="phone"/>+38 (096) 612-15-16</p></li>
-                        <li><p><img src={mail} alt="mail"/>allince.cup.ua@gmail.com</p></li>
+                        <li><p><img src={mail} alt="mail"/>alliance.cup.ua@gmail.com</p></li>
                     </ul>
                 </div>
                 <div className={classes.schedule}>
