@@ -37,9 +37,9 @@
 }
 
 .categoryImage {
-  display: block;
+  display: block !important;
   width: 100%;
-  height: 200px;
+  height: 200px !important;
   object-fit: cover;
   object-position: center;
 }
@@ -59,9 +59,9 @@
   .categoriesList {
   }
   .categoryItem {
-    width: 280px;
+    width: 280px !important;
   }
   .categoryImage {
-    height: 180px;
+    height: 180px !important;
   }
 }

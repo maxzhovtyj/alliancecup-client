@@ -37,13 +37,13 @@
 }
 
 .orderProductItem {
-  display: flex;
+  display: flex !important;
   width: 100%;
   gap: 2rem;
   img {
     margin: auto;
-    width: 45px;
-    height: 45px;
+    width: 45px !important;
+    height: 45px !important;
   }
   span {
     font-family: 'Roboto', serif;

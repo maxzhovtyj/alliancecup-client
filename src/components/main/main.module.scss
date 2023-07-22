@@ -4,7 +4,7 @@
   padding-top: 2rem;
   padding-bottom: 2rem;
   position: relative;
-  min-height: 100%;
+  min-height: 100% !important;
   @include left-right-padding;
 }
 

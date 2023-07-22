@@ -13,17 +13,17 @@
 
 .productImg {
   grid-area: image;
-  max-width: 400px;
+  max-width: 400px !important;
   width: 100%;
-  height: auto;
+  height: auto !important;
   position: relative;
 
   img {
     object-position: center;
     object-fit: cover;
     border-radius: .5rem;
-    width: 100%;
-    height: auto;
+    width: 100% !important;
+    height: auto !important;
   }
 }
 

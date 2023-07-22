@@ -1,7 +1,7 @@
 @import '../../../variables';
 
 .productsPageWrapper {
-  min-height: 100%;
+  min-height: 100% !important;
   display: grid;
   grid-template-columns: 1fr 3fr;
   grid-gap: 2rem;
@@ -117,9 +117,9 @@
 .productImg {
   background-color: $alliance-grey-plug;
   margin: 0;
-  display: block;
+  display: block !important;
   width: 100%;
-  height: 260px;
+  height: 260px !important;
   object-fit: cover;
   object-position: center;
 }

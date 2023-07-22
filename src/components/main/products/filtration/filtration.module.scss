@@ -53,14 +53,14 @@
 
 .filtrationItemImg {
   background-color: $alliance-grey-plug;
-  display: block;
+  display: block !important;
   width: 100%;
   height: 180px !important;
   object-fit: cover;
   object-position: center;
   @media all and (max-width: 600px) {
     width: 100%;
-    height: 100px;
+    height: 100px !important;
   }
 }
 

@@ -2,19 +2,39 @@ import configData from "../config.json";
 
 import NoImageItem from "../assets/NoImageItem.png"
 
-import classes from "./ItemImage.module.scss"
+import ProgressiveImage from "react-progressive-graceful-image";
+import {Skeleton} from "@mui/material";
 
-const ItemImage = ({cls,  plug, alt = "item-image", item: {imgUrl, imgUUID}}) => {
+const ItemImage = ({cls, plug, alt = "item-image", item: {imgUrl, imgUUID}}) => {
     if (imgUUID) {
         const imgUrlUUID = `${configData.MINIO_URL}/images/${imgUUID}`
-        return <img loading={"lazy"} src={imgUrlUUID} alt={alt} className={`${cls} ${classes.skeletonImage}`}/>
+        return (
+            <ProgressiveImage src={imgUrlUUID} placeholder={alt}>
+                {(src, loading) =>
+                    loading ? <Skeleton className={cls} variant="rectangular"/> :
+                        <img loading={"lazy"} src={src} className={cls} alt={alt}/>
+                }
+            </ProgressiveImage>
+        )
     } else if (imgUrl) {
-        return <img loading={"lazy"} src={imgUrl} alt={alt} className={`${cls} ${classes.skeletonImage}`}/>
-    } else if (plug) {
-        return <img loading={"lazy"} src={NoImageItem} alt={"empty-img"} className={`${cls} ${classes.skeletonImage}`}/>
+        return (
+            <ProgressiveImage src={imgUrl} placeholder={alt}>
+                {(src, loading) =>
+                    loading ? <Skeleton className={cls} variant="rectangular"/> :
+                        <img loading={"lazy"} src={src} className={cls} alt={alt}/>
+                }
+            </ProgressiveImage>
+        )
+    } else {
+        return (
+            <ProgressiveImage src={NoImageItem} placeholder={alt}>
+                {(src, loading) =>
+                    loading ? <Skeleton className={cls} variant="rectangular"/> :
+                        <img loading={"lazy"} src={src} className={cls} alt={alt}/>
+                }
+            </ProgressiveImage>
+        )
     }
-
-    return <div className={cls}/>
 }
 
 export default ItemImage;
