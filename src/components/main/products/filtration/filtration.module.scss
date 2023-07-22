@@ -55,7 +55,7 @@
   background-color: $alliance-grey-plug;
   display: block;
   width: 100%;
-  height: 180px;
+  height: 180px !important;
   object-fit: cover;
   object-position: center;
   @media all and (max-width: 600px) {

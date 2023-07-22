@@ -14,6 +14,8 @@ import FiltrationListComponent from "./filtration/filtrationList.component";
 import ProductsPageSidebar from "./sidebar/productsPageSidebar";
 
 import classes from './products.module.scss'
+import ProductsSkeleton from "./skeleton/productsSkeleton";
+import FiltrationListSkeleton from "./filtration/filtrationListSkeleton";
 
 const parentCategory = "category_id"
 const parentFiltrationList = "filtration_list_id"
@@ -28,7 +30,7 @@ function ProductsComponent() {
     const products = useSelector(state => state.shop.products)
     const cannotLoadMore = useSelector(state => state.shop.statusNoMoreProducts)
     const filtrationList = useSelector(state => state.shop.filtrationList)
-    const isLoading = useSelector(state => state.shop.isFetching)
+    const [isLoading, setIsLoading] = useState(true)
 
     const [parentName, setParentName] = useState(
         queryParams.get("filtrationId") === null
@@ -70,6 +72,7 @@ function ProductsComponent() {
     }, [dispatch])
 
     useEffect(() => {
+        setIsLoading(true)
         setRangePriceForm(getQueryPriceParam())
         setRangePrice(getQueryPriceParam())
 
@@ -93,7 +96,8 @@ function ProductsComponent() {
             : queryParams.get("filtrationId"))
 
         dispatch(fetchFiltrationList(parentName, filtrationId))
-    }, [dispatch, filtrationId, getQueryPriceParam, parentName, queryParams, searchParams])
+        setIsLoading(false)
+    }, [dispatch, filtrationId, getQueryPriceParam, isLoading, parentName, queryParams, searchParams])
 
     function loadMore() {
         let lastCreatedAt = products[products.length - 1].createdAt
@@ -192,18 +196,24 @@ function ProductsComponent() {
                                      currentCategoryId={searchParams.id}
                 />
                 <div className={classes.productsWrapper}>
-                    <FiltrationListComponent
-                        filtrationList={filtrationList}
-                        handleCharacteristic={handleCharacteristic}
-                    />
-                    <ProductsListComponent
-                        isLoading={isLoading}
-                        products={products}
-                        loadMore={loadMore}
-                        cannotLoadMore={cannotLoadMore}
-                        handleClick={snackbar.handleClick}
-                        setMessage={snackbar.setMessage}
-                    />
+                    {
+                        isLoading
+                            ? <>
+                                <FiltrationListSkeleton/>
+                                <ProductsSkeleton/>
+                            </>
+                            : <>
+                                <FiltrationListComponent filtrationList={filtrationList}
+                                                         handleCharacteristic={handleCharacteristic}/>
+                                <ProductsListComponent
+                                    isLoading={isLoading}
+                                    products={products}
+                                    loadMore={loadMore}
+                                    cannotLoadMore={cannotLoadMore}
+                                    handleClick={snackbar.handleClick}
+                                    setMessage={snackbar.setMessage}/>
+                            </>
+                    }
                 </div>
             </div>
         </>
