@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const novaAccessKey = "6e42ef74bae876c04fb84dcc2912126a"
+import configData from "../config.json"
 
 export class NovaPoshtaService {
     static async getCities(findByString) {
         try {
             const response = await axios.post('https://api.novaposhta.ua/v2.0/json/', {
-                apiKey: novaAccessKey,
+                apiKey: configData.NOVA_POSHTA_API_KEY,
                 modelName: "Address",
                 calledMethod: "getCities",
                 methodProperties: {
@@ -25,7 +25,7 @@ export class NovaPoshtaService {
     static async getDepartments(cityRef) {
         try {
             const response = await axios.post('https://api.novaposhta.ua/v2.0/json/', {
-                apiKey: novaAccessKey,
+                apiKey: configData.NOVA_POSHTA_API_KEY,
                 modelName: "Address",
                 calledMethod: "getWarehouses",
                 methodProperties: {
